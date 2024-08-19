@@ -1,0 +1,98 @@
+{
+  "leads": [
+    {
+      "id": "f711",
+      "Lead Name": "Shajahan",
+      "Lead Mail": "shajahan@gmail.com",
+      "Phone": "7654321890",
+      "Address": "Agra",
+      "date": "2024-08-23",
+      "Organization": "mumtaajz Organization"
+    },
+    {
+      "id": "14f6",
+      "Lead Name": "Lakshman",
+      "Lead Mail": "lakshman@gmail.com",
+      "Phone": "6789012345",
+      "Address": "Delhi",
+      "date": "2024-08-07",
+      "Organization": "Heroku Organization"
+    },
+    {
+      "id": "4d7e",
+      "Lead Name": "Harry Potter",
+      "Lead Mail": "harry@gmail.com",
+      "Phone": "7654321890",
+      "Address": "usa",
+      "date": "2024-07-30",
+      "Organization": "Turing Machine"
+    },
+    {
+      "id": "ed6b",
+      "Lead Name": "Shinchan",
+      "Lead Mail": "shinchan@gmail.com",
+      "Phone": "8765432190",
+      "Address": "Netherlands",
+      "date": "2024-08-07",
+      "Organization": "abc Schools"
+    },
+    {
+      "id": "9be6",
+      "Lead Name": "Himawari",
+      "Lead Mail": "himawari@gmail.com",
+      "Phone": "8765432190",
+      "Address": "UK",
+      "date": "2024-08-29",
+      "Organization": "bca Organization"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "55fb",
+      "Contact Name": "Alan Turing",
+      "Contact Mail": "alan@gmail.com",
+      "Phone": "8765432190",
+      "Address": "mexico",
+      "date": "2024-08-27",
+      "Organization": "MNM"
+    },
+    {
+      "id": "19aa",
+      "Contact Name": "Kaveri",
+      "Contact Mail": "kaveri@gmail.com",
+      "Phone": "8765432190",
+      "Address": "mexico",
+      "date": "2024-08-21",
+      "Organization": "catgemini"
+    },
+    {
+      "id": "6aa4",
+      "Contact Name": "Raja Raja Chola",
+      "Contact Mail": "rajarajachola@gmail.com",
+      "Phone": "8765432190",
+      "Address": "Madurai",
+      "date": "2024-08-21",
+      "Organization": "The Great Chola Kingdom"
+    },
+    {
+      "id": "097c",
+      "Contact Name": "Nila",
+      "Contact Mail": "nila@gmail.com",
+      "Phone": "8765432190",
+      "date": "18-04-1980",
+      "Address": "Kanchipuram",
+      "Organization": "cwdcw"
+    },
+    {
+      "id": "85e4",
+      "Contact Name": "Chetan",
+      "Contact Mail": "chetan@gmail.com",
+      "Phone": "7654321890",
+      "date": "14-03-1990",
+      "Address": "Karnataka",
+      "Organization": "Test Yantra"
+    }
+  ],
+  "accounts": [],
+  "deals": []
+}

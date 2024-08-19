@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Create Contact - Zoho CRM</title>
+    <link rel="stylesheet" href="../frontPage/crmFront.css">
+</head>
+<body>
+     <!-- Navbar Container -->
+     <div id="navBar">
+        <ul>
+            <li id="Logo" class="navParent">
+                <a href="../frontPage/crmFront.html">
+                    <img src="../assets/iconnn.svg" alt="CRM image" id="crmicon"><span id="CRM">CRM</span>
+                </a>
+            </li>
+            <li id="Home" class="navParent">
+                <a href="../frontPage/crmFront.html">Home</a>
+            </li>
+            <li id="Leads" class="navParent">
+                <a href="../leadForm/leadList.html">Leads</a>
+            </li>
+            <li id="Contact" class="navParent">
+                <a href="./contactList.html">Contacts</a>
+            </li>
+            <li id="Account" class="navParent">
+                <a href="">Accounts</a>
+            </li>
+            <li id="Deals" class="navParent">
+                <a href="">Deals</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Nav Container End -->
+
+
+    <!-- Second Nav Bar -->
+    <div id="secondNav">
+        <ul id="leadFormSecondNavUl">
+        <div id="left">
+             <li><h3>Create Contact</h3></li>
+             <li>
+                 <select name="" id="leadOption">
+                     <option value="All Contacts">All Contacts</option>
+                     <option value="Locked Contacts">Locaked Contacts</option>
+                     <option value="Junk Contacts">Junk Contacts</option>
+                 </select>
+             </li>
+             <li>
+                 <a href="#">Edit Page Layout</a>
+             </li>
+        </div>
+        <div id="right">
+         <li><button id="cancelBtn">Cancel</button></li>
+         <li><button id="saveNewBtn">Save and New</button></li>
+         <li><input type="button" 
+             name="" id="contactSubmitBtn" value="Save"></li>
+        </div>
+        </ul>
+     </div>
+     <!-- Second Nav Ends -->
+
+     <div id="contactForm">
+        <form action="">
+            <label for="contactName">Contact Name</label>
+            <input type="text" name="contactName" id="contactName" class="contactInp">
+            <p></p>
+            <br>
+            <label for="contactMail">E-Mail</label>
+            <input type="email" name="contactMail" id="contactMail" class="contactInp">
+            <p></p>
+            <br>
+            <label for="contactPhone">Phone</label>
+            <input type="tel" name="contactPhone" id="contactPhone" class="contactInp">
+            <P></P>
+            <br>
+            <label for="date">Date</label>
+            <input type="datetime" name="date" id="date" class="contactInp">
+            <p></p>
+            <br>
+            <label for="contactAddress">Address</label>
+            <input type="text" name="contactAddress" id="contactAddress" class="contactInp">
+            <p></p>
+            <br>
+            <label for="organization">Organization</label>
+            <input type="text" name="organization" id="organization" class="contactInp">
+            <p></p>
+        </form>
+     </div>
+<script src="./contactForm.js"></script>
+</body>
+</html>

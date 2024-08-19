@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Lead - Zoho CRM</title>
+    <link rel="stylesheet" href="../frontPage/crmFront.css">
+</head>
+<body>
+     <!-- Navbar Container -->
+     <div id="navBar">
+        <ul>
+            <li id="Logo" class="navParent">
+                <a href="../frontPage/crmFront.html">
+                    <img src="../assets/iconnn.svg" alt="CRM image" id="crmicon"><span id="CRM">CRM</span>
+                </a>
+            </li>
+            <li id="Home" class="navParent">
+                <a href="../frontPage/crmFront.html">Home</a>
+            </li>
+            <li id="Leads" class="navParent">
+                <a href="../leadForm/leadList.html">Leads</a>
+            </li>
+            <li id="Contact" class="navParent">
+                <a href="../contact/contactList.html">Contacts</a>
+            </li>
+            <li id="Account" class="navParent">
+                <a href="">Accounts</a>
+            </li>
+            <li id="Deals" class="navParent">
+                <a href="">Deals</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Nav Container End -->
+     <!-- Second Navbar -->
+     <div id="secondNav">
+        <!---->
+            <ul id="ull">
+                <div id="left">
+                    <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li>
+                        <select name="" id="leadOption">
+                            <option value="All Leads">All Leads</option>
+                            <option value="Locked Leads">Locaked Leads</option>
+                            <option value="Junk Leads">Junk Leads</option>
+                        </select>
+                    </li>
+                </div>
+               <div id="right">
+                    <li>
+                        <button class="createBtnForAllModules">
+                            <a href="../leadForm/leadForm.html" style="text-decoration: none; color: white;">Create Lead</a>
+                        </button>
+                    </li>
+                    <li>
+                        <input type="text" name="search" id="searchLead" placeholder="search here..."> 
+                    </li>
+                    <li>
+                        <select name="" id="actionOption">
+                            <option value="">action</option>
+                            <option value="Mass Update">Mass Update</option>
+                            <option value="Mass Delete">Mass Delete</option>
+                            <option value="Mass Transfer">Mass Transfer</option>
+                            <option value="Mass Email">Mass Email</option>
+                        </select>
+                    </li>
+               </div>
+            </ul>
+    </div>
+    <!-- Body Container -->
+    <div id="parent">
+
+        <!-- Filter Container Starts Here -->
+        <div id="filterForLead">
+            
+            <div id="searchBar">
+                <input type="text" name="" id="searchBarInp" placeholder="Search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <!-- Lead Container Starts Here-->
+        <div id="leadListContainer">
+            <table>
+            </table>
+        </div>
+        <!-- Lead Container Ends Here -->
+    
+        
+    </div>
+    <script src="./leadList.js"></script>
+    <!-- <script src="./leadView.js"></script> -->
+</body>
+</html>

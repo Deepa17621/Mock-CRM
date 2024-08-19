@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
+    <title>Edit Lead - Zoho CRM</title>
+    <link rel="stylesheet" href="../frontPage/crmFront.css">
+</head>
+<body>
+
+     <!-- Navbar Container -->
+     <div id="navBar">
+        <ul>
+            <li id="Logo" class="navParent">
+                <a href="../frontPage/crmFront.html">
+                    <img src="../assets/iconnn.svg" alt="CRM image" id="crmicon"><span id="CRM">CRM</span>
+                </a>
+            </li>
+            <li id="Home" class="navParent">
+                <a href="../frontPage/crmFront.html">Home</a>
+            </li>
+            <li id="Leads" class="navParent">
+                <a href="../leadForm/leadList.html">Leads</a>
+            </li>
+            <li id="Contact" class="navParent">
+                <a href="../contact/contactList.html">Contacts</a>
+            </li>
+            <li id="Account" class="navParent">
+                <a href="">Accounts</a>
+            </li>
+            <li id="Deals" class="navParent">
+                <a href="">Deals</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Nav Container End -->
+
+    <!-- Second Nav Starts -->
+    <div id="secondNav">
+       <ul id="leadFormSecondNavUl">
+       <div id="left">
+            <li><h3>Edit Lead</h3></li>
+            <li>
+                <!-- <select name="" id="leadOption">
+                    <option value="All Leads">All Leads</option>
+                    <option value="Locked Leads">Locaked Leads</option>
+                    <option value="Junk Lead\s">Junk Leads</option>
+                </select> -->
+            </li>
+            <li>
+                <a href="#">Edit Page Layout</a>
+            </li>
+       </div>
+       <div id="right">
+        <li><button id="cancelBtn">Cancel</button></li>
+        <li><button id="saveNewBtn">Save and New</button></li>
+        <li><input type="button" 
+            name="" id="leadSubmitBtn" value="Save"></li>
+       </div>
+       </ul>
+    </div>
+    <!-- Second Nav Ends -->
+     
+    <!-- Form Container -->
+     <div id="leadFormContainer">
+        <form action="">
+            <label for="leadName">Lead Name</label>
+            <input type="text" name="name" id="leadName" class="leadInp">
+            <p></p>
+            <br>
+            <label for="leadMail">Lead Mail</label>
+            <input type="email" name="email" id="leadMail" class="leadInp">
+            <p></p>
+            <br>
+            <label for="phone" >Phone</label>
+            <input type="tel" name="phone" id="phone" class="leadInp" min=10>
+            <p></p>
+            <br>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" class="leadInp" >
+            <p></p>
+            <br>
+            <label for="LeadAddress">Lead Address</label>
+            <input type="text" name="address" id="LeadAddress" class="leadInp">
+            <p></p>
+            <br>
+            <label for="oraganization">Organization</label>
+            <input type="text" name="org" id="organization" class="leadInp"> 
+            <p></p>           
+        </form>
+     </div>
+     <script src="./editLead.js"></script>
+</body>
+</html>
