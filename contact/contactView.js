@@ -51,7 +51,7 @@ function createTable(data)
         td.innerHTML=key.toUpperCase();
         row.appendChild(td);
         let td2=document.createElement("td");
-        td2.innerHTML=data[key];
+        td2.textContent=data[key];
         row.appendChild(td2);
     }
 }
@@ -64,5 +64,26 @@ mailBtn.addEventListener("click",()=>{
     mailBtn.children[0].href=`mailto:${email}`;
 });
 
-// Convert contact Button
+// Delete Contact
+async function  delContact(id)
+{
+    let res=await fetch(`http://localhost:3000/contacts/${currentId}`, {
+        method:"DELETE"
+    });
+    let out=res.json();
+}
+let delBtn=document.querySelector("#deleteBtn");
+delBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    delContact(currentId);
+    window.location.href="http://127.0.0.1:5500/contact/contactList.html";
+    e.stopPropagation();
+});
+
+//Edit Contact
+let editBtn=document.querySelector("#editBtn");
+editBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/contact/editContact.html?id=${currentId}`;
+});
 

@@ -1,13 +1,13 @@
 {
   "leads": [
     {
-      "id": "f711",
-      "Lead Name": "Shajahan",
+      "Lead Name": "Shajahan Mumtajz",
       "Lead Mail": "shajahan@gmail.com",
       "Phone": "7654321890",
       "Address": "Agra",
+      "Organization": "mumtaajz Organization",
       "date": "2024-08-23",
-      "Organization": "mumtaajz Organization"
+      "id": "f711"
     },
     {
       "id": "4d7e",
@@ -35,15 +35,6 @@
       "Address": "UK",
       "date": "2024-08-29",
       "Organization": "bca Organization"
-    },
-    {
-      "id": "419d",
-      "Lead Name": "mumtaajz shajahan",
-      "Lead Mail": "mumtajzz@gmail.com",
-      "Phone": "7654321890",
-      "Address": "Agra",
-      "date": "2024-08-14",
-      "Organization": "shajahan organization"
     },
     {
       "id": "ec1f",
@@ -91,15 +82,6 @@
       "Organization": "grid dynamics"
     },
     {
-      "id": "1d8a",
-      "Lead Name": "Minion",
-      "Lead Mail": "minion2012@gmail.com",
-      "Phone": "7654321890",
-      "Address": "Chennai",
-      "date": "2024-08-01",
-      "Organization": "Iniyan Minion orgs"
-    },
-    {
       "id": "9057",
       "Lead Name": "Benedit",
       "Lead Mail": "benedit213@gmail.com",
@@ -120,22 +102,13 @@
   ],
   "contacts": [
     {
-      "id": "55fb",
-      "Contact Name": "Alan Turing",
-      "Contact Mail": "alan@gmail.com",
-      "Phone": "8765432190",
-      "Address": "mexico",
-      "date": "2024-08-27",
-      "Organization": "MNM"
-    },
-    {
-      "id": "19aa",
       "Contact Name": "Kaveri",
       "Contact Mail": "kaveri@gmail.com",
-      "Phone": "8765432190",
-      "Address": "mexico",
+      "Phone": "8987867567",
       "date": "2024-08-21",
-      "Organization": "catgemini"
+      "Address": "mexico",
+      "Organization": "catgemini",
+      "id": "19aa"
     },
     {
       "id": "6aa4",
@@ -151,7 +124,7 @@
       "Contact Name": "Nila",
       "Contact Mail": "nila@gmail.com",
       "Phone": "8765432190",
-      "date": "18-04-1980",
+      "date": "2024-04-19",
       "Address": "Kanchipuram",
       "Organization": "cwdcw"
     },
@@ -160,7 +133,7 @@
       "Contact Name": "Chetan",
       "Contact Mail": "chetan@gmail.com",
       "Phone": "7654321890",
-      "date": "14-03-1990",
+      "date": "1990-03-14",
       "Address": "Karnataka",
       "Organization": "Test Yantra"
     },
@@ -169,43 +142,34 @@
       "Contact Name": "Vijay",
       "Contact Mail": "vijay@gmail.com",
       "Phone": "6789054321",
-      "date": "14-03-2002",
+      "date": "2002-03-14",
       "Address": "Karnataka",
       "Organization": "Xavior"
-    },
-    {
-      "id": "8dc0",
-      "Contact Name": "Yogi",
-      "Contact Mail": "yogi@gmail.com",
-      "Phone": "7890654321",
-      "date": "18-04-1980",
-      "Address": "Bengalore",
-      "Organization": "GCC groups of company"
     },
     {
       "id": "f727",
       "Contact Name": "Amutha",
       "Contact Mail": "amutha@gmail.com",
       "Phone": "6789054332",
-      "date": "18-04-1980",
+      "date": "1984-04-18",
       "Address": "Vellore",
       "Organization": "cwdcw"
     },
     {
-      "id": "b236",
       "Contact Name": "Balaji P",
-      "Contact Mail": "balaji2001@gmail.com",
+      "Contact Mail": "balaG2001@gmail.com",
       "Phone": "6345789203",
-      "date": "18-06-2001",
+      "date": "2001-06-18",
       "Address": "Ranipet",
-      "Organization": "Admindroid"
+      "Organization": "Admindroid",
+      "id": "b236"
     },
     {
       "id": "74f5",
       "Contact Name": "Vasan",
       "Contact Mail": "vasan@gmail.com",
       "Phone": "9876543210",
-      "date": "10-06-2002",
+      "date": "2002-06-10",
       "Address": "Walajabad",
       "Organization": "Qualian Technologies"
     },
@@ -226,6 +190,24 @@
       "date": "26-04-2002",
       "Address": "Chengam",
       "Organization": "CEG"
+    },
+    {
+      "id": "1d8a",
+      "Contact Name": "Minion",
+      "Contact Mail": "minion2012@gmail.com",
+      "Phone": "7654321890",
+      "Address": "Chennai",
+      "date": "2024-08-01",
+      "Organization": "Iniyan Minion orgs"
+    },
+    {
+      "Contact Name": "Deepa Rajendiran",
+      "Contact Mail": "deeparajendiran@gmail.com",
+      "Phone": "7777777777",
+      "date": "2001-06-18",
+      "Address": "Ranipet",
+      "Organization": "ZappyWorks",
+      "id": "ae14"
     }
   ],
   "accounts": [],
