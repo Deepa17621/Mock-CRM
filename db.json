@@ -89,6 +89,24 @@
       "Address": "Thiyagaraya Nagar",
       "date": "2024-08-07",
       "Organization": "grid dynamics"
+    },
+    {
+      "id": "1d8a",
+      "Lead Name": "Minion",
+      "Lead Mail": "minion2012@gmail.com",
+      "Phone": "7654321890",
+      "Address": "Chennai",
+      "date": "2024-08-01",
+      "Organization": "Iniyan Minion orgs"
+    },
+    {
+      "id": "9057",
+      "Lead Name": "Benedit",
+      "Lead Mail": "benedit213@gmail.com",
+      "Phone": "7895040908",
+      "Address": "Kaniyakumari",
+      "date": "2024-08-16",
+      "Organization": "Bene Groups of Company"
     }
   ],
   "contacts": [
