@@ -87,3 +87,21 @@ convertBtn.addEventListener("click", (e)=>{
     e.stopPropagation();
 });
 
+async function del(id)
+{
+        let res=await fetch(`http://localhost:3000/leads/${id}`, {
+            method:"DELETE"
+        });
+        let out=res.json();
+}
+
+let deleteBtn=document.querySelector("#deleteBtn");
+deleteBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    del(identity);
+    window.location.href=`http://127.0.0.1:5500/leadForm/leadList.html`;
+    e.stopPropagation();
+});
+
+
+
