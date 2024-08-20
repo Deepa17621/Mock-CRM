@@ -10,12 +10,18 @@ function rowClickFunction(row)
         window.location.href=`http://127.0.0.1:5500/leadForm/leadView.html?id=${idValue}`;
         
 }
-
-const allLeadsFetch=async()=>
+// SEARCH -Search Lead 
+var selectField;
+let arr=[];
+function selField()
 {
-    let promi=await fetch("http://localhost:3000/leads");
-
-    let out=await promi.json();
+    selectField=document.querySelector("#lookupForLead").value;
+    console.log(selectField);
+}
+//Display Table Function
+function tableFunction(out)
+{
+    
     let thead=document.createElement("tr");
     table.appendChild(thead);
     //Table Head
@@ -33,6 +39,7 @@ const allLeadsFetch=async()=>
         td.innerHTML=e;
         thead.appendChild(td);
     });
+
     
     // Fetching Single Object From Group of Objects-Using For Each
     out.forEach(e => { 
@@ -71,10 +78,51 @@ const allLeadsFetch=async()=>
         }
         
     });
+
+}
+let inpForSearch=document.querySelector("#searchLead");
+function filterField(arrOfObjs)
+{
+    
+    arrOfObjs.forEach((ele)=>
+    {
+        // console.log(ele[`${selectField}`]);
+        if((ele[`${selectField}`].toLowerCase())==((inpForSearch.value).toLowerCase()))
+         {
+             console.log("true");
+             arr.push(ele);
+             console.log(ele);
+             return;
+         } 
+    });
+
+    if(arr.length>0)
+    {
+        while(table.hasChildNodes())
+        {
+            table.firstChild.remove();
+        }
+        tableFunction(arr);
+    }
+}
+
+
+
+const allLeadsFetch=async()=>
+{
+    let promi=await fetch("http://localhost:3000/leads");
+
+    let out=await promi.json();
+    tableFunction(out);
+    inpForSearch.addEventListener("keyup",(e)=>{
+        e.preventDefault();
+        filterField(out);
+    });
 }
 allLeadsFetch();
 
-//Filter Icon and Filter Click Event
+
+// Filter Icon and Filter Click Event
 let filterContainer=document.getElementById("filterForLead");
 
 document.getElementById("filterIcon").addEventListener("click",()=>
@@ -88,7 +136,3 @@ document.getElementById("filterIcon").addEventListener("click",()=>
         filterContainer.style.display="none";
     }
 });
-
-
-
-

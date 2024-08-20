@@ -44,6 +44,78 @@
       "Address": "UK",
       "date": "2024-08-29",
       "Organization": "bca Organization"
+    },
+    {
+      "id": "632e",
+      "Lead Name": "Shinchan kemumaki",
+      "Lead Mail": "kemumaki@gmail.com",
+      "Phone": "8765432190",
+      "Address": "japan",
+      "date": "2024-08-21",
+      "Organization": "hattori organization"
+    },
+    {
+      "id": "419d",
+      "Lead Name": "mumtaajz shajahan",
+      "Lead Mail": "mumtajzz@gmail.com",
+      "Phone": "7654321890",
+      "Address": "Agra",
+      "date": "2024-08-14",
+      "Organization": "shajahan organization"
+    },
+    {
+      "Lead Name": "Khio",
+      "Lead Mail": "khio123@gmail.com",
+      "Phone": "6543218901",
+      "Address": "china",
+      "Organization": "kemumaki Company",
+      "date": "2024-08-13",
+      "id": "59f5"
+    },
+    {
+      "id": "ec1f",
+      "Lead Name": "Jhon Cena",
+      "Lead Mail": "jhoncena@gmai.com",
+      "Phone": "8765432190",
+      "Address": "USA",
+      "date": "2024-08-21",
+      "Organization": "cena academy"
+    },
+    {
+      "id": "a029",
+      "Lead Name": "Sherine Shiny",
+      "Lead Mail": "shenrine@gmail.com",
+      "Phone": "8765432190",
+      "Address": "mexico",
+      "date": "2024-08-09",
+      "Organization": "grid dynamics"
+    },
+    {
+      "id": "e257",
+      "Lead Name": "BalaSubramani",
+      "Lead Mail": "balasubramani@gmail.com",
+      "Phone": "1234567890",
+      "Address": "Thiyagaraya Nagar",
+      "date": "2024-08-06",
+      "Organization": "grid dynamics"
+    },
+    {
+      "id": "f298",
+      "Lead Name": "Aruna",
+      "Lead Mail": "aruna23@gmail.com",
+      "Phone": "6789054321",
+      "Address": "Thiyagaraya Nagar",
+      "date": "2024-08-06",
+      "Organization": "NextSphere"
+    },
+    {
+      "id": "ff20",
+      "Lead Name": "Sangeetha",
+      "Lead Mail": "sangeetha@gmail.com",
+      "Phone": "6789054321",
+      "Address": "Thiyagaraya Nagar",
+      "date": "2024-08-07",
+      "Organization": "grid dynamics"
     }
   ],
   "contacts": [
@@ -91,6 +163,69 @@
       "date": "14-03-1990",
       "Address": "Karnataka",
       "Organization": "Test Yantra"
+    },
+    {
+      "id": "0ad1",
+      "Contact Name": "Vijay",
+      "Contact Mail": "vijay@gmail.com",
+      "Phone": "6789054321",
+      "date": "14-03-2002",
+      "Address": "Karnataka",
+      "Organization": "Xavior"
+    },
+    {
+      "id": "8dc0",
+      "Contact Name": "Yogi",
+      "Contact Mail": "yogi@gmail.com",
+      "Phone": "7890654321",
+      "date": "18-04-1980",
+      "Address": "Bengalore",
+      "Organization": "GCC groups of company"
+    },
+    {
+      "id": "f727",
+      "Contact Name": "Amutha",
+      "Contact Mail": "amutha@gmail.com",
+      "Phone": "6789054332",
+      "date": "18-04-1980",
+      "Address": "Vellore",
+      "Organization": "cwdcw"
+    },
+    {
+      "id": "b236",
+      "Contact Name": "Balaji P",
+      "Contact Mail": "balaji2001@gmail.com",
+      "Phone": "6345789203",
+      "date": "18-06-2001",
+      "Address": "Ranipet",
+      "Organization": "Admindroid"
+    },
+    {
+      "id": "74f5",
+      "Contact Name": "Vasan",
+      "Contact Mail": "vasan@gmail.com",
+      "Phone": "9876543210",
+      "date": "10-06-2002",
+      "Address": "Walajabad",
+      "Organization": "Qualian Technologies"
+    },
+    {
+      "id": "45fe",
+      "Contact Name": "Thendral",
+      "Contact Mail": "thendral@gmail.com",
+      "Phone": "8907654321",
+      "date": "03-10-2001",
+      "Address": "Kanchipuram",
+      "Organization": "DeviSri company"
+    },
+    {
+      "id": "9e87",
+      "Contact Name": "Raghul",
+      "Contact Mail": "raghul2002@gmail.com",
+      "Phone": "7654321890",
+      "date": "26-04-2002",
+      "Address": "Chengam",
+      "Organization": "CEG"
     }
   ],
   "accounts": [],
