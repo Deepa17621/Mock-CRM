@@ -28,7 +28,7 @@ function createTable(data)
             let td1=document.createElement("td");
             let td2=document.createElement("td");
             td1.textContent=key;
-            td2.innerHTML=`<a href="mailto:${data[key]}">${data[key]}</a>`;
+            td2.innerHTML=`<span><a href="mailto:${data[key]}" class="maill">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
@@ -40,7 +40,7 @@ function createTable(data)
             let td1=document.createElement("td");
             let td2=document.createElement("td");
             td1.textContent=key;
-            td2.innerHTML=`<a href="tel:${data[key]}">${data[key]}</a>`;
+            td2.innerHTML=`<span><a href="tel:${data[key]}">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
@@ -87,4 +87,11 @@ editBtn.addEventListener("click", (e)=>{
     window.location.href=`http://127.0.0.1:5500/contact/editContact.html?id=${currentId}`;
 });
 
+// Create New Deal 
+
+let dealBtn=document.querySelector("#convert");// create new deal button 
+dealBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=``
+});
 
