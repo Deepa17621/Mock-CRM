@@ -3,6 +3,12 @@ let param=new URLSearchParams(url);
 console.log("Clicked Data's id:="+param.get("id"));
 let currentId=param.get("id");
 
+let cancelBtn=document.querySelector("#cancelBtn");
+cancelBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${currentId}`;
+
+});
 
 let contactName=document.querySelector("#contactName");
 let contactMail=document.querySelector("#contactMail");
