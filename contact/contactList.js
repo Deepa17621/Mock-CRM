@@ -1,6 +1,6 @@
 
 
-// 1=> Getting data from Lead View---Converted From lead Module.
+// 1=> If Contact Converted From Lead Means-->Get Url.
 let url = window.location.search;
 let param = new URLSearchParams(url);
 let currentId = param.get("id");
@@ -8,21 +8,20 @@ let currentId = param.get("id");
 console.log("Current Id From Contact List :");
 console.log(currentId);
 
-//Filter Icon and Filter Click Event
-let filterContainer = document.getElementById("filterForLead");
-
-document.getElementById("filterIcon").addEventListener("click", () => {
-    if (filterContainer.style.display == "none") {
-        filterContainer.style.display = "block"
-    }
-    else {
-        filterContainer.style.display = "none";
-    }
-});
-
 // Getting table
 let table = document.querySelector("table");
 
+// Search Contact using keywords/Fields name
+
+let searchInp=document.querySelector("#searchField");
+let option;
+let arr=[];
+function selectField()
+{
+    option=document.querySelector("#fields").value;
+}
+
+// lead to contact=>del from lead add to contact
 function sendToContact(contact, lead) {
     try {
         let del = deleteLead(lead);
@@ -104,20 +103,17 @@ console.log(convert);
 if (currentId != null) {
     fetchDataFromLead()
 }
-//==================================================================
-// 2.=>Fetching Contact Data From JSON And Adding to Table List
-const getDataFromContact = async () => {
-    const url = `http://localhost:3000/contacts`;
+function rowClickedEvent(id)
+{
+    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${id}`; 
+}
 
-    const res = await fetch(url);
-    let allContacts = await res.json(); 
-    console.log("All Contacts:==>");
-    console.log(allContacts);
-
+// Table function to Add Data's To Table.
+function tableFunction(allContacts)
+{
     let keyArr=Object.keys(allContacts[0]);
     console.log("Key Array");
     console.log(keyArr);
-    
     //Create Table And Add Headers to Table.
     let table=document.querySelector("table");
     let thead=document.createElement("tr");
@@ -166,14 +162,60 @@ const getDataFromContact = async () => {
             }
          }
     })
+}
+// Filter data From JSON To Display
 
+function filterField(arrOfObjs)
+{
+    
+    arrOfObjs.forEach((ele)=>
+    {
+        // console.log(ele[`${selectField}`]);
+        if((ele[`${option}`].toLowerCase())==((searchInp.value).toLowerCase()))
+         {
+             console.log("true");
+             arr.push(ele);
+             console.log(ele);
+             return;
+         } 
+    });
+    if(arr.length>0)
+    {
+        while(table.hasChildNodes())
+        {
+            table.firstChild.remove();
+        }
+        tableFunction(arr);
+    }
 }
 
-function rowClickedEvent(id)
-{
-    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${id}`; 
+// 2.=>Fetching Contact Data From JSON And Adding to Table List
+const getDataFromContact = async () => {
+    const url = `http://localhost:3000/contacts`;
+
+    const res = await fetch(url);
+    let allContacts = await res.json(); 
+    tableFunction(allContacts)
+    console.log("All Contacts:==>");
+    console.log(allContacts);
+    searchInp.addEventListener("keyup", (e)=>{
+        e.preventDefault();
+        filterField(allContacts);
+        // e.stopPropagation();
+        return;
+    });
+
 }
 getDataFromContact();
 
+//Filter Icon and Filter Click Event
+let filterContainer = document.getElementById("filterForLead");
 
-
+document.getElementById("filterIcon").addEventListener("click", () => {
+    if (filterContainer.style.display == "none") {
+        filterContainer.style.display = "block"
+    }
+    else {
+        filterContainer.style.display = "none";
+    }
+});

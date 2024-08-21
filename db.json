@@ -102,15 +102,6 @@
   ],
   "contacts": [
     {
-      "Contact Name": "Kaveri",
-      "Contact Mail": "kaveri@gmail.com",
-      "Phone": "8987867567",
-      "date": "2024-08-21",
-      "Address": "mexico",
-      "Organization": "catgemini",
-      "id": "19aa"
-    },
-    {
       "id": "6aa4",
       "Contact Name": "Raja Raja Chola",
       "Contact Mail": "rajarajachola@gmail.com",
@@ -156,15 +147,6 @@
       "Organization": "cwdcw"
     },
     {
-      "Contact Name": "Balaji P",
-      "Contact Mail": "balaG2001@gmail.com",
-      "Phone": "6345789203",
-      "date": "2001-06-18",
-      "Address": "Ranipet",
-      "Organization": "Admindroid",
-      "id": "b236"
-    },
-    {
       "id": "74f5",
       "Contact Name": "Vasan",
       "Contact Mail": "vasan@gmail.com",
@@ -208,6 +190,15 @@
       "Address": "Ranipet",
       "Organization": "ZappyWorks",
       "id": "ae14"
+    },
+    {
+      "id": "2f95",
+      "Contact Name": "Balaji P",
+      "Contact Mail": "balaji2001@gmail.com",
+      "Phone": "6789054321",
+      "date": "2024-06-18",
+      "Address": "Ranipet",
+      "Organization": "Admindroid"
     }
   ],
   "accounts": [],

@@ -117,6 +117,8 @@ const allLeadsFetch=async()=>
     inpForSearch.addEventListener("keyup",(e)=>{
         e.preventDefault();
         filterField(out);
+        e.stopPropagation();
+        return;
     });
 }
 allLeadsFetch();
