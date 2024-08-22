@@ -44,7 +44,6 @@ async function getAllAccounts()
     inpForSearch.addEventListener("keyup", (e)=>{
         e.preventDefault();
         filterField(allAccounts);
-        // e.stopPropagation();
         return;
     });
 }

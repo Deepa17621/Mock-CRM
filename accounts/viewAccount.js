@@ -2,7 +2,7 @@ let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
 console.log(currentId);
-
+let mailButton=null;
 let accTable=document.getElementById("accTable");
 let contactTable=document.getElementById("contactsInAcc");
 function displayAcc(obj)
@@ -44,6 +44,7 @@ function displayAcc(obj)
             if(key=="AccountMail")
             {
                 td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
+                mailButton=obj[key];
                 continue
             }
             else if(key=="Phone")
@@ -92,3 +93,44 @@ async function fetchContactToAcc(id, arr)
         }
     }
 }
+
+// Edit Button Event
+let editBtn=document.querySelector("#editBtn");
+editBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/accounts/editAccount.html?=id=${currentId}`;
+});
+
+// Delete Btn Event
+
+let deleteBtn=document.querySelector("#deleteBtn");
+deleteBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    if(window.confirm("Are You Sure delete??"))
+    {
+        window.location.href=`http://127.0.0.1:5500/accounts/accountList.html`;
+        deleteAcc(currentId);
+        window.alert("Account Deleted Successfully")
+    }
+    e.stopPropagation();
+});
+
+async function deleteAcc(id)
+{
+    let res=await fetch(`http://localhost:3000/accounts/${id}`,{
+        method:"DELETE", 
+        headers:{"Content-Type":"application/json"}
+    });
+    let out=await res.json(); 
+    return out;
+}
+
+// send Mail Button
+let mailBtn=document.querySelector("#mail");
+mailBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    mailBtn.setAttribute("href", `mailto:${mailButton}`);
+
+});
+
+

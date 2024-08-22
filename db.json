@@ -210,43 +210,6 @@
       "Organization": "bca Organization"
     }
   ],
-  "accounts": [
-    {
-      "id": "82ed",
-      "AccountOwner": "Kaveri",
-      "AccountName": "ZappyWorks",
-      "AccountMail": "zappyworks123@gmail.com",
-      "Phone": "9876543210",
-      "date": "2024-08-15",
-      "AccountAddress": "mexico",
-      "AnnualRevenue": "9080000",
-      "Contacts": [],
-      "deals": []
-    },
-    {
-      "id": "9eec",
-      "AccountOwner": "Kaveri",
-      "AccountName": "Admindroid",
-      "AccountMail": "admindroid1232@gmail.com",
-      "Phone": "8765432190",
-      "date": "2024-08-08",
-      "AccountAddress": "Sholinganallur",
-      "AnnualRevenue": "15490000",
-      "Contacts": [],
-      "deals": []
-    },
-    {
-      "id": "1245",
-      "AccountOwner": "Deepa Rajendiran",
-      "AccountName": "ZappyWorks",
-      "AccountMail": "zappyworks123@gmail.com",
-      "Phone": "9876543210",
-      "date": "2024-08-09",
-      "AccountAddress": "Kelambakkam",
-      "AnnualRevenue": "5000000",
-      "Contacts": [],
-      "deals": []
-    }
-  ],
+  "accounts": [],
   "deals": []
 }
