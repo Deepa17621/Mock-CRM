@@ -1,8 +1,39 @@
 // Get Table using DOM
 let table=document.querySelector("table");
 
-// Fetch All the Accounts From JSON
 
+// search Account
+let inpForSearch=document.querySelector("#searchAccount");
+let selOption;
+let arr=[];
+function selField()
+{
+     selOption=document.querySelector("#lookupForLead").value;
+}
+function filterField(arrOfObjs)
+{
+    
+    arrOfObjs.forEach((ele)=>
+    {
+        // console.log(ele[`${selectField}`]);
+        if((ele[`${selOption}`].toLowerCase())==((inpForSearch.value).toLowerCase()))
+         {
+             console.log("true");
+             arr.push(ele);
+             console.log(ele);
+             return;
+         } 
+    });
+    if(arr.length>0)
+    {
+        while(table.hasChildNodes())
+        {
+            table.firstChild.remove();
+        }
+        addToTable(arr);
+    }
+}
+// Fetch All the Accounts From JSON
 async function getAllAccounts() 
 {
     let res=await fetch("http://localhost:3000/accounts");
@@ -10,6 +41,12 @@ async function getAllAccounts()
     
     // Function Call To Add All the Details To Table
     addToTable(allAccounts);
+    inpForSearch.addEventListener("keyup", (e)=>{
+        e.preventDefault();
+        filterField(allAccounts);
+        // e.stopPropagation();
+        return;
+    });
 }
 
 function addToTable(allAccs)
