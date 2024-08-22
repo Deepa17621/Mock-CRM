@@ -28,15 +28,6 @@
       "Organization": "abc Schools"
     },
     {
-      "id": "9be6",
-      "Lead Name": "Himawari",
-      "Lead Mail": "himawari@gmail.com",
-      "Phone": "8765432190",
-      "Address": "UK",
-      "date": "2024-08-29",
-      "Organization": "bca Organization"
-    },
-    {
       "id": "ec1f",
       "Lead Name": "Jhon Cena",
       "Lead Mail": "jhoncena@gmai.com",
@@ -208,8 +199,30 @@
       "date": "2024-08-22",
       "Address": "Chennai",
       "Organization": "UCEK"
+    },
+    {
+      "id": "9be6",
+      "Contact Name": "Himawari",
+      "Contact Mail": "himawari@gmail.com",
+      "Phone": "8765432190",
+      "Address": "UK",
+      "date": "2024-08-29",
+      "Organization": "bca Organization"
     }
   ],
-  "accounts": [],
+  "accounts": [
+    {
+      "id": "82ed",
+      "AccountOwner": "Kaveri",
+      "AccountName": "ZappyWorks",
+      "AccountMail": "zappyworks123@gmail.com",
+      "Phone": "9876543210",
+      "date": "2024-08-15",
+      "AccountAddress": "mexico",
+      "AnnualRevenue": "9080000",
+      "Contacts": [],
+      "deals": []
+    }
+  ],
   "deals": []
 }

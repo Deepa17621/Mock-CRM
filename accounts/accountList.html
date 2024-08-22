@@ -38,12 +38,71 @@
         </ul>
     </div>
     <!-- Nav Container End -->
+ <!-- Second Navbar -->
+ <div id="secondNav">
+    <!---->
+        <ul id="ull">
+            <div id="left">
+                <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                <li>
+                    <select name="" id="leadOption">
+                        <option value="All Accounts">All Accounts</option>
+                        <option value="Locked Accounts">Locaked Accounts</option>
+                        <option value="Junk Accounts">Junk Accounts</option>
+                    </select>
+                </li>
+            </div>
+           <div id="right">
+                <li>
+                    <button class="createBtnForAllModules">
+                        <a href="http://127.0.0.1:5500/accounts/createAccount.html" style="text-decoration: none; color: white;">Create Account</a>
+                    </button>
+                </li>
+                <li>
+                    <select name="lookups" id="lookupForLead" onchange="selField()">
+                        <option value="">--Select--</option>
+                        <option value="id">id</option>
+                        <option value="Account Name">Account Name</option>
+                        <option value="Lead Mail">Account Owner</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Address">Contact Name</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="search" id="searchLead" placeholder="search here..."> 
+                </li>
+                <li>
+                    <select name="" id="actionOption">
+                        <option value="">action</option>
+                        <option value="Mass Update">Mass Update</option>
+                        <option value="Mass Delete">Mass Delete</option>
+                        <option value="Mass Transfer">Mass Transfer</option>
+                        <option value="Mass Email">Mass Email</option>
+                    </select>
+                </li>
+           </div>
+        </ul>
+</div>
 
+<div id="parent">
 
-    <!-- Home Container Starts -->
-    <div id="HomeContainer">
-        <li><h3>Hello From Home Page</h3></li>
+    <!-- Filter Container Starts Here -->
+    <div id="filterForLead">
+        
+        <div id="searchBar">
+            <input type="text" name="" id="searchBarInp" placeholder="Search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
     </div>
+    <!-- Account List Starts Here-->
+    <div id="leadListContainer">
+        <table>
+        </table>
+    </div>
+    <!--Account List Ends Here -->
+
+    
+</div>
 </body>
 
 </html>

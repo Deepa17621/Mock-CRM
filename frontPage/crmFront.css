@@ -13,7 +13,7 @@ body{
     background-color: #313949;
     border: 1px solid #313949;
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;   
 }
 #searchBar
 {
@@ -64,7 +64,6 @@ li
     width: 100vw;
     display: flex;
     align-items: center;
-    /* justify-content: space-evenly; */
     border-bottom: 1px solid rgb(185, 185, 188);
     box-shadow: 0 0 2px;
 }
@@ -133,24 +132,27 @@ button a{
     border: 1px solid blue;
     border-radius: 4px;
 }
-#leadFormContainer, #contactForm
+#leadFormContainer, #contactForm, #accountFormContainer
 {
     width: 100vw;
-    height: 80vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* overflow: auto; */
+
+    
 }
-#leadFormContainer>form, #contactForm>form
+#leadFormContainer>form, #contactForm>form, #accountFormContainer>form
 {
     width: 20%;    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    overflow: hidden;
+    height: 80%;
 }
-.leadInp, .contactInp
+.leadInp, .contactInp, .accountInp
 {
     height: 30px;
 }
