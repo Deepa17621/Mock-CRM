@@ -209,7 +209,7 @@ select{
     box-shadow: 0 0 2px;
     margin-left:10px;
 }
-#leadViewHomeContainer
+#leadViewHomeContainer, #accViewHomeContainer
 {
     border-radius: 7px;
     height: 75vh;

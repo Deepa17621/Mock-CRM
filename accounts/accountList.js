@@ -108,5 +108,5 @@ function addToTable(allAccs)
 getAllAccounts();
 function rowClickedEvent(id)
 {
-    window.location.href=`?id=${id}`;
+    window.location.href=`http://127.0.0.1:5500/accounts/viewAccount.html?id=${id}`;
 }
