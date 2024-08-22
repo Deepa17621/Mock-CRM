@@ -222,6 +222,18 @@
       "AnnualRevenue": "9080000",
       "Contacts": [],
       "deals": []
+    },
+    {
+      "id": "9eec",
+      "AccountOwner": "Kaveri",
+      "AccountName": "Admindroid",
+      "AccountMail": "admindroid1232@gmail.com",
+      "Phone": "8765432190",
+      "date": "2024-08-08",
+      "AccountAddress": "Sholinganallur",
+      "AnnualRevenue": "15490000",
+      "Contacts": [],
+      "deals": []
     }
   ],
   "deals": []

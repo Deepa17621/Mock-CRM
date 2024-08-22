@@ -133,7 +133,7 @@ function tableFunction(allContacts)
 
         //iterator for same order insertion of data.
          let iterator1=keyArr[Symbol.iterator]();
-
+        
          let row=document.createElement("tr");
          row.id=obj["id"];
          row.setAttribute("onclick", "rowClickedEvent(this.id)");
