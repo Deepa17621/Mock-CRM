@@ -4,29 +4,91 @@ let currentId=param.get("id");
 console.log(currentId);
 
 let accTable=document.getElementById("accTable");
+let contactTable=document.getElementById("contactsInAcc");
 function displayAcc(obj)
 {
     for (const key in obj) {
         if(key=="Contacts"|| key=="deals")
         {
-            continue
+            if(key=="Contacts")
+            {
+                let thead=document.createElement("tr");
+                contactTable.appendChild(thead);
+                let td1=document.createElement("th");
+                thead.appendChild(td1);
+                td1.innerHTML="Contact Name";
+                let td2=document.createElement("th");
+                thead.appendChild(td2);
+                td2.innerHTML="Contact Mail";
+                let td3=document.createElement("th");
+                thead.appendChild(td3);
+                td3.innerHTML="Contact Phone";
+                let headArr=["Contact Name", "Contact Mail", "Phone"];
+                obj[key].forEach(e => {
+                    fetchContactToAcc(e, headArr); 
+                });
+            }
+            // else if("deals")
+            // {
+            //     key.forEach(e=>fetchContactToAcc(e));
+            // }
         }
-        let tr=document.createElement("tr");
-        accTable.appendChild(tr);
-        let td1=document.createElement("td");
-        tr.appendChild(td1);
-        td1.innerHTML=key.toUpperCase();
-        let td2=document.createElement("td");
-        tr.appendChild(td2);
-        td2.innerHTML=obj[key];
+        else {
+            let tr=document.createElement("tr");
+            accTable.appendChild(tr);
+            let td1=document.createElement("td");
+            tr.appendChild(td1);
+            let td2=document.createElement("td");
+            tr.appendChild(td2);
+            td1.innerHTML=key.toUpperCase();
+            if(key=="AccountMail")
+            {
+                td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
+                continue
+            }
+            else if(key=="Phone")
+            {
+                td2.innerHTML=`<a href="tel:${obj[key]}">${obj[key]}</a>`;
+                continue
+            }
+            td2.innerHTML=obj[key];
+        }
     }
 }
 // Fetch Account Data From JSON
-
 async function fetchAcc(id)
 {
     let res=await fetch(`http://localhost:3000/accounts/${currentId}`); 
     let out=await res.json();
     displayAcc(out); 
 }
+
 fetchAcc(currentId);
+
+function rowClicked(id)
+{
+    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${id}`;
+}
+
+// Fetch Contact Details To Accounts Module
+async function fetchContactToAcc(id, arr)
+{
+    let res=await fetch(`http://localhost:3000/contacts/${id}`);
+    let out=await res.json();
+    let iterator=arr[Symbol.iterator]();
+    let tr=document.createElement("tr");
+    contactTable.appendChild(tr);
+    tr.setAttribute("id", id);
+    tr.setAttribute("onclick", "rowClicked(this.id)");
+    for (const key in out)
+    {
+        if(key.includes(arr))
+        {
+            let val=iterator.next().value;
+            let td=document.createElement("td");
+            tr.appendChild(td);
+            td.className=val;
+            td.innerHTML=out[td.className];
+        }
+    }
+}
