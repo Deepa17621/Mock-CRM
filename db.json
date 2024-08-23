@@ -236,5 +236,15 @@
       "id": "6616"
     }
   ],
-  "deals": []
+  "deals": [
+    {
+      "id": "40b2",
+      "DealOwner": "Deepa",
+      "DealName": "Deal-1",
+      "ContactName": "Balaji P",
+      "AccountName": "Admindroid",
+      "Amount": "8799000",
+      "ClosingDate": "2024-08-21"
+    }
+  ]
 }

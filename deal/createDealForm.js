@@ -34,10 +34,13 @@ let accountName=document.querySelector("#accountName");
 let amount=document.querySelector("#amount");
 let closingDate=document.querySelector("#closingDate");
 let stages=null;
-function stages1()
-{
-    stages=document.querySelector("stages").value;
-}
+
+let stage=document.querySelector("#stages");
+stage.addEventListener("change",()=>{
+    stages = stage.value;
+    console.log(stages);
+    
+})
 
 // Form Submit Event
 myForm.addEventListener("submit", (e)=>{

@@ -75,6 +75,7 @@ console.log(editBtn);
 
 editBtn.addEventListener("click", ()=>{
     window.location.href=`http://127.0.0.1:5500/leadForm/editLeadForm.html?id=${identity}`;
+   
 });
 
 
@@ -83,9 +84,38 @@ let convertBtn=document.querySelector("#convert");
 
 convertBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
+    document.querySelector("#popupContainer").style.display="flex";
     e.stopPropagation();
 });
+
+// Cancel From Pop-Up
+let cancelPopup=document.querySelector("#popupCancel");
+    cancelPopup.addEventListener("click", (e)=>{
+        e.preventDefault();
+        document.querySelector("#popupContainer").style.display="none";
+    });
+
+    //convertForm
+let convertForm=document.querySelector("form");
+
+// Only Contact
+let convertOk=document.querySelector("#convertOk");
+convertOk.addEventListener("click", (e)=>{
+    // e.preventDefault();
+    convertForm.requestSubmit();
+});
+
+
+convertForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    let contactOnly=document.querySelector("#contactOnly");
+    if(contactOnly.checked)
+    {
+        document.querySelector("#popupContainer").style.display="none";
+        window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
+        alert("Converted Successfully");
+    }
+})
 
 async function del(id)
 {
