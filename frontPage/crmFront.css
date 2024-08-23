@@ -163,7 +163,7 @@ button a{
     width: 100vw;
     border: 1px solid rgb(230, 225, 225);
     box-shadow: 0 0 1px;
-    overflow: scroll;
+    overflow: auto;
     margin-left: 30px;
     margin-top:30px ;
 }
@@ -230,6 +230,21 @@ select{
     height: 70%;
     margin-top: 50px;
     background-color: rgb(255, 255, 255);
+}
+#accContainer
+{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#accTable
+{
+    width: 90%;
+}
+#contactsInAcc
+{
+    width: 90%;
 }
 
 

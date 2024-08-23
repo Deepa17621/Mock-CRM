@@ -210,6 +210,19 @@
       "Organization": "bca Organization"
     }
   ],
-  "accounts": [],
+  "accounts": [
+    {
+      "Account Owner": "BalaG",
+      "Account Name": "Admindroid",
+      "Account Mail": "admindroid1232@gmail.com",
+      "Phone": "9876543210",
+      "date": "2024-08-23",
+      "AccountAddress": "usa",
+      "AnnualRevenue": "15490000",
+      "Contacts": [],
+      "deals": [],
+      "id": "3a13"
+    }
+  ],
   "deals": []
 }

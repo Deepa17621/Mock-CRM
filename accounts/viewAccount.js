@@ -98,7 +98,7 @@ async function fetchContactToAcc(id, arr)
 let editBtn=document.querySelector("#editBtn");
 editBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/accounts/editAccount.html?=id=${currentId}`;
+    window.location.href=`http://127.0.0.1:5500/accounts/editAccount.html?id=${currentId}`;
 });
 
 // Delete Btn Event
