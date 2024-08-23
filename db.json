@@ -212,16 +212,28 @@
   ],
   "accounts": [
     {
-      "Account Owner": "BalaG",
-      "Account Name": "Admindroid",
-      "Account Mail": "admindroid1232@gmail.com",
-      "Phone": "9876543210",
-      "date": "2024-08-23",
-      "AccountAddress": "usa",
-      "AnnualRevenue": "15490000",
+      "id": "1c51",
+      "AccountOwner": "Prakash",
+      "AccountName": "Prakash Groups Of Company",
+      "AccountMail": "prakash@gmai.com",
+      "Phone": "7654321890",
+      "date": "2024-08-22",
+      "AccountAddress": "Kanchipuram",
+      "AnnualRevenue": "87900000",
       "Contacts": [],
-      "deals": [],
-      "id": "3a13"
+      "deals": []
+    },
+    {
+      "id": "6616",
+      "AccountOwner": "BalaG",
+      "AccountName": "Admindroid",
+      "AccountMail": "admindroid1232@gmail.com",
+      "Phone": "6789012345",
+      "date": "2024-08-08",
+      "AccountAddress": "Sholinganallur",
+      "AnnualRevenue": "87900000",
+      "Contacts": [],
+      "deals": []
     }
   ],
   "deals": []

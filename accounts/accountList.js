@@ -88,7 +88,7 @@ function addToTable(allAccs)
            let tdata=document.createElement("td");
            tdata.className=val;
            row.appendChild(tdata)
-           if(val=="AccountMail")
+           if(val=="Account Mail")
            {
                tdata.innerHTML=`<a href="mailto:${obj[tdata.className]}">${obj[tdata.className]}</a>`;
            }

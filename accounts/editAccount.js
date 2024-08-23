@@ -64,9 +64,9 @@ myForm.addEventListener("submit",(e)=>{
         !date.value?setError(date):setSuccess(date);
     }
     let obj={
-        "Account Owner":owner.value,
-        "Account Name":accountName.value,
-        "Account Mail":accountMail.value,
+        "AccountOwner":owner.value,
+        "AccountName":accountName.value,
+        "AccountMail":accountMail.value,
         "Phone":phone.value,
         "date":date.value,
         "AccountAddress":accountAddress.value,
