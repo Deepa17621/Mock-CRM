@@ -39,10 +39,76 @@
     </div>
     <!-- Nav Container End -->
 
+    <!-- Second Navbar -->
+    <div id="secondNav">
+        <!---->
+            <ul id="ull">
+                <div id="left">
+                    <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li>
+                        <select name="" id="leadOption">
+                            <option value="All Deals">All Deals</option>
+                            <option value="Locked Deals">Locked Deals</option>
+                            <option value="Junk Deals">New Deals</option>
+                        </select>
+                    </li>
+                </div>
+               <div id="right">
+                    <li>
+                        <button class="createBtnForAllModules">
+                            <a href="./createDealForm.html" style="text-decoration: none; color: white;">Create Deal</a>
+                        </button>
+                    </li>
+                    <li>
+                        <select name="" id="fields" onchange="selectField()">
+                            <option value="">---Select---</option>
+                            <option value="id">ID</option>
+                            <option value="Deal Owner">Deal Owner</option>
+                            <option value="Deal Name">Contact Name</option>
+                            <option value="Deal Mail">Contact Mail</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Address">Address</option>
+                            <option value="Organization">Organization</option>
+                            <option value="date">date</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" name="" id="searchField" placeholder="search here..." style="height: 23px;" >
+                    </li>
+                    <li>
+                        <select name="" id="actionOption">
+                            <option value="">action</option>
+                            <option value="Mass Update">Mass Update</option>
+                            <option value="Mass Delete">Mass Delete</option>
+                            <option value="Mass Transfer">Mass Transfer</option>
+                            <option value="Mass Email">Mass Email</option>
+                        </select>
+                    </li>
+               </div>
+            </ul>
+    </div>
+    <!-- Second Nav Ending -->
 
-    <!-- Home Container Starts -->
-    <div id="HomeContainer">
-        <li><h3>Hello From Home Page</h3></li>
+    <!-- Contact List  Body Container -->
+    <div id="parent">
+
+        <!-- Filter Container Starts Here -->
+        <div id="filterForLead">
+            
+            <div id="searchBar">
+                <input type="text" name="" id="searchBarInp" placeholder="Search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <!-- Lead Container Starts Here-->
+        <div id="dealListContainer">
+            <table>
+
+            </table>
+        </div>
+        <!-- Lead Container Ends Here -->
+    
+        
     </div>
 </body>
 
