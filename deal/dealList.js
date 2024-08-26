@@ -44,7 +44,5 @@ function sendToTable(obj)
 
  async function rowClicked(row, id)
 {
-    let result=await fetch(`http://localhost:3000/deals/${id}`);
-    let out=await result.json();
-    console.log(out);
+    window.location.href=`http://127.0.0.1:5500/deal/dealView.html?id=${id}`;
 }

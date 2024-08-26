@@ -245,15 +245,6 @@
       "AccountName": "Admindroid",
       "Amount": "8799000",
       "ClosingDate": "2024-08-21"
-    },
-    {
-      "id": "967d",
-      "DealOwner": "Deepa",
-      "DealName": "Deal-1",
-      "ContactName": "Balaji P",
-      "AccountName": "Admindroid",
-      "Amount": "2109302",
-      "ClosingDate": "2024-08-07"
     }
   ]
 }
