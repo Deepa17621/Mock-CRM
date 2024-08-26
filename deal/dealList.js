@@ -1,14 +1,49 @@
 let table=document.querySelector("table");
 
+let arr=[];
+let selField;
+// search Deal
+function selectField()
+{
+     selField=document.querySelector("#fields").value;
+
+}
+let searchField=document.querySelector("#searchField");
+
 // Fetch From Json
 async function fetchData()
 {
     let result=await fetch("http://localhost:3000/deals");
     let arrOfObj=await result.json();
-   
-    sendToTable(arrOfObj);    
+
+    sendToTable(arrOfObj); 
+    searchField.addEventListener("keyup",(e)=>{
+        e.preventDefault();
+        filterFunction(arrOfObj);
+    });
+       
 }
 fetchData();
+
+// Filter Function
+
+function filterFunction(arrOfObjs)
+{
+    arrOfObjs.forEach(e=>{
+        if((e[selField]).toLowerCase()==(searchField.value).toLowerCase())
+        {
+            arr.push(e);
+        }
+    });
+    if(arr.length>0)
+    {
+        while(table.hasChildNodes())
+        {
+            table.firstChild.remove();
+        }
+    }
+    sendToTable(arr);
+}
 
 function sendToTable(obj)
 {
@@ -27,7 +62,7 @@ function sendToTable(obj)
         let item=(Object.keys(obj[0]))[Symbol.iterator]();
         let tr=document.createElement("tr");
         tr.id=e["id"];
-        tr.setAttribute("onclick", "rowClicked(this, this.id)")
+        tr.setAttribute("onclick", "rowClicked(this.id)")
         table.appendChild(tr);
         for (const key in e)
         {        
@@ -42,7 +77,7 @@ function sendToTable(obj)
 
 // Row Clicked Event
 
- async function rowClicked(row, id)
+ async function rowClicked(id)
 {
     window.location.href=`http://127.0.0.1:5500/deal/dealView.html?id=${id}`;
 }

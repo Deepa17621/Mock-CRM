@@ -28,15 +28,6 @@
       "Organization": "abc Schools"
     },
     {
-      "id": "ec1f",
-      "Lead Name": "Jhon Cena",
-      "Lead Mail": "jhoncena@gmai.com",
-      "Phone": "8765432190",
-      "Address": "USA",
-      "date": "2024-08-21",
-      "Organization": "cena academy"
-    },
-    {
       "id": "a029",
       "Lead Name": "Sherine Shiny",
       "Lead Mail": "shenrine@gmail.com",
@@ -208,6 +199,15 @@
       "Address": "UK",
       "date": "2024-08-29",
       "Organization": "bca Organization"
+    },
+    {
+      "id": "ec1f",
+      "Contact Name": "Jhon Cena",
+      "Contact Mail": "jhoncena@gmai.com",
+      "Phone": "8765432190",
+      "Address": "USA",
+      "date": "2024-08-21",
+      "Organization": "cena academy"
     }
   ],
   "accounts": [
@@ -238,13 +238,22 @@
   ],
   "deals": [
     {
-      "id": "40b2",
+      "id": "830c",
       "DealOwner": "Deepa",
       "DealName": "Deal-1",
       "ContactName": "Balaji P",
       "AccountName": "Admindroid",
-      "Amount": "8799000",
-      "ClosingDate": "2024-08-21"
+      "Amount": "1200000",
+      "ClosingDate": "2024-08-14"
+    },
+    {
+      "id": "4ffe",
+      "DealOwner": "Deepa",
+      "DealName": "Deal-2",
+      "ContactName": "Nila",
+      "AccountName": "GGHS",
+      "Amount": "203000",
+      "ClosingDate": "2024-08-27"
     }
   ]
 }
