@@ -73,15 +73,19 @@
         <h4 id="leadName">Lead to be Converted:</h4>
         <br>
         <form id="convertForm">
-            <input type="radio" name="contactOnly" id="contactOnly" value="ContactOnly">
+            <input type="radio" name="options" id="contactOnly" value="ContactOnly">
             <label for="convertOnlyContact">Only Contact</label>
             <p></p>
             <br>
-            <input type="radio" name="accountAlso" id="accountAlso" value="CreateAccount">
-            <label for="accountAlso">Create Account</label>
+            <input type="radio" name="options" id="hasAccount" value="hasAccount">
+            <label for="hasAccount">Existing Account</label>
             <p></p>
-           <br>
-           <button id="convertOk">Convert</button>
+            <br>
+            <input type="radio" name="options" id="accountAlso" value="CreateAccount">
+            <label for="accountAlso">New Account</label>
+            <p></p>
+            <br>
+            <input style="width: 99px; height: 28px;" type="button" value="Convert" id="convertOk" onclick="submit1()">
            <button id="popupCancel">Cancel</button>
         </form>
        </div>

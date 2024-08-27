@@ -1,3 +1,8 @@
+let url=window.location.search;
+let param=new URLSearchParams(url);
+let id=param.get("id");
+console.log("Lead Id : "+id);
+
 let cancelBtn=document.querySelector("#cancelBtn");
 let saveBtn=document.querySelector("#leadSubmitBtn");
 let saveNewBtn=document.querySelector("#saveNewBtn");
@@ -8,6 +13,8 @@ cancelBtn.addEventListener("click", (e)=>{
     window.location.href="http://127.0.0.1:5500/accounts/accountList.html";
     e.stopPropagation();
 });
+
+
 
 let clicked=null;
 
@@ -33,8 +40,13 @@ let phone=document.querySelector("#phone");
 let date=document.querySelector("#date");
 let address=document.querySelector("#accountAddress");
 let annualRevenue=document.querySelector("#annualRevenue");
+let contactId;
 
 
+if(id!=null)
+    {
+        contactId=id;
+    }
 
 accForm.addEventListener("submit", (e)=>{
     e.preventDefault();
@@ -57,9 +69,10 @@ accForm.addEventListener("submit", (e)=>{
         "date":date.value,
         "AccountAddress":address.value,
         "AnnualRevenue":annualRevenue.value, 
-        "Contacts":[],
+        "Contacts":!contactId?[]:[contactId],
         "deals":[]
     }
+
     saveAccount(obj);
     window.location.href=clicked?"http://127.0.0.1:5500/accounts/accountList.html":"http://127.0.0.1:5500/accounts/createAccount.html";
     clicked=null;
@@ -74,9 +87,16 @@ async function  saveAccount(obj)
         body:JSON.stringify(obj)
     });
     let out=await res.json();
+    console.log(out);
+    
     return out;
 }
 
+// // Function to add account id to Contact
+// async function updateContactByAddingAccId(accId)
+// {
+    
+// }
 
 
 

@@ -5,6 +5,7 @@ console.log(currentId);
 let mailButton=null;
 let accTable=document.getElementById("accTable");
 let contactTable=document.getElementById("contactsInAcc");
+let headArr=["Contact Name", "Contact Mail", "Phone"];
 function displayAcc(obj)
 {
     for (const key in obj) {
@@ -23,7 +24,6 @@ function displayAcc(obj)
                 let td3=document.createElement("th");
                 thead.appendChild(td3);
                 td3.innerHTML="Contact Phone";
-                let headArr=["Contact Name", "Contact Mail", "Phone"];
                 obj[key].forEach(e => {
                     fetchContactToAcc(e, headArr); 
                 });
@@ -76,21 +76,24 @@ async function fetchContactToAcc(id, arr)
 {
     let res=await fetch(`http://localhost:3000/contacts/${id}`);
     let out=await res.json();
+    console.log("Contact From Accounts Module");
+    
+    console.log(out);
+    
     let iterator=arr[Symbol.iterator]();
-    let tr=document.createElement("tr");
-    contactTable.appendChild(tr);
-    tr.setAttribute("id", id);
-    tr.setAttribute("onclick", "rowClicked(this.id)");
+    let trr=document.createElement("tr");
+    contactTable.appendChild(trr);
+    trr.setAttribute("id", id);
+    trr.setAttribute("onclick", "rowClicked(this.id)");
     for (const key in out)
     {
-        if(key.includes(arr))
-        {
             let val=iterator.next().value;
+            console.log(val); 
             let td=document.createElement("td");
-            tr.appendChild(td);
+            trr.appendChild(td);
             td.className=val;
-            td.innerHTML=out[td.className];
-        }
+            td.textContent=out[td.className];
+    
     }
 }
 
@@ -102,7 +105,6 @@ editBtn.addEventListener("click", (e)=>{
 });
 
 // Delete Btn Event
-
 let deleteBtn=document.querySelector("#deleteBtn");
 deleteBtn.addEventListener("click", (e)=>{
     e.preventDefault();

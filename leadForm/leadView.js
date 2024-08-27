@@ -3,7 +3,7 @@ console.log(url);
 let param=new URLSearchParams(url);
 let identity=param.get("id");
 console.log(identity);
-
+let organizationName;
 // This is For Display the Clicked Lead Detail
 function displayData(obj)
 {    
@@ -13,7 +13,7 @@ function displayData(obj)
     let table=document.querySelector("#view");
     for (const key in obj)
     {
-        if(key=="Lead Mail")
+        if(key=="Lead Mail" || key=="Phone")
         {
             mail=obj[key];
             let tr=document.createElement("tr");
@@ -21,19 +21,7 @@ function displayData(obj)
             let td1=document.createElement("td");
             let td2=document.createElement("td");
             td1.textContent=key;
-            td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            continue
-        }
-        if(key==="Phone")
-        {
-            let tr=document.createElement("tr");
-            table.appendChild(tr);
-            let td1=document.createElement("td");
-            let td2=document.createElement("td");
-            td1.textContent=key;
-            td2.innerHTML=`<a href="tel:${obj[key]}">${obj[key]}</a>`;
+            td2.innerHTML=(key=="Lead Mail")?`<a href="mailto:${obj[key]}">${obj[key]}</a>`:`<a href="tel:${obj[key]}">${obj[key]}</a>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
@@ -64,6 +52,8 @@ const clickedDataFetch=async()=>{
     let url=`http://localhost:3000/leads/`
      const res=await fetch(url+id);
      const data=await res.json();
+     organizationName=data["Organization"];
+     console.log(organizationName);
      displayData(data);
 }
 
@@ -98,24 +88,86 @@ let cancelPopup=document.querySelector("#popupCancel");
     //convertForm
 let convertForm=document.querySelector("form");
 
-// Only Contact
-let convertOk=document.querySelector("#convertOk");
-convertOk.addEventListener("click", (e)=>{
-    // e.preventDefault();
-    convertForm.requestSubmit();
-});
+function submit1()
+{
+    let options=document.getElementsByName("options");
+    console.log(options);
+    
+    let selected='';
+    for (const e of options) 
+    {
+            if(e.checked)
+            {
+                selected=e.value;
+                break;
+            }
+    }
+    if(selected=="ContactOnly")
+    {
+        convertForm.requestSubmit();
+    }
+    else if(selected=="hasAccount")
+    {
+        
+        fetchAccount(organizationName);
+        convertForm.requestSubmit();
+    }
+    else if(selected=="CreateAccount")
+    {
+        convertForm.requestSubmit();
+
+        
+            window.location.href=`http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
+        
+        
+    }
+    
+}
+
+//=======================
+
+// Fetch Account Details using Account NAME
+async function fetchAccount(name)
+{
+    let accName=await fetch(`http://localhost:3000/accounts?AccountName=${name}`);
+    let res=await accName.json();
+    if(!accName.ok)
+    {
+        throw new Error("Error From Acc Fetch")
+    }
+    let objectt=res[0];
+    console.log(objectt);
+    
+
+
+    objectt["Contacts"].push(identity);
+    putAcc(objectt, objectt["id"]);
+
+    // let contactFetch=
+
+}
+
+// Update Account Details By Adding Lead Id To Account
+async function putAcc(obj,accId)
+{
+    let res=await fetch(`http://localhost:3000/accounts/${accId}`, {
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(obj)
+    });
+    let out=await res.json();
+    console.log(out);
+}
 
 
 convertForm.addEventListener("submit", (e)=>{
     e.preventDefault();
-    let contactOnly=document.querySelector("#contactOnly");
-    if(contactOnly.checked)
-    {
-        document.querySelector("#popupContainer").style.display="none";
-        window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
-        alert("Converted Successfully");
-    }
-})
+    // let contactOnly=document.querySelector("#contactOnly");
+    document.querySelector("#popupContainer").style.display="none";
+
+    
+    // window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
+});
 
 async function del(id)
 {
