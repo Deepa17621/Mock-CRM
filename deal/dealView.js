@@ -52,5 +52,11 @@ async function deleteDeal(id)
 
 }
 
+// back Button for previous page
+let backButton=document.querySelector("#backBtn");
+backButton.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.back();
+})
 
 

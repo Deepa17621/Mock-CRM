@@ -179,3 +179,9 @@ deleteBtn.addEventListener("click",(e)=>{
 
 
 
+// back to previous page event
+let back=document.querySelector("#backBtn");
+back.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.back();
+})

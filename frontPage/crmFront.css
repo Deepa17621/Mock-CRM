@@ -342,7 +342,20 @@ select{
     background-color: white;
 }
 
-
+#backBtn:hover
+{
+    cursor: pointer;
+    background-color: #9a9a9a;
+}
+#backBtn
+{
+    border: 1px dotted dimgray;
+    height: 30px;
+    width: 80px;
+    background-color: dimgray;
+    color: white;
+    border-radius: 3px;
+}
 
 
 

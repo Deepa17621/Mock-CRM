@@ -135,4 +135,9 @@ mailBtn.addEventListener("click", (e)=>{
 
 });
 
-
+// back button to navigate previously visted page
+let backBtn=document.querySelector("#backBtn");
+backBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.go(-1);
+})

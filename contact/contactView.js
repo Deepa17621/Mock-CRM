@@ -95,3 +95,9 @@ dealBtn.addEventListener("click", (e)=>{
     window.location.href=``
 });
 
+// back button event to navigate to previously visited page
+let backBtn=document.querySelector("#backBtn");
+backBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.back();
+})
