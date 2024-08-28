@@ -49,8 +49,8 @@ const clickedDataFetch=async()=>{
     let id=param.get("id");
     console.log(id);
     
-    let url=`http://localhost:3000/leads/`
-     const res=await fetch(url+id);
+    // let url=`http://localhost:3000/leads/`
+     const res=await fetch("http://localhost:3000/leads/"+id);
      const data=await res.json();
      organizationName=data["Organization"];
      console.log(organizationName);
@@ -115,11 +115,7 @@ function submit1()
     else if(selected=="CreateAccount")
     {
         convertForm.requestSubmit();
-
-        
-            window.location.href=`http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
-        
-        
+        window.location.href=await `http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
     }
     
 }
@@ -137,8 +133,6 @@ async function fetchAccount(name)
     }
     let objectt=res[0];
     console.log(objectt);
-    
-
 
     objectt["Contacts"].push(identity);
     putAcc(objectt, objectt["id"]);
@@ -164,9 +158,7 @@ convertForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     // let contactOnly=document.querySelector("#contactOnly");
     document.querySelector("#popupContainer").style.display="none";
-
-    
-    // window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
+    window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
 });
 
 async function del(id)

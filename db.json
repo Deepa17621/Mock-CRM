@@ -10,24 +10,60 @@
       "id": "f711"
     },
     {
-      "id": "4d7e",
-      "Lead Name": "Harry Potter",
-      "Lead Mail": "harry@gmail.com",
-      "Phone": "7654321890",
-      "Address": "usa",
-      "date": "2024-07-30",
-      "Organization": "Turing Machine"
+      "id": "de13",
+      "Lead Name": "Dimple Marrie",
+      "Lead Mail": "dimple@gmail.com",
+      "Phone": "6789012345",
+      "Address": "mexico",
+      "date": "2024-08-27",
+      "Organization": "MNM"
     }
   ],
   "contacts": [
     {
-      "id": "13f2",
       "Contact Name": "Lead-1",
       "Contact Mail": "lead1@gmail.com",
       "Phone": "8765432190",
-      "Address": "usa",
       "date": "2024-08-14",
+      "Address": "usa",
+      "Organization": "BAC",
+      "id": "13f2"
+    },
+    {
+      "id": "9374",
+      "Contact Name": "Pinky Ben",
+      "Contact Mail": "pinky@gmail.com",
+      "Phone": "6789012345",
+      "Address": "USA",
+      "date": "2024-08-13",
       "Organization": "BAC"
+    },
+    {
+      "id": "c43f",
+      "Contact Name": "Kaveri",
+      "Contact Mail": "harry@gmail.com",
+      "Phone": "6789054321",
+      "Address": "usa",
+      "date": "2024-08-27",
+      "Organization": "BAC"
+    },
+    {
+      "id": "dc05",
+      "Contact Name": "Alan ",
+      "Contact Mail": "alan@gmail.com",
+      "Phone": "6789012345",
+      "Address": "C. Montes Urales 445",
+      "date": "2024-08-20",
+      "Organization": "MNM"
+    },
+    {
+      "id": "ca95",
+      "Contact Name": "padma",
+      "Contact Mail": "dimple@gmail.com",
+      "Phone": "8654363564",
+      "Address": "Chennai",
+      "Organization": "Zoho Maps",
+      "date": "2024-08-27"
     }
   ],
   "accounts": [
@@ -40,22 +76,30 @@
       "AccountAddress": "Thiruchendhur",
       "AnnualRevenue": "87900000",
       "Contacts": [
-        "13f2"
+        "13f2",
+        "9374",
+        "c43f"
       ],
       "deals": [],
       "id": "6616"
+    },
+    {
+      "id": "1869",
+      "AccountOwner": "Dimple Marrie",
+      "AccountName": "MNM",
+      "AccountMail": "mnmasds@gmail.com",
+      "Phone": "9876543210",
+      "date": "2024-08-27",
+      "AccountAddress": "mexico",
+      "AnnualRevenue": "5000000",
+      "Contacts": [
+        "de13",
+        "dc05"
+      ],
+      "deals": []
     }
   ],
   "deals": [
-    {
-      "id": "830c",
-      "DealOwner": "Deepa",
-      "DealName": "Deal-1",
-      "ContactName": "Balaji P",
-      "AccountName": "Admindroid",
-      "Amount": "1200000",
-      "ClosingDate": "2024-08-14"
-    },
     {
       "id": "4ffe",
       "DealOwner": "Deepa",

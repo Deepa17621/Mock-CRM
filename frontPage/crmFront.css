@@ -15,6 +15,13 @@ body{
     display: flex;
     flex-direction: row;   
 }
+
+/* Disbaled Event For Non-Functionality Elements */
+.disabled
+{
+    pointer-events: none;
+    opacity: 0.5;
+}
 #searchBar
 {
     display: flex;
@@ -34,6 +41,9 @@ ul{
 #navBar>ul li{
     padding: 2px 10px;
     font-size: 15px;
+}
+#navBar>ul li:hover{
+    border-bottom: 5px solid  white;
 }
 li
 {
@@ -67,9 +77,7 @@ li
     border-bottom: 1px solid rgb(185, 185, 188);
     box-shadow: 0 0 2px;
 }
-ul{
-    display: flex;
-}
+
 #ull li {
     padding: 0px 7px;
     margin-left: 15px;
@@ -78,7 +86,7 @@ ul{
 .createBtnForAllModules
 {
     border: 1px solid white;
-    background-color: blue;
+    background-color: rgba(0, 0, 255, 0.958);
     height: 35px ;
     width: 130px;
     display: flex;
@@ -87,6 +95,9 @@ ul{
     font-size: medium;
     border-radius: 4px;
     color:white;
+}
+.createBtnForAllModules:hover{
+    background-color: rgba(0, 0, 210, 0.948);
 }
 #leadFormContainer
 {
@@ -132,6 +143,10 @@ button a{
     border: 1px solid blue;
     border-radius: 4px;
 }
+#leadSubmitBtn:hover, #contactSubmitBtn:hover
+{
+    background-color:rgb(14, 17, 155) ;
+}
 #leadFormContainer, #contactForm, #accountFormContainer
 {
     width: 100vw;
@@ -139,8 +154,6 @@ button a{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* overflow: auto; */
-
     
 }
 #leadFormContainer>form, #contactForm>form, #accountFormContainer>form
@@ -328,9 +341,6 @@ select{
     border-radius: 4px;
     background-color: white;
 }
-/* #popupContainer input{
-    width: 100%;
-} */
 
 
 
