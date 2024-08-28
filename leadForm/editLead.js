@@ -76,13 +76,13 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     let inpArr = [leadName, leadMail, leadPhone, leadAddress, organization, date];
     // Form Validation Part 
-    if(!leadAddress.value || !leadMail.value || !leadName.value || !leadPhone.value || !organization.value)
+    if(!leadAddress.value || !leadMail.value || !leadName.value || !leadPhone.value)
     {
         leadName.value ? setSuccess(leadName) :setError(leadName) ;
         leadMail.value ? mailValidation(leadMail) :setError(leadMail) ;
         leadPhone.value ? mobileValidation(leadPhone) :setError(leadPhone) ;
         leadAddress.value ? setSuccess(leadAddress) :setError(leadAddress) ;
-        organization.value ? setSuccess(organization) :setError(organization);
+        // organization.value ? setSuccess(organization) :setError(organization);
         return;
     }
 
@@ -164,5 +164,10 @@ function mobileValidation(tag) {
         setError(tag);
         tag.nextElementSibling.innerHTML = "number should start with 6-9."
     }
+    else if((tag.value).length!=10)
+        {
+            setError(tag);
+            tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
+        }
     else setSuccess(tag);
 } 

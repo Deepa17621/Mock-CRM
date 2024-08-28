@@ -123,5 +123,10 @@ function mobileValidation(tag) {
         setError(tag);
         tag.nextElementSibling.innerHTML = "number should start with 6-9."
     }
+    else if((tag.value).length!=10)
+        {
+            setError(tag);
+            tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
+        }
     else setSuccess(tag);
 }

@@ -114,8 +114,7 @@ function submit1()
     }
     else if(selected=="CreateAccount")
     {
-        convertForm.requestSubmit();
-        window.location.href=await `http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
+        window.location.href= `http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
     }
     
 }

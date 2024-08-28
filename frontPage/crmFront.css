@@ -43,7 +43,7 @@ ul{
     font-size: 15px;
 }
 #navBar>ul li:hover{
-    border-bottom: 5px solid  white;
+    border-bottom: 4px solid  white;
 }
 li
 {
@@ -345,15 +345,16 @@ select{
 #backBtn:hover
 {
     cursor: pointer;
-    background-color: #9a9a9a;
+    background-color: #313950;
+    color: white;
 }
 #backBtn
 {
-    border: 1px dotted dimgray;
+    border: 1px dashed #313945;
     height: 30px;
     width: 80px;
-    background-color: dimgray;
-    color: white;
+    /* background-color: #313949; */
+    color: black;
     border-radius: 3px;
 }
 

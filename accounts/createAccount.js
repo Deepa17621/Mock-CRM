@@ -32,6 +32,95 @@ saveNewBtn.addEventListener("click", (e)=>{
     e.stopPropagation();
 });
 
+// / POST Method- Storing Data to JSON
+async function  saveAccount(obj)
+{
+    let res=await fetch("http://localhost:3000/accounts",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(obj)
+    });
+    let out=await res.json();
+    console.log(out);
+    accId=out["id"];
+    console.log("Account Id: "+accId);
+    fetchContactAndUpdateIt(accId, contactId);
+    return out;
+}
+
+async function fetchContactAndUpdateIt(accountId, ContactId)
+{
+    let res=await fetch(`http://localhost:3000/leads/${ContactId}`);
+    if(!res.ok)
+    {
+        throw new Error("Error in Promise");
+    }
+    else
+    {
+        let fetchedContact=await res.json();
+        console.log(fetchedContact);
+        
+        let contactObj=createContactObject(fetchedContact, accountId);
+        if(postContact(contactObj))
+        {
+            deleteFromLead(ContactId);
+        }
+        else{
+            throw new Error("Error in POsting Contact")
+        }
+       
+    }
+
+}
+
+// Delete Lead From Leads
+async function deleteFromLead(ContactId){
+    let res=await fetch(`http://localhost:3000/leads/${ContactId}`,{
+        method:"DELETE",
+        headers:{"Content-Type":"application/json"}
+    });
+    let out=await res.json();
+    return out;
+}
+function createContactObject(leadObj, aId)
+{
+    let obj={
+        "Contact Name":leadObj["Lead Name"],
+        "Contact Mail":leadObj["Lead Mail"],
+        "Phone":leadObj["Phone"],
+        "Address":leadObj["Address"],
+        "date":leadObj["date"],
+        "Organization":leadObj["Organization"], 
+        "id":leadObj["id"],
+        "OrganiztionId":aId
+    }
+    return obj;
+}
+async function postContact(cotactObj)
+{
+   try {
+    let res=await fetch(`http://localhost:3000/contacts`, {
+        method:"POST", 
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(cotactObj)
+    });
+    if(res.ok)
+    {
+        let out=await res.json();
+        console.log(out);
+        return true;
+        
+    }
+    else{
+        throw new Error("Error in Posting Contact")
+    }
+   } catch (error) {
+    
+   }
+    
+}
+
+
 // Form Fields 
 let accountOwner=document.querySelector("#accountOwner");
 let accountName=document.querySelector("#AccountName");
@@ -74,29 +163,11 @@ accForm.addEventListener("submit", (e)=>{
     }
 
     saveAccount(obj);
-    window.location.href=clicked?"http://127.0.0.1:5500/accounts/accountList.html":"http://127.0.0.1:5500/accounts/createAccount.html";
+    // window.location.href=clicked?"http://127.0.0.1:5500/accounts/accountList.html":"http://127.0.0.1:5500/accounts/createAccount.html";
     clicked=null;
 });
+let accId;
 
-// POST Method- Storing Data to JSON
-async function  saveAccount(obj)
-{
-    let res=await fetch("http://localhost:3000/accounts",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(obj)
-    });
-    let out=await res.json();
-    console.log(out);
-    
-    return out;
-}
-
-// // Function to add account id to Contact
-// async function updateContactByAddingAccId(accId)
-// {
-    
-// }
 
 
 
@@ -136,6 +207,10 @@ function mobileValidation(tag)
     if (!(/^[6-9]\d{9}$/).test(tag.value)) {
         setError(tag);
         tag.nextElementSibling.innerHTML = "number should start with 6-9."
+    }else if((tag.value).length!=10)
+    {
+        setError(tag);
+        tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
     }
     else setSuccess(tag);
 }
