@@ -2,7 +2,7 @@ let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
 console.log(currentId);
-
+let accountId;
 async function getData()
 {
     let url="http://localhost:3000/contacts/";
@@ -10,6 +10,7 @@ async function getData()
     // console.log(res);
     
     let obj=await res.json();
+    accountId=obj["OrganiztionId"];
     createTable(obj);
     
 }
@@ -92,7 +93,7 @@ editBtn.addEventListener("click", (e)=>{
 let dealBtn=document.querySelector("#convert");// create new deal button 
 dealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=``
+    window.location.href=`http://127.0.0.1:5500/deal/createDealForm.html?id=${currentId}&accId=${accountId}`;
 });
 
 // back button event to navigate to previously visited page

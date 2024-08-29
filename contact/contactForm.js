@@ -41,7 +41,9 @@ form.addEventListener("submit", (e)=>{
         !organization.value?setError(organization):setSuccess(organization);
         return;
     }
-    let obj = {};
+    let obj = {
+        "deals":[],
+    };
     inpArr.forEach(e => {
         switch(e)
         {
@@ -65,6 +67,7 @@ form.addEventListener("submit", (e)=>{
                 break;
         }
     });
+   
 
     inpArr.forEach(e=>{
         if(e.value==="") return;

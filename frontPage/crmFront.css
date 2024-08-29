@@ -22,6 +22,10 @@ body{
     pointer-events: none;
     opacity: 0.5;
 }
+.disabled:hover
+{
+    cursor: not-allowed;
+}
 #searchBar
 {
     display: flex;
@@ -154,7 +158,12 @@ button a{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     
+}
+#radioContainer
+{
+    margin-right: 1100px;
 }
 #leadFormContainer>form, #contactForm>form, #accountFormContainer>form
 {

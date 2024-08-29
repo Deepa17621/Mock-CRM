@@ -2,76 +2,45 @@
   "leads": [],
   "contacts": [
     {
-      "id": "d185",
-      "Contact Name": "Alan ",
-      "Contact Mail": "alan@gmail.com",
-      "Phone": "9876543210",
-      "Address": "C. Montes Urales 445",
-      "date": "2024-08-28",
-      "Organization": "",
-      "OrganiztionId": "1bfe"
-    },
-    {
-      "id": "a27f",
-      "Contact Name": "Dimple Marrie",
-      "Contact Mail": "admindroid1232@gmail.com",
-      "Phone": "6789054321",
-      "Address": "1600 Amphitheatre Parkway",
+      "id": "c17e",
+      "Contact Name": "Manju",
+      "Contact Mail": "manju@gmail.com",
+      "Phone": "8765432190",
+      "Address": "Kanchipuram",
       "date": "2024-08-29",
-      "Organization": "Admindroid"
-    },
-    {
-      "id": "8ebe",
-      "Contact Name": "Alan Turing",
-      "Contact Mail": "pinky@gmail.com",
-      "Phone": "9876543210",
-      "Address": "1600 Amphitheatre Parkway",
-      "date": "2024-08-29",
-      "Organization": "Seenathaana",
-      "OrganiztionId": "119c"
+      "Organization": "MNM",
+      "OrganiztionId": "bda2",
+      "deals": [
+        "3469"
+      ]
     }
   ],
   "accounts": [
     {
-      "id": "1bfe",
-      "AccountOwner": "Deepa Rajendiran",
-      "AccountName": "Admindroid",
-      "AccountMail": "admindroid1232@gmail.com",
-      "Phone": "6543217890",
-      "date": "2024-08-28",
-      "AccountAddress": "Sholinganallur",
-      "AnnualRevenue": "9080000",
+      "id": "bda2",
+      "AccountOwner": "Nithya",
+      "AccountName": "TCS",
+      "AccountMail": "tcs123@gmail.com",
+      "Phone": "9876543210",
+      "date": "2024-08-29",
+      "AccountAddress": "Chennai One",
+      "AnnualRevenue": "15490000",
       "Contacts": [
-        "d185",
-        "a27f",
-        "a27f"
-      ],
-      "deals": []
-    },
-    {
-      "id": "119c",
-      "AccountOwner": "Shajahan",
-      "AccountName": "seena thana",
-      "AccountMail": "lead3@gmail.com",
-      "Phone": "6789054321",
-      "date": "2024-08-31",
-      "AccountAddress": "usa",
-      "AnnualRevenue": "12334123",
-      "Contacts": [
-        "8ebe"
+        "c17e"
       ],
       "deals": []
     }
   ],
   "deals": [
     {
-      "id": "819b",
-      "DealOwner": "Shajahan",
-      "DealName": "Taj Mahal",
-      "ContactName": "masen",
-      "AccountName": "Taj Mahal project company",
-      "Amount": "70000000000",
-      "ClosingDate": "2162-12-31"
+      "id": "3469",
+      "DealOwner": "Nithya",
+      "DealName": "Nithya's Deal",
+      "ContactName": "Manju",
+      "AccountName": "TCS",
+      "Amount": "978739412",
+      "ClosingDate": "2024-08-29",
+      "Stage": "stage3"
     }
   ]
 }

@@ -92,7 +92,8 @@ function createContactObject(leadObj, aId)
         "date":leadObj["date"],
         "Organization":leadObj["Organization"], 
         "id":leadObj["id"],
-        "OrganiztionId":aId
+        "OrganiztionId":aId,
+        "deals":[]
     }
     return obj;
 }

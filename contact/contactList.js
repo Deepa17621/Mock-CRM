@@ -69,7 +69,9 @@ console.log(convert);
             // throw new Error('Error in URL')
         }
         const respo = await fetching.json()
-        let obj = {}
+        let obj = {
+            "deals":[]
+        }
         for (const key in respo) {
             switch (key) {
                 case "id":
@@ -95,6 +97,8 @@ console.log(convert);
                     break;
             }
         }
+        // console.log(sendToContact);
+        
        sendToContact(obj, currentId)
     } catch (err) {
         console.log(err.message);
