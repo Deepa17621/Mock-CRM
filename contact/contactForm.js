@@ -126,3 +126,23 @@ function mobileValidation(tag) {
     }
     else setSuccess(tag);
 }
+
+// LookUp For Account Names
+
+async function getAccounts(){
+    let res=await fetch(`http://localhost:3000/accounts`);
+    let accs=await res.json();
+    accs.forEach(obj => {
+        let option=`<option value="${obj["id"]}">${obj["AccountName"]}</option>`;
+        organization.insertAdjacentHTML('beforeend', option);
+
+    });
+}
+getAccounts()
+
+// Dynamic Field Form
+
+let contactOnly=document.querySelector("#onlyContact");
+let existingAccount=document.querySelector("#ExistingAccount");
+let newAccount=document.querySelector("#contactWithNewAccount");
+

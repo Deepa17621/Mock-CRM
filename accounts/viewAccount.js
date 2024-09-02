@@ -28,10 +28,6 @@ function displayAcc(obj)
                     fetchContactToAcc(e, headArr); 
                 });
             }
-            // else if("deals")
-            // {
-            //     key.forEach(e=>fetchContactToAcc(e));
-            // }
         }
         else {
             let tr=document.createElement("tr");

@@ -21,6 +21,13 @@ function selectField()
     option=document.querySelector("#fields").value;
 }
 
+// create Contact Button 
+const createContactBtn=document.querySelector("#createContactBtn");
+createContactBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href='http://127.0.0.1:5500/contact/contactForm.html';
+})
+
 // lead to contact=>del from lead add to contact
 function sendToContact(contact, lead) {
     try {

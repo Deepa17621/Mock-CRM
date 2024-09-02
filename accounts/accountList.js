@@ -1,6 +1,12 @@
 // Get Table using DOM
 let table=document.querySelector("table");
 
+// create Account Button Event
+const createAccount=document.querySelector("#createAccountBtn");
+createAccount.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/accounts/createAccount.html`;
+})
 
 // search Account
 let inpForSearch=document.querySelector("#searchAccount");

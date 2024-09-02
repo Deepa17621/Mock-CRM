@@ -10,6 +10,14 @@ function rowClickFunction(row)
         window.location.href=`http://127.0.0.1:5500/leadForm/leadView.html?id=${idValue}`;
         
 }
+
+// Create Lead Button
+
+const createLeadBtn=document.querySelector("#createLeadBtn");
+createLeadBtn.addEventListener("click",e=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/leadForm/leadForm.html`
+})
 // SEARCH -Search Lead 
 var selectField;
 let arr=[];

@@ -45,7 +45,7 @@
              <li>
                  <select name="" id="leadOption" class="disabled">
                      <option value="All Contacts">All Contacts</option>
-                     <option value="Locked Contacts">Locaked Contacts</option>
+                     <option value="Locked Contacts">Located Contacts</option>
                      <option value="Junk Contacts">Junk Contacts</option>
                  </select>
              </li>
@@ -64,12 +64,11 @@
      <!-- Second Nav Ends -->
 
      <div id="contactForm">
+
         <div id="radioContainer">
-            <input type="radio" name="choose" id="onlyContact">
-            <label for="onlyContact">Contact Only</label><br>
-            <input type="radio" name="choose" id="createAccount">
-            <label for="createAccount">Contact With Account</label>
+            
         </div>
+
         <form action="">
             <label for="contactName">Contact Name</label>
             <input type="text" name="contactName" id="contactName" class="contactInp">
@@ -92,7 +91,10 @@
             <p></p>
             <br>
             <label for="organization">Organization</label>
-            <input type="text" name="organization" id="organization" class="contactInp">
+            <!-- <input type="text" name="organization" id="organization" class="contactInp"> -->
+            <select name="organization" id="organization" class="contactInp">
+                <option value="">Select</option>
+            </select>
             <p></p>
         </form>
      </div>

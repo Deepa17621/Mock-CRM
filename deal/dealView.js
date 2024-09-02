@@ -23,6 +23,28 @@ function display(obj)
     name.innerHTML=obj["DealName"];
     for (const key in obj)
     {
+        if(key=="ContactId" || key=="AccountId")
+        {
+            let cHead=["id", "Contact Name", "Contact Mail", "Organization"];
+            let aHead=["id", "AccountName", "AccountMail", "Phone"];
+            let contactTable=document.querySelector("#contactInDeal");
+            let accountTable=document.querySelector("#accountInDeal");
+
+            let header1=document.createElement("tr");
+            contactTable.appendChild(header1);
+            accountTable.appendChild(header1);
+            cHead.forEach(e=>{
+                let th=document.createElement("th");
+                th.innerHTML=e;
+                header1.appendChild(th);
+            });
+            aHead.forEach(e=>{
+                let th=document.createElement("th");
+                th.innerHTML=e;
+                header1.appendChild(th);
+            });
+            continue
+        }
         let tr=document.createElement("tr");
         table.appendChild(tr);
         let td1=document.createElement("td");
@@ -32,7 +54,6 @@ function display(obj)
         td1.innerHTML=key;
         td2.innerHTML=obj[key];
     }
-
 }
 
 // Delete Button

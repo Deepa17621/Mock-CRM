@@ -2,45 +2,47 @@
   "leads": [],
   "contacts": [
     {
-      "id": "c17e",
-      "Contact Name": "Manju",
-      "Contact Mail": "manju@gmail.com",
-      "Phone": "8765432190",
-      "Address": "Kanchipuram",
-      "date": "2024-08-29",
-      "Organization": "MNM",
-      "OrganiztionId": "bda2",
+      "id": "ef31",
+      "Contact Name": "Deepa",
+      "Contact Mail": "deeparajendiran@gmail.com",
+      "Phone": "6789054321",
+      "Address": "Kanchipurm",
+      "date": "2024-09-02",
+      "Organization": "Admindroid",
+      "OrganiztionId": "8f94",
       "deals": [
-        "3469"
+        "be81"
       ]
     }
   ],
   "accounts": [
     {
-      "id": "bda2",
-      "AccountOwner": "Nithya",
-      "AccountName": "TCS",
-      "AccountMail": "tcs123@gmail.com",
-      "Phone": "9876543210",
-      "date": "2024-08-29",
-      "AccountAddress": "Chennai One",
-      "AnnualRevenue": "15490000",
+      "id": "8f94",
+      "AccountOwner": "BalaG",
+      "AccountName": "Admindroid",
+      "AccountMail": "admindroid1232@gmail.com",
+      "Phone": "6789012345",
+      "date": "2024-09-02",
+      "AccountAddress": "Sholinganallur",
+      "AnnualRevenue": "87900000",
       "Contacts": [
-        "c17e"
+        "ef31"
       ],
       "deals": []
     }
   ],
   "deals": [
     {
-      "id": "3469",
-      "DealOwner": "Nithya",
-      "DealName": "Nithya's Deal",
-      "ContactName": "Manju",
-      "AccountName": "TCS",
-      "Amount": "978739412",
-      "ClosingDate": "2024-08-29",
-      "Stage": "stage3"
+      "id": "be81",
+      "DealOwner": "BalaG",
+      "DealName": "BalaG's Deal",
+      "ContactName": "Deepa",
+      "AccountName": "Admindroid",
+      "Amount": "987654000",
+      "ClosingDate": "2024-09-03",
+      "Stage": "stage2",
+      "ContactId": "ef31",
+      "AccountId": "8f94"
     }
   ]
 }

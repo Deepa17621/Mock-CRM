@@ -10,6 +10,13 @@ function selectField()
 }
 let searchField=document.querySelector("#searchField");
 
+// create Deal Button
+const createDealBtn=document.querySelector("#createDealBtn");
+createDealBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href='http://127.0.0.1:5500/deal/createDealForm.html';
+})
+
 // Fetch From Json
 async function fetchData()
 {

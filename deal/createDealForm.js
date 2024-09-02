@@ -107,7 +107,14 @@ myForm.addEventListener("submit", (e)=>{
         "AccountName":accountName.value,
         "Amount":amount.value,
         "ClosingDate":closingDate.value,
-        "Stage":stages
+        "Stage":stages,
+        "ContactId":"",
+        "AccountId":""
+    }
+    if(contactId!=null || accountId!=null)
+    {
+        obj["ContactId"]=contactId;
+        obj["AccountId"]=accountId;
     }
     saveDeal(obj);
     // window.location.href=clicked?`http://127.0.0.1:5500/deal/dealList.html`:"http://127.0.0.1:5500/deal/createDealForm.html";
