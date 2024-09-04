@@ -102,3 +102,27 @@ backBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.history.back();
 })
+
+// Meeting Creation Event
+let dialog=document.querySelector("#dialogbox");
+let meetingBtn=document.querySelector("#meetingBtn");
+let meetingCancelBtn=document.querySelector("#meetingCancelBtn");
+meetingBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    dialog.showModal();
+});
+
+// Meeting close event--- dialog box closing event
+meetingCancelBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    dialog.close();
+});
+
+// meeting save button
+let meetingSaveBtn=document.querySelector("#meetingSaveBtn");
+
+meetingSaveBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    
+});
+

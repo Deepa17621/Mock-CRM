@@ -44,6 +44,7 @@
              <li><h4 id="name"></h4></li>
         </div>
         <div id="right">
+            <li><button id="meetingBtn">New Meeting</button></li>
             <li><button id="mailBtn"><a id="mail" href="" class="maill">Send Email</a></button></li>
             <li><button id="convert">Create Deal</button></li>
             <li >
@@ -54,6 +55,30 @@
         </ul>
     </div>
      <!-- Second Nav Ends -->
+      
+     <!-- Create New Meeting -->
+      <dialog id="dialogbox">
+        <h4>Meeting Information</h4>
+        <form action="">
+            <input type="text" value="New Meeting*" class="meetInp">
+            <br>
+            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
+            <br>
+            <label for="startTime">From</label><br>
+            <input type="datetime-local" name="time" id="startTime" placeholder="start Time*" class="meetInp">
+            <br>
+            <label for="endTime">To</label><br>
+            <input type="datetime-local" name="time" id="endTime" placeholder="endTime*" class="meetInp">
+            <br>
+            <label for="mail">Email</label><br>
+            <input type="email" name="mail" id="mail" class="meetInp" >
+            <br>
+            <label for="hostName">HostName</label><br>
+            <input type="text" name="hostName" id="hostName" class="meetInp">
+            <br><br>
+            <button id="meetingCancelBtn" class="meetBtn">Cancel</button> <button id="meetingSaveBtn" class="meetBtn">Save</button>
+        </form>
+      </dialog>
 
      <!-- Home Container For Lead View -->
      <div id="parentContainer">

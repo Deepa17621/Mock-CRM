@@ -1,5 +1,15 @@
 {
-  "leads": [],
+  "leads": [
+    {
+      "id": "e3ab",
+      "Lead Name": "Pinky Ben",
+      "Lead Mail": "pinky@gmail.com",
+      "Phone": "7654321890",
+      "Address": "USA",
+      "date": "2024-09-04",
+      "Organization": "catgemini"
+    }
+  ],
   "contacts": [
     {
       "id": "ef31",
@@ -12,6 +22,19 @@
       "OrganiztionId": "8f94",
       "deals": [
         "be81"
+      ]
+    },
+    {
+      "id": "3b06",
+      "Contact Name": "Anitha",
+      "Contact Mail": "anitha@gmail.com",
+      "Phone": "9876543210",
+      "Address": "dubai",
+      "date": "2024-09-02",
+      "Organization": "SSSA Constructions",
+      "OrganiztionId": "b14e",
+      "deals": [
+        "a463"
       ]
     }
   ],
@@ -29,20 +52,34 @@
         "ef31"
       ],
       "deals": []
+    },
+    {
+      "id": "b14e",
+      "AccountOwner": "SadaSivan D",
+      "AccountName": "SSSA Constructions",
+      "AccountMail": "sssa1110@gmail.com",
+      "Phone": "8765432190",
+      "date": "2024-09-02",
+      "AccountAddress": "dubai",
+      "AnnualRevenue": "87900000",
+      "Contacts": [
+        "3b06"
+      ],
+      "deals": []
     }
   ],
   "deals": [
     {
-      "id": "be81",
-      "DealOwner": "BalaG",
-      "DealName": "BalaG's Deal",
-      "ContactName": "Deepa",
-      "AccountName": "Admindroid",
-      "Amount": "987654000",
+      "id": "a463",
+      "DealOwner": "SadaSivan D",
+      "DealName": "SSS Deal",
+      "ContactName": "Anitha",
+      "AccountName": "SSSA Constructions",
+      "Amount": "87000000",
       "ClosingDate": "2024-09-03",
       "Stage": "stage2",
-      "ContactId": "ef31",
-      "AccountId": "8f94"
+      "ContactId": "3b06",
+      "AccountId": "b14e"
     }
   ]
 }
