@@ -1,5 +1,15 @@
 {
-  "leads": [],
+  "leads": [
+    {
+      "id": "b093",
+      "Lead Name": "Prakash",
+      "Lead Mail": "prakash@gmai.com",
+      "Phone": "8765432345",
+      "Address": "mexico",
+      "date": "2024-09-09",
+      "Organization": "Prakash Groups Of Companies"
+    }
+  ],
   "contacts": [
     {
       "id": "811e",

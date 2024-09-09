@@ -2,7 +2,7 @@ let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
 console.log(currentId);
-let mailButton=null;
+let mailButton;
 let accTable=document.getElementById("accTable");
 let contactTable=document.getElementById("contactsInAcc");
 let headArr=["Contact Name", "Contact Mail", "Phone"];
@@ -40,8 +40,8 @@ function displayAcc(obj)
             td1.innerHTML=key.toUpperCase();
             if(key=="AccountMail")
             {
-                td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
                 mailButton=obj[key];
+                td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
                 continue
             }
             else if(key=="Phone")
@@ -168,11 +168,11 @@ async function deleteAcc(id)
 }
 
 // send Mail Button
-let mailBtn=document.querySelector("#mail");
+let mailBtn=document.querySelector("#mailBtn");
 mailBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    mailBtn.setAttribute("href", `mailto:${mailButton}`);
-
+    // mailBtn.setAttribute("href", `mailto:${mailButton}`);
+    mailBtn.children[0].href=`mailto:${mailButton}`;
 });
 
 // back button to navigate previously visted page

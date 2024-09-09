@@ -85,7 +85,7 @@ form.addEventListener("submit", (e)=>{
         console.log(result);
         
     });
-    return;
+    // return;
     window.location.href = clicked ? "http://127.0.0.1:5500/contact/contactList.html" :  "http://127.0.0.1:5500/contact/contactForm.html";
     clicked = null;
 });
@@ -158,8 +158,21 @@ getAccounts()
 
 
 // Dynamic Field Form
+let individual=document.querySelector("#Individual");
+let existing=document.querySelector("#Existing");
+let newAcco=document.querySelector("#newAccount");
+individual.addEventListener("click", (e)=>{
+    e.preventDefault();
+    organization.disabled="true";
+});
+existing.addEventListener("click", (e)=>{
+    e.preventDefault();
+    organization.removeAttribute("disabled");
+});
+newAcco.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/accounts/createAccount.html`;
 
-let contactOnly=document.querySelector("#onlyContact");
-let existingAccount=document.querySelector("#ExistingAccount");
-let newAccount=document.querySelector("#contactWithNewAccount");
+})
+
 

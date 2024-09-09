@@ -31,7 +31,6 @@ body{
     display: flex;
     justify-content: space-evenly;
     margin-top: 10px;
-    /* box-shadow: 0 0 3px; */
 }
 #searchBar button{
     border: none;
@@ -161,10 +160,7 @@ button a{
     flex-direction: column;
     
 }
-#radioContainer
-{
-    margin-right: 1100px;
-}
+
 #leadFormContainer>form, #contactForm>form, #accountFormContainer>form
 {
     width: 20%;    
@@ -172,7 +168,35 @@ button a{
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    height: 80%;
+    height: 70%;
+}
+#contactBody
+{
+    width: 95vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+}
+#dynamicFieldContainer
+{
+    width: 20%;
+    height: 70%;
+    margin-left: 1%;
+    margin-top: 10%;
+    line-height: 40px;
+}
+#dynamicFieldContainer button
+{
+    width: 130px;
+    height: 30px;
+    background-color: #484d58;
+    color: white;
+    border: 1px solid black;
+    border-radius:4px ;
+}
+#dynamicFieldContainer button:hover
+{
+    background-color: #1c2025;
 }
 #dealFormContainer
 {
@@ -255,7 +279,7 @@ tr:hover{
 select{
     height: 30px;
 }
-#parent
+#parent, #parentContainer
 {
     display: flex;
 }
@@ -272,7 +296,6 @@ select{
 #filterContainer
 {
     width: 22%;
-    /* height: 75vh; */
     margin-top: 30px;
     border-radius: 3px;
     box-shadow: 0 0 2px;
@@ -281,11 +304,9 @@ select{
 #leadViewHomeContainer, #accViewHomeContainer
 {
     border-radius: 7px;
-    /* height: 75vh; */
     width: 100vw;
     border: 1px solid rgb(230, 225, 225);
     box-shadow: 0 0 1px;
-    /* overflow: scroll; */
     margin-left: 30px;
     margin-top:30px ;
     display: flex;
@@ -299,10 +320,7 @@ select{
     border-spacing: 10px;
     border-radius: 5px;
 }
-#parentContainer
-{
-    display: flex;
-}
+
 #leadViewHomeContainer table, #contact{
     width: 100%;
     height: 70%;
@@ -316,14 +334,11 @@ select{
     display: flex;
     flex-direction: column;
 }
-#accTable
+#accTable, #contactsInAcc
 {
     width: 90%;
 }
-#contactsInAcc
-{
-    width: 90%;
-}
+
 
 /* PupUp-Form-For-Converting-The-Lead-To-Acc,Deal */
 #popupContainer
@@ -331,7 +346,6 @@ select{
     display: none;
     width: 100%;
     height: 100%;
-    /* display: flex; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -340,14 +354,11 @@ select{
     top: 0;
     position: fixed;
     overflow: auto;
-    /* border: 1px solid white; */
-    /* background-color: beige; */
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 #actualContainer
 {
-    /* display: none; */
     height: 200px;
     width: 30%;
     display: flex;
@@ -355,7 +366,6 @@ select{
     justify-content: center;
     align-items: center;
    padding: 10px;
-   /* padding-left: 100px; */
     border-radius: 4px;
     background-color: white;
 }
@@ -371,7 +381,6 @@ select{
     border: 1px dashed #313945;
     height: 30px;
     width: 80px;
-    /* background-color: #313949; */
     color: black;
     border-radius: 3px;
 }
@@ -400,6 +409,7 @@ select{
 {
     width: 49%;
 }
+
 
 
 

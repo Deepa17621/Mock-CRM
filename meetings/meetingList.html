@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Contacts - Zoho CRM</title>
+    <title>Meetings - Zoho CRM</title>
     <link rel="stylesheet" href="../frontPage/crmFront.css">
 </head>
 <body>
-     <!-- Navbar Container -->
-     <div id="navBar">
+    <!-- Navbar Container -->
+    <div id="navBar">
         <ul>
             <li id="Logo" class="navParent">
                 <a href="../frontPage/crmFront.html">
@@ -39,43 +39,37 @@
     </div>
     <!-- Nav Container End -->
 
-     <!-- Second Navbar -->
-     <div id="secondNav">
+    <!-- Second Navbar -->
+    <div id="secondNav">
         <!---->
             <ul id="ull">
                 <div id="left">
                     <li style="cursor: pointer;" id="filterIcon">Filter</li>
                     <li>
                         <select name="" id="leadOption" class="disabled">
-                            <option value="All Contacts">All Contacts</option>
-                            <option value="Locked Contacts">Locked Contacts</option>
-                            <option value="Junk Contacts">New Contacts</option>
+                            <option value="All Meetings">All Meetings</option>
+                            <option value="Locked Meetings">Locaked Meetings</option>
+                            <option value="Junk Meetings">Junk Meetings</option>
                         </select>
                     </li>
                 </div>
                <div id="right">
                     <li>
-                        <button class="createBtnForAllModules" id="createContactBtn">
-                            Create Contact
+                        <button class="createBtnForAllModules" id="createLeadBtn">
+                            Create Meeting
                         </button>
                     </li>
                     <li>
-                        <select name="" id="fields" onchange="selectField()">
-                            <option value="">---Select---</option>
-                            <option value="id">ID</option>
-                            <option value="Contact Name">Contact Name</option>
-                            <option value="Contact Mail">Contact Mail</option>
-                            <option value="Phone">Phone</option>
-                            <option value="Address">Address</option>
-                            <option value="Organization">Organization</option>
-                            <option value="date">date</option>
+                        <select name="lookups" id="lookupForLead" onchange="selField()">
+                            <option value="">--Select--</option>
+                            <!-- Need to add more options based to Meeting -->
                         </select>
                     </li>
                     <li>
-                        <input type="text" name="" id="searchField" placeholder="search here..." style="height: 23px;" >
+                        <input type="text" name="search" id="searchLead" placeholder="search here..."> 
                     </li>
-                    <li>
-                        <select name="" id="actionOption" class="disabled">
+                    <li class="disabled">
+                        <select name="" id="actionOption" >
                             <option value="">action</option>
                             <option value="Mass Update">Mass Update</option>
                             <option value="Mass Delete">Mass Delete</option>
@@ -86,9 +80,10 @@
                </div>
             </ul>
     </div>
-    <!-- Second Nav Ending -->
+    <!-- Second Nav Bar End -->
 
-    <!-- Contact List  Body Container -->
+    <!-- List Body Container Starts Here -->
+      <!-- Body Container -->
     <div id="parent">
 
         <!-- Filter Container Starts Here -->
@@ -100,15 +95,15 @@
             </div>
         </div>
         <!-- Lead Container Starts Here-->
-        <div id="contactListContainer">
+        <div id="leadListContainer">
             <table>
-
             </table>
         </div>
         <!-- Lead Container Ends Here -->
     
         
     </div>
-    <script src="./contactList.js"></script>
+     <!-- List Body Container Ends Here -->
+
 </body>
 </html>

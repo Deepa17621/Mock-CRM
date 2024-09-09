@@ -80,7 +80,7 @@ async function  delContact(id)
 async function updateOrganizationDetails(contactId) {
     let contactRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
     let contactObj=await contactRes.json();
-    let accountId=contactObj["OrganiztionId"];
+    let accountId=contactObj["OrganizationId"];
     if(!accountId)
     {
         return;
@@ -105,7 +105,7 @@ async function updateOrganizationDetails(contactId) {
 }
 
 
-// Click Event For Delete Cotact.
+// Click Event For Delete Contact.
 
 // Before Deleting Contact  here we need to delete the contact Details in Account ALSO.
 let delBtn=document.querySelector("#deleteBtn");
@@ -138,6 +138,7 @@ backBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.history.back();
 })
+
  // ========================================== Test Meeting =======================================================
 // 1. Meeting Creation Event-----> Create Meeting <----------
 let dialog=document.querySelector("#dialogbox");
