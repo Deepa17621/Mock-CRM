@@ -63,7 +63,7 @@ form.addEventListener("submit", (e)=>{
                 obj["date"]=e.value;
                 break;
             case organization:
-                obj["Organization"]=e.value;
+                obj["OrganizationId"]=e.value;
                 break;
         }
     });
@@ -81,13 +81,29 @@ form.addEventListener("submit", (e)=>{
     }).then(res => {
         return res.json();
     }).then(result => {
+        updateAccountFromLookUp(result["id"]);
         console.log(result);
+        
     });
+    return;
     window.location.href = clicked ? "http://127.0.0.1:5500/contact/contactList.html" :  "http://127.0.0.1:5500/contact/contactForm.html";
     clicked = null;
-
-
 });
+
+// Update Account By Adding Cotact Id 
+async function updateAccountFromLookUp(contactId) {
+    let accRes=await fetch(`http://localhost:3000/accounts/${organization.value}`);
+    let accObj=await accRes.json();
+    accObj["Contacts"].push(contactId);
+
+    // PUT FOR Accounts to update the new Contact to Organization
+
+    let putAcc=await fetch(`http://localhost:3000/accounts/${organization.value}`, {
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(accObj)
+    });
+}
 
 
 //Set Error
@@ -128,17 +144,18 @@ function mobileValidation(tag) {
 }
 
 // LookUp For Account Names
-
 async function getAccounts(){
     let res=await fetch(`http://localhost:3000/accounts`);
     let accs=await res.json();
     accs.forEach(obj => {
         let option=`<option value="${obj["id"]}">${obj["AccountName"]}</option>`;
         organization.insertAdjacentHTML('beforeend', option);
-
     });
 }
 getAccounts()
+
+
+
 
 // Dynamic Field Form
 

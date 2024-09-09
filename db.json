@@ -2,15 +2,14 @@
   "leads": [],
   "contacts": [
     {
-      "id": "ba5a",
+      "id": "811e",
       "deals": [],
-      "Contact Name": "Prathipa",
-      "Contact Mail": "prathipa213@gmail.com",
-      "Phone": "8765432190",
-      "Address": "Madurai",
+      "Contact Name": "Tokyo",
+      "Contact Mail": "tokyo213@gmail.com",
+      "Phone": "8765432345",
       "date": "2024-09-09",
-      "Organization": "",
-      "OrganiztionId": ""
+      "Address": "Melbourne",
+      "OrganizationId": "9a16"
     }
   ],
   "accounts": [
@@ -35,9 +34,7 @@
       "date": "2024-09-09",
       "AccountAddress": "Kanchipuram",
       "AnnualRevenue": "876500000",
-      "Contacts": [
-        "cf0c"
-      ],
+      "Contacts": [],
       "deals": []
     },
     {
@@ -49,7 +46,9 @@
       "date": "2024-09-09",
       "AccountAddress": "Sriperumbuthur",
       "AnnualRevenue": "98000000",
-      "Contacts": [],
+      "Contacts": [
+        "811e"
+      ],
       "deals": []
     }
   ],
