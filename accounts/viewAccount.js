@@ -9,7 +9,7 @@ let headArr=["Contact Name", "Contact Mail", "Phone"];
 function displayAcc(obj)
 {
     for (const key in obj) {
-        
+
         if(key=="Contacts"|| key=="deals")
         {
             if(key=="Contacts")
@@ -112,16 +112,50 @@ editBtn.addEventListener("click", (e)=>{
 
 // Delete Btn Event
 let deleteBtn=document.querySelector("#deleteBtn");
-deleteBtn.addEventListener("click", (e)=>{
+deleteBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
     if(window.confirm("Are You Sure delete??"))
     {
-        window.location.href=`http://127.0.0.1:5500/accounts/accountList.html`;
-        deleteAcc(currentId);
+        // Before Deleting Account...we need to delete the account associated with Contact.
+        // Updating Contact By deleting the account ID in Contact Detail.
+        await updateContactFromAccount(currentId); // Here Current Id Refers Account ID of Viewed Account.
+        // Deletion of Account.
+        await deleteAcc(currentId);
         window.alert("Account Deleted Successfully")
+        window.location.href=`http://127.0.0.1:5500/accounts/accountList.html`;
     }
     e.stopPropagation();
 });
+// Update Contact Function
+async function updateContactFromAccount(accId) {
+    // GET Organization Details.
+    let accRes=await fetch(`http://localhost:3000/accounts/${accId}`);
+    let accObj=await accRes.json();
+    let contactArr=accObj["Contacts"];
+    if(contactArr.length==0)
+    {
+        return;
+    }
+    // Iterate Through Contacts Array fetched from Account Detail
+    contactArr.forEach(e=>{
+        fetchAndUpdateContact(e);
+    })
+
+}
+
+async function  fetchAndUpdateContact(contactId) {
+    let conRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
+    let conObj=await conRes.json();
+    conObj["OrganiztionId"]="";
+    conObj["Organization"]="";
+
+    // Update contact --PUT Method
+    let putContact=await fetch(`http://localhost:3000/contacts/${contactId}`, {
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(conObj)
+    });
+}
 
 async function deleteAcc(id)
 {

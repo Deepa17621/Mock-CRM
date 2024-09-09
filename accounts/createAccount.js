@@ -44,8 +44,11 @@ async function  saveAccount(obj)
     console.log(out);
     accId=out["id"];
     console.log("Account Id: "+accId);
-    fetchContactAndUpdateIt(accId, contactId);
-    return out;
+    if(contactId!=null)
+    {
+        fetchContactAndUpdateIt(accId, contactId);
+    }
+    // return out;
 }
 
 async function fetchContactAndUpdateIt(accountId, ContactId)

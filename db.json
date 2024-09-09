@@ -2,30 +2,18 @@
   "leads": [],
   "contacts": [
     {
-      "id": "299b",
-      "Contact Name": "Nila",
-      "Contact Mail": "nila123@gmial.com",
-      "Phone": "7654321890",
-      "Address": "Kanchipuram",
-      "date": "2024-09-10",
-      "Organization": "SSKV",
-      "OrganiztionId": "c794",
-      "deals": []
+      "id": "ba5a",
+      "deals": [],
+      "Contact Name": "Prathipa",
+      "Contact Mail": "prathipa213@gmail.com",
+      "Phone": "8765432190",
+      "Address": "Madurai",
+      "date": "2024-09-09",
+      "Organization": "",
+      "OrganiztionId": ""
     }
   ],
   "accounts": [
-    {
-      "id": "8f94",
-      "AccountOwner": "BalaG",
-      "AccountName": "Admindroid",
-      "AccountMail": "admindroid1232@gmail.com",
-      "Phone": "6789012345",
-      "date": "2024-09-02",
-      "AccountAddress": "Sholinganallur",
-      "AnnualRevenue": "87900000",
-      "Contacts": [],
-      "deals": []
-    },
     {
       "id": "b14e",
       "AccountOwner": "SadaSivan D",
@@ -53,17 +41,15 @@
       "deals": []
     },
     {
-      "id": "c794",
-      "AccountOwner": "Sai Laskmi",
-      "AccountName": "SSKV",
-      "AccountMail": "sskv231@gmail.com",
-      "Phone": "8765432190",
+      "id": "9a16",
+      "AccountOwner": "Kaveri",
+      "AccountName": "L&T",
+      "AccountMail": "landt123@gmail.com",
+      "Phone": "9876543210",
       "date": "2024-09-09",
-      "AccountAddress": "kanchipuram",
-      "AnnualRevenue": "9080000",
-      "Contacts": [
-        "299b"
-      ],
+      "AccountAddress": "Sriperumbuthur",
+      "AnnualRevenue": "98000000",
+      "Contacts": [],
       "deals": []
     }
   ],
