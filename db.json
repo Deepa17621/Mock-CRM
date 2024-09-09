@@ -1,42 +1,16 @@
 {
-  "leads": [
-    {
-      "id": "e3ab",
-      "Lead Name": "Pinky Ben",
-      "Lead Mail": "pinky@gmail.com",
-      "Phone": "7654321890",
-      "Address": "USA",
-      "date": "2024-09-04",
-      "Organization": "catgemini"
-    }
-  ],
+  "leads": [],
   "contacts": [
     {
-      "id": "ef31",
-      "Contact Name": "Deepa",
-      "Contact Mail": "deeparajendiran@gmail.com",
-      "Phone": "6789054321",
-      "Address": "Kanchipurm",
-      "date": "2024-09-02",
-      "Organization": "Admindroid",
-      "OrganiztionId": "8f94",
-      "deals": [
-        "be81",
-        "2594"
-      ]
-    },
-    {
-      "id": "3b06",
-      "Contact Name": "Anitha",
-      "Contact Mail": "anitha@gmail.com",
-      "Phone": "9876543210",
-      "Address": "dubai",
-      "date": "2024-09-02",
-      "Organization": "SSSA Constructions",
-      "OrganiztionId": "b14e",
-      "deals": [
-        "a463"
-      ]
+      "id": "299b",
+      "Contact Name": "Nila",
+      "Contact Mail": "nila123@gmial.com",
+      "Phone": "7654321890",
+      "Address": "Kanchipuram",
+      "date": "2024-09-10",
+      "Organization": "SSKV",
+      "OrganiztionId": "c794",
+      "deals": []
     }
   ],
   "accounts": [
@@ -49,9 +23,7 @@
       "date": "2024-09-02",
       "AccountAddress": "Sholinganallur",
       "AnnualRevenue": "87900000",
-      "Contacts": [
-        "ef31"
-      ],
+      "Contacts": [],
       "deals": []
     },
     {
@@ -63,8 +35,34 @@
       "date": "2024-09-02",
       "AccountAddress": "dubai",
       "AnnualRevenue": "87900000",
+      "Contacts": [],
+      "deals": []
+    },
+    {
+      "id": "adfe",
+      "AccountOwner": "Kumaravel",
+      "AccountName": "GGHSS",
+      "AccountMail": "gghss12@gmail.com",
+      "Phone": "8765432190",
+      "date": "2024-09-09",
+      "AccountAddress": "Kanchipuram",
+      "AnnualRevenue": "876500000",
       "Contacts": [
-        "3b06"
+        "cf0c"
+      ],
+      "deals": []
+    },
+    {
+      "id": "c794",
+      "AccountOwner": "Sai Laskmi",
+      "AccountName": "SSKV",
+      "AccountMail": "sskv231@gmail.com",
+      "Phone": "8765432190",
+      "date": "2024-09-09",
+      "AccountAddress": "kanchipuram",
+      "AnnualRevenue": "9080000",
+      "Contacts": [
+        "299b"
       ],
       "deals": []
     }
@@ -93,6 +91,30 @@
       "Stage": "stage3",
       "ContactId": "ef31",
       "AccountId": "8f94"
+    },
+    {
+      "id": "5e06",
+      "DealOwner": "SadaSivan D",
+      "DealName": "Sabari's Deal-1",
+      "ContactName": "Anitha",
+      "AccountName": "SSSA Constructions",
+      "Amount": "98120000",
+      "ClosingDate": "2024-09-09",
+      "Stage": "stage3",
+      "ContactId": "3b06",
+      "AccountId": "b14e"
+    },
+    {
+      "id": "ba40",
+      "DealOwner": "SadaSivan D",
+      "DealName": "Sabari's Deal-1",
+      "ContactName": "Anitha",
+      "AccountName": "SSSA Constructions",
+      "Amount": "9000000",
+      "ClosingDate": "2024-09-16",
+      "Stage": "stage2",
+      "ContactId": "3b06",
+      "AccountId": "b14e"
     }
   ]
 }

@@ -14,6 +14,8 @@ async function getData()
     createTable(obj);
     
 }
+console.log(accountId);
+
 let email;
 function createTable(data)
 {
@@ -73,10 +75,44 @@ async function  delContact(id)
     });
     let out=res.json();
 }
+
+// Update Account Details By Deleting THE Contact id from associated account.
+async function updateOrganizationDetails(contactId) {
+    let contactRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
+    let contactObj=await contactRes.json();
+    let accountId=contactObj["OrganiztionId"];
+    if(!accountId)
+    {
+        return;
+    }
+
+    // Fetch to get organization Details.
+    let orgRes=await fetch(`http://localhost:3000/accounts/${accountId}`);
+    let orgObj=await orgRes.json();
+    let contactArr=(orgObj["Contacts"]).filter((e)=>{
+        e!=contactId;
+    });
+    console.log(contactArr);
+    orgObj["Contacts"]=contactArr;
+
+    // Fetch To PUT operation in Organization
+    let putRes=await fetch(`http://localhost:3000/accounts/${accountId}`, {
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(orgObj)
+    });
+
+}
+
+
+// Click Event For Delete Cotact.
+
+// Before Deleting Contact  here we need to delete the contact Details in Account ALSO.
 let delBtn=document.querySelector("#deleteBtn");
-delBtn.addEventListener("click",(e)=>{
+delBtn.addEventListener("click",async (e)=>{
     e.preventDefault();
-    delContact(currentId);
+    await updateOrganizationDetails(currentId);
+    await delContact(currentId);
     window.location.href="http://127.0.0.1:5500/contact/contactList.html";
     e.stopPropagation();
 });
@@ -103,7 +139,7 @@ backBtn.addEventListener("click", (e)=>{
     window.history.back();
 })
  // ========================================== Test Meeting =======================================================
-// Meeting Creation Event
+// 1. Meeting Creation Event-----> Create Meeting <----------
 let dialog=document.querySelector("#dialogbox");
 let meetingBtn=document.querySelector("#meetingBtn");
 let meetingCancelBtn=document.querySelector("#meetingCancelBtn");
@@ -177,4 +213,7 @@ meetingForm.addEventListener("submit", async (e) => {
         console.error("Error:", error);
     }
 });
+
+
+// 2. Cancel Meeting  
 

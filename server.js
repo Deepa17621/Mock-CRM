@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 5500;
 
 // Define authorization code as a variable
-const AUTHORIZATION_CODE = "Zoho-oauthtoken 1000.ffffdcacc93c99e7274d20bb905ed42c.13369c0f9aeb49f00f933f6158d6b90f";
+let AUTHORIZATION_CODE = "Zoho-oauthtoken 1000.d89a54923c954d482720ca3c8258b4b7.5bd6a03faa7dbf0b81be6107ce943f69";
 
 // Middleware
 app.use(cors());
@@ -20,7 +20,7 @@ app.use('/deal', express.static(path.join(__dirname, 'deal')));
 app.use('/frontPage', express.static(path.join(__dirname, 'frontPage')));
 app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
 
-// Proxy POST request to Zoho API
+//1. Proxy [--POST--] request to Zoho API
 app.post('/postmeeting', async (req, res) => {
     try {
         const obj = req.body; // Get the request body
@@ -49,12 +49,57 @@ app.post('/postmeeting', async (req, res) => {
     }
 });
 
+// 2. [---Cance---l] Meetig Request To ZOHO Meeting API
+app.post('/deletemeeting', async (req, res) => {
+    try { 
+        const response = await fetch('https://meeting.zoho.com/api/v2/60017874042/sessions/{meetingKey}.json',
+             // Pass the body to the Zoho API
+            {
+                method:"DELETE",
+                headers: {
+                    "Authorization": AUTHORIZATION_CODE,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        // Send the response from Zoho API back to the client
+        console.log(await response.json());
+        
+    } catch (error) {
+        console.error('Error:', error.message); // Log the error
+        // Respond with an appropriate error message and status code
+        res.status(error.response?.status || 500).json({ error: error.message });
+    }
+});
+
+
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+// Get REFRESHED Access Token Using Refresh Token
+
+async function getAccessFromRefreshToken(refresh_token)
+{
+    try {
+        
+        let response=await fetch(`https://accounts.zoho.in/oauth/v2/token?
+            refresh_token=${refresh_token}&client_id=1000.3FMW57THDNZF3FG2GQU0UJMPBM0N8B&client_secret=723010f112a8f95732609ce51b857dd55166431874&
+            redirect_uri=https://dmock-crm.vercel.app&
+            grant_type=refresh_token`)
+    }
+    
+    catch (error) {
+        
+    }
+}

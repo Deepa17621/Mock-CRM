@@ -9,6 +9,7 @@ let headArr=["Contact Name", "Contact Mail", "Phone"];
 function displayAcc(obj)
 {
     for (const key in obj) {
+        
         if(key=="Contacts"|| key=="deals")
         {
             if(key=="Contacts")
@@ -70,26 +71,35 @@ function rowClicked(id)
 // Fetch Contact Details To Accounts Module
 async function fetchContactToAcc(id, arr)
 {
-    let res=await fetch(`http://localhost:3000/contacts/${id}`);
-    let out=await res.json();
-    console.log("Contact From Accounts Module");
-    
-    console.log(out);
-    
-    let iterator=arr[Symbol.iterator]();
-    let trr=document.createElement("tr");
-    contactTable.appendChild(trr);
-    trr.setAttribute("id", id);
-    trr.setAttribute("onclick", "rowClicked(this.id)");
-    for (const key in out)
-    {
-            let val=iterator.next().value;
-            console.log(val); 
-            let td=document.createElement("td");
-            trr.appendChild(td);
-            td.className=val;
-            td.textContent=out[td.className];
-    
+    try {
+        let res=await fetch(`http://localhost:3000/contacts/${id}`);
+        let out=await res.json();
+        if(res.ok)
+        {
+            console.log("Contact From Accounts Module");
+        
+            console.log(out);
+        
+            let iterator=arr[Symbol.iterator]();
+            let trr=document.createElement("tr");
+            contactTable.appendChild(trr);
+            trr.setAttribute("id", id);
+            trr.setAttribute("onclick", "rowClicked(this.id)");
+            for (const key in out)
+            {
+                    let val=iterator.next().value;
+                    console.log(val); 
+                    let td=document.createElement("td");
+                    trr.appendChild(td);
+                    td.className=val;
+                    td.textContent=out[td.className];
+            }
+        }
+        else{
+            throw new Error("Contact Not Found");
+        }
+    } catch (error) {
+        throw new Error("Contact Not Found");
     }
 }
 

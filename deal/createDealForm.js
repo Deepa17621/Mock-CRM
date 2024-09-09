@@ -150,7 +150,7 @@ async function updateContactAccount(dealObj, cId, aId)
          });
          let updatedAccount=await putAccount.json();
     } catch (error) {
-        console.error(error)
+        console.log(error)
     }
     
 
