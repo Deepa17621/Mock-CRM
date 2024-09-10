@@ -19,6 +19,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/deal', express.static(path.join(__dirname, 'deal')));
 app.use('/frontPage', express.static(path.join(__dirname, 'frontPage')));
 app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
+app.use('/meetings', express.static(path.join(__dirname, 'meetings')));
 
 //1. Proxy [--POST--] request to Zoho API
 // app.post('/postmeeting', async (req, res) => {
@@ -77,19 +78,22 @@ app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
 // 2. Get MeetingList // WORK IN PROGRESS
 app.get('/getmeetinglist', async (req, res) => {
     try { 
-        const response = await fetch('https://meeting.zoho.com/api/v2/60017874042/sessions.json',
+        const response = await fetch('https://meeting.zoho.in/api/v2/60017874042/sessions.json',
              // Pass the body to the Zoho API
             {
                 method:"GET",
                 headers: {
-                    "Authorization": "Zoho-oauthtoken 1000.4466c9b6dbb51d843ccb17cace20f042.6eb6a617265b322520364bb6289c4eb4",
+                    "Authorization": "Zoho-oauthtoken 1000.e7eed0bee82107399caf0a2ac971dd39.a84f8185253ecde743ca34b4f5f38205",
                     "Content-Type": "application/json"
                 }
             }
         );
 
         // Send the response from Zoho API back to the client
-        console.log(await response.json());
+        let result = await response.json();
+        console.log(result);
+        
+       res.json(result);
         
     } catch (error) {
         console.error('Error:', error.message); // Log the error
