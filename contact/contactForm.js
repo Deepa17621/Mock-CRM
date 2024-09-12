@@ -85,7 +85,7 @@ form.addEventListener("submit", (e)=>{
         console.log(result);
         
     });
-    // return;
+    return;
     window.location.href = clicked ? "http://127.0.0.1:5500/contact/contactList.html" :  "http://127.0.0.1:5500/contact/contactForm.html";
     clicked = null;
 });

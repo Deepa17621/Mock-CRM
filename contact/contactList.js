@@ -1,3 +1,4 @@
+// const { all } = require("axios");
 
 
 // 1=> If Contact Converted From Lead Means-->Get Url.
@@ -206,9 +207,16 @@ const getDataFromContact = async () => {
 
     const res = await fetch(url);
     let allContacts = await res.json(); 
-    tableFunction(allContacts)
+    if(!res.ok)
+    {
+        throw new Error("Error in URL")
+    }
+    else if(allContacts!=null)
+    {
+        tableFunction(allContacts)
     console.log("All Contacts:==>");
     console.log(allContacts);
+    }
     searchInp.addEventListener("keyup", (e)=>{
         e.preventDefault();
         filterField(allContacts);

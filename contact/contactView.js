@@ -1,8 +1,7 @@
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
-console.log(currentId);
-let accountId;
+let accountId ;
 async function getData()
 {
     let url="http://localhost:3000/contacts/";
@@ -14,7 +13,7 @@ async function getData()
     createTable(obj);
     
 }
-console.log(accountId);
+
 
 let email;
 function createTable(data)
@@ -77,34 +76,31 @@ async function  delContact(id)
 }
 
 // Update Account Details By Deleting THE Contact id from associated account.
-async function updateOrganizationDetails(contactId) {
+async function updateOrganizationDetails(contactId) {    
     let contactRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
     let contactObj=await contactRes.json();
-    let accountId=contactObj["OrganizationId"];
-    if(!accountId)
-    {
+    let orgID = contactObj.OrganizationId;  
+    accountId = orgID
+    if(!accountId){
         return;
     }
-
+    
     // Fetch to get organization Details.
     let orgRes=await fetch(`http://localhost:3000/accounts/${accountId}`);
     let orgObj=await orgRes.json();
     let contactArr=(orgObj["Contacts"]).filter((e)=>{
         e!=contactId;
     });
-    console.log(contactArr);
     orgObj["Contacts"]=contactArr;
 
     // Fetch To PUT operation in Organization
-    let putRes=await fetch(`http://localhost:3000/accounts/${accountId}`, {
+    let putRes =await fetch(`http://localhost:3000/accounts/${accountId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(orgObj)
     });
 
 }
-
-
 // Click Event For Delete Contact.
 
 // Before Deleting Contact  here we need to delete the contact Details in Account ALSO.
@@ -113,7 +109,7 @@ delBtn.addEventListener("click",async (e)=>{
     e.preventDefault();
     await updateOrganizationDetails(currentId);
     await delContact(currentId);
-    window.location.href="http://127.0.0.1:5500/contact/contactList.html";
+    window.location.href="contact/contactList.html";
     e.stopPropagation();
 });
 
@@ -124,13 +120,16 @@ editBtn.addEventListener("click", (e)=>{
     window.location.href=`http://127.0.0.1:5500/contact/editContact.html?id=${currentId}`;
 });
 
+
 // Create New Deal 
 
 let dealBtn=document.querySelector("#convert");// create new deal button 
 dealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/deal/createDealForm.html?id=${currentId}&accId=${accountId}`;
+    window.location.href=`http://127.0.0.1:5500/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
+
 });
+
 
 // back button event to navigate to previously visited page
 let backBtn=document.querySelector("#backBtn");
