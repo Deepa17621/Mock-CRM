@@ -1,25 +1,25 @@
 {
-  "leads": [
-    {
-      "id": "b093",
-      "Lead Name": "Prakash",
-      "Lead Mail": "prakash@gmai.com",
-      "Phone": "8765432345",
-      "Address": "mexico",
-      "date": "2024-09-09",
-      "Organization": "Prakash Groups Of Companies"
-    }
-  ],
+  "leads": [],
   "contacts": [
     {
-      "id": "811e",
+      "id": "66b7",
       "deals": [],
-      "Contact Name": "Tokyo",
-      "Contact Mail": "tokyo213@gmail.com",
-      "Phone": "8765432345",
-      "date": "2024-09-09",
-      "Address": "Melbourne",
-      "OrganizationId": "9a16"
+      "Contact Name": "Deepa Rajendiran",
+      "Contact Mail": "deeparajendiran@gmail.com",
+      "Phone": "6382883032",
+      "date": "2024-09-15",
+      "Address": "Kanchipuram",
+      "OrganizationId": "b14e"
+    },
+    {
+      "id": "ddfb",
+      "deals": [],
+      "Contact Name": "Balaji P",
+      "Contact Mail": "balaji2001@gmail.com",
+      "Phone": "6789054321",
+      "date": "2024-09-12",
+      "Address": "Ranipet",
+      "OrganizationId": "b14e"
     }
   ],
   "accounts": [
@@ -32,7 +32,10 @@
       "date": "2024-09-02",
       "AccountAddress": "dubai",
       "AnnualRevenue": "87900000",
-      "Contacts": [],
+      "Contacts": [
+        "66b7",
+        "ddfb"
+      ],
       "deals": []
     },
     {
@@ -56,9 +59,7 @@
       "date": "2024-09-09",
       "AccountAddress": "Sriperumbuthur",
       "AnnualRevenue": "98000000",
-      "Contacts": [
-        "811e"
-      ],
+      "Contacts": [],
       "deals": []
     }
   ],

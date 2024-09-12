@@ -410,6 +410,16 @@ select{
     width: 49%;
 }
 
-
-
+/* LookUp Field Style */
+.lookUp
+{
+    width: 250px;
+    height: 200px;
+    box-shadow: 0 0 10px;
+    z-index: 1;
+    position: absolute;
+    display: none;
+    overflow: auto;
+    background-color: white;
+}
 

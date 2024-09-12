@@ -1,7 +1,6 @@
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
-
 let currentId=param.get("id");
 console.log(currentId);
 

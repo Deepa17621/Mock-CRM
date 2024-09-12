@@ -1,66 +1,80 @@
-// Getting URL --> If deal creation handled by contact
+// const { Double } = require("mongodb");
 
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
-let contactId=param.get("id");
+// FROM ACCOUNT MODULE---Acc Id
+let accIdFromAccModule=param.get("id");
+console.log(accIdFromAccModule);
+
+
+// Getting URL --> If deal creation handled by contact
+let contactId=param.get("contactid");
 let accountId=param.get("accId");
-console.log("ContactId="+contactId);
-console.log("AccountId="+accountId);
-
-
 
 let fetchedContact;
 let fetchedAccount;
+// Step-1 ==>If Deal Creation done by Contact Module....
 if(contactId!=null  && accountId!=null)
 {
-    getContact(contactId, accountId)
+    console.log("ContactId="+contactId);
+    console.log("AccountId="+accountId);
+    getContact(contactId, accountId); // Line Number - 28
+}
+else if(accIdFromAccModule){
+    console.log("THIS DEAL IS CREATE BY ACCOUNT");
+    getOrgDetail(accIdFromAccModule);
+}
+else if(!contactId && !accountId && !accIdFromAccModule)
+{
+    setDataToFormFields("Dummy", "Dummy");
 }
 
 
 // Fetch Contact & Account Details
-async function getContact(cId, aId) 
+async function getContact(cId, aId)  // LIne Number 19
 {
+    let contactObjs = [];
+    let accObj=await fetchAccById(aId);
     try {
-        let contactRes=await fetch(`http://localhost:3000/contacts/${cId}`);
-        let contactObj=await contactRes.json();
+        // Check if cId is an array
+        if (Array.isArray(cId)) {
+            let contactRes = await fetch(`http://localhost:3000/contacts`);
+            let contactObj = await contactRes.json();
 
-        let accountRes=await fetch(`http://localhost:3000/accounts/${aId}`);
-        let accObj=await accountRes.json();
-            setDataToFormFields(contactObj, accObj);    
+            // Iterate over cId array
+            for (let e of cId) {
+                // Iterate over contactObj array
+                for (let obj of contactObj) {
+                    if (e === obj.id) {
+                        contactObjs.push(obj);
+                        break; 
+                    }
+                }
+            }
+            setDataToFormFields("dummy",accObj);
+            return;
+        }
+        let conById=fetchContById(cId);
+        // Assuming setDataToFormFields is defined elsewhere
+        setDataToFormFields(conById, accObj);
     } catch (error) {
-      console.error(error);
-      
+        console.error('An error occurred:', error);
     }
 }
 
+// If Deal Creation Done By Account Module
+async function getOrgDetail(accId) {
+
+    let accObj=await fetchAccById(accId);
+    getContact(accObj.Contacts, accId);
+}
 let myForm=document.querySelector("form");
 
 // save and saveNew
 let clicked=null;
 
-// 1. Cancel Button
-let cancelBtn=document.querySelector("#cancelBtn");
-cancelBtn.addEventListener("click", (e)=>{
-    e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/deal/dealList.html`;
-});
 
-// 2. Save Button
-let saveBtn=document.querySelector("#leadSubmitBtn");
-saveBtn.addEventListener("click", (e)=>{
-    e.preventDefault();
-    clicked=1;
-    myForm.requestSubmit();
-});
-
-// 3. Save and New Button
-let saveNewBtn=document.querySelector("#saveNewBtn");
-saveNewBtn.addEventListener("click", (e)=>{
-    e.preventDefault();
-    clicked=0;
-    myForm.requestSubmit();
-});
 
 // Form Fields
 let dealOwner=document.querySelector("#dealOwner");
@@ -78,14 +92,47 @@ stage.addEventListener("change",()=>{
     
 })
 
+// LookUp Field List
+const contsList=document.querySelector("#listOfContacts");
+const accList=document.querySelector("#listOfAccs");
 
+
+ 
 // Setting predefined values of existing account and contact
-function setDataToFormFields(cObj, aObj)
+async function setDataToFormFields(cObj, aObj)
 {
-    contactName.value=cObj["Contact Name"];
-    contactName.setAttribute("disabled", "true");
-    accountName.setAttribute("disabled", "true");
-    accountName.value=aObj["AccountName"];
+    if(cObj && aObj ==="Dummy")
+    {
+        let allContacts=await fetchAllContacts();
+        let allAccounts=await fetchALLAccounts();
+        allContacts.forEach(obj => {
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li value=${obj.id} onclick="dataClicked(this.id)">${obj["Contact Name"]}</li>`;
+            contsList.appendChild(lii);
+        });
+        allAccounts.forEach(obj=>{
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li id=${obj.id} onclick="dataClicked(this.id)>${obj.AccountName}</li>`;
+            accList.appendChild(lii);
+        })
+    }
+    else if(cObj!=="dummy" )
+    {
+        contactName.value=cObj["Contact Name"];
+        contactName.setAttribute("disabled", "true");
+    }
+    else if(aObj!=="Dummy")
+    {
+        accountName.setAttribute("disabled", "true");
+        accountName.value=aObj["AccountName"];
+    }
+    
+}
+
+// Click Function to set Data to Input Field by Clicking the LookUp
+function dataClicked(inpTag, id)
+{
+    
 }
 
 // Form Submit Event
@@ -124,13 +171,11 @@ async function updateContactAccount(dealObj, cId, aId)
 {
     try {
         //fetch contact- to update deal details to contact
-        let cr1=await fetch(`http://localhost:3000/contacts/${cId}`);
-        let contactToBeUpdated=await cr1.json();
+        let contactToBeUpdated= await fetchContById(cId);
         contactToBeUpdated["deals"].push(dealObj["id"]);
 
-        // fetch account to update about the deal details
-        let ar1=await fetch(`http://localhost:3000/accounts/${aId}`);
-        let accountToBeUpdated=await ar1.json();
+        // fetch account to update  the deal details
+        let accountToBeUpdated=await fetchAccById(aId);
         accountToBeUpdated["deals"].push(dealObj["id"]);
 
         // put method for contact
@@ -156,8 +201,7 @@ async function updateContactAccount(dealObj, cId, aId)
 
 }
 
-// POST - Save Dato to JSON
-
+// POST Method For Deal Creation- Save Deal Data
 async function saveDeal(obj)
 {
     let res=await fetch("http://localhost:3000/deals", {
@@ -170,6 +214,97 @@ async function saveDeal(obj)
     return out;
 }
 
+// ===========> DAO <============
+// FETCH TO GET THE ACCOUNT DETAILS By ID
+async function fetchAccById(aId) {
+    try {
+        let accResponse=await fetch(`http://localhost:3000/accounts/${aId}`);
+        if(!accResponse.status==200)
+        {
+           throw new Error("Error Occured: "+ accResponse.statusText);
+        }
+        let accObj=await accResponse.json();
+        return accObj;
+    } catch (error) {
+        throw new Error("Error: "+ error);
+    }
+}
+
+// Fetch to get Contact Details By Id
+async function fetchContById(conId) {
+    try {
+        let res=await fetch(`http://localhost:3000/accounts/${conId}`);
+        if(!res.status==200)
+        {
+            throw new Error("Error in Fetching Data---"+ res.status + res.statusText);
+        }
+        let contactObj=await res.json();
+        return contactObj;
+    } catch (error) {
+        throw new Error("Error: "+ error);
+    }
+}
+
+// Fetch All Contacts And Accounts
+async function fetchAllContacts() {
+    try {
+        let res=await fetch(`http://localhost:3000/contacts`);
+    if(!res.ok)
+    {
+        throw new Error("Error in Fetching Data");
+    }
+    let arr=await res.json();
+    return arr;
+    } catch (error) {
+        console.log("error"+error);
+        
+    }
+}
+
+// Fetch All Accounts 
+async function  fetchALLAccounts() {
+    try {
+        let res=await fetch(`http://localhost:3000/accounts`);
+    if(!res.ok)
+    {
+        throw new Error("Error in Fetching Data");
+    }
+    let arr=await res.json();
+    return arr;
+    } catch (error) {
+        
+    }
+}
+
+// 1. Cancel Button
+let cancelBtn=document.querySelector("#cancelBtn");
+cancelBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`http://127.0.0.1:5500/deal/dealList.html`;
+});
+
+// 2. Save Button
+let saveBtn=document.querySelector("#leadSubmitBtn");
+saveBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    clicked=1;
+    myForm.requestSubmit();
+});
+
+// 3. Save and New Button
+let saveNewBtn=document.querySelector("#saveNewBtn");
+saveNewBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    clicked=0;
+    myForm.requestSubmit();
+});
+
+// Click Event For LookUp View
+let lookUpForContact=document.querySelector("#lookUpForContact");
+contactName.addEventListener("click", (e)=>{
+    e.preventDefault();
+    lookUpForContact.style.display="block";
+});
 
 // Form Validation
 function setError(tag)

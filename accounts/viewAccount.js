@@ -1,3 +1,5 @@
+// const { Double } = require("mongodb");
+
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
@@ -180,4 +182,11 @@ let backBtn=document.querySelector("#backBtn");
 backBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.history.go(-1);
+});
+
+// Create Deal For Specified Account Along With Contact Detail.
+let createDealFromAccount=document.querySelector("#convert");
+createDealFromAccount.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../deal/createDealForm.html?id=${currentId}`; // Here current id refers Current Viewed Account s
 })
