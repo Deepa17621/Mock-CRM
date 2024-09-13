@@ -7,7 +7,9 @@ console.log(currentId);
 let mailButton;
 let accTable=document.getElementById("accTable");
 let contactTable=document.getElementById("contactsInAcc");
-let headArr=["Contact Name", "Contact Mail", "Phone"];
+let dealTable=document.querySelector("#dealsInAcc");
+let headArrForContact=["Contact Name", "Contact Mail", "Phone"];
+let headArrForDeals=["DealName", "id", "Amount", "Stage", "ClosingDate"];
 function displayAcc(obj)
 {
     for (const key in obj) {
@@ -28,7 +30,30 @@ function displayAcc(obj)
                 thead.appendChild(td3);
                 td3.innerHTML="Contact Phone";
                 obj[key].forEach(e => {
-                    fetchContactToAcc(e, headArr); 
+                    fetchContactToAcc(e, headArrForContact); 
+                });
+            }
+            else if(key=="deals")
+            {
+                let thead=document.createElement("tr");
+                dealTable.appendChild(thead);
+                let td1=document.createElement("th");
+                thead.appendChild(td1);
+                td1.innerHTML="DealName";
+                let td2=document.createElement("th");
+                thead.appendChild(td2);
+                td2.innerHTML="id";
+                let td3=document.createElement("th");
+                thead.appendChild(td3);
+                td3.innerHTML="Amount";
+                let td4=document.createElement("th");
+                thead.appendChild(td4);
+                td4.innerHTML="Stage";
+                let td5=document.createElement("th");
+                thead.appendChild(td5);
+                td5.innerHTML="ClosingDate";
+                obj[key].forEach(e => {
+                    fetchDealToAcc(e, headArrForDeals); 
                 });
             }
         }
@@ -81,7 +106,6 @@ async function fetchContactToAcc(id, arr)
             console.log("Contact From Accounts Module");
         
             console.log(out);
-        
             let iterator=arr[Symbol.iterator]();
             let trr=document.createElement("tr");
             contactTable.appendChild(trr);
@@ -102,6 +126,43 @@ async function fetchContactToAcc(id, arr)
         }
     } catch (error) {
         throw new Error("Contact Not Found");
+    }
+}
+
+// Fetch Deal Details to Accounts Module
+async function fetchDealToAcc(id, arr)
+{
+    try {
+        let res=await fetch(`http://localhost:3000/deals/${id}`);
+        let out=await res.json();
+        if(res.ok)
+        {
+            console.log("Deals From Accounts Module");
+        
+            console.log(out);
+            let iterator=arr[Symbol.iterator]();
+            let trr=document.createElement("tr");
+            dealTable.appendChild(trr);
+            trr.setAttribute("id", id);
+            trr.addEventListener("click", (e)=>{
+                e.preventDefault();
+                window.location.href=`/deal/dealView.html?id=${id}`
+            })
+            for (const key in out)
+            {
+                    let val=iterator.next().value;
+                    console.log(val); 
+                    let td=document.createElement("td");
+                    trr.appendChild(td);
+                    td.className=val;
+                    td.textContent=out[td.className];
+            }
+        }
+        else{
+            throw new Error("Deal Not Found");
+        }
+    } catch (error) {
+        throw new Error("Deal Not Found");
     }
 }
 
