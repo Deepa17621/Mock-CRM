@@ -3,7 +3,9 @@
   "contacts": [
     {
       "id": "66b7",
-      "deals": [],
+      "deals": [
+        "1f39"
+      ],
       "Contact Name": "Deepa Rajendiran",
       "Contact Mail": "deeparajendiran@gmail.com",
       "Phone": "6382883032",
@@ -13,7 +15,9 @@
     },
     {
       "id": "ddfb",
-      "deals": [],
+      "deals": [
+        "3844"
+      ],
       "Contact Name": "Balaji P",
       "Contact Mail": "balaji2001@gmail.com",
       "Phone": "6789054321",
@@ -36,7 +40,9 @@
         "66b7",
         "ddfb"
       ],
-      "deals": []
+      "deals": [
+        "1f39"
+      ]
     },
     {
       "id": "adfe",
@@ -110,6 +116,30 @@
       "ClosingDate": "2024-09-16",
       "Stage": "stage2",
       "ContactId": "3b06",
+      "AccountId": "b14e"
+    },
+    {
+      "id": "9f6f",
+      "DealOwner": "padma",
+      "DealName": "deal-11",
+      "ContactName": "Deepa Rajendiran",
+      "AccountName": "GGHSS",
+      "Amount": "908000000",
+      "ClosingDate": "2024-09-14",
+      "Stage": "stage2",
+      "ContactId": "",
+      "AccountId": ""
+    },
+    {
+      "id": "1f39",
+      "DealOwner": "Prakash",
+      "DealName": "prakash's Deal",
+      "ContactName": "Deepa Rajendiran",
+      "AccountName": "SSSA Constructions",
+      "Amount": "900000000000",
+      "ClosingDate": "2024-09-13",
+      "Stage": "stage3",
+      "ContactId": "66b7",
       "AccountId": "b14e"
     }
   ]

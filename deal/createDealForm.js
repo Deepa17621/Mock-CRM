@@ -107,12 +107,24 @@ async function setDataToFormFields(cObj, aObj)
         let allAccounts=await fetchALLAccounts();
         allContacts.forEach(obj => {
             let lii=document.createElement("li")
-            lii.innerHTML=`<li value=${obj.id} onclick="dataClicked(this.id)">${obj["Contact Name"]}</li>`;
+            lii.innerHTML=`<li value=${obj.id}>${obj["Contact Name"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                contactName.id=obj.id;
+                contactName.value=obj["Contact Name"];    
+                lookUpForContact.style.display="none";
+            });
             contsList.appendChild(lii);
         });
         allAccounts.forEach(obj=>{
             let lii=document.createElement("li")
-            lii.innerHTML=`<li id=${obj.id} onclick="dataClicked(this.id)>${obj.AccountName}</li>`;
+            lii.innerHTML=`<li value=${obj.id}>${obj["AccountName"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                accountName.id=obj.id;
+                accountName.value=obj.AccountName;
+                lookUpForAccount.style.display="none";
+            })
             accList.appendChild(lii);
         })
     }
@@ -126,12 +138,6 @@ async function setDataToFormFields(cObj, aObj)
         accountName.setAttribute("disabled", "true");
         accountName.value=aObj["AccountName"];
     }
-    
-}
-
-// Click Function to set Data to Input Field by Clicking the LookUp
-function dataClicked(inpTag, id)
-{
     
 }
 
@@ -158,11 +164,9 @@ myForm.addEventListener("submit", (e)=>{
         "ContactId":"",
         "AccountId":""
     }
-    if(contactId!=null || accountId!=null)
-    {
-        obj["ContactId"]=contactId;
-        obj["AccountId"]=accountId;
-    }
+    
+        obj["ContactId"]=!contactId?contactName.id:contactId;
+        obj["AccountId"]=!accountId?(accIdFromAccModule?accIdFromAccModule:accountName.id):accountId;
     saveDeal(obj);
     // window.location.href=clicked?`http://127.0.0.1:5500/deal/dealList.html`:"http://127.0.0.1:5500/deal/createDealForm.html";
 });
@@ -188,7 +192,7 @@ async function updateContactAccount(dealObj, cId, aId)
          let updatedCotact=await putContact.json();
 
          // put method for account
-         let putAccount=await fetch(`http://localhost:3000/contacts/${aId}`,{
+         let putAccount=await fetch(`http://localhost:3000/accounts/${aId}`,{
             method:"PUT",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(accountToBeUpdated)
@@ -210,7 +214,7 @@ async function saveDeal(obj)
         body:JSON.stringify(obj)
     });
     let out=await res.json();
-    updateContactAccount(out, contactId, accountId);
+    updateContactAccount(out, out.ContactId, out.AccountId);
     return out;
 }
 
@@ -233,7 +237,7 @@ async function fetchAccById(aId) {
 // Fetch to get Contact Details By Id
 async function fetchContById(conId) {
     try {
-        let res=await fetch(`http://localhost:3000/accounts/${conId}`);
+        let res=await fetch(`http://localhost:3000/contacts/${conId}`);
         if(!res.status==200)
         {
             throw new Error("Error in Fetching Data---"+ res.status + res.statusText);
@@ -272,6 +276,7 @@ async function  fetchALLAccounts() {
     let arr=await res.json();
     return arr;
     } catch (error) {
+        console.log(error);
         
     }
 }
@@ -299,12 +304,19 @@ saveNewBtn.addEventListener("click", (e)=>{
     myForm.requestSubmit();
 });
 
-// Click Event For LookUp View
+// Click Event For LookUp View - Contact LookUp
 let lookUpForContact=document.querySelector("#lookUpForContact");
 contactName.addEventListener("click", (e)=>{
     e.preventDefault();
     lookUpForContact.style.display="block";
 });
+
+// Click Event For LookUp View - Account LookUp
+let lookUpForAccount=document.querySelector("#lookUpForAcc");
+accountName.addEventListener("click", (e)=>{
+    e.preventDefault();
+    lookUpForAccount.style.display="block";
+})
 
 // Form Validation
 function setError(tag)
