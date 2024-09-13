@@ -18,7 +18,8 @@
       "id": "ddfb",
       "deals": [
         "3844",
-        "d907"
+        "d907",
+        "eaea"
       ],
       "Contact Name": "Balaji P",
       "Contact Mail": "balaji2001@gmail.com",
@@ -45,7 +46,8 @@
       "deals": [
         "1f39",
         "d907",
-        "23d5"
+        "23d5",
+        "eaea"
       ]
     },
     {
@@ -85,18 +87,6 @@
       "Stage": "stage2",
       "ContactId": "3b06",
       "AccountId": "b14e"
-    },
-    {
-      "id": "2594",
-      "DealOwner": "Balaji",
-      "DealName": "BalaG's Deal-2",
-      "ContactName": "Deepa",
-      "AccountName": "Admindroid",
-      "Amount": "87000000",
-      "ClosingDate": "2024-09-05",
-      "Stage": "stage3",
-      "ContactId": "ef31",
-      "AccountId": "8f94"
     },
     {
       "id": "5e06",
@@ -168,6 +158,18 @@
       "ClosingDate": "2024-09-14",
       "Stage": "stage3",
       "ContactId": "66b7",
+      "AccountId": "b14e"
+    },
+    {
+      "id": "eaea",
+      "DealOwner": "Catherine",
+      "DealName": "Catherine's Deal",
+      "ContactName": "Balaji P",
+      "AccountName": "SSSA Constructions",
+      "Amount": "890000000",
+      "ClosingDate": "2024-09-14",
+      "Stage": "stage2",
+      "ContactId": "ddfb",
       "AccountId": "b14e"
     }
   ]

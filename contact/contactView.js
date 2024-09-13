@@ -6,10 +6,9 @@ async function getData()
 {
     let url="http://localhost:3000/contacts/";
     let res=await fetch(url+currentId);
-    // console.log(res);
     
     let obj=await res.json();
-    accountId=obj["OrganiztionId"];
+    accountId=obj["OrganizationId"];
     createTable(obj);
     
 }

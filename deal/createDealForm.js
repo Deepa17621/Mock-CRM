@@ -41,7 +41,7 @@ async function getContact(cId, aId)  // LIne Number 19
             setDataToFormFields(cId,accObj);
             return;
         }
-        let conById=fetchContById(cId);
+        let conById=await fetchContById(cId);
         // Assuming setDataToFormFields is defined elsewhere
         setDataToFormFields(conById, accObj);
     } catch (error) {
@@ -135,7 +135,8 @@ async function setDataToFormFields(cObj, aObj)
     {
         contactName.value=cObj["Contact Name"];
         contactName.setAttribute("disabled", "true");
-        
+        accountName.setAttribute("disabled", "true");
+        accountName.value=aObj["AccountName"];
     }
     
 }
