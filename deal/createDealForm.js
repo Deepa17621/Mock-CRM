@@ -34,25 +34,11 @@ else if(!contactId && !accountId && !accIdFromAccModule)
 // Fetch Contact & Account Details
 async function getContact(cId, aId)  // LIne Number 19
 {
-    let contactObjs = [];
     let accObj=await fetchAccById(aId);
     try {
         // Check if cId is an array
         if (Array.isArray(cId)) {
-            let contactRes = await fetch(`http://localhost:3000/contacts`);
-            let contactObj = await contactRes.json();
-
-            // Iterate over cId array
-            for (let e of cId) {
-                // Iterate over contactObj array
-                for (let obj of contactObj) {
-                    if (e === obj.id) {
-                        contactObjs.push(obj);
-                        break; 
-                    }
-                }
-            }
-            setDataToFormFields("dummy",accObj);
+            setDataToFormFields(cId,accObj);
             return;
         }
         let conById=fetchContById(cId);
@@ -128,15 +114,28 @@ async function setDataToFormFields(cObj, aObj)
             accList.appendChild(lii);
         })
     }
-    else if(cObj!=="dummy" )
+    else if(Array.isArray(cObj) ) // Here cObj Refers Contact Array From Account
     {
-        contactName.value=cObj["Contact Name"];
-        contactName.setAttribute("disabled", "true");
+        cObj.forEach(async(id)=> {
+            let obj=await fetchContById(id);
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li value=${obj.id}>${obj["Contact Name"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                contactName.id=obj.id;
+                contactName.value=obj["Contact Name"];    
+                lookUpForContact.style.display="none";
+            });
+            contsList.appendChild(lii);
+        });
+        accountName.setAttribute("disabled", "true");
+        accountName.value=aObj["AccountName"];
     }
     else if(aObj!=="Dummy")
     {
-        accountName.setAttribute("disabled", "true");
-        accountName.value=aObj["AccountName"];
+        contactName.value=cObj["Contact Name"];
+        contactName.setAttribute("disabled", "true");
+        
     }
     
 }
