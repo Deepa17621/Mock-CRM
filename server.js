@@ -37,7 +37,7 @@ app.post('/postmeeting', async (req, res) => {
     try {
         const obj = req.body; // Get the request body
         const response = await axios.post(
-            ZOHO_API_URL,
+            "https://meeting.zoho.in/api/v2/60017874042/sessions.json",
             obj,
             {
                 headers: {
