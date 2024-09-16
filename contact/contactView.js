@@ -1,7 +1,18 @@
+import dao from "/controller/dao";
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
 let accountId ;
+let dealsArr;
+
+
+let contactInstance=new dao(`http://localhost:3000/contacts/`);
+let currentContactObj=contactInstance.getById(currentId).then((data)=>{
+    console.log(data);
+    
+})
+// console.log(currentContactObj);
+
 async function getData()
 {
     let url="http://localhost:3000/contacts/";
@@ -9,8 +20,11 @@ async function getData()
     
     let obj=await res.json();
     accountId=obj["OrganizationId"];
+    dealsArr=obj["deals"];
+    console.log(obj['deals']);
+    console.log(dealsArr);
     createTable(obj);
-    
+    listDownDeals();
 }
 
 
@@ -78,8 +92,8 @@ async function  delContact(id)
 async function updateOrganizationDetails(contactId) {    
     let contactRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
     let contactObj=await contactRes.json();
-    let orgID = contactObj.OrganizationId;  
-    accountId = orgID
+    let orgID =contactObj.OrganizationId;  
+    accountId = orgID;
     if(!accountId){
         return;
     }
@@ -121,13 +135,20 @@ editBtn.addEventListener("click", (e)=>{
 
 
 // Create New Deal 
-
 let dealBtn=document.querySelector("#convert");// create new deal button 
 dealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`http://127.0.0.1:5500/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
 
 });
+
+// List Down Deals Details
+let dealTable=document.querySelector("#dealTable");
+function listDownDeals()
+{
+    let thead=document.createElement("tr");
+
+}
 
 
 // back button event to navigate to previously visited page
@@ -168,7 +189,7 @@ let agenda=document.querySelector("#agenda");
 // let endTime=document.querySelector("#endTime");
 let presenterId=document.querySelector("#presenterId");
 let participants=document.querySelector("#participants");
-// Meeting Form Event
+// Meeting Form  submit Event
 const meetingForm=document.querySelector("#meetingForm");
 meetingForm.addEventListener("submit", async (e) => {
     e.preventDefault();

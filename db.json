@@ -159,18 +159,6 @@
       "Stage": "stage3",
       "ContactId": "66b7",
       "AccountId": "b14e"
-    },
-    {
-      "id": "eaea",
-      "DealOwner": "Catherine",
-      "DealName": "Catherine's Deal",
-      "ContactName": "Balaji P",
-      "AccountName": "SSSA Constructions",
-      "Amount": "890000000",
-      "ClosingDate": "2024-09-14",
-      "Stage": "stage2",
-      "ContactId": "ddfb",
-      "AccountId": "b14e"
     }
   ]
 }
