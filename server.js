@@ -2,11 +2,12 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const axios = require('axios');
+const { log } = require('console');
 const app = express();
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-const ACCESS_TOKEN = "1000.240710760d010aabbb970b4b068cbd39.9e2c532dee3d0511dbc8edb20616a8d0";
+const ACCESS_TOKEN = "1000.f35e0680230e93b777f7cf8777510c19.8561842731855fd9abc3bfd04f41cb28";
 const REFRESH_TOKEN = "1000.3f671416c359ae859af145b0a0c35989.0dc79244a529ff3cc57be96b31d8e4af";
 const CLIENT_ID = "1000.3FMW57THDNZF3FG2GQU0UJMPBM0N8B"
 const CLIENT_SECRET = "723010f112a8f95732609ce51b857dd55166431874";
@@ -56,11 +57,11 @@ app.post('/postmeeting', async (req, res) => {
 });
 
 // 2. [---Cancel---] Meeting Request To ZOHO Meeting API
-app.post('/deletemeeting', async (req, res) => {
+app.delete('/deletemeeting/:meetingKey', async (req, res) => {
     try {
-        const { meetingKey } = req.body; // Get the meeting key from request body
+        const { meetingKey } = req.params; // Get the meeting key from request body
         const response = await fetch(
-            `https://meeting.zoho.com/api/v2/60017874042/sessions/${meetingKey}.json`,
+            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
             {
                 method:"DELETE",
                 headers: {
@@ -131,33 +132,41 @@ app.get('/editmeeting', async (req, res) => {
     }
 });
 
+// 5. Get Meeting By MeetingKey
+app.get(`/getmeeting/:meetingKey`, async (req, res) => {
+    try {
+        let {meetingKey}=req.params;
+        const response = await fetch(
+            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
+            {
+                method:"GET",
+                headers: {
+                    "Authorization":"Zoho-oauthtoken "+ ACCESS_TOKEN,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
 
-
-
-// // Get REFRESHED Access Token Using Refresh Token
-// async function getAccessFromRefreshToken() {
-//     try {
-//         const response = await axios.post("https://accounts.zoho.in/oauth/v2/token",{})
-//         if(!response.ok)
-//         {
-//             throw new Error("Error: "+response.status + " "+ response.message)
-//         }
-//         console.log('New Access Token:', response.data);
-//         // You might want to store this token somewhere or update your application logic accordingly
-
-//     } catch (error) {
-//         console.error('Error refreshing access token:', error.message);
-//     }
-// }
-
-// // Call the function to refresh token
-// getAccessFromRefreshToken();
-
-// Serve index.html for all other routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+        if(!response.ok)
+        {
+            throw new Error("Error: "+response.status+ " "+ response.message)
+        }
+        const parsedResponse=await response.json();
+        res.json(parsedResponse);        
+    } catch (error) {
+        console.error('Error:', error.message); // Log the error
+        res.status(error.response?.status || 500).json({ error: error.message });
+    }
 });
 
+//Getting Refresh Token
+app.post(`/getAccessToken`,async(req,res)=>{
+    try {
+        let response=await fetch(TOKEN_URL,)
+    } catch (error) {
+        
+    }
+})
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

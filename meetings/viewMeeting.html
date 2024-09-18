@@ -38,41 +38,44 @@
     </div>
     <!-- Nav Container End -->
 
-     <!-- Second Nav Starts -->
-    <div id="secondNav">
-        <ul id="leadFormSecondNavUl">
-        <div id="left">
-            <li><button id="backBtn">All Meetings</button></li>
-             <li><h4 id="name"></h4></li>
+     <!-- Body Container with two partition -->
+    <div id="bodyContainer">
+        <div id="leftPanelContainer">
+            <div id="">
+                <button id="backBtn">All Meetings</button>
+            </div>
         </div>
-        <div id="right">
-            <li><button>Send Email</button></li>
-            <li >
-                <button id="editBtn" >Edit</button>
-            </li>
-            <li>
-                <button id="deleteMeeting">cancel Meeting</button>
-            </li>
-            <li>
-                <button>Start Meeting</button>
-            </li>
-            <li><button id="meetingMenuBar" style="width: 60px; height: 25px;"><b>...</b></button></li>
+        <div id="rightPanelContainer">
+            <div id="topContainerForMeetingView">
+                <div id="titleContainer">
+
+                </div>
+                <div id="btnContainer">
+                    <button id="startMeetBtn">Start Meeting</button>
+                    <button id="editMeetBtn">Edit</button>
+                    <button id="deleteMeetBtn">Cancel</button>
+                </div>
+            </div>
+            <div id="bodyContainerForMeetingView">
+                <div id="timeContainer" class="cards">
+
+                </div>
+                <br>
+                <div id="participantsContainer" class="cards">
+                    <div>
+                        <span>Participants</span>
+                        <button>add</button>
+                    </div>
+                    <hr>
+
+                </div>
+                <br>
+                <div id="otherInfoContainer" class="cards" >
+
+                </div>
+            </div>
         </div>
-        </ul>
     </div>
-     <!-- Second Nav Ends -->
-
-    <!-- Home Container For Lead View -->
-     <div id="parentContainer">
-        <div id="filterContainer">
-
-        </div>
-        <div id="leadViewHomeContainer">
-           <table id="view">
-           </table>
-   
-       </div>
-     </div>
 
 
     <script src="/meetings/viewMeeting.js"></script>
