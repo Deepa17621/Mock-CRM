@@ -1,4 +1,3 @@
-// const { Double } = require("mongodb");
 
 let url=window.location.search;
 let param=new URLSearchParams(url);

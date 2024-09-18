@@ -1,16 +1,20 @@
-import dao from "/controller/dao";
+import dao from "/controller/dao.js";
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
 let accountId ;
 let dealsArr;
+let deepa;
 
+const contactInstance=new dao(`http://localhost:3000/contacts/`);
+contactInstance.getById(currentId).then((data)=>{
+    deepa=data;
+    console.log(data);  
+});
 
-let contactInstance=new dao(`http://localhost:3000/contacts/`);
-let currentContactObj=contactInstance.getById(currentId).then((data)=>{
-    console.log(data);
-    
-})
+setTimeout(()=>{console.log(deepa)}
+, 2000);
+
 // console.log(currentContactObj);
 
 async function getData()
@@ -36,12 +40,12 @@ function createTable(data)
     let tbl=document.querySelector("#view");
     for (const key in data) 
     {
-        if(key=="Contact Mail") {
-            email=data[key];
-            let tr=document.createElement("tr");
+        let tr=document.createElement("tr");
             tbl.appendChild(tr);
             let td1=document.createElement("td");
             let td2=document.createElement("td");
+        if(key=="Contact Mail") {
+            email=data[key];
             td1.textContent=key;
             td2.innerHTML=`<span><a href="mailto:${data[key]}" class="maill">${data[key]}</a></span>`;
             tr.appendChild(td1);
@@ -50,10 +54,6 @@ function createTable(data)
         }
         if(key==="Phone")
         {
-            let tr=document.createElement("tr");
-            tbl.appendChild(tr);
-            let td1=document.createElement("td");
-            let td2=document.createElement("td");
             td1.textContent=key;
             td2.innerHTML=`<span><a href="tel:${data[key]}">${data[key]}</a></span>`;
             tr.appendChild(td1);
@@ -65,9 +65,9 @@ function createTable(data)
         let td=document.createElement("td");
         td.innerHTML=key.toUpperCase();
         row.appendChild(td);
-        let td2=document.createElement("td");
-        td2.textContent=data[key];
-        row.appendChild(td2);
+        let td3=document.createElement("td");
+        td3.textContent=data[key];
+        row.appendChild(td3);
     }
 }
 // 1. Flow-1
@@ -223,13 +223,10 @@ meetingForm.addEventListener("submit", async (e) => {
             // If response status is not in the range 200-299, throw an error
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
-
-        // Parse the JSON response
         const responseBody = await response.json();
         console.log(responseBody);
 
     } catch (error) {
-        // Handle errors
         console.error("Error:", error);
     }
 });
