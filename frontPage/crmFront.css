@@ -422,4 +422,65 @@ select{
     overflow: auto;
     background-color: white;
 }
+#bodyContainer
+{
+    display: flex;
+    width: 100vw;
+    height: 90vh;
+}
+#leftPanelContainer
+{
+    width: 18%;
+    height: 100%;
+    box-shadow: 0 0 5px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#rightPanelContainer
+{
+    width: 90%;
+    height: 100%;
+}
+#topContainerForMeetingView
+{
+    height: 15%;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+}
+#titleContainer
+{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+#btnContainer
+{
+    width: 37%;
+    border: 1px solid black;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: right;
+    padding: 10px;
+}
+#bodyContainerForMeetingView
+{
+    width: 80%;
+    height: 100%;
+    padding-left: 30px;
+    padding-top: 18px;
+}
+.cards{
+    width: 80%;
+    box-shadow: 0 0 4px;
+    /* height: 25%; */
+    border-radius: 4px;
+}
+
+
+
 
