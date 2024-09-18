@@ -59,7 +59,7 @@ function sendToTable(obj)
 
 function rowClickedEvent(meetingKey)
 {
-    window.location.href=`/meeting/viewMeeting.html/${meetingKey}`;
+    window.location.href=`/meetings/viewMeeting.html?meetingKey=${meetingKey}`;
 }
 
 // menu bar for delete and Edit Meeting Details
