@@ -230,7 +230,5 @@ meetingForm.addEventListener("submit", async (e) => {
         console.error("Error:", error);
     }
 });
-
-
-// 2. Cancel Meeting  
+  
 

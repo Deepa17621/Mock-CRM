@@ -62,6 +62,76 @@ function rowClickedEvent(meetingKey)
     window.location.href=`/meetings/viewMeeting.html?meetingKey=${meetingKey}`;
 }
 
-// menu bar for delete and Edit Meeting Details
+// 1. Meeting Creation Event-----> Create Meeting <----------
+let dialog=document.querySelector("#dialogbox");
+let meetingBtn=document.querySelector("#createMeeting");
+let meetingCancelBtn=document.querySelector("#meetingCancelBtn");
+meetingBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    dialog.showModal();
+});
+
+// Meeting close event--- dialog box closing event
+meetingCancelBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    dialog.close();
+});
+
+// meeting save button
+let meetingSaveBtn=document.querySelector("#meetingSaveBtn");
+
+meetingSaveBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    meetingForm.requestSubmit();
+});
+// Meeting Form Data
+let meetingTopic=document.querySelector("#topic");
+let mlocation=document.querySelector("#location");
+let startTime=document.querySelector("#startTime");
+let agenda=document.querySelector("#agenda");
+// let endTime=document.querySelector("#endTime");
+let presenterId=document.querySelector("#presenterId");
+let participants=document.querySelector("#participants");
+// Meeting Form  submit Event
+const meetingForm=document.querySelector("#meetingForm");
+meetingForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Request Body
+    const session = {
+        "session": {
+            "topic": meetingTopic.value,
+            "agenda": agenda.value,
+            "presenter": presenterId.value,
+            "startTime": "Jun 19, 2025 07:00 PM",
+            "timezone": "Asia/Calcutta",
+            "participants": [
+                {
+                    "email": participants.value
+                }
+            ]
+        }
+    };
+
+    try {
+        const response = await fetch('http://localhost:5500/postmeeting', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(session) // Convert the session object to a JSON string
+        });
+
+        if (!response.ok) {
+            // If response status is not in the range 200-299, throw an error
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const responseBody = await response.json();
+        console.log(responseBody);
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
 
 

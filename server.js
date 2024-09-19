@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-const ACCESS_TOKEN = "1000.f35e0680230e93b777f7cf8777510c19.8561842731855fd9abc3bfd04f41cb28";
+const ACCESS_TOKEN = "1000.77af8bbbde3db80430becd66a6855b40.e1dd35307e9925404476afd63d7829f2";
 const REFRESH_TOKEN = "1000.3f671416c359ae859af145b0a0c35989.0dc79244a529ff3cc57be96b31d8e4af";
 const CLIENT_ID = "1000.3FMW57THDNZF3FG2GQU0UJMPBM0N8B"
 const CLIENT_SECRET = "723010f112a8f95732609ce51b857dd55166431874";
@@ -106,16 +106,19 @@ app.get('/getmeetinglist', async (req, res) => {
 });
 
 // 4. Edit Existing Meeting Details
-app.get('/editmeeting', async (req, res) => {
+app.put('/editmeeting/:meetingKey', async (req, res) => {
+    let {meetingKey}=req.params;
     try {
+        let session=req.body;
         const response = await fetch(
-            ZOHO_API_URL,
+            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
             {
                 method:"PUT",
                 headers: {
                     "Authorization":"Zoho-oauthtoken "+ ACCESS_TOKEN,
                     "Content-Type": "application/json"
-                }
+                },
+                body:JSON.stringify(session)
             }
         );
 
@@ -159,15 +162,19 @@ app.get(`/getmeeting/:meetingKey`, async (req, res) => {
     }
 });
 
-//Getting Refresh Token
-app.post(`/getAccessToken`,async(req,res)=>{
-    try {
-        let response=await fetch(TOKEN_URL,)
-    } catch (error) {
+// //Getting Refresh Token
+// app.post(`/getAccessToken`,async(req,res)=>{
+//     try {
+//         let response=await fetch(TOKEN_URL,)
+//     } catch (error) {
         
-    }
-})
+//     }
+// })
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+//
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'))});
