@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-const ACCESS_TOKEN = "1000.77af8bbbde3db80430becd66a6855b40.e1dd35307e9925404476afd63d7829f2";
+const ACCESS_TOKEN = "1000.2a8d5ab6df465601a20e1c3654717e7d.9e375503ba87953c60868c0170e33364";
 const REFRESH_TOKEN = "1000.3f671416c359ae859af145b0a0c35989.0dc79244a529ff3cc57be96b31d8e4af";
 const CLIENT_ID = "1000.3FMW57THDNZF3FG2GQU0UJMPBM0N8B"
 const CLIENT_SECRET = "723010f112a8f95732609ce51b857dd55166431874";
