@@ -4,7 +4,7 @@
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
-        const res=await fetch('/getmeetinglist');
+        const res=await fetch('http://localhost:5500/getmeetinglist');
         let meetingList=await res.json();
         if(!res.ok)
         {

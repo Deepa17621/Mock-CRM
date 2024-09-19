@@ -9,7 +9,7 @@ let meetingObject;
 // Get Meeting Details Using MeetingKey
 async function getMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getmeeting/${meetingKey}`);
+        let res=await fetch(`http://localhost:5500/getmeeting/${meetingKey}`);
         let meetingObj=await res.json();
     if(!res.ok)
     {
@@ -63,7 +63,7 @@ deleteMeetingBtn.addEventListener("click", (e)=>{
 
 async function deleteMeeting(meetingKey) {
     try {
-        let res=await fetch(`/deletemeeting/${meetingKey}`,{method:"DELETE"});
+        let res=await fetch(`http://localhost:5500/deletemeeting/${meetingKey}`,{method:"DELETE"});
         if(!res.ok && res.status==204)
         {
             alert("Meeting Cancelled");
