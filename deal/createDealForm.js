@@ -2,12 +2,14 @@
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
-// FROM ACCOUNT MODULE---Acc Id
+// Deal Creation From Account Module-->Redirection From Account View
 let accIdFromAccModule=param.get("id");
 console.log(accIdFromAccModule);
 
+// Editing Deal Details--> Redirection from dealView
+let dealToBeEdited=param.get("dealToBeEdited");
 
-// Getting URL --> If deal creation handled by contact
+// Deal Creation From Contact Module-->Redirection From Contact View
 let contactId=param.get("contactid");
 let accountId=param.get("accId");
 
@@ -24,9 +26,14 @@ else if(accIdFromAccModule){
     console.log("THIS DEAL IS CREATE BY ACCOUNT");
     getOrgDetail(accIdFromAccModule);
 }
-else if(!contactId && !accountId && !accIdFromAccModule)
+// Deal Creation from direct Deal Module
+else if(!contactId && !accountId && !accIdFromAccModule && !dealToBeEdited)
 {
     setDataToFormFields("Dummy", "Dummy");
+}
+else if(dealToBeEdited)
+{
+    getDealToBeEdited(dealToBeEdited);
 }
 
 
@@ -53,6 +60,14 @@ async function getOrgDetail(accId) {
 
     let accObj=await fetchAccById(accId);
     getContact(accObj.Contacts, accId);
+}
+
+// Edit Deal Details 
+async function getDealToBeEdited(id) {
+    let dealObj=await fetchDealById(id);
+    console.log(dealObj);
+    setDealDataToForm(dealObj);
+
 }
 let myForm=document.querySelector("form");
 
@@ -140,6 +155,48 @@ async function setDataToFormFields(cObj, aObj)
     
 }
 
+// Form with prefilled Data --- To Edit The Deal
+ async function setDealDataToForm(dealObj)
+{
+    dealName.value=dealObj.DealName;
+    dealOwner.value=dealObj.DealOwner;
+    contactName.value=dealObj.ContactName;
+    contactName.setAttribute("id", dealObj.ContactId);
+    accountName.value=dealObj.AccountName;
+    accountName.setAttribute("id", dealObj.AccountId);
+    amount.value=dealObj.Amount;
+    closingDate.value=dealObj.ClosingDate;
+    stage.value=dealObj.stage;
+    setLookUpFields();
+}
+// LookUp With All the contacts and Accounts
+async function setLookUpFields()
+{
+    let allContacts=await fetchAllContacts();
+        let allAccounts=await fetchALLAccounts();
+        allContacts.forEach(obj => {
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li value=${obj.id}>${obj["Contact Name"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                contactName.id=obj.id;
+                contactName.value=obj["Contact Name"];    
+                lookUpForContact.style.display="none";
+            });
+            contsList.appendChild(lii);
+        });
+        allAccounts.forEach(obj=>{
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li value=${obj.id}>${obj["AccountName"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                accountName.id=obj.id;
+                accountName.value=obj.AccountName;
+                lookUpForAccount.style.display="none";
+            })
+            accList.appendChild(lii);
+        })
+}
 // Form Submit Event
 myForm.addEventListener("submit", (e)=>{
     e.preventDefault();
@@ -163,11 +220,10 @@ myForm.addEventListener("submit", (e)=>{
         "ContactId":"",
         "AccountId":""
     }
-    
         obj["ContactId"]=!contactId?contactName.id:contactId;
         obj["AccountId"]=!accountId?(accIdFromAccModule?accIdFromAccModule:accountName.id):accountId;
-    saveDeal(obj);
-    // window.location.href=clicked?`http://127.0.0.1:5500/deal/dealList.html`:"http://127.0.0.1:5500/deal/createDealForm.html";
+        let DEAL=!dealToBeEdited?saveDeal(obj):updateDeal(obj);
+        // window.location.href=clicked?`../deal/dealList.html`:"../deal/createDealForm.html";
 });
 //Update Contact and Account by adding deal details.
 async function updateContactAccount(dealObj, cId, aId)
@@ -207,14 +263,42 @@ async function updateContactAccount(dealObj, cId, aId)
 // POST Method For Deal Creation- Save Deal Data
 async function saveDeal(obj)
 {
-    let res=await fetch("http://localhost:3000/deals", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(obj)
-    });
-    let out=await res.json();
-    updateContactAccount(out, out.ContactId, out.AccountId);
-    return out;
+    try {
+        let res=await fetch("http://localhost:3000/deals", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+        });
+       if(res.ok)
+       {
+        let out=await res.json();
+        updateContactAccount(out, out.ContactId, out.AccountId);
+        alert("Successfully Deal Created!")
+        return out;
+       }
+       else throw new Error("Error in URL");
+    } catch (error) {
+        
+    }
+}
+async function updateDeal(obj) {
+    try {
+        let res=await fetch(`http://localhost:3000/deals/${dealToBeEdited}`, {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+        });
+       if(res.ok)
+       {
+            let out=await res.json();
+            updateContactAccount(out, out.ContactId, out.AccountId);
+            alert("Deal Updated!");
+            return out;
+       }
+       else throw new Error("Error in URL");
+    } catch (error) {
+        
+    }
 }
 
 // ===========> DAO <============
@@ -280,11 +364,27 @@ async function  fetchALLAccounts() {
     }
 }
 
+// Fetch Deal By Id
+async function fetchDealById(id) {
+    try {
+        let res=await fetch(`http://localhost:3000/deals/${id}`);
+        if(!res.ok)
+        {
+            throw new Error("Error in URL");
+        }
+        let obj=await res.json();
+        return obj;
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 // 1. Cancel Button
 let cancelBtn=document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/deal/dealList.html`;
+    window.location.href=`/deal/dealList.html`;
 });
 
 // 2. Save Button

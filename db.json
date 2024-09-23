@@ -5,7 +5,9 @@
       "id": "66b7",
       "deals": [
         "1f39",
-        "23d5"
+        "23d5",
+        "d9dc",
+        "d9dc"
       ],
       "Contact Name": "Deepa Rajendiran",
       "Contact Mail": "deeparajendiran@gmail.com",
@@ -47,7 +49,8 @@
         "1f39",
         "d907",
         "23d5",
-        "eaea"
+        "eaea",
+        "d9dc"
       ]
     },
     {
@@ -72,7 +75,9 @@
       "AccountAddress": "Sriperumbuthur",
       "AnnualRevenue": "98000000",
       "Contacts": [],
-      "deals": []
+      "deals": [
+        "d9dc"
+      ]
     }
   ],
   "deals": [
@@ -101,30 +106,6 @@
       "AccountId": "b14e"
     },
     {
-      "id": "ba40",
-      "DealOwner": "SadaSivan D",
-      "DealName": "Sabari's Deal-1",
-      "ContactName": "Anitha",
-      "AccountName": "SSSA Constructions",
-      "Amount": "9000000",
-      "ClosingDate": "2024-09-16",
-      "Stage": "stage2",
-      "ContactId": "3b06",
-      "AccountId": "b14e"
-    },
-    {
-      "id": "9f6f",
-      "DealOwner": "padma",
-      "DealName": "deal-11",
-      "ContactName": "Deepa Rajendiran",
-      "AccountName": "GGHSS",
-      "Amount": "908000000",
-      "ClosingDate": "2024-09-14",
-      "Stage": "stage2",
-      "ContactId": "",
-      "AccountId": ""
-    },
-    {
       "id": "1f39",
       "DealOwner": "Prakash",
       "DealName": "prakash's Deal",
@@ -149,16 +130,16 @@
       "AccountId": "b14e"
     },
     {
-      "id": "23d5",
-      "DealOwner": "Shajahan",
-      "DealName": "shajahan deal-2",
+      "DealOwner": "Prakash Rajendiran",
+      "DealName": "prakash's Deal",
       "ContactName": "Deepa Rajendiran",
       "AccountName": "SSSA Constructions",
-      "Amount": "90000000",
-      "ClosingDate": "2024-09-14",
+      "Amount": "900000000000",
+      "ClosingDate": "2024-09-23",
       "Stage": "stage3",
       "ContactId": "66b7",
-      "AccountId": "b14e"
+      "AccountId": "b14e",
+      "id": "d9dc"
     }
   ]
 }

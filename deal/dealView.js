@@ -75,11 +75,22 @@ deleteBtn.addEventListener("click",(e)=>{
 
 async function deleteDeal(id) 
 {
-
-    let response=await fetch(`http://localhost:3000/deals/${id}`, {
-        method:"DELETE"
-    });
-
+    let confirmation=confirm("are you sure? Deleting Deal!");
+    if(confirmation)
+    {
+        try {
+            let response=await fetch(`http://localhost:3000/deals/${id}`, {
+                method:"DELETE"
+            });
+            if(!response.ok)
+            {
+                throw new Error("Error in URL");
+            }
+            alert("Successfully Deleted!");
+        } catch (error) {
+            
+        }
+    }
 }
 
 // back Button for previous page
@@ -87,6 +98,13 @@ let backButton=document.querySelector("#backBtn");
 backButton.addEventListener("click", (e)=>{
     e.preventDefault();
     window.history.back();
+});
+
+// Edit Deal Details
+let editBtn=document.querySelector("#editBtn");
+editBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../deal/createDealForm.html?dealToBeEdited=${currentId}`;
 });
 
 // put contact Detail By Deleting Deal Id From Contact 
