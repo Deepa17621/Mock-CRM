@@ -75,6 +75,7 @@ meetingBtn.addEventListener("click", (e)=>{
 meetingCancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     dialog.close();
+    window.location.href=`../meetings/meetingList.html`;
 });
 
 // meeting save button
@@ -86,7 +87,6 @@ meetingSaveBtn.addEventListener("click", (e)=>{
 });
 // Meeting Form Data
 let meetingTopic=document.querySelector("#topic");
-let mlocation=document.querySelector("#location");
 let startTime=document.querySelector("#startTime");
 let agenda=document.querySelector("#agenda");
 // let endTime=document.querySelector("#endTime");
@@ -96,7 +96,8 @@ let participants=document.querySelector("#participants");
 const meetingForm=document.querySelector("#meetingForm");
 meetingForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+    console.log(startTime.value);
+    
     // Request Body
     const session = {
         "session": {
@@ -127,8 +128,10 @@ meetingForm.addEventListener("submit", async (e) => {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
         const responseBody = await response.json();
+        dialog.close();
+        window.location.href=`../meetings/meetingList.html`;
+        alert("Meeting Created SuccessFully");
         console.log(responseBody);
-
     } catch (error) {
         console.error("Error:", error);
     }

@@ -48,18 +48,18 @@
     <div id="bodyContainer">
         <div id="leftPanelContainer">
             <div id="">
-                <button id="backBtn">All Meetings</button>
+                <button id="backBtn" style="margin-top: 10px;">All Meetings</button>
             </div>
         </div>
         <div id="rightPanelContainer">
             <div id="topContainerForMeetingView">
-                <div id="titleContainer">
+                <div id="titleContainer" style="justify-content: center;">
 
                 </div>
                 <div id="btnContainer">
-                    <button id="startMeetBtn">Start Meeting</button>
+                    <button id="startMeetBtn" disabled style="opacity: 0.5;">Start Meeting</button>
                     <button id="editMeetBtn">Edit</button>
-                    <button id="deleteMeetBtn">Cancel</button>
+                    <button id="deleteMeetBtn" title="Delete This Meeting">Cancel</button>
                 </div>
             </div>
             <div id="bodyContainerForMeetingView">
@@ -89,8 +89,6 @@
         <h4>Meeting Information</h4>
         <form action="" id="meetingForm">
             <input type="text" value="New Meeting*" class="meetInp" id="topic">
-            <br>
-            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
             <br>
             <label for="startTime">From</label><br>
             <input type="datetime-local" name="time" id="startTime" class="meetInp">

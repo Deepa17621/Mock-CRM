@@ -53,7 +53,6 @@ let deleteMeetingBtn=document.querySelector("#deleteMeetBtn");
 
 startMeetingBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href= ``
 });
 
 deleteMeetingBtn.addEventListener("click", (e)=>{
@@ -64,21 +63,11 @@ deleteMeetingBtn.addEventListener("click", (e)=>{
 async function deleteMeeting(meetingKey) {
     try {
         let res=await fetch(`http://localhost:5500/deletemeeting/${meetingKey}`,{method:"DELETE"});
-        if(!res.ok && res.status==204)
-        {
-            alert("Meeting Cancelled");
-            // throw new Error(`Error: `+res.status)
-        }
-        // else if()
-        // {
-        //     let response=await res.json();
-        //     console.log(response);
-        //     console.log("Delete started");
-            
-            
-        // }
+        let out=await res.json();
+        console.log(out);
         
     } catch (error) {
+        console.log(error);
         
     }
 }
@@ -95,6 +84,7 @@ editMeetingBtn.addEventListener("click", (e)=>{
 meetingCancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     dialog.close();
+    window.location.href=`meetings/meetingList.html`;
 });
 
 function sendToEditForm(obj)
@@ -108,6 +98,8 @@ function sendToEditForm(obj)
     meetingSaveBtn.addEventListener("click", (e)=>{
         e.preventDefault();
         meetingForm.requestSubmit();
+        window.location.href=`../meetings/meetingList.html`;
+        alert("Meeting Created SuccessFully");
     });
     // Meeting Form Data
     let meetingTopic=document.querySelector("#topic");
@@ -157,15 +149,12 @@ function sendToEditForm(obj)
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
             const responseBody = await response.json();
+            dialog.close();
             console.log(responseBody);
-
         } catch (error) {
             console.error("Error:", error);
         }
     });
 }
-
-
-//=====================================================
 
 

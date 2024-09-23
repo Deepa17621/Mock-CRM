@@ -44,9 +44,7 @@
      <dialog id="dialogbox">
         <h4>Meeting Information</h4>
         <form action="" id="meetingForm">
-            <input type="text" value="New Meeting*" class="meetInp" id="topic">
-            <br>
-            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
+            <input type="text" placeholder="Meeting Title*" class="meetInp" id="topic">
             <br>
             <label for="startTime">From</label><br>
             <input type="datetime-local" name="time" id="startTime" class="meetInp">
@@ -82,24 +80,6 @@
                         <button class="createBtnForAllModules" id="createMeeting">
                             Create Meeting
                         </button>
-                    </li>
-                    <li>
-                        <select name="lookups" id="lookupForLead" onchange="selField()">
-                            <option value="">--Select--</option>
-                            <!-- Need to add more options based to Meeting -->
-                        </select>
-                    </li>
-                    <li>
-                        <input type="text" name="search" id="searchLead" placeholder="search here..."> 
-                    </li>
-                    <li class="disabled">
-                        <select name="" id="actionOption" >
-                            <option value="">action</option>
-                            <option value="Mass Update">Mass Update</option>
-                            <option value="Mass Delete">Mass Delete</option>
-                            <option value="Mass Transfer">Mass Transfer</option>
-                            <option value="Mass Email">Mass Email</option>
-                        </select>
                     </li>
                </div>
             </ul>
