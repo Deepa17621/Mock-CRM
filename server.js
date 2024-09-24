@@ -1,20 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const axios = require('axios');
-const { log } = require('console');
+const { log, error } = require('console');
 const app = express();
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-let ACCESS_TOKEN = "1000.73012cdb3c932f3f28e156247b8e2765.571caa42b823bd5d06748d5725bb912a";
-const REFRESH_TOKEN = "1000.3f671416c359ae859af145b0a0c35989.0dc79244a529ff3cc57be96b31d8e4af";
-const CLIENT_ID = "1000.3FMW57THDNZF3FG2GQU0UJMPBM0N8B"
-const CLIENT_SECRET = "723010f112a8f95732609ce51b857dd55166431874";
-const REDIRECT_URI = "https://dmock-crm.vercel.app";
-const ZOHO_API_URL = 'https://meeting.zoho.in/api/v2/60017874042/sessions.json';
-const TOKEN_URL = 'https://accounts.zoho.in/oauth/v2/token';
+let ACCESS_TOKEN ="1000.baedd8db0f4d1896a3f16dcd303b9026.6819dbaf1c493f8e24899c0d0b68bf6b";
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const ZOHO_API_URL = process.env.ZOHO_API_URL;
+const TOKEN_URL =process.env.TOKEN_URL;
   
 app.use(cors());
 app.use(express.json()); // For parsing application/json
@@ -30,7 +31,26 @@ app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
 app.use('/meetings', express.static(path.join(__dirname, 'meetings')));
 app.use('/controller', express.static(path.join(__dirname, 'controller')));
 
-
+// Access Token Validation
+// app.get("/", async(req,res)=> {
+//     ACCESS_TOKEN=req.cookies.newAccessToken;
+//     if(!ACCESS_TOKEN)
+//     {
+//         let outPut=await getAccessToken();
+//         if(outPut.status)
+//         {
+//             ACCESS_TOKEN=await outPut.accessToken;
+//             // next();
+//         }
+//         else
+//         {
+//             return res.status(401).json({ error: 'Unauthorized: Token not available', ACCESS_TOKEN });
+//         }
+//     }
+//     else {
+//         // next()
+//     }
+// });
 
 // 1. [--POST--] request to Zoho API
 app.post('/postmeeting', async (req, res) => {
@@ -159,19 +179,19 @@ app.get(`/getmeeting/:meetingKey`, async (req, res) => {
                 }
             }
         );
-        if(response.status==401)
-            {
-                (async () => {
-                    try {
-                        const newAccessToken = await getAccessToken();
-                        ACCESS_TOKEN=await newAccessToken;
-                        // console.log('New access token:', newAccessToken);
-                    } catch (error) {
-                        console.error('Failed to get access token:', error);
-                    }
-                });
-            }
-        else if(!response.ok)
+        // if(response.status==401)
+        //     {
+        //         (async () => {
+        //             try {
+        //                 const newAccessToken = await getAccessToken();
+        //                 ACCESS_TOKEN=await newAccessToken;
+        //                 // console.log('New access token:', newAccessToken);
+        //             } catch (error) {
+        //                 console.error('Failed to get access token:', error);
+        //             }
+        //         });
+        //     }
+        if(!response.ok)
         {
             throw new Error("Error: "+response.status+ " "+ response.message)
         }
@@ -188,18 +208,27 @@ app.get(`/getmeeting/:meetingKey`, async (req, res) => {
 async function getAccessToken() {
     try {
         const response = await axios.post(TOKEN_URL,paramss);
-        return response.data.access_token; // Return the new access token
+        res.cookie("newAccessToken",response.data.access_token, {
+            httpOnly: true,  // Can't be accessed via JavaScript
+            secure: false,   // Set to true if using HTTPS
+            sameSite: 'Strict', // Helps prevent CSRF
+            maxAge: 3600000  // Cookie expires in 1 hour
+        });
+        return {
+            "status":true,
+            "accessToken":response.data.access_token
+        }; // Return the new access token
     } catch (error) {
         console.error('Error refreshing access token:', error.response ? error.response.data : error.message);
         throw error; // Rethrow the error for further handling
     }
 }
 
+
 // Example usage
 // (async () => {
 //     try {
 //         const newAccessToken = await getAccessToken();
-//         ACCESS_TOKEN=newAccessToken;
 //         console.log('New access token:', newAccessToken);
 //     } catch (error) {
 //         console.error('Failed to get access token:', error);

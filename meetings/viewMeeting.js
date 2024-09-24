@@ -1,4 +1,3 @@
-
 // Getting Meeting key From URL
 let url=window.location.search;
 let param=new URLSearchParams(url);
@@ -7,6 +6,18 @@ console.log(meetingKey);
 let meetingObject;
 
 // Get Meeting Details Using MeetingKey
+async function getMeetingForDistribution(meetingKey) {
+    try {
+        let res=await getMeeting(meetingKey);
+        let meetingObj=res;
+        console.log(meetingObj.session);
+    display(meetingObj);
+    sendToEditForm(meetingObj.session);
+    } catch (error) {
+        console.log(error);
+    }
+}
+// Get meeting object
 async function getMeeting(meetingKey) {
     try {
         let res=await fetch(`http://localhost:5500/getmeeting/${meetingKey}`);
@@ -17,14 +28,18 @@ async function getMeeting(meetingKey) {
     }
     console.log(meetingObj);
     meetingObject=await meetingObj.session;
-    display(meetingObj);
-    sendToEditForm(meetingObj.session);
+    return meetingObj;
     } catch (error) {
         console.log(error);
     }
 }
+// Function to disable and enable the start meeting button -- Before 15 mins to the meeting
+// let currentDateAndTime=new Date()
+// currentDateAndTime.getDate();
 
-getMeeting(meetingKey);
+
+// Function call to display the meeting details
+getMeetingForDistribution(meetingKey);
 let titleContainer=document.querySelector("#titleContainer");
 let timeContainer=document.querySelector("#timeContainer");
 
@@ -53,8 +68,16 @@ let deleteMeetingBtn=document.querySelector("#deleteMeetBtn");
 
 startMeetingBtn.addEventListener("click", (e)=>{
     e.preventDefault();
+    setStartMeeting();
 });
 
+
+async function setStartMeeting() {
+    let obj=await getMeeting(meetingKey);
+    console.log(obj.session);
+    console.log(obj.startLink);
+    window.location.href=obj.session.startLink;
+}
 deleteMeetingBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     deleteMeeting(meetingKey);

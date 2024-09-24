@@ -1,6 +1,3 @@
-
-
-
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
@@ -71,7 +68,7 @@ meetingBtn.addEventListener("click", (e)=>{
     dialog.showModal();
 });
 
-// Meeting close event--- dialog box closing event
+// Meeting close event-dialog box closing event
 meetingCancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     dialog.close();
