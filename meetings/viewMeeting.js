@@ -106,8 +106,8 @@ editMeetingBtn.addEventListener("click", (e)=>{
 // dialog box closing event
 meetingCancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
+    window.location.href=`/meetings/viewMeeting.html?meetingKey=${meetingKey}`;
     dialog.close();
-    window.location.href=`meetings/meetingList.html`;
 });
 
 function sendToEditForm(obj)
