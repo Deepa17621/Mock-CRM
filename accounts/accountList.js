@@ -1,6 +1,7 @@
 // Get Table using DOM
 let table=document.querySelector("table");
-
+let tHead=document.querySelector("thead");
+let tBody=document.querySelector("tbody");
 // create Account Button Event
 const createAccount=document.querySelector("#createAccountBtn");
 createAccount.addEventListener("click", (e)=>{
@@ -62,7 +63,7 @@ function addToTable(allAccs)
     let tableHead=["Account Owner", "Account Name", "Phone", "Mail"];
     // table header
     let thead=document.createElement("tr");
-    table.appendChild(thead);
+    tHead.appendChild(thead);
     thead.style.position="sticky";
     //CheckBox
     let checkBox=document.createElement("th");
@@ -81,7 +82,7 @@ function addToTable(allAccs)
         let row=document.createElement("tr");
         row.id=obj["id"];
         row.setAttribute("onclick", "rowClickedEvent(this.id)");
-        table.appendChild(row);
+        tBody.appendChild(row);
         let checkBox21=document.createElement("td");
         row.appendChild(checkBox21);
         checkBox21.innerHTML=`<input type="checkbox">`;

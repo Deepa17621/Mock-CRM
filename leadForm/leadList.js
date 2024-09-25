@@ -1,6 +1,8 @@
 
 //Script to Display All Leads.
 let table=document.querySelector("table");
+let tableHead=document.querySelector("thead");
+let tableBody=document.querySelector("tbody");
 
 function rowClickFunction(row)
 {
@@ -31,7 +33,7 @@ function tableFunction(out)
 {
     
     let thead=document.createElement("tr");
-    table.appendChild(thead);
+    tableHead.appendChild(thead);
     //Table Head
     let firstObj=out[0];
     console.log(Object.keys(firstObj));
@@ -56,7 +58,7 @@ function tableFunction(out)
         let head=headForTable[Symbol.iterator]();
 
         let trow=document.createElement("tr");
-        table.appendChild(trow);
+        tableBody.appendChild(trow);
         trow.id=e["id"];
         trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
         let checkBoxtd=document.createElement("td");

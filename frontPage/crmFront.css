@@ -259,21 +259,23 @@ button a{
     width: 100%;
     border-collapse: collapse;
 }
-td, th{
+td{
     padding: 6px;
     text-align: left;
     border-bottom:1px solid rgb(230, 240, 247);
 }
+th,td{padding-left: 20px;}
 th
 {
-    padding: 18px 3px;
+    text-align: left;
+    padding: 18px 20px;
 }
 .formRow>td{
     padding: 4px;
     text-align: left;
     border-bottom:1px solid rgb(230, 240, 247);
 }
-tr:hover{
+tbody tr:hover{
     background-color: rgb(230, 240, 247);
 }
 select{
@@ -415,7 +417,7 @@ select{
 {
     width: 250px;
     height: 200px;
-    box-shadow: 0 0 10px;
+    box-shadow: 0 0 7px;
     z-index: 1;
     position: absolute;
     display: none;

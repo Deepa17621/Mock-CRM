@@ -11,6 +11,8 @@ console.log(currentId);
 
 // Getting table
 let table = document.querySelector("table");
+let tableHead=document.querySelector("thead");
+let tableBody=document.querySelector("tbody");
 
 // Search Contact using keywords/Fields name
 
@@ -127,9 +129,9 @@ function tableFunction(allContacts)
     console.log("Key Array");
     console.log(keyArr);
     //Create Table And Add Headers to Table.
-    let table=document.querySelector("table");
+    // let table=document.querySelector("table");
     let thead=document.createElement("tr");
-    table.appendChild(thead);
+    tableHead.appendChild(thead);
     let thForCheckBox=document.createElement("th");
     thForCheckBox.innerHTML=`<input type="checkbox">`
     thead.appendChild(thForCheckBox);
@@ -149,7 +151,7 @@ function tableFunction(allContacts)
          let row=document.createElement("tr");
          row.id=obj["id"];
          row.setAttribute("onclick", "rowClickedEvent(this.id)");
-         table.appendChild(row);
+         tableBody.appendChild(row);
          let checkBox21=document.createElement("td");
          row.appendChild(checkBox21);
          checkBox21.innerHTML=`<input type="checkbox">`;

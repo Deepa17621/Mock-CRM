@@ -1,4 +1,6 @@
 let table=document.querySelector("table");
+let tableHead=document.querySelector("thead");
+let tableBody=document.querySelector("tbody");
 
 let arr=[];
 let selField;
@@ -56,7 +58,7 @@ function sendToTable(obj)
 {
     let header=Object.keys(obj[0]);
     let thead=document.createElement("tr");
-    table.appendChild(thead);
+    tableHead.appendChild(thead);
     header.forEach(e=>{
         let th=document.createElement("th");
         th.innerHTML=e;
@@ -70,7 +72,7 @@ function sendToTable(obj)
         let tr=document.createElement("tr");
         tr.id=e["id"];
         tr.setAttribute("onclick", "rowClicked(this.id)")
-        table.appendChild(tr);
+        tableBody.appendChild(tr);
         for (const key in e)
         {        
             let val=item.next().value;

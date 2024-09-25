@@ -20,11 +20,13 @@ async function getList() {
     // Table to List All the meetings
 
     let table=document.querySelector("#meetingListTable");
+    let tHead=document.querySelector("thead");
+    let tBody=document.querySelector("tbody");
 function sendToTable(obj)
 {
     //Table Head
     let thead=document.createElement("tr");
-    table.appendChild(thead);
+    tHead.appendChild(thead);
     let theadArr=["Title", "From", "To", "Host"];
     theadArr.forEach(e=>{
         let th=document.createElement("th");
@@ -33,7 +35,7 @@ function sendToTable(obj)
     });
     for (let i = 0; i < obj.length; i++) {
         let tr=document.createElement("tr");
-        table.appendChild(tr);
+        tBody.appendChild(tr);
         let titleTD=document.createElement("td");
         tr.appendChild(titleTD);
         titleTD.innerHTML=obj[i]["topic"];
