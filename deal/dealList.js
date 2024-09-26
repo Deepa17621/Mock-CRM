@@ -16,7 +16,7 @@ let searchField=document.querySelector("#searchField");
 const createDealBtn=document.querySelector("#createDealBtn");
 createDealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href='http://127.0.0.1:5500/deal/createDealForm.html';
+    window.location.href='/deal/createDealForm.html';
 })
 
 // Fetch From Json
@@ -88,5 +88,5 @@ function sendToTable(obj)
 
  async function rowClicked(id)
 {
-    window.location.href=`http://127.0.0.1:5500/deal/dealView.html?id=${id}`;
+    window.location.href=`/deal/dealView.html?id=${id}`;
 }

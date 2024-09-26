@@ -28,7 +28,7 @@ function selectField()
 const createContactBtn=document.querySelector("#createContactBtn");
 createContactBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href='http://127.0.0.1:5500/contact/contactForm.html';
+    window.location.href='/contact/contactForm.html';
 })
 
 // lead to contact=>del from lead add to contact
@@ -119,7 +119,7 @@ if (currentId != null) {
 }
 function rowClickedEvent(id)
 {
-    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${id}`; 
+    window.location.href=`/contact/contactView.html?id=${id}`; 
 }
 
 // Table function to Add Data's To Table.

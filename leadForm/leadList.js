@@ -9,7 +9,7 @@ function rowClickFunction(row)
         let idValue=row;
         console.log(idValue);
         console.log(`http://localhost:3000/leads/${idValue}`);
-        window.location.href=`http://127.0.0.1:5500/leadForm/leadView.html?id=${idValue}`;
+        window.location.href=`/leadForm/leadView.html?id=${idValue}`;
         
 }
 
@@ -18,7 +18,7 @@ function rowClickFunction(row)
 const createLeadBtn=document.querySelector("#createLeadBtn");
 createLeadBtn.addEventListener("click",e=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/leadForm/leadForm.html`
+    window.location.href=`/leadForm/leadForm.html`
 })
 // SEARCH -Search Lead 
 var selectField;
