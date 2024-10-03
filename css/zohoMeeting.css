@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+header
+{
+    height: 48px;
+}
+#meetingIconContainer
+{
+    height: 30px;
+    width: 108px;
+    
+}
+#homeIcon
+{
+    padding: 10px 3px 3px 8px;
+    height: 21px;
+    width: 99px;
+    opacity: 0.7;
+}
+section{
+    height: 93vh;
+    display: flex;
+}
+.sideBar
+{
+    width: 70px;
+    background-color: #1C2A40;
+}
+.meetingListContainer
+{
+    background-color: #eff9ff;
+    /* width: 92%; */
+    /* margin: auto; */
+    height: 95vh;
+    flex: 1;
+}
+.sideBar ul{
+    list-style-type: none;
+}
+.sideBarList li{
+    display: inline-block;
+    width: 100%;
+    height: 65px;
+    border-bottom:1px solid  #1e55ac;
+}
+svg{
+    width: 25px;
+    height: 20px;
+}
+.parentForSideBarIcons
+{
+    color: white;
+    /* border: 0.5px solid white; */
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px ;
+    font-size: small;
+}
+.parentForSideBarIcons a
+{
+    text-decoration: none;
+    color: white;
+    opacity: 0.7;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.parentForSideBarIcons a:hover
+{
+    opacity: 1.0;
+}
+.clockForHome
+{
+    height: 52px;
+    width: 92%;
+    margin:100px 50px 0px ;
+    background-color: white;
+}
+.cardsContainer
+{
+    width: 92%;
+    height:183px;
+    margin: 15px 50px 0px;
+    /* background-color: #1e55ac; */
+    display: flex;
+    justify-content: space-between;
+    /* background-color: white; */
+}
+.cards
+{
+    width: 525px;
+    height: 100%;
+    box-shadow: 0.5px;
+    /* background-color: #eff9ff; */
+}
+.btns
+{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 50%;
+}
+.innerContainer
+{
+    width: 450px;
+    height: 100%;
+    background-color: white;
+    padding: 0px 35.2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    line-height: 28px;
+}
+.buttons
+{
+    border: 1px solid rgb(0, 166, 255);
+    color: rgb(0, 166, 255);
+    border-radius: 15px;
+    font-size: medium;
+    padding: 4px;
+}
+p{
+    font-weight: 200;
+}
+h3{
+    font-size: 20px;
+    font-weight: 600;
+}
