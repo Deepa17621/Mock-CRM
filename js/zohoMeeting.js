@@ -25,11 +25,11 @@ function setImage()
     {
         imgTagForTime.setAttribute("src", "../meetingImages/afternoonTime.svg");
     }
-    else if((date.getHours())>=15 && (date.getHours())<17)
+    else if((date.getHours())>=15 && (date.getHours())<=17)
     {
         imgTagForTime.setAttribute("src", "../meetingImages/eveningTime.svg");
     }
-    else if((date.getHours())>18 && (date.getHours())<24 && (date.getHours())<5)
+    else if((date.getHours())>=18 && (date.getHours())<=24 && (date.getHours())<=5)
     {
         imgTagForTime.setAttribute("src", "../meetingImages/nightTime.svg");
     }
