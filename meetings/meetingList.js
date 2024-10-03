@@ -128,6 +128,17 @@ meetingForm.addEventListener("submit", async (e) => {
         }
         const responseBody = await response.json();
         dialog.close();
+        let newMeetingResStoredInJson=await fetch(`http://localhost:3000/meetings`, 
+            {
+                method:"POST",
+                headers:{"Content-Type": "application/json"},
+                body: JSON.stringify(responseBody)
+            }
+        );
+        if(!newMeetingResStoredInJson.ok)
+        {
+            throw new Error("Meeting Data Not Stored In Json File");
+        }
         window.location.href=`../meetings/meetingList.html`;
         alert("Meeting Created SuccessFully");
         console.log(responseBody);

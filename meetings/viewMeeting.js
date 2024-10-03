@@ -55,10 +55,31 @@ async function display(sessionObj)
         timeHtml+=`<li>${obj.sTime}</li>`;
         timeHtml+=`<li>Notify Participant: ${obj.sTime}</li><ul>`;
         timeContainer.innerHTML=timeHtml;
-    // Participant Details
-    // let participantContainer=document.querySelector("#participantsContainer");
-    // let participantHtml=``
+
+    // Get Meeting Data From Json File using meeting got from api response
+    let allMeetingsFromJson=await fetch(`http://localhost:3000/meetings`);
+    let meetingObjects=await allMeetingsFromJson.json();
+    let meetingObjFromJson=""
+    meetingObjects.forEach(e => {
+        if(e.session.meetingKey=meetingKey)
+        {
+            meetingObjFromJson=e;
+            return;
+        }
+    });   
+    console.log(meetingObjFromJson);
+    let participantsDetails=meetingObjFromJson.session.participants;
+    console.log(participantsDetails);
     
+     
+    // Participant Details
+    let participantContainer=document.querySelector("#participantsContainer");
+    let secContainer=document.createElement("div");
+    participantContainer.appendChild(secContainer);
+    participantsDetails.forEach(e => {
+        let participantHtml=`<ul class="ulForMeet" style="display:flex;flex-direction:column"><li><a href="mailto:${e.email}">${e.email}</a></li></ul><hr>`
+        secContainer.innerHTML=participantHtml
+    }); 
 }
 
 //  Button Click Events
@@ -70,7 +91,6 @@ startMeetingBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     setStartMeeting();
 });
-
 
 async function setStartMeeting() {
     let obj=await getMeeting(meetingKey);
@@ -91,7 +111,6 @@ async function deleteMeeting(meetingKey) {
         
     } catch (error) {
         console.log(error);
-        
     }
 }
 
@@ -180,4 +199,9 @@ function sendToEditForm(obj)
     });
 }
 
-
+// Navigate to Previous Page- Back To Previous Page
+let backBtn=document.querySelector("#backBtn");
+backBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.back();
+})
