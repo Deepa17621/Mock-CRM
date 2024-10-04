@@ -130,7 +130,7 @@ delBtn.addEventListener("click",async (e)=>{
 let editBtn=document.querySelector("#editBtn");
 editBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/contact/editContact.html?id=${currentId}`;
+    window.location.href=`/contact/editContact.html?id=${currentId}`;
 });
 
 
@@ -138,7 +138,7 @@ editBtn.addEventListener("click", (e)=>{
 let dealBtn=document.querySelector("#convert");// create new deal button 
 dealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
+    window.location.href=`/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
 
 });
 

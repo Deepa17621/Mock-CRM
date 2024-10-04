@@ -9,13 +9,13 @@ let form = document.querySelector("form");
 //Cancel Button
 let cancelBtn = document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click", () => {
-    window.location.href = "http://127.0.0.1:5500/leadForm/leadList.html";
+    window.location.href = "/leadForm/leadList.html";
 });
 
 // Save Button Event
 submitBtn.addEventListener("click", () => {
     form.requestSubmit();
-    window.location.href = "http://127.0.0.1:5500/leadForm/leadList.html";
+    window.location.href = "/leadForm/leadList.html";
     
 });
 

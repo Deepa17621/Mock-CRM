@@ -10,7 +10,7 @@ let accForm=document.querySelector("#formm");
 
 cancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href="http://127.0.0.1:5500/accounts/accountList.html";
+    window.location.href="/accounts/accountList.html";
     e.stopPropagation();
 });
 

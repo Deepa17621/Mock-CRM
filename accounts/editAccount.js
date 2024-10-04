@@ -37,7 +37,7 @@ let saveBtn=document.querySelector("#leadSubmitBtn");
 saveBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     myForm.requestSubmit();
-    window.location.href=`http://127.0.0.1:5500/accounts/viewAccount.html?id=${currentId}`;
+    window.location.href=`/accounts/viewAccount.html?id=${currentId}`;
 });
 
 // PUT Data 
@@ -79,7 +79,7 @@ myForm.addEventListener("submit",(e)=>{
 let cancelBtn=document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click",(e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/accounts/viewAccount.html?id=${currentId}`;
+    window.location.href=`/accounts/viewAccount.html?id=${currentId}`;
 
 });
 

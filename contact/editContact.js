@@ -6,7 +6,7 @@ let currentId=param.get("id");
 let cancelBtn=document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click",(e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${currentId}`;
+    window.location.href=`/contact/contactView.html?id=${currentId}`;
 
 });
 
@@ -61,7 +61,7 @@ let saveBtn=document.querySelector("#leadSubmitBtn");
 saveBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     formm.requestSubmit();
-    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${currentId}`
+    window.location.href=`/contact/contactView.html?id=${currentId}`
 
 
 });

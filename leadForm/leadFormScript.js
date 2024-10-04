@@ -7,7 +7,7 @@ let clicked = null;
 
 let cancelBtn = document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click", () => {
-    window.location.href = "http://127.0.0.1:5500/leadForm/leadList.html";
+    window.location.href = "/leadForm/leadList.html";
 });
 
 // Save And New Button
@@ -87,7 +87,7 @@ inpArr.forEach(e=>{
     }).then(result => {
         console.log(result);
     });
-    window.location.href = clicked ? "http://127.0.0.1:5500/leadForm/leadList.html" :  "http://127.0.0.1:5500/leadForm/leadForm.html";
+    window.location.href = clicked ? "/leadForm/leadList.html" :  "/leadForm/leadForm.html";
     clicked = null;
 });
 

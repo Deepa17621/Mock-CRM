@@ -7,6 +7,7 @@ for (const inp of inputs)
 {
     inp.addEventListener("dragstart", function(e){
         let item= e.target;
+        item.nextElementSibling.remove();
         myForm.addEventListener("drop",(e)=>{
             if(item)
             {

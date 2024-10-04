@@ -1,7 +1,7 @@
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
-        const res=await fetch('http://localhost:5500/getmeetinglist');
+        const res=await fetch('/getmeetinglist');
         let meetingList=await res.json();
         if(!res.ok)
         {
@@ -114,7 +114,7 @@ meetingForm.addEventListener("submit", async (e) => {
     };
 
     try {
-        const response = await fetch('http://localhost:5500/postmeeting', {
+        const response = await fetch('/postmeeting', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

@@ -64,7 +64,7 @@ let editBtn=document.getElementById("editBtn");
 console.log(editBtn);
 
 editBtn.addEventListener("click", ()=>{
-    window.location.href=`http://127.0.0.1:5500/leadForm/editLeadForm.html?id=${identity}`;
+    window.location.href=`/leadForm/editLeadForm.html?id=${identity}`;
    
 });
 
@@ -114,7 +114,7 @@ function submit1()
     }
     else if(selected=="CreateAccount")
     {
-        window.location.href= `http://127.0.0.1:5500/accounts/createAccount.html?id=${identity}`;
+        window.location.href= `/accounts/createAccount.html?id=${identity}`;
     }
     
 }
@@ -157,7 +157,7 @@ convertForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     // let contactOnly=document.querySelector("#contactOnly");
     document.querySelector("#popupContainer").style.display="none";
-    window.location.href=`http://127.0.0.1:5500/contact/contactList.html?id=${identity}`;
+    window.location.href=`/contact/contactList.html?id=${identity}`;
 });
 
 async function del(id)
@@ -172,7 +172,7 @@ let deleteBtn=document.querySelector("#deleteBtn");
 deleteBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     del(identity);
-    window.location.href=`http://127.0.0.1:5500/leadForm/leadList.html`;
+    window.location.href=`/leadForm/leadList.html`;
     e.stopPropagation();
 });
 

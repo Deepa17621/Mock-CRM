@@ -5,7 +5,7 @@ let saveAndNewBtn=document.querySelector("#saveNewBtn");
 let saveBtn=document.querySelector("#contactSubmitBtn");
 let clicked=null;
 cancelBtn.addEventListener("click", ()=>{
-    window.location.href="http://127.0.0.1:5500/contact/contactList.html";
+    window.location.href="/contact/contactList.html";
 });
 
 saveAndNewBtn.addEventListener("click", ()=>{
@@ -171,7 +171,7 @@ existing.addEventListener("click", (e)=>{
 });
 newAcco.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/accounts/createAccount.html`;
+    window.location.href=`/accounts/createAccount.html`;
 
 })
 

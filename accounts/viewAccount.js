@@ -92,7 +92,7 @@ fetchAcc(currentId);
 
 function rowClicked(id)
 {
-    window.location.href=`http://127.0.0.1:5500/contact/contactView.html?id=${id}`;
+    window.location.href=`/contact/contactView.html?id=${id}`;
 }
 
 // Fetch Contact Details To Accounts Module
@@ -170,7 +170,7 @@ async function fetchDealToAcc(id, arr)
 let editBtn=document.querySelector("#editBtn");
 editBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`http://127.0.0.1:5500/accounts/editAccount.html?id=${currentId}`;
+    window.location.href=`/accounts/editAccount.html?id=${currentId}`;
 });
 
 // Delete Btn Event
@@ -185,7 +185,7 @@ deleteBtn.addEventListener("click", async(e)=>{
         // Deletion of Account.
         await deleteAcc(currentId);
         window.alert("Account Deleted Successfully")
-        window.location.href=`http://127.0.0.1:5500/accounts/accountList.html`;
+        window.location.href=`/accounts/accountList.html`;
     }
     e.stopPropagation();
 });
