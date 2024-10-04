@@ -1,11 +1,10 @@
-
 export default class dao {
     constructor(url) {
         this.url=url;
     }
 
     // get  Method
-    async get() {
+    async getAll() {
         try {
             let res = await fetch(this.url);
             let responseObj= await res.json();

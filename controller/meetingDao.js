@@ -22,4 +22,3 @@ let meetingDialoq=`<dialog id="dialogbox">
             <button id="meetingCancelBtn" class="meetBtn">Cancel</button> <button id="meetingSaveBtn" class="meetBtn">Save</button>
         </form>
       </dialog>`;
-      

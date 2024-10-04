@@ -198,6 +198,7 @@ li>a
     color: gray;
     font-size: medium;
     display: block;
+    padding: 20px 5px;
     /* height: 100%; */
     width: 100%;
 }
