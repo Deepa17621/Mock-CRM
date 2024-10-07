@@ -21,7 +21,7 @@ async function getMeetingForDistribution(meetingKey) {
 // Get meeting object
 async function getMeeting(meetingKey) {
     try {
-        let res=await fetch(`http://localhost:5500/getmeeting/${meetingKey}`);
+        let res=await fetch(`/getmeeting/${meetingKey}`);
         let meetingObj=await res.json();
     if(!res.ok)
     {
