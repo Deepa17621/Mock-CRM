@@ -147,4 +147,9 @@ meetingForm.addEventListener("submit", async (e) => {
     }
 });
 
-
+// Navigate to mock meeting
+let mockMeeting=document.querySelector("#mockMeeting");
+mockMeeting.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`/meetings/zohoMeeting.html`
+})
