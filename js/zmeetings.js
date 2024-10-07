@@ -7,6 +7,7 @@
 
 // console.log(res);
 let url="https://dmock-crm.vercel.app/";
+let listOfMeetings;
 async function getlistOfMeeting() {
     try {
         let res=await fetch('/getmeetinglist', {
@@ -16,15 +17,18 @@ async function getlistOfMeeting() {
         if(res.ok)
         {
             console.log(response.session);
-            createList(response.session)
+            createList(response.session);
+            listOfMeetings=response.session;
         }
         else throw new Error("Error: "+ res.statusText+" "+res.status)
     } catch (error) {
         
     }
-
 }
 getlistOfMeeting()
+console.log("Global Variable:");
+console.log(listOfMeetings);
+
 
 // List-Down All the Meetings
 let wrapperForMeetingList=document.querySelector(".actualListContainer");
@@ -39,21 +43,27 @@ function createList(arrOfObj){
         spanForImg.appendChild(image);
         switch (obj.timePeriod) {
             case "MORNING":
-                image.src=`./meetingImages/morningTime.svg`;
+                image.src=`../meetingImages/morningTime.svg`;
                 break;
             case "AFTERNOON":
-                image.src=`./meetingImages/afternoonTime.svg`;
+                image.src=`../meetingImages/afternoonTime.svg`;
                 break;
             case "EVENING":
-                image.src='./meetingImages/eveningTime.svg';
+                image.src='../meetingImages/eveningTime.svg';
                 break;
             case "NIGHT":
-                image.src='./meetingImages/nightTime.svg';
+                image.src='../meetingImages/nightTime.svg';
             default:
                 break;
         }
-        for (const key in obj) {
-        }
+        let divForDateTime=document.createElement("div")
+        divForDateTime.className="divForDateTime";
+        let spanForDate=document.createElement("span");
+        myDiv.appendChild(spanForDate);
+        spanForDate.innerHTML=obj.sDate;
+        let spanForTime=document.querySelector("span");
+
+
     });
 }
 
