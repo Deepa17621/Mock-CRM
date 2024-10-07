@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-let ACCESS_TOKEN="1000.61e7e0cd4c1d593f5257301f907ae64e.6900e297831b548a7a9ec27077ade40f";
+let ACCESS_TOKEN="1000.349ae63d10a99b4a100db2f3fc01f103.cdb643b4b0644eaf257a1b4c341171d5";
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
