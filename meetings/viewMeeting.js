@@ -1,4 +1,5 @@
-// Getting Meeting key From URL
+
+
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let meetingKey=param.get("meetingKey");

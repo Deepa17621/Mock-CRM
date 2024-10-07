@@ -186,7 +186,7 @@ h3{
     
 }
 .navBarForList ul>li{
-    width: 150px;
+    width: 130px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -195,14 +195,22 @@ h3{
 li>a
 {
     text-decoration: none;
-    color: gray;
-    font-size: medium;
-    display: block;
-    padding: 20px 5px;
+    color: rgb(49, 47, 47);
+    font-size: 15px;
+    display: inline-block;
+    /* padding: 20px 5px; */
     /* height: 100%; */
     width: 100%;
+    /* border: 1px solid black; */
+    height: 100%;
+    text-align: center;
 }
-.listLink.activeLink
-{
-    border-bottom: rgb(36, 167, 219);
+.listLink>a:hover, .listLink>a:active{
+    color:rgb(0, 119, 255);
+    border-bottom: 2px solid rgb(0, 119, 255);
 }
+li>a>span{
+    display: inline-block;
+    padding-top: 15px;
+}
+

@@ -17,11 +17,11 @@ currentTimeContainer.innerHTML=`${df.format(date)} <span id="center" style="marg
 // function to setImage based on time
 function setImage()
 {
-    if((date.getHours())>7 && (date.getHours())<11)
+    if((date.getHours())>=7 && (date.getHours())<=11)
     {
         imgTagForTime.setAttribute("src", `../meetingImages/morningTime.svg`);
     }
-    else if((date.getHours())>11 && (date.getHours())<15)
+    else if((date.getHours())>11 && (date.getHours())<=15)
     {
         imgTagForTime.setAttribute("src", "../meetingImages/afternoonTime.svg");
     }

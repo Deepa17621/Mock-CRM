@@ -30,6 +30,10 @@ app.use('/frontPage', express.static(path.join(__dirname, 'frontPage')));
 app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
 app.use('/meetings', express.static(path.join(__dirname, 'meetings')));
 app.use('/controller', express.static(path.join(__dirname, 'controller')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/js', express.static(path.join(__dirname, 'js')));
+app.use('/meetingImages', express.static(path.join(__dirname, 'meetingImages')));
+
 
 // Access Token Validation
 // app.get("/", async(req,res)=> {
