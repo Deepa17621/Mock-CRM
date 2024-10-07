@@ -1,6 +1,8 @@
 // import dao from "../controller/dao.js";
 // let getAllMeetings=new dao('http://localhost:5500/getmeetinglist');
 
+const { forIn } = require("lodash");
+
 // let res=getAllMeetings.getAll();
 
 // console.log(res);
@@ -22,5 +24,20 @@ async function getlistOfMeeting() {
 
 }
 getlistOfMeeting()
+
+// List-Down All the Meetings
+let wrapperForMeetingList=document.querySelector(".actualListContainer");
+
+function createList(arrOfObj){
+    arrOfObj.forEach(obj => {
+        let myDiv=document.createElement("div");
+        wrapperForMeetingList.appendChild(myDiv);
+        let spanForImg=document.createElement("span");
+        console.log(obj.timePeriod);
+        
+        for (const key in obj) {
+        }
+    });
+}
 
 

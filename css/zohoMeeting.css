@@ -31,7 +31,7 @@ section{
 }
 .meetingListContainer
 {
-    background-color: #eff9ff;
+    background-color: #fbfdff;
     /* width: 92%; */
     /* margin: auto; */
     height: 95vh;
@@ -213,4 +213,8 @@ li>a>span{
     display: inline-block;
     padding-top: 15px;
 }
+/* .actualListContainer
+{
+    
+} */
 
