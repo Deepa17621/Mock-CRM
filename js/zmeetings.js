@@ -18,7 +18,7 @@ async function getlistOfMeeting() {
         {
             console.log(response.session);
             createList(response.session);
-            listOfMeetings=response.session;
+            // return response.session;
         }
         else throw new Error("Error: "+ res.statusText+" "+res.status)
     } catch (error) {
@@ -26,45 +26,104 @@ async function getlistOfMeeting() {
     }
 }
 getlistOfMeeting()
-console.log("Global Variable:");
-console.log(listOfMeetings);
+// getlistOfMeeting().then((arr)=>{
+//     listOfMeetings=arr;
+// }).then(()=>{createList(listOfMeetings)}); // Execution starts Here....
 
 
 // List-Down All the Meetings
 let wrapperForMeetingList=document.querySelector(".actualListContainer");
+let wrapperForToday=document.querySelector(".wrapperForToday");
+let wrapperForTomorrow=document.querySelector(".wrapperForTomorrow");
+let wrapperForLater=document.querySelector(".wrapperForLater");
 
 function createList(arrOfObj){
     arrOfObj.forEach(obj => {
-        let myDiv=document.createElement("div");
-        wrapperForMeetingList.appendChild(myDiv);
-        let spanForImg=document.createElement("span");
-        let image=document.createElement("img");
-        myDiv.appendChild(spanForImg);
-        spanForImg.appendChild(image);
-        switch (obj.timePeriod) {
-            case "MORNING":
-                image.src=`../meetingImages/morningTime.svg`;
-                break;
-            case "AFTERNOON":
-                image.src=`../meetingImages/afternoonTime.svg`;
-                break;
-            case "EVENING":
-                image.src='../meetingImages/eveningTime.svg';
-                break;
-            case "NIGHT":
-                image.src='../meetingImages/nightTime.svg';
-            default:
-                break;
+        let li=document.createElement("li");
+        li.className="list"
+        if(obj.eventTime=="Later")
+        {
+            if(!wrapperForLater.hasChildNodes)
+                {
+                    let h2=document.createElement("h2");
+                    h2.innerHTML="Later";
+                    wrapperForLater.appendChild(h2)
+                }
+            li.innerHTML=listStructure(obj);
+            wrapperForLater.appendChild(li);
         }
-        let divForDateTime=document.createElement("div")
-        divForDateTime.className="divForDateTime";
-        let spanForDate=document.createElement("span");
-        myDiv.appendChild(spanForDate);
-        spanForDate.innerHTML=obj.sDate;
-        let spanForTime=document.querySelector("span");
-
-
+        else if(obj.eventTime="Today")
+        {
+            if(!wrapperForToday.hasChildNodes)
+                {
+                    let h2=document.createElement("h2");
+                    h2.innerHTML="Today"
+                    wrapperForToday.appendChild(h2)
+                }
+            li.innerHTML=listStructure(obj);
+            wrapperForToday.appendChild(li);
+        }
+        else if(obj.eventTime=="Tomorrow")
+        {
+            if(!wrapperForTomorrow.hasChildNodes)
+                {
+                    let h2=document.createElement("h2");
+                    h2.innerHTML="Tomorrow";
+                    wrapperForTomorrow.appendChild(h2)
+                }
+            li.innerHTML=listStructure(obj);
+            wrapperForTomorrow.appendChild(li);
+        }
     });
+}
+
+// Time Image Function
+function setImage(time)
+{
+    switch (time) {
+        case "MORNING":
+            return`../meetingImages/morningTime.svg`;
+        case "AFTERNOON":
+            return `../meetingImages/afternoonTime.svg`;
+        case "EVENING":
+            return '../meetingImages/eveningTime.svg';
+        case "NIGHT":
+            return '../meetingImages/nightTime.svg';
+        default:
+            break;
+    }
+}
+
+// List Html Structure Function
+function listStructure(meetingObj)
+{
+    let structure=`
+        <div class="dateTimeContainer division">
+            <span><img src=${setImage(meetingObj.timePeriod)} alt="Time-Image"></span>
+            <div id="dateTime">
+                <span>${meetingObj.sDate}</span>
+                <span id="meetingTime">${meetingObj.sTime} . ${meetingObj.durationInHours}</span>
+            </div>
+        </div>
+        <div class="topicContainer division">
+            <span><b>${meetingObj.topic}</b></span>
+        </div>
+        <div class="hostNameContainer division">
+            <span><img src=${meetingObj.presenterAvatar} alt="host-Avatar" id="avatarImg"></span>
+            <span id="presenterName">${meetingObj.presenterFullName}</span>
+        </div>
+        <div class="startBtnContainer division">
+            <button id="startBtn">Start</button>
+             <span id="meetingOptions">
+                    <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+                        <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+                        <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+                    </svg>
+             <span>
+        </div>
+        `;
+        return structure;
 }
 
 

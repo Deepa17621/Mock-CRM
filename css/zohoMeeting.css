@@ -213,5 +213,84 @@ li>a>span{
     display: inline-block;
     padding-top: 15px;
 }
+.actualListContainer
+{
+    margin: 10px 20px;
+    /* border: 1px solid black; */
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 200;
+}
+.wrapperForToday>li, .wrapperForTomorrow>li, .wrapperForLater>li{
+    height: 60px;
+    /* border: 1px solid blue; */
+    box-shadow: 5px;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    margin: 10px 0px;
+    text-align: center;
+}
+.dateTimeContainer
+{
+    display: flex;
+    padding: 10px 10px ;
+    gap: 2px;
+}
+#dateTime
+{
+    display: flex;
+    flex-direction: column;
+}
+#meetingTime
+{
+    font-size: 13px;
+}
+#avatarImg
+{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    /* display: inline; */
+}
+/* #presenterName
+{
+    display: inline-block;
+    margin-top:20px;
+} */
+/* singleListDivision */
+.division 
+{
+   width: 270px;
+   text-align: center;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+}
+/* ParentForAllList */
+.lists
+{
+    row-gap: 10px;
+}
+#startBtn
+{
+    border: 1px solid blue;
+    height: 27px;
+    width: 60px;
+    /* gap: 10px; */
+    border-radius: 10px;
+    background-color: white;
+    color: blue;
+}
+.list:hover
+{
+    border: 0.5px solid rgb(0, 140, 255);
+}
 
-
+/* .startBtnContainer
+{
+    justify-content: right;
+    padding: 10px 30px;
+} */
