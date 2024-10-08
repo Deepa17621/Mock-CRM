@@ -135,7 +135,7 @@ function listStructure(meetingObj)
 // Function to start a Meeting for each Meeting
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getMeeting/:${meetingKey}`);
+        let res=await fetch(`/getMeeting/${meetingKey}`);
         let obj=await res.json();
         if(!res.ok)
         {
@@ -150,7 +150,7 @@ async function startMeeting(meetingKey) {
 // Delete Meeting
 async function deleteMeeting(meetingKey) {
     confirm("Are you sure to cancel meeting?")
-    let res=await fetch(`/deletemeeting/:${meetingKey}`);
+    let res=await fetch(`/deletemeeting/${meetingKey}`);
     let response=await res.json();
     if(res.status=="204");
     {
