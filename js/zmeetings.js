@@ -18,6 +18,7 @@ async function getlistOfMeeting() {
         {
             console.log(response.session);
             createList(response.session);
+
             // return response.session;
         }
         else throw new Error("Error: "+ res.statusText+" "+res.status)
@@ -114,7 +115,7 @@ function listStructure(meetingObj)
         </div>
         <div class="startBtnContainer division">
             <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
-             <span id="meetingOptions">
+             <span id="meetingOptions" onclick="dropDown(${meetingObj.meetingKey})">
                     <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
                         <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
@@ -142,7 +143,7 @@ async function startMeeting(meetingKey) {
             throw new Error("Error in Url: "+ res.status+ " "+ res.statusText)
         }
         console.log(obj);
-        console.log(obj.startLink);
+        console.log(obj.session.startLink);
         window.location.href=obj.session.startLink;
     } catch (error) {
         
@@ -160,6 +161,14 @@ async function deleteMeeting(meetingKey) {
     }
 }
 
+// DropDown Menu - Three Dots
+// let dropDownDiv=document.querySelector("#dropDown");
+// console.log(dropDown);
+
+// function dropDown(meetingKey)
+// {
+
+// }
 // Events for btns
 // let meetNow=document.querySelector("#meetNow");
 // let scheduleMeetingBtn=document.querySelector("#schedule");
@@ -175,8 +184,4 @@ async function deleteMeeting(meetingKey) {
 // });
 
 // // Meeting Options -- Three Dot Menu Bar 
-// let meetingOptios=document.querySelector("#meetingOptions");
-// meetingOptios.addEventListener("click", (e)=>{
-//     e.preventDefault();
 
-// });

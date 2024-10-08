@@ -88,6 +88,18 @@
       "deals": [
         "d9dc"
       ]
+    },
+    {
+      "id": "55fa",
+      "AccountOwner": "Divya",
+      "AccountName": "dddd",
+      "AccountMail": "ddd@gmail.com",
+      "Phone": "9876543212",
+      "date": "2024-10-16",
+      "AccountAddress": "1600 Amphitheatre Parkway",
+      "AnnualRevenue": "9800000",
+      "Contacts": [],
+      "deals": []
     }
   ],
   "deals": [
