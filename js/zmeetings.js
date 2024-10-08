@@ -141,7 +141,9 @@ async function startMeeting(meetingKey) {
         {
             throw new Error("Error in Url: "+ res.status+ " "+ res.statusText)
         }
-        window.location.href=obj.startLink;
+        console.log(obj);
+        console.log(obj.startLink);
+        window.location.href=obj.session.startLink;
     } catch (error) {
         
     }
