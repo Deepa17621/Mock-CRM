@@ -159,22 +159,22 @@ async function deleteMeeting(meetingKey) {
 }
 
 // Events for btns
-let meetNow=document.querySelector("#meetNow");
-let scheduleMeetingBtn=document.querySelector("#schedule");
-meetNow.addEventListener("click", (e)=>{
-    e.preventDefault();
-    // Need to learn about sdk api documentaion
-});
+// let meetNow=document.querySelector("#meetNow");
+// let scheduleMeetingBtn=document.querySelector("#schedule");
+// meetNow.addEventListener("click", (e)=>{
+//     e.preventDefault();
+//     // Need to learn about sdk api documentaion
+// });
 
-// schedule Meeting
-scheduleMeetingBtn.addEventListener("click", (e)=>{
-    e.preventDefault();
-    // Need to create form to schdule a meeting
-});
+// // schedule Meeting
+// scheduleMeetingBtn.addEventListener("click", (e)=>{
+//     e.preventDefault();
+//     // Need to create form to schdule a meeting
+// });
 
-// Meeting Options -- Three Dot Menu Bar 
-let meetingOptios=document.querySelector("#meetingOptions");
-meetingOptios.addEventListener("click", (e)=>{
-    e.preventDefault();
+// // Meeting Options -- Three Dot Menu Bar 
+// let meetingOptios=document.querySelector("#meetingOptions");
+// meetingOptios.addEventListener("click", (e)=>{
+//     e.preventDefault();
 
-});
+// });
