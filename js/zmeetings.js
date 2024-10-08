@@ -113,7 +113,7 @@ function listStructure(meetingObj)
             <span id="presenterName">${meetingObj.presenterFullName}</span>
         </div>
         <div class="startBtnContainer division">
-            <button id="startBtn">Start</button>
+            <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
              <span id="meetingOptions">
                     <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
@@ -121,9 +121,60 @@ function listStructure(meetingObj)
                         <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
                     </svg>
              <span>
+             <div id="dropDown">
+                <ul>
+                    <li id="editMeeting">Edit</li>
+                    <li id="deleteMeeting" onclick="deleteMeeting(${meetingObj.meetingKey})">Cancel</li>
+                </ul>
+             </div>
         </div>
         `;
         return structure;
 }
 
+// Function to start a Meeting for each Meeting
+async function startMeeting(meetingKey) {
+    try {
+        let res=await fetch(`/getMeeting/:${meetingKey}`);
+        let obj=await res.json();
+        if(!res.ok)
+        {
+            throw new Error("Error in Url: "+ res.status+ " "+ res.statusText)
+        }
+        window.location.href=obj.startLink;
+    } catch (error) {
+        
+    }
+}
 
+// Delete Meeting
+async function deleteMeeting(meetingKey) {
+    confirm("Are you sure to cancel meeting?")
+    let res=await fetch(`/deletemeeting/:${meetingKey}`);
+    let response=await res.json();
+    if(res.status=="204");
+    {
+        alert("Meeting Deleted!")
+    }
+}
+
+// Events for btns
+let meetNow=document.querySelector("#meetNow");
+let scheduleMeetingBtn=document.querySelector("#schedule");
+meetNow.addEventListener("click", (e)=>{
+    e.preventDefault();
+    // Need to learn about sdk api documentaion
+});
+
+// schedule Meeting
+scheduleMeetingBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    // Need to create form to schdule a meeting
+});
+
+// Meeting Options -- Three Dot Menu Bar 
+let meetingOptios=document.querySelector("#meetingOptions");
+meetingOptios.addEventListener("click", (e)=>{
+    e.preventDefault();
+
+});
