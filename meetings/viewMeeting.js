@@ -96,12 +96,17 @@ startMeetingBtn.addEventListener("click", (e)=>{
 async function setStartMeeting() {
     let obj=await getMeeting(meetingKey);
     let tenMinPrior=(obj.session.startTimeMillisec)-600000;
-    console.log(tenMinPrior);
-    return;
-    
+    console.log(tenMinPrior);    
     if(Date.now()==tenMinPrior)
     {
         window.location.href=obj.session.startLink;
+    }
+    else 
+    {
+        if(confirm("Meeting will start only before 10mins of start time"))
+        {
+            location.reload();
+        }
     }
 }
 deleteMeetingBtn.addEventListener("click", (e)=>{
