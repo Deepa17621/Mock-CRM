@@ -81,7 +81,7 @@ function addToTable(allAccs)
 
         let row=document.createElement("tr");
         row.id=obj["id"];
-        row.setAttribute("onclick", "rowClickedEvent(this.id)");
+        // row.setAttribute("onclick", "rowClickedEvent(this.id)");
         tBody.appendChild(row);
         let checkBox21=document.createElement("td");
         row.appendChild(checkBox21);
@@ -104,6 +104,11 @@ function addToTable(allAccs)
                tdata.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
            }
            else{
+                if(val=="AccountName")
+                {
+                    tdata.setAttribute("onclick", `rowClickedEvent("${obj["id"]}")`);
+                    tdata.style.cursor="pointer";
+                }
                tdata.innerHTML=obj[tdata.className];
            }
         }

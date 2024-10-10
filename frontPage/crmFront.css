@@ -45,13 +45,13 @@ ul{
     height: 100%;
 }
 #navBar>ul li{
-    padding: 2px 10px;
+    padding: 0px 10px;
     height: 100%;
     font-size: 15px;
 
 }
-#navBar>ul a:hover , #navBar>ul a:active{
-    border-bottom: 4px solid  rgb(173, 222, 59);
+#navBar>ul li:hover{
+    border-bottom: 3px solid  rgb(226, 246, 14);
 }
 
 li

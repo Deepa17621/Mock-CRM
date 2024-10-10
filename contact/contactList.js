@@ -117,10 +117,6 @@ console.log(convert);
 if (currentId != null) {
     fetchDataFromLead()
 }
-function rowClickedEvent(id)
-{
-    window.location.href=`/contact/contactView.html?id=${id}`; 
-}
 
 // Table function to Add Data's To Table.
 function tableFunction(allContacts)
@@ -150,7 +146,7 @@ function tableFunction(allContacts)
         
          let row=document.createElement("tr");
          row.id=obj["id"];
-         row.setAttribute("onclick", "rowClickedEvent(this.id)");
+        //  row.setAttribute("onclick", "rowClickedEvent(this.id)");
          tableBody.appendChild(row);
          let checkBox21=document.createElement("td");
          row.appendChild(checkBox21);
@@ -172,11 +168,22 @@ function tableFunction(allContacts)
                 tdata.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
             }
             else{
+                if(val=="Contact Name")
+                    {
+                        tdata.setAttribute("onclick", `rowClickedEvent("${obj["id"]}")`);
+                        tdata.style.cursor="pointer";
+                    }
                 tdata.innerHTML=obj[tdata.className];
             }
          }
     })
 }
+
+function rowClickedEvent(id)
+{
+    window.location.href=`/contact/contactView.html?id=${id}`; 
+}
+
 // Filter data From JSON To Display
 
 function filterField(arrOfObjs)

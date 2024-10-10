@@ -97,7 +97,7 @@ async function setStartMeeting() {
     let obj=await getMeeting(meetingKey);
     let tenMinPrior=(obj.session.startTimeMillisec)-600000;
     console.log(tenMinPrior);    
-    if(Date.now()==tenMinPrior)
+    if(Date.now()>=tenMinPrior)
     {
         window.location.href=obj.session.startLink;
     }

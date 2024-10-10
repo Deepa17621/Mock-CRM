@@ -71,13 +71,18 @@ function sendToTable(obj)
         let item=(Object.keys(obj[0]))[Symbol.iterator]();
         let tr=document.createElement("tr");
         tr.id=e["id"];
-        tr.setAttribute("onclick", "rowClicked(this.id)")
+        // tr.setAttribute("onclick", "rowClicked(this.id)")
         tableBody.appendChild(tr);
         for (const key in e)
         {        
             let val=item.next().value;
             let td=document.createElement("td");
             td.className=val;
+            if(val=="DealName")
+            {
+                td.setAttribute("onclick", `rowClicked("${e["id"]}")`);
+                td.style.cursor="pointer";
+            }
             td.innerHTML=e[td.className];
             tr.appendChild(td);
         }

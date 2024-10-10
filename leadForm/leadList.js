@@ -60,7 +60,7 @@ function tableFunction(out)
         let trow=document.createElement("tr");
         tableBody.appendChild(trow);
         trow.id=e["id"];
-        trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
+        // trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
         let checkBoxtd=document.createElement("td");
         checkBoxtd.innerHTML=`<input type="checkbox">`;
         trow.appendChild(checkBoxtd);
@@ -82,6 +82,11 @@ function tableFunction(out)
                 tdata.innerHTML=`<a href=tel:${e[tdata.className]}>${e[tdata.className]}`;
             }
             else{
+                if(val=="Lead Name")
+                    {
+                        tdata.setAttribute("onclick", `rowClickFunction(${e.id})` );
+                        tdata.style.cursor="pointer";
+                    }
                 tdata.innerHTML=e[tdata.className];
             }
 
