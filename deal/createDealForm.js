@@ -405,18 +405,24 @@ saveNewBtn.addEventListener("click", (e)=>{
 
 // Click Event For LookUp View - Contact LookUp
 let lookUpForContact=document.querySelector("#lookUpForContact");
-contactName.addEventListener("click", (e)=>{
+contactName.addEventListener("focus", (e)=>{
     e.preventDefault();
     lookUpForContact.style.display="block";
 });
-
+contactName.addEventListener("blur", (e)=>{
+    e.preventDefault();
+    lookUpForContact.style.display="none";
+});
 // Click Event For LookUp View - Account LookUp
 let lookUpForAccount=document.querySelector("#lookUpForAcc");
-accountName.addEventListener("click", (e)=>{
+accountName.addEventListener("focus", (e)=>{
     e.preventDefault();
     lookUpForAccount.style.display="block";
 })
-
+accountName.addEventListener("blur", (e)=>{
+    e.preventDefault();
+    lookUpForAccount.style.display="none";
+})
 // Form Validation
 function setError(tag)
 {
