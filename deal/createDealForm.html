@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>Create Deal- Zoho CRM</title>
     <link rel="stylesheet" href="../frontPage/crmFront.css">
 </head>
@@ -123,7 +124,7 @@
                     <tr class="formRow">
                         <td><label for="closingDate">Closing Date</label></td>
                         <td>
-                            <input type="date" name="closingDate" id="closingDate" class="inps">
+                            <input type="date" name="closingDate" id="closingDate"  class="inps datePicker">
                             <p></p>
                         </td>
                     </tr>
@@ -143,6 +144,7 @@
             </div>
         </form>
      </div>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
      <script src="./createDealForm.js"></script>
 </body>
 </html>

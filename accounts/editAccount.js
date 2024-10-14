@@ -83,6 +83,10 @@ cancelBtn.addEventListener("click",(e)=>{
 
 });
 
+flatpickr(".datePicker", {
+    dateFormat: "Y-m-d",
+});
+
 //validation
 
 // Feild Validation

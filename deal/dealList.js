@@ -35,7 +35,6 @@ async function fetchData()
 fetchData();
 
 // Filter Function
-
 function filterFunction(arrOfObjs)
 {
     arrOfObjs.forEach(e=>{
@@ -89,9 +88,26 @@ function sendToTable(obj)
     });
 }
 
-// Row Clicked Event
+// Select View -- KambanView / List View
+let selectOption=document.querySelector("#selectView");
 
+
+// Row Clicked Event
  async function rowClicked(id)
 {
     window.location.href=`/deal/dealView.html?id=${id}`;
 }
+
+// Change View From List To Kamban
+let selectView=document.querySelector("#selectView");
+selectView.addEventListener("change", (e)=>{
+    e.preventDefault();
+    if(selectView.value=="listView")
+    {
+        window.location.href=`./dealList.html`;
+    }
+    else if(selectView.value=="kambanView")
+    {
+        window.location.href=`./dealKambanView.html`
+    }
+});

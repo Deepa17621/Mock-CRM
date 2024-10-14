@@ -90,7 +90,11 @@ inpArr.forEach(e=>{
     window.location.href = clicked ? "/leadForm/leadList.html" :  "/leadForm/leadForm.html";
     clicked = null;
 });
-
+// Flatpicker
+flatpickr(".datePicker", {
+    // You can add options here
+    dateFormat: "Y-m-d",
+});
 
 
 //Set Error

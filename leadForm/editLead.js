@@ -133,6 +133,9 @@ form.addEventListener("submit", (e) => {
      });
  });
  
+ flatpickr(".datePicker", {
+    dateFormat: "Y-m-d",
+});
  
 
 //Set Error

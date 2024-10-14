@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
     <title>Edit Contact - Zoho CRM</title>
     <link rel="stylesheet" href="../frontPage/crmFront.css">
@@ -75,7 +76,7 @@
             <p></p>
             <br>
             <label for="date">Date</label>
-            <input type="date" name="date" id="date" class="contactInp" >
+            <input type="date" name="date" id="date" class="contactInp datePicker" >
             <p></p>
             <br>
             <label for="contactAddress">Lead Address</label>
@@ -87,6 +88,7 @@
             <p></p>           
         </form>
      </div>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
      <script src="./editContact.js"></script>
 </body>
 </html>

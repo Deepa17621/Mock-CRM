@@ -113,6 +113,9 @@ formm.addEventListener("submit", (e)=>{
     }).catch(err=>{})
 });
 
+flatpickr(".datePicker", {
+    dateFormat: "Y-m-d",
+});
 
 // Feild Validation
 function setSuccess(tag)

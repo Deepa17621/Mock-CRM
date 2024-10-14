@@ -67,7 +67,6 @@ form.addEventListener("submit", (e)=>{
                 break;
         }
     });
-   
 
     inpArr.forEach(e=>{
         if(e.value==="") return;
@@ -105,7 +104,11 @@ async function updateAccountFromLookUp(contactId) {
     });
 }
 
-
+// FlatPickr
+flatpickr(".datePicker", {
+    // You can add options here
+    dateFormat: "Y-m-d",
+});
 //Set Error
 function setError(tag) {
     tag.style.borderColor = "red";

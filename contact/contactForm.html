@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Create Contact - Zoho CRM</title>
     <link rel="stylesheet" href="../frontPage/crmFront.css">
 </head>
@@ -89,7 +89,7 @@
                 <P></P>
                 <br>
                 <label for="date">Date</label>
-                <input type="date" name="date" id="date" class="contactInp">
+                <input type="date" name="date" id="date" class="contactInp datePicker">
                 <p></p>
                 <br>
                 <label for="contactAddress">Address</label>
@@ -105,6 +105,7 @@
             </form>
          </div>
      </div>
-<script src="./contactForm.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+     <script src="./contactForm.js"></script>
 </body>
 </html>

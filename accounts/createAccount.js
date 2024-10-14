@@ -172,7 +172,10 @@ accForm.addEventListener("submit", (e)=>{
 });
 let accId;
 
-
+flatpickr(".datePicker", {
+    // You can add options here
+    dateFormat: "Y-m-d",
+});
 
 
 // Form Field Validation

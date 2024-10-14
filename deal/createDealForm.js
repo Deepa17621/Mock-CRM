@@ -301,6 +301,12 @@ async function updateDeal(obj) {
     }
 }
 
+// Flatpicker
+flatpickr(".datePicker", {
+    // You can add options here
+    dateFormat: "Y-m-d",
+});
+
 // ===========> DAO <============
 // FETCH TO GET THE ACCOUNT DETAILS By ID
 async function fetchAccById(aId) {
