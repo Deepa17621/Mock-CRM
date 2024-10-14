@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/crm-icon.ico" type="image/x-icon">
+    <title> Deals - Zoho CRM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="../frontPage/crmFront.css">
+    <link rel="stylesheet" href="../css/dealKamban.css">
+</head>
+
+<body>
+
+    <!-- Navbar Container -->
+    <div id="navBar">
+        <ul>
+            <li id="Logo" class="navParent">
+                <a href="../index.html">
+                    <img src="../assets/iconnn.svg" alt="CRM image" id="crmicon"> <span id="CRM">CRM</span>
+                </a>
+            </li>
+            <li id="Home" class="navParent">
+                <a href="../index.html">Home</a>
+            </li>
+            <li id="Leads" class="navParent">
+                <a href="../leadForm/leadList.html">Leads</a>
+            </li>
+            <li id="Contact" class="navParent">
+                <a href="../contact/contactList.html">Contacts</a>
+            </li>
+            <li id="Account" class="navParent">
+                <a href="../accounts/accountList.html">Accounts</a>
+            </li>
+            <li id="Deals" class="navParent">
+                <a href="./dealList.html">Deals</a>
+            </li>
+            <li id="meetings" class="navParent">
+                <a href="../meetings/meetingList.html">Meetings</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Nav Container End -->
+
+    <!-- Second Navbar -->
+    <div id="secondNav">
+        <!---->
+            <ul id="ull">
+                <div id="left">
+                    <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li>
+                        <select name="" id="leadOption" class="disabled">
+                            <option value="All Deals">All Deals</option>
+                            <option value="Locked Deals">Locked Deals</option>
+                            <option value="Junk Deals">New Deals</option>
+                        </select>
+                    </li>
+                </div>
+               <div id="right">
+                    <li>
+                        <select name="selectView" id="selectView">
+                            <option value="">Select View</option>
+                            <option value="listView">List View</option>
+                            <option value="kambanView">Kamban View</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select name="pipeLine" id="pipeLine">
+                            <option value="standardView">Standard</option>
+                            <option value="deepa">Deepa</option>
+                            <option value="allPipeLine">All PipeLine</option>
+                        </select>
+                    </li>
+                    <li>
+                        <button class="createBtnForAllModules" id="createDealBtn">
+                            create Deal
+                        </button>
+                    </li>
+                    <li>
+                        <select name="" id="fields" onchange="selectField()">
+                            <option value="">---Select---</option>
+                            <option value="id">ID</option>
+                            <option value="DealOwner">Deal Owner</option>
+                            <option value="ContactName">Contact Name</option>
+                            <option value="DealName">Deal Name</option>
+                            <option value="AccountName">AcoountName</option>
+                            <option value="Amount">Amount</option>
+                            <option value="ClosingDate">Closing date</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" name="" id="searchField" placeholder="search here..." style="height: 23px;" >
+                    </li>
+                    <li class="disabled">
+                        <select name="" id="actionOption">
+                            <option value="">action</option>
+                            <option value="Mass Update">Mass Update</option>
+                            <option value="Mass Delete">Mass Delete</option>
+                            <option value="Mass Transfer">Mass Transfer</option>
+                            <option value="Mass Email">Mass Email</option>
+                        </select>
+                    </li>
+               </div>
+            </ul>
+    </div>
+    <!-- Second Nav Ending -->
+
+    <!-- Contact List  Body Container -->
+    <div id="parent">
+
+        <!-- Filter Container Starts Here -->
+        <div id="filterForDeal">
+            
+            <div id="searchBar">
+                <input type="text" name="" id="searchBarInp" placeholder="Search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <!-- Kamban View Body Starts Here -->
+         <section id="stageParent" class="pipeLines">
+            <div id="qualification" class="multipleStagesContainer">
+                <!-- stageHeader -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Qualification</span>
+                        <span class="count" id="qualificationCount">0</span>
+                        <span class="dot">.</span>
+                        <span>10%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfqualification" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                 <div class="stageBody"></div>
+            </div>
+            <div id="needAnalysis" class="multipleStagesContainer">
+                 <!-- stageHeader -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Need Analysis</span>
+                        <span class="count" id="needAnalysisCount">0</span>
+                        <span class="dot">.</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfNeedAnalysis" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="valueProposition" class="multipleStagesContainer">
+                 <!-- stageHeader -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Value Proposition</span>
+                        <span class="count" id="valuePropositionCount">0</span>
+                        <span class="dot">.</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfValueProposition" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="identifyDecisionMakers" class="multipleStagesContainer">
+                <!-- stage Header -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Identify Decision Makers</span>
+                        <span class="count" id="identifyDecisionMakersCount">0</span>
+                        <span class="dot">.</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfDecisionMakers" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="proposal" class="multipleStagesContainer">
+                <!-- Stage Header -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Proposal / Price Quote</span>
+                        <span class="count" id="proposalCount">0</span>
+                        <span class="dot">.</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfProposal" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="negotiation" class="multipleStagesContainer">
+                <!-- Stage Header -->
+                <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Negotiation/Review</span>
+                        <span class="count" id="negotiationCount">0</span>
+                        <span class="dot">.</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfNegotiation" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="closedWon" class="multipleStagesContainer">
+                <!-- stage Header -->
+                <div class="stageHeader won">
+                    <div class="firstRow">
+                        <span>Closed Won</span>
+                        <span class="count" id="closedWonCount">0</span>
+                        <span class="dot">.</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="secondRow">
+                        <span id="totalAmountOfClosedWon" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="closedLost" class="multipleStagesContainer">
+                <!-- stage Header -->
+                <div class="stageHeader closed">
+                    <div class="firstRow">
+                        <span>Closed Lost</span>
+                        <span class="count" id="closedLostCount">0</span>
+                        <span class="dot">.</span>
+                        <span>0%</span>
+                    </div>
+                    <div id="totalAmountOfClosedLost" class="rupee">
+                        <i class="fa-solid fa-indian-rupee-sign"></i> 0.00
+                    </div>
+                </div>
+                <!-- stage Body -->
+                <div class="stageBody"></div>
+            </div>
+            <div id="closedLostCompetition" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader closed">
+                    <div class="firstRow">
+                        <span>Closed-Lost Competition</span>
+                        <span class="count" id="closedCompetitionCount">0</span>
+                        <span class="dot">.</span>
+                        <span>0%</span>
+                    </div>
+                    <div id="totalAmountOfLostCompetition" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stage Body -->
+                 <div class="stageBody"></div>
+            </div>
+         </section>
+         <!-- Deepa's PipeLine -->
+         <section id="deepaPipeline" class="pipeLines">
+            <div id="stage1" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>Stage-1</span>
+                        <span class="count" id="stage-1Count">0</span>
+                        <span class="dot">.</span>
+                        <span>0%</span>
+                    </div>
+                    <div id="totalAmountOfStage1" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stage Body -->
+                 <div class="stageBody"></div>
+            </div>
+            <div id="stage2" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>stage-2</span>
+                        <span class="count stage-2Count">0</span>
+                        <span class="dot">.</span>
+                        <span>30%</span>
+                    </div>
+                    <div id="totalAmountOfStge2" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stageBody -->
+                  <div class="stageBody"></div>
+            </div>
+            <div id="stage3" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>stage-3</span>
+                        <span class="count stage-3Count">0</span>
+                        <span class="dot">.</span>
+                        <span>50%</span>
+                    </div>
+                    <div id="totalAmountOfStage3" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stageBody -->
+                  <div class="stageBody"></div>
+            </div>
+            <div id="stage4" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>stage-4</span>
+                        <span class="count stage-4Count">0</span>
+                        <span class="dot">.</span>
+                        <span>80%</span>
+                    </div>
+                    <div id="totalAmountOfStage4" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stageBody -->
+                  <div class="stageBody"></div>
+            </div>
+         </section>
+    </div>
+    <script src="../js/dealKambanView.js"></script>
+</body>
+
+</html>
