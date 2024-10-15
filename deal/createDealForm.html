@@ -13,12 +13,12 @@
     <div id="navBar">
         <ul>
             <li id="Logo" class="navParent">
-                <a href="../frontPage/crmFront.html">
+                <a href="../index.html">
                     <img src="../assets/iconnn.svg" alt="CRM image" id="crmicon"><span id="CRM">CRM</span>
                 </a>
             </li>
             <li id="Home" class="navParent">
-                <a href="../frontPage/crmFront.html">Home</a>
+                <a href="../index.html">Home</a>
             </li>
             <li id="Leads" class="navParent">
                 <a href="../leadForm/leadList.html">Leads</a>
@@ -43,7 +43,7 @@
     <div id="secondNav">
        <ul id="leadFormSecondNavUl">
        <div id="left">
-            <li><h3>Create Deal</h3></li>
+            <li><h3 id="titleForPage">Create Deal</h3></li>
             <li>
                 <select name="" id="leadOption" class="disabled">
                     <option value="All Deals">All Deals</option>
@@ -92,9 +92,7 @@
                             <input type="text" name="contactName" id="contactName" class="inps">
                             <p></p>
                             <div class="lookUp" id="lookUpForContact" >
-                                <ul id="listOfContacts" style="display: flex; flex-direction: column; text-align: left;">
-
-                                </ul>
+                                <ul id="listOfContacts" style="display: flex; flex-direction: column; text-align: left;"></ul>
                             </div>
                         </td>
                    </tr>
@@ -109,6 +107,13 @@
                             </div>
                         </td>
                     </tr>
+                    <tr class="formRow">
+                        <td><label for="dateOf"> Date Of</label></td>
+                        <td>
+                            <input type="date" name="dateOf" id="dateOf" class="inps datePicker" placeholder="mmm dd,yyyy">
+                            <p></p>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div id="rightForm"class="divideForm">
@@ -120,25 +125,38 @@
                             <p></p>
                         </td>
                     </tr>
-                
                     <tr class="formRow">
                         <td><label for="closingDate">Closing Date</label></td>
                         <td>
-                            <input type="date" name="closingDate" id="closingDate"  class="inps datePicker">
+                            <input type="date" name="closingDate" id="closingDate"  class="inps datePicker" placeholder="mmm dd, yyyy">
                             <p></p>
                         </td>
                     </tr>
-                
+                    <tr class="formRow">
+                        <td><label for="pipeLine">Pipeline</label></td>
+                        <td>
+                            <select name="pipeLine" id="pipeLine" class="inps">
+                                <!-- <option value="">select</option> -->
+                                <option value="standard">standard</option>
+                                <option value="deepa">Deepa</option>
+                                <option value="allPipeLines">All PipeLines</option>
+                            </select>
+                        </td>
+                    </tr>
                     <tr class="formRow">
                         <td><label for="stages">Stage</label></td>
                         <td>
                             <select name="stages" id="stages" class="inps">
-                                <option value="" disabled selected>--Select--</option>
+                                <!-- <option value="" disabled selected>--Select--</option>
                                 <option value="stage1">stage-1</option>
                                 <option value="stage2">stage-2</option>
-                                <option value="stage3">stage-3</option>
+                                <option value="stage3">stage-3</option> -->
                             </select>
                         </td>
+                    </tr>
+                    <tr class="formRow">
+                        <td><label for="designation">Designation</label></td>
+                        <td><input type="text" name="designation" id="designation" class="inps"><p></p></td>
                     </tr>
                 </table>
             </div>

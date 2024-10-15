@@ -1,4 +1,3 @@
-
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
@@ -8,7 +7,11 @@ console.log(accIdFromAccModule);
 
 // Editing Deal Details--> Redirection from dealView
 let dealToBeEdited=param.get("dealToBeEdited");
-
+if(dealToBeEdited!=null)
+{
+    let setTitle=document.querySelector("#titleForPage");
+    setTitle.textContent="Edit Deal"
+}
 // Deal Creation From Contact Module-->Redirection From Contact View
 let contactId=param.get("contactid");
 let accountId=param.get("accId");
@@ -35,8 +38,6 @@ else if(dealToBeEdited)
 {
     getDealToBeEdited(dealToBeEdited);
 }
-
-
 // Fetch Contact & Account Details
 async function getContact(cId, aId)  // LIne Number 19
 {
@@ -95,8 +96,24 @@ stage.addEventListener("change",()=>{
 // LookUp Field List
 const contsList=document.querySelector("#listOfContacts");
 const accList=document.querySelector("#listOfAccs");
+// Dynamic stages based on user choice
+let deepaPipeLine=`<option value="">--select--</option>
+                      <option value="stage1">stage-1</option>
+                      <option value="stage2">stage-2</option>
+                      <option value="stage3">stage-3</option>
+                      <option value="stage4">stage-4</option>
+                      <option value="stage5">stage-5</option>`;
 
-
+let standardPipeLine=`<option value="">select</option>
+                      <option value="qualification">Qualification</option>
+                      <option value="needAnalysis">Need Analysis</option>
+                      <option value="valueProposition">Value Proposition</option>
+                      <option value="identifyDecisionMakers">Identify Decision Makers</option>
+                      <option value="proposal">Proposal / Price Quote</option>
+                      <option value="negotiation">Negotiation</option>
+                      <option value="closedWon">Closed Won</option>
+                      <option value="closedLost">Closed Lost</option>
+                      <option value="closedLostCompetition">Closed-Lost Competition</option>`;
  
 // Setting predefined values of existing account and contact
 async function setDataToFormFields(cObj, aObj)
@@ -154,7 +171,39 @@ async function setDataToFormFields(cObj, aObj)
     }
     
 }
-
+// Default selection 
+let pipeLineChoice=document.querySelector("#pipeLine");
+if(pipeLineChoice.value=="standard")
+{
+    stage.innerHTML=standardPipeLine;
+}
+else if(pipeLineChoice.value=="deepa")
+{
+    stage.innerHTML=deepaPipeLine;
+}
+// Set Stage options - based on url param -Deal Creation From kambanView
+if((param.get("pipeLine")=="deepa"))
+{
+    pipeLineChoice.value="deepa";
+    stage.innerHTML=deepaPipeLine;
+}
+else if((param.get("pipeLine"))=="standardView")
+{
+    pipeLineChoice.value="standard"
+    stage.innerHTML=standardPipeLine;
+}
+// Set Stage Options - based on user choice
+pipeLineChoice.addEventListener("change", (e)=>{
+    e.preventDefault();
+    if(pipeLineChoice.value=="standard")
+    {
+        stage.innerHTML=standardPipeLine;
+    }
+    else if(pipeLineChoice.value=="deepa")
+    {
+        stage.innerHTML=deepaPipeLine;
+    }
+})
 // Form with prefilled Data --- To Edit The Deal
  async function setDealDataToForm(dealObj)
 {
@@ -255,8 +304,7 @@ async function updateContactAccount(dealObj, cId, aId)
          let updatedAccount=await putAccount.json();
     } catch (error) {
         console.log(error)
-    }
-    
+    }  
 
 }
 
@@ -304,7 +352,7 @@ async function updateDeal(obj) {
 // Flatpicker
 flatpickr(".datePicker", {
     // You can add options here
-    dateFormat: "Y-m-d",
+    dateFormat: "M d, Y",
 });
 
 // ===========> DAO <============
@@ -327,8 +375,7 @@ async function fetchAccById(aId) {
 async function fetchContById(conId) {
     try {
         let res=await fetch(`http://localhost:3000/contacts/${conId}`);
-        if(!res.status==200)
-        {
+        if(!res.status==200) {
             throw new Error("Error in Fetching Data---"+ res.status + res.statusText);
         }
         let contactObj=await res.json();
@@ -342,15 +389,13 @@ async function fetchContById(conId) {
 async function fetchAllContacts() {
     try {
         let res=await fetch(`http://localhost:3000/contacts`);
-    if(!res.ok)
-    {
+    if(!res.ok){
         throw new Error("Error in Fetching Data");
     }
     let arr=await res.json();
     return arr;
     } catch (error) {
         console.log("error"+error);
-        
     }
 }
 
@@ -366,7 +411,6 @@ async function  fetchALLAccounts() {
     return arr;
     } catch (error) {
         console.log(error);
-        
     }
 }
 
@@ -381,8 +425,7 @@ async function fetchDealById(id) {
         let obj=await res.json();
         return obj;
     } catch (error) {
-        console.log(error);
-        
+        console.log(error);  
     }
 }
 
@@ -390,7 +433,8 @@ async function fetchDealById(id) {
 let cancelBtn=document.querySelector("#cancelBtn");
 cancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`/deal/dealList.html`;
+    // window.location.href=`/deal/dealList.html`;
+    window.history.back();
 });
 
 // 2. Save Button
