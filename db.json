@@ -104,64 +104,26 @@
   ],
   "deals": [
     {
-      "id": "a463",
-      "DealOwner": "SadaSivan D",
-      "DealName": "SSS Deal",
-      "ContactName": "Anitha",
-      "AccountName": "SSSA Constructions",
-      "Amount": "87000000",
-      "ClosingDate": "2024-09-03",
-      "Stage": "stage2",
-      "ContactId": "3b06",
-      "AccountId": "b14e"
-    },
-    {
-      "id": "5e06",
-      "DealOwner": "SadaSivan D",
-      "DealName": "Sabari's Deal-1",
-      "ContactName": "Anitha",
-      "AccountName": "SSSA Constructions",
-      "Amount": "98120000",
-      "ClosingDate": "2024-09-09",
-      "Stage": "stage3",
-      "ContactId": "3b06",
-      "AccountId": "b14e"
-    },
-    {
-      "id": "1f39",
-      "DealOwner": "Prakash",
-      "DealName": "prakash's Deal",
-      "ContactName": "Deepa Rajendiran",
-      "AccountName": "SSSA Constructions",
-      "Amount": "900000000000",
-      "ClosingDate": "2024-09-13",
-      "Stage": "stage3",
-      "ContactId": "66b7",
-      "AccountId": "b14e"
-    },
-    {
-      "id": "d907",
-      "DealOwner": "Deepa",
-      "DealName": "Mr.B's Deal-21",
-      "ContactName": "Balaji P",
-      "AccountName": "SSSA Constructions",
-      "Amount": "90800000",
-      "ClosingDate": "2024-09-13",
-      "Stage": "stage2",
-      "ContactId": "ddfb",
-      "AccountId": "b14e"
-    },
-    {
-      "DealOwner": "Prakash Rajendiran",
-      "DealName": "prakash's Deal",
-      "ContactName": "Deepa Rajendiran",
-      "AccountName": "SSSA Constructions",
-      "Amount": "900000000000",
-      "ClosingDate": "2024-09-23",
-      "Stage": "stage3",
-      "ContactId": "66b7",
-      "AccountId": "b14e",
-      "id": "d9dc"
+      "standardPipeLine": {
+        "qualification": [],
+        "needAnalysis": [],
+        "valueProposition": [],
+        "identifyDecisionMakers": [],
+        "proposal": [],
+        "negotiation": [],
+        "closedWon": [],
+        "closedLost": [],
+        "closedLostCompetition": []
+      },
+      "deepaPipeLine": {
+        "stage1": [],
+        "stage2": [],
+        "stage3": [],
+        "stage4": [],
+        "stage5": [],
+        "completed": [],
+        "Cancelled": []
+      }
     }
   ],
   "meetings": [

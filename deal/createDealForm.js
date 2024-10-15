@@ -82,11 +82,14 @@ let dealOwner=document.querySelector("#dealOwner");
 let dealName=document.querySelector("#dealName");
 let contactName=document.querySelector("#contactName");
 let accountName=document.querySelector("#accountName");
+let dateOfDealCreation=document.querySelector("#dateOf");
 let amount=document.querySelector("#amount");
 let closingDate=document.querySelector("#closingDate");
-let stages=null;
-
+let pipeLineInp=document.querySelector("#pipeLine");
 let stage=document.querySelector("#stages");
+let designation=document.querySelector("#designation");
+
+let stages=null;
 stage.addEventListener("change",()=>{
     stages = stage.value;
     console.log(stages);
@@ -98,11 +101,11 @@ const contsList=document.querySelector("#listOfContacts");
 const accList=document.querySelector("#listOfAccs");
 // Dynamic stages based on user choice
 let deepaPipeLine=`<option value="">--select--</option>
-                      <option value="stage1">stage-1</option>
-                      <option value="stage2">stage-2</option>
-                      <option value="stage3">stage-3</option>
-                      <option value="stage4">stage-4</option>
-                      <option value="stage5">stage-5</option>`;
+                      <option value="stage1">stage1</option>
+                      <option value="stage2">stage2</option>
+                      <option value="stage3">stage3</option>
+                      <option value="stage4">stage4</option>
+                      <option value="stage5">stage5</option>`;
 
 let standardPipeLine=`<option value="">select</option>
                       <option value="qualification">Qualification</option>
@@ -213,9 +216,20 @@ pipeLineChoice.addEventListener("change", (e)=>{
     contactName.setAttribute("id", dealObj.ContactId);
     accountName.value=dealObj.AccountName;
     accountName.setAttribute("id", dealObj.AccountId);
+    dateOfDealCreation.value=dealObj.DateOf;
     amount.value=dealObj.Amount;
     closingDate.value=dealObj.ClosingDate;
-    stage.value=dealObj.stage;
+    pipeLineInp.value=dealObj.pipeLine;
+    if(dealObj.pipeLine=="deepa")
+    {
+        stage.innerHTML=deepaPipeLine;
+        stage.value=dealObj.Stage;
+    }
+    else if(dealObj.pipeLine=="standard")
+    {
+        stage.innerHTML=standardPipeLine;
+        stage.value=dealObj.Stage;
+    }
     setLookUpFields();
 }
 // LookUp With All the contacts and Accounts
@@ -263,9 +277,11 @@ myForm.addEventListener("submit", (e)=>{
         "DealName":dealName.value,
         "ContactName":contactName.value,
         "AccountName":accountName.value,
+        "DateOf":dateOfDealCreation.value,
         "Amount":amount.value,
         "ClosingDate":closingDate.value,
-        "Stage":stages,
+        "pipeLine":pipeLineInp.value,
+        "Stage":stage.value,
         "ContactId":"",
         "AccountId":""
     }
@@ -312,11 +328,22 @@ async function updateContactAccount(dealObj, cId, aId)
 async function saveDeal(obj)
 {
     try {
-        let res=await fetch("http://localhost:3000/deals", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(obj)
-        });
+            if(obj.pipeLine=="standard")
+            {
+                let res=await fetch(`http://localhost:3000/deals/standardPipeLine`, {
+                    method:"POST",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify(obj)
+                });
+            }
+            else if(obj.pipeLine=="deepa")
+            {
+                let res=await fetch(`http://localhost:3000/deals/deepaPipeLine`, {
+                    method:"POST",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify(obj)
+                });
+            }
        if(res.ok)
        {
         let out=await res.json();
@@ -459,20 +486,20 @@ contactName.addEventListener("focus", (e)=>{
     e.preventDefault();
     lookUpForContact.style.display="block";
 });
-contactName.addEventListener("blur", (e)=>{
-    e.preventDefault();
-    lookUpForContact.style.display="none";
-});
+// contactName.addEventListener("blur", (e)=>{
+//     e.preventDefault();
+//     lookUpForContact.style.display="none";
+// });
 // Click Event For LookUp View - Account LookUp
 let lookUpForAccount=document.querySelector("#lookUpForAcc");
 accountName.addEventListener("focus", (e)=>{
     e.preventDefault();
     lookUpForAccount.style.display="block";
 })
-accountName.addEventListener("blur", (e)=>{
-    e.preventDefault();
-    lookUpForAccount.style.display="none";
-})
+// accountName.addEventListener("blur", (e)=>{
+//     e.preventDefault();
+//     lookUpForAccount.style.display="none";
+// })
 // Form Validation
 function setError(tag)
 {

@@ -1,3 +1,4 @@
+import dao from "../controller/dao.js";
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
@@ -66,10 +67,9 @@ function display(obj)
 let deleteBtn=document.querySelector("#deleteBtn");
 deleteBtn.addEventListener("click",(e)=>{
     e.preventDefault();
-
     deleteDeal(currentId);
 
-    window.location.href=`http://127.0.0.1:5500/deal/dealList.html`;
+    // window.location.href=`../deal/dealList.html`;
     
 });
 
@@ -79,14 +79,19 @@ async function deleteDeal(id)
     if(confirmation)
     {
         try {
-            let response=await fetch(`http://localhost:3000/deals/${id}`, {
-                method:"DELETE"
-            });
-            if(!response.ok)
+            let updateContAcc=await updateContactAndAccount(id);
+            // return 
+            if(updateContAcc=="true")
             {
-                throw new Error("Error in URL");
+                let response=await fetch(`http://localhost:3000/deals/${id}`, {
+                    method:"DELETE"
+                });
+                if(!response.ok)
+                {
+                    throw new Error("Error in URL");
+                }
+                alert("Successfully Deleted!");
             }
-            alert("Successfully Deleted!");
         } catch (error) {
             
         }
@@ -107,8 +112,25 @@ editBtn.addEventListener("click", (e)=>{
     window.location.href=`../deal/createDealForm.html?dealToBeEdited=${currentId}`;
 });
 
-// put contact Detail By Deleting Deal Id From Contact 
-// put account Detail by Deleting Deal Id From Account Details
+// Update Contact And Account Details By Deleting the deal id From both the modules
+async function updateContactAndAccount(dealId) {
+    try {
+        console.log("Function");
+        
+        let dealInstance=await dao(`http://localhost:3000/deals`);    
+        let contactInstance=dao(`http://localhost:3000/contacts`);
+        let accountInstance=dao(`http://localhost:3000/accounts`);
+        //1.GetDeal Object to get acc and contact Details
+        let currentDeal=dealInstance.getById(dealId);        
+        if(currentDeal!=null)
+        {
+             
+        }
+    } catch (error) {
+        
+    }
+    
+}
 
 async function putContactAndAccountDetails(accId,contId) {
     // let cRes=await fetch(`http://localhost:3000/deals/${}`);

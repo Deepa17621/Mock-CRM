@@ -306,7 +306,7 @@ tbody tr{
 {
     gap: 50px;
 }
-tbody tr:hover{
+tbody>tr:hover{
     background-color: rgb(230, 240, 247);
 }
 select{
