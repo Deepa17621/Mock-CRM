@@ -156,17 +156,17 @@ h3{
     font-size: 20px;
     font-weight: 600;
 }
-#meetingListContainer
+#meetingListContainer, #meetingFormContainer
 {
-    background-color: hsl(204, 100%, 96%);
+    background-color: hsl(204, 24%, 96%);
     display: flex;
     flex-direction: column;
     width: 95vw;
 }
-#meetingListContainer .navBarForList
+#meetingListContainer .navBarForList, #meetingFormContainer .navBarForList
 {
     height: 50px;
-    background-color: #dcebfa;
+    background-color: #f0f4f7;
     color: white;
     display: flex;
     border-bottom:1px solid gray ;
@@ -221,7 +221,7 @@ li>a>span{
     font-size: 14px;
     font-weight: 200;
 }
-.wrapperForToday>li, .wrapperForTomorrow>li, .wrapperForLater>li{
+.list{
     height: 80px;
     /* border: 1px solid blue; */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -342,6 +342,7 @@ li>a>span{
 #meetNow:hover, #schedule:hover
 {
     background-color: rgb(7, 72, 125);
+    cursor: pointer;
 }
 /* #meetNowDropDown
 {
