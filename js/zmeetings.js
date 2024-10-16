@@ -54,6 +54,11 @@ function createList(arrOfObj){
     arrOfObj.forEach(obj => {
         let li=document.createElement("li");
         li.className="list"
+        li.setAttribute("id", obj.meetingKey);
+        li.addEventListener("click", (e)=>{
+            e.preventDefault();
+            window.location.href=`../meetings/displayMeetingDetail.html?meetingKey=${obj.meetingKey}`
+        });
         if(obj.eventTime=="Later")
         {
             if((obj.startTimeMillisec)>=(Date.now()))

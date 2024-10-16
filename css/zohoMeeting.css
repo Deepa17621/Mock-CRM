@@ -7,6 +7,9 @@ header
 {
     height: 48px;
 }
+li{
+    list-style-type: none;
+}
 #meetingIconContainer
 {
     height: 30px;
@@ -156,7 +159,7 @@ h3{
     font-size: 20px;
     font-weight: 600;
 }
-#meetingListContainer, #meetingFormContainer
+#meetingListContainer, #meetingFormContainer, #meetingDisplayContainer
 {
     background-color: hsl(204, 24%, 96%);
     display: flex;
@@ -213,7 +216,7 @@ li>a>span{
     display: inline-block;
     padding-top: 15px;
 }
-.actualListContainer
+.actualListContainer, .actualDisplayContainer
 {
     margin: 10px 20px;
     /* border: 1px solid black; */
@@ -231,6 +234,7 @@ li>a>span{
     align-items: center;
     margin: 10px 0px;
     text-align: center;
+    cursor: pointer;
 }
 .dateTimeContainer
 {
@@ -318,7 +322,7 @@ li>a>span{
     flex-direction: column;
     row-gap: 5px;
 }
-#meetNow, #schedule
+#meetNowAnonymous, #schedule
 {
     border: 1px solid rgb(33, 124, 199);
     width: 120px;
@@ -332,14 +336,15 @@ li>a>span{
 }
 #btns
 {
-    width: 500px;
+    width: 50%;
     display: flex;
     justify-content: right;
+    align-items: center;
     margin-right: 10px;
-    gap: 10px;
-    padding-right: 15px;
+    gap: 20px;
+    /* padding-right: 15px; */
 }
-#meetNow:hover, #schedule:hover
+#meetNowAnonymous:hover, #schedule:hover
 {
     background-color: rgb(7, 72, 125);
     cursor: pointer;
@@ -361,3 +366,87 @@ li>a>span{
     row-gap: 0px;
 } */
 
+/* Style For Display Meeting */
+#meetingDisplayContainer .wrapperForHeader
+{
+    height: 70px;
+    box-shadow: 0 0 2px;
+    background-color: #ffffff;
+    display: flex;
+}
+.wrapperForHeader>ul{
+    display: flex;
+    width: 50%;
+    gap: 10px;
+    align-items: center;
+}
+#backBtn>img
+{
+    width: 25px;
+    height: 23px;
+}
+#backBtn{
+    padding-left: 10px;
+}
+#startMeeting
+{
+    background-color: blue;
+    border: 1px solid blue;
+    border-radius: 16px;
+    color: white;
+    height: 30px;
+    width: 120px;
+    
+}
+#edit
+{
+    background-color: white;
+    color: blue;
+    border: 1px solid blue;
+    height: 29px;
+    border-radius: 15px;
+    width: 85px;
+}
+#cancel
+{
+    border: 1px solid red;
+    color: red;
+    border-radius: 15px;
+    height: 29px ;
+    width: 85px;
+    background-color: white;
+}
+.actualDisplayContainer
+{
+    background-color: #f9f9f9;
+    height: 90vh;
+}
+#innerContainer
+{
+    width: 78%;
+}
+.colInDisplayMeet
+{
+    height: 90px;
+    display: flex;
+    margin: 30px 0px;
+}
+.iconContainer
+{
+    width: 130px;
+    border-right: 1px solid rgb(128, 128, 128, 0.2);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imgContainer{
+    height: 26px;
+    width: 26px;
+}
+.textContainer
+{
+    width: 100%;
+    height: 100%;
+    padding: 10px 0px 10px 20px;
+}
