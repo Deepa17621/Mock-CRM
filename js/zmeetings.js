@@ -18,20 +18,32 @@ async function getlistOfMeeting() {
         {
             console.log(response.session);
             createList(response.session);
-
-            // return response.session;
         }
         else throw new Error("Error: "+ res.statusText+" "+res.status)
     } catch (error) {
         
     }
 }
-getlistOfMeeting()
-// getlistOfMeeting().then((arr)=>{
-//     listOfMeetings=arr;
-// }).then(()=>{createList(listOfMeetings)}); // Execution starts Here....
+getlistOfMeeting(); // Execution starts from here
 
+// Navigate From Upcoming to Past And Past To Upcoming Meeting
+let upComingLink=document.querySelector("#upComingLink");
+let pastLink=document.querySelector("#pastLink");
+let personalRoom=document.querySelector("#personalRoom");
 
+// click event for navigate from upcoming to past
+upComingLink.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/zohoMeetingmeetings.html`;
+});
+pastLink.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/pastMeeting.html`;
+});
+personalRoom.addEventListener("click", (e)=>{
+    e.preventDefault();
+    //Need to write code here--->?(FIX)
+});
 // List-Down All the Meetings
 let wrapperForMeetingList=document.querySelector(".actualListContainer");
 let wrapperForToday=document.querySelector(".wrapperForToday");
@@ -44,36 +56,46 @@ function createList(arrOfObj){
         li.className="list"
         if(obj.eventTime=="Later")
         {
-            if(!wrapperForLater.hasChildNodes)
-                {
-                    let h2=document.createElement("h2");
-                    h2.innerHTML="Later";
-                    wrapperForLater.appendChild(h2)
-                }
-            li.innerHTML=listStructure(obj);
-            wrapperForLater.appendChild(li);
+            if((obj.startTimeMillisec)>=(Date.now()))
+            {
+                if(!wrapperForLater.hasChildNodes())
+                    {
+                        let h4=document.createElement("h4");
+                        wrapperForLater.appendChild(h4)
+                        h4.innerHTML="Later";
+                    }
+                li.innerHTML=listStructure(obj);
+                wrapperForLater.appendChild(li);
+            }
         }
-        else if(obj.eventTime="Today")
+        else if(obj.eventTime=="Today")
         {
-            if(!wrapperForToday.hasChildNodes)
+            if((obj.startTimeMillisec)>=(Date.now()))
+            {
+                if(!wrapperForToday.hasChildNodes())
                 {
-                    let h2=document.createElement("h2");
-                    h2.innerHTML="Today"
-                    wrapperForToday.appendChild(h2)
+                    let h4=document.createElement("h4");
+                    wrapperForToday.appendChild(h4);
+                    h4.innerHTML="Today"
                 }
-            li.innerHTML=listStructure(obj);
-            wrapperForToday.appendChild(li);
+                li.innerHTML=listStructure(obj);
+                wrapperForToday.appendChild(li);
+            }
+                
         }
         else if(obj.eventTime=="Tomorrow")
         {
-            if(!wrapperForTomorrow.hasChildNodes)
+            if((obj.startTimeMillisec)>=(Date.now()))
+            {
+                if(!wrapperForTomorrow.hasChildNodes())
                 {
-                    let h2=document.createElement("h2");
-                    h2.innerHTML="Tomorrow";
-                    wrapperForTomorrow.appendChild(h2)
+                    let h4=document.createElement("h4");
+                    wrapperForTomorrow.appendChild(h4);
+                    h4.innerHTML="Tomorrow";
                 }
-            li.innerHTML=listStructure(obj);
-            wrapperForTomorrow.appendChild(li);
+                li.innerHTML=listStructure(obj);
+                wrapperForTomorrow.appendChild(li);
+            }
         }
     });
 }
@@ -94,6 +116,13 @@ function setImage(time)
             break;
     }
 }
+
+// Schedule Meeting
+let scheduleMeeting=document.querySelector("#schedule");
+scheduleMeeting.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/zMeetingCreate.html`;
+});
 
 // List Html Structure Function
 function listStructure(meetingObj)
@@ -144,7 +173,10 @@ async function startMeeting(meetingKey) {
         }
         console.log(obj);
         console.log(obj.session.startLink);
-        window.location.href=obj.session.startLink;
+        if(confirm("start Immediately?"))
+        {
+            window.location.href=obj.session.startLink;
+        }
     } catch (error) {
         
     }
@@ -152,7 +184,7 @@ async function startMeeting(meetingKey) {
 
 // Delete Meeting
 async function deleteMeeting(meetingKey) {
-    confirm("Are you sure to cancel meeting?")
+    confirm("Are you sure to cancel/Delete meeting?")
     let res=await fetch(`/deletemeeting/${meetingKey}`);
     let response=await res.json();
     if(res.status=="204");
