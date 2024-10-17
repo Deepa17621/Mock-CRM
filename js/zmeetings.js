@@ -141,7 +141,7 @@ function listStructure(meetingObj)
             </div>
         </div>
         <div class="topicContainer division">
-            <span><b>${meetingObj.topic}</b></span>
+            <span>${meetingObj.topic}</span>
         </div>
         <div class="hostNameContainer division">
             <span><img src=${meetingObj.presenterAvatar} alt="host-Avatar" id="avatarImg"></span>

@@ -49,7 +49,12 @@ let wrapperForThisMonth=document.querySelector(".wrapperForThisMonth");
 function createList(arrOfObj){
     arrOfObj.forEach(obj => {
         let li=document.createElement("li");
-        li.className="list"
+        li.className="list";
+        li.setAttribute("id", obj.meetingKey);
+        li.addEventListener("click", (e)=>{
+            e.preventDefault();
+            window.location.href=`../meetings/displayMeetingDetail.html?meetingKey=${obj.meetingKey}&pastMeeting=${true}`;
+        });
         if(obj.eventTime=="Yesterday")
         {
             if((obj.startTimeMillisec)<(Date.now()))
@@ -159,7 +164,7 @@ function listStructure(meetingObj)
             </div>
         </div>
         <div class="topicContainer division">
-            <span><b>${meetingObj.topic}</b></span>
+            <span>${meetingObj.topic}</span>
         </div>
         <div class="hostNameContainer division">
             <span><img src=${meetingObj.presenterAvatar} alt="host-Avatar" id="avatarImg"></span>
