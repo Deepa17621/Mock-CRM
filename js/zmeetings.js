@@ -197,6 +197,12 @@ async function deleteMeeting(meetingKey) {
         alert("Meeting Deleted!")
     }
 }
+// Schedule Meeting Button-click Event
+let schedule=document.querySelector("#schedule");
+schedule.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/scheduleMeeting.html`;
+});
 
 // DropDown Menu - Three Dots
 // let dropDownDiv=document.querySelector("#dropDown");
