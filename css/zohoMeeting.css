@@ -152,6 +152,7 @@ svg{
     border-radius: 15px;
     font-size: medium;
     padding: 4px;
+    cursor: pointer;
 }
 p{
     font-weight: 200;

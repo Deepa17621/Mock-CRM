@@ -42,6 +42,12 @@ let scheduleMeetBtn=document.querySelector("#scheduleBtn");
 let broadCastNowBtn=document.querySelector("#broadCastNowBtn");
 let scheduleWebinarBtn=document.querySelector("#scheduleBtnForWebinar");
 
+// 3. Schedule Meeting Event
+scheduleMeetBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/scheduleMeeting.html`;
+})
+
 // 3. SideBarActive Link Style
 // let sideBarList=document.querySelectorAll(".sideBarList");
 // sideBarList.forEach( link=> {

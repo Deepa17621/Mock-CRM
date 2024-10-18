@@ -77,7 +77,7 @@ console.log(participants);
 
 //5.Buttons For Submition and cancel
 let submitBtn=document.querySelector("#submitBtn");
-let cancelBtn=document.querySelector("#cancelBtn");
+let cancelBtn=document.querySelector("#cancelSubmit");
 let myForm=document.querySelector("#form");
 
 // ii)
@@ -87,6 +87,17 @@ submitBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     myForm.requestSubmit();
 });
+
+// 7.cancel Submission of Form
+cancelBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.history.back();
+});
+
+//8. Onload event - clear input fields
+window.onload = function() {
+    myForm.reset();
+};
 
 myForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
