@@ -18,8 +18,8 @@ if(past)
     while (btns.hasChildNodes()) {
         btns.childNodes[0].remove();
     }
-    btns.innerHTML=`<button type="button" id="edit" class="btnsInMeetingView repeatMeet" style="width:140px">Repeat meeting</button>
-                    <button type="button" id="cancel" class="btnsInMeetingView">Cancel</button>`;
+    btns.innerHTML=`<button type="button" id="edit" class="btnsInMeetingView repeatMeet" style="width:140px" onclick="editMeeting(${meetingK})">Repeat meeting</button>
+                    <button type="button" id="cancel" class="btnsInMeetingView" onclick=deleteMeeting(${meetingK})>Cancel</button>`;
 
     let forCompleted=document.querySelector("#forCompleted");
     let completed=document.createElement("button");
@@ -42,6 +42,12 @@ else{
     e.preventDefault();
     startMeeting(meetingK);
 });
+}
+
+//function for repeat meeting
+function editMeeting(meetingKey)
+{
+    window.location.href=`../meetings/scheduleMeeting.html?meetingToBeEdited=${meetingKey}`
 }
 
 //Header
