@@ -48,6 +48,8 @@ personalRoom.addEventListener("click", (e)=>{
 let wrapperForMeetingList=document.querySelector(".actualListContainer");
 let wrapperForToday=document.querySelector(".wrapperForToday");
 let wrapperForTomorrow=document.querySelector(".wrapperForTomorrow");
+let wrapperForThisWeek=document.querySelector(".wrapperForThisWeek");
+let wrapperForThisMonth=document.querySelector(".wrapperForThisMonth");
 let wrapperForLater=document.querySelector(".wrapperForLater");
 
 function createList(arrOfObj){
@@ -73,6 +75,31 @@ function createList(arrOfObj){
                 wrapperForLater.appendChild(li);
             }
         }
+        else if(obj.eventTime=="This Week")
+            {
+                if((obj.startTimeMillisec)>=(Date.now())){
+                    if(!wrapperForThisWeek.hasChildNodes()){
+                        let h4=document.createElement("h4");
+                        wrapperForThisWeek.appendChild(h4);
+                        h4.innerHTML="This Week";
+                    }
+                    li.innerHTML=listStructure(obj);
+                    wrapperForThisWeek.appendChild(li);
+                }
+            }
+            else if(obj.eventTime=="This Month")
+                {
+                    if((obj.startTimeMillisec)>=(Date.now())){
+                        if(!wrapperForThisMonth.hasChildNodes()){
+                            let h4=document.createElement("h4");
+                            wrapperForThisMonth.appendChild(h4);
+                            h4.innerHTML="This Month";
+                        }
+                        li.innerHTML=listStructure(obj);
+                        wrapperForThisMonth.appendChild(li);
+                    }
+                }
+    
         else if(obj.eventTime=="Today")
         {
             if((obj.startTimeMillisec)>=(Date.now()))
@@ -149,19 +176,6 @@ function listStructure(meetingObj)
         </div>
         <div class="startBtnContainer division">
             <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
-             <span id="meetingOptions" onclick="dropDown(${meetingObj.meetingKey})">
-                    <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                        <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                        <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                    </svg>
-             <span>
-             <div id="dropDown">
-                <ul>
-                    <li id="editMeeting">Edit</li>
-                    <li id="deleteMeeting" onclick="deleteMeeting(${meetingObj.meetingKey})">Cancel</li>
-                </ul>
-             </div>
         </div>
         `;
         return structure;
@@ -228,3 +242,18 @@ schedule.addEventListener("click", (e)=>{
 
 // // Meeting Options -- Three Dot Menu Bar 
 
+
+// For now not required ...will be used in future if required.
+// {/* <span id="meetingOptions" onclick="dropDown(${meetingObj.meetingKey})">
+// <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+//     <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+//     <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+//     <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+// </svg>
+// <span>
+// <div id="dropDown">
+// <ul>
+// <li id="editMeeting">Edit</li>
+// <li id="deleteMeeting" onclick="deleteMeeting(${meetingObj.meetingKey})">Cancel</li>
+// </ul>
+// </div> */}

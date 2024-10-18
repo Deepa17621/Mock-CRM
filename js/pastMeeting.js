@@ -41,6 +41,7 @@ getlistOfMeeting(); // Execution starts from here
 // List-Down All the Meetings
 let wrapperForMeetingList=document.querySelector(".actualListContainer");
 let wrapperForYesterday=document.querySelector(".wrapperForYesterday");
+let wrapperForThisWeek=document.querySelector(".wrapperForThisWeek");
 let wrapperForLastWeek=document.querySelector(".wrapperForLastWeek");
 let wrapperForLastMonth=document.querySelector(".wrapperForLastMonth");
 let wrapperForLastYear=document.querySelector(".wrapperForLastYear");
@@ -69,21 +70,43 @@ function createList(arrOfObj){
                 wrapperForYesterday.appendChild(li);
             }
         }
-        else if(obj.eventTime=="Last Week")
-        {
-            if((obj.startTimeMillisec)<(Date.now()))
+        else if(obj.eventTime=="This Month" && ((obj.startTimeMillisec)<(Date.now())))
             {
-                if(!wrapperForLastWeek.hasChildNodes())
+                    if(!wrapperForThisMonth.hasChildNodes())
+                    {
+                        let h4=document.createElement("h4");
+                        wrapperForLastYear.appendChild(h4);
+                        h4.innerHTML="This Month";
+                    }
+                    li.innerHTML=listStructure(obj);
+                    wrapperForThisMonth.appendChild(li);
+            }
+        else if(obj.eventTime=="This Week" && ((obj.startTimeMillisec)<(Date.now())))
+        {
+                if(!wrapperForThisWeek.hasChildNodes())
                 {
                     let h4=document.createElement("h4");
-                    wrapperForLastWeek.appendChild(h4);
-                    h4.innerHTML="Last Week"
+                    wrapperForThisWeek.appendChild(h4);
+                    h4.innerHTML="This Week"
                 }
                 li.innerHTML=listStructure(obj);
-                wrapperForLastWeek.appendChild(li);
-            }
-                
+                wrapperForThisWeek.appendChild(li);
         }
+        else if(obj.eventTime=="Last Week")
+            {
+                if((obj.startTimeMillisec)<(Date.now()))
+                {
+                    if(!wrapperForLastWeek.hasChildNodes())
+                    {
+                        let h4=document.createElement("h4");
+                        wrapperForLastWeek.appendChild(h4);
+                        h4.innerHTML="Last Week"
+                    }
+                    li.innerHTML=listStructure(obj);
+                    wrapperForLastWeek.appendChild(li);
+                }
+                    
+            }
         else if(obj.eventTime=="Last Month")
         {
             if((obj.startTimeMillisec)<(Date.now()))
@@ -112,20 +135,6 @@ function createList(arrOfObj){
                     wrapperForLastYear.appendChild(li);
                 }
             }
-            else if(obj.eventTime=="This Month")
-                {
-                    if((obj.startTimeMillisec)<(Date.now()))
-                    {
-                        if(!wrapperForThisMonth.hasChildNodes())
-                        {
-                            let h4=document.createElement("h4");
-                            wrapperForLastYear.appendChild(h4);
-                            h4.innerHTML="This Month";
-                        }
-                        li.innerHTML=listStructure(obj);
-                        wrapperForThisMonth.appendChild(li);
-                    }
-                }
     });
 }
 
@@ -172,19 +181,6 @@ function listStructure(meetingObj)
         </div>
         <div class="startBtnContainer division">
             <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
-             <span id="meetingOptions" onclick="dropDown(${meetingObj.meetingKey})">
-                    <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                        <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                        <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
-                    </svg>
-             <span>
-             <div id="dropDown">
-                <ul>
-                    <li id="editMeeting">Edit</li>
-                    <li id="deleteMeeting" onclick="deleteMeeting(${meetingObj.meetingKey})">Cancel</li>
-                </ul>
-             </div>
         </div>
         `;
         return structure;
@@ -220,3 +216,18 @@ async function deleteMeeting(meetingKey) {
         alert("Meeting Deleted!")
     }
 }
+
+//- Three Dot Menu Bar - Will be used in future if required.
+// {/* <span id="meetingOptions" onclick="dropDown(${meetingObj.meetingKey})">
+//                     <svg width="30" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                         <circle cx="5" cy="9" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+//                         <circle cx="5" cy="15" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+//                         <circle cx="5" cy="21" r="1" fill="#4588F0" stroke="#4588F0" stroke-width="2" />
+//                     </svg>
+//              <span>
+//              <div id="dropDown">
+//                 <ul>
+//                     <li id="editMeeting">Edit</li>
+//                     <li id="deleteMeeting" onclick="deleteMeeting(${meetingObj.meetingKey})">Cancel</li>
+//                 </ul>
+//              </div> */}
