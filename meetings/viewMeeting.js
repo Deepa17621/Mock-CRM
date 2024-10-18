@@ -1,5 +1,3 @@
-
-
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let meetingKey=param.get("meetingKey");
@@ -116,7 +114,7 @@ deleteMeetingBtn.addEventListener("click", (e)=>{
 
 async function deleteMeeting(meetingKey) {
     try {
-        let res=await fetch(`http://localhost:5500/deletemeeting/${meetingKey}`,{method:"DELETE"});
+        let res=await fetch(`/deletemeeting/${meetingKey}`,{method:"DELETE"});
         let out=await res.json();
         console.log(out);
         

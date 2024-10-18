@@ -45,6 +45,10 @@ input.addEventListener("keyup", addInput);
 let url=window.location.search;
 let param=new URLSearchParams(url);
 const meetingKeyForEdit=param.get("meetingToBeEdited");
+   if(meetingKeyForEdit)
+   {
+        getMeetingDetailToEdit(meetingKeyForEdit);
+   }
     //Get Meeting Details
     async function getMeetingDetailToEdit(meetingKeyForEdit) {
         try {
@@ -80,7 +84,15 @@ let submitBtn=document.querySelector("#submitBtn");
 let cancelBtn=document.querySelector("#cancelSubmit");
 let myForm=document.querySelector("#form");
 
-// ii)
+// ii) Set Values to input feilds - (Existing Details will be Displayed in form feilds)
+function setToFormFields(obj)
+{
+    topic.value=obj.topic;
+    timeZone.value=obj.timezone;
+    agenda.value=obj.agenda;
+    startTime.value=obj.startTime;
+    endTime.value=obj.endTime;
+}
 
 //6. form submission event
 submitBtn.addEventListener("click", (e)=>{
@@ -120,14 +132,58 @@ myForm.addEventListener("submit", async(e)=>{
     };
 
     try {
-        const response = await fetch('/postmeeting', {
-            method: 'POST',
+        // Edit meeting existing meeting
+       if(meetingKeyForEdit)
+       {
+           updateMeeting(meetingKeyForEdit, session)
+       }
+       // For Create / Schedule New Meeting
+       else{
+            let response = await fetch('/postmeeting', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(session) // Convert the session object to a JSON string
+            });
+
+            if (!response.ok) {
+                // If response status is not in the range 200-299, throw an error
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            const responseBody = await response.json();
+            let newMeetingResStoredInJson=await fetch(`http://localhost:3000/meetings`, 
+                {
+                    method:"POST",
+                    headers:{"Content-Type": "application/json"},
+                    body: JSON.stringify(responseBody.session)
+                }
+            );
+            if(!newMeetingResStoredInJson.ok)
+            {
+                throw new Error("Meeting Data Not Stored In Json File");
+            }
+            window.location.href=`../meetings/displayMeetingDetail.html?meetingKey=${responseBody.session.meetingKey}`
+            alert("Meeting Created SuccessFully");
+            console.log(responseBody);
+       }
+        
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+// Function to update Meeting Details
+async function updateMeeting(meetingKey, obj) {
+    try {
+        let response = await fetch(`/editmeeting/${meetingKey}`, {
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(session) // Convert the session object to a JSON string
+            body: JSON.stringify(obj) // Convert the session object to a JSON string
         });
-
+    
         if (!response.ok) {
             // If response status is not in the range 200-299, throw an error
             throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -145,12 +201,12 @@ myForm.addEventListener("submit", async(e)=>{
             throw new Error("Meeting Data Not Stored In Json File");
         }
         window.location.href=`../meetings/displayMeetingDetail.html?meetingKey=${responseBody.session.meetingKey}`
-        alert("Meeting Created SuccessFully");
+        alert("Meeting Updated SuccessFully");
         console.log(responseBody);
     } catch (error) {
-        console.error("Error:", error);
+        
     }
-});
+}
 
 // 4.Validate User Inputs
 function dateTimeValidation(tag)

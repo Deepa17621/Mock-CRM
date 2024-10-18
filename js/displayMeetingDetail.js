@@ -1,12 +1,17 @@
+// 1. get meeting key from url
 let currentUrl=window.location.search;
 let param=new URLSearchParams(currentUrl);
 let meetingK=param.get("meetingKey");
+
+// i) If it is Past Meeting
 let past=param.get("pastMeeting");
 let url="https://dmock-crm.vercel.app/";
 console.log(past);
+
 let listOfMeetings;
 let editBtn=document.querySelector("#edit");
 let deleteBtn=document.querySelector("#cancel");
+// ii) Alter UI to past meeting view
 if(past)
 {
     let btns=document.querySelector("#btns");
@@ -41,6 +46,8 @@ else{
 
 //Header
 let topic=document.querySelector("#meetingTopicForHeader");
+
+// 1. Get Meeting Details
 async function getMeetingObj() {
     try {
         let res=await fetch(`/getmeeting/${meetingK}`, {
@@ -87,6 +94,12 @@ async function startMeeting(meetingKey) {
         
     }
 }
+
+// Edit meeting details
+editBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    window.location.href=`../meetings/scheduleMeeting.html?meetingToBeEdited=${meetingK}`;
+})
 //delete meeting - Click Event
 deleteBtn.addEventListener("click", (e)=>{
     e.preventDefault();
