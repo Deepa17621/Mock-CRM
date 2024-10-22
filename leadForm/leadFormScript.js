@@ -134,3 +134,18 @@ function mobileValidation(tag) {
         }
     else setSuccess(tag);
 }
+
+async function getAll() {
+    try {
+        let res=await fetch("/getAll/leads");
+        if(!res.ok)
+        {
+            throw new Error("Error:"+ res.status+ " "+res.statusText);
+        }
+        let data=await res.json();
+        console.log(data);
+    } catch (error) {
+        // console.log(error);   
+    }
+}
+getAll();
