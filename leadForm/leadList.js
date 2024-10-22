@@ -1,5 +1,5 @@
-
 //Script to Display All Leads.
+
 let table=document.querySelector("table");
 let tableHead=document.querySelector("thead");
 let tableBody=document.querySelector("tbody");
@@ -8,18 +8,17 @@ function rowClickFunction(row)
 {
         let idValue=row;
         console.log(idValue);
-        console.log(`http://localhost:3000/leads/${idValue}`);
-        window.location.href=`/leadForm/leadView.html?id=${idValue}`;
-        
+        window.location.href=`/leadForm/leadView.html?id=${idValue}`;  
 }
 
-// Create Lead Button
-
+// Create Lead - Button
 const createLeadBtn=document.querySelector("#createLeadBtn");
+
 createLeadBtn.addEventListener("click",e=>{
     e.preventDefault();
     window.location.href=`/leadForm/leadForm.html`
-})
+});
+
 // SEARCH -Search Lead 
 var selectField;
 let arr=[];
@@ -29,13 +28,12 @@ function selField()
     console.log(selectField);
 }
 //Display Table Function
-function tableFunction(out)
+function tableFunction(collectionOfObjs)
 {
-    
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
     //Table Head
-    let firstObj=out[0];
+    let firstObj=collectionOfObjs[0];
     console.log(Object.keys(firstObj));
     
     let headForTable=Object.keys(firstObj);
@@ -50,16 +48,15 @@ function tableFunction(out)
         thead.appendChild(td);
     });
 
-    
     // Fetching Single Object From Group of Objects-Using For Each
-    out.forEach(e => { 
+    collectionOfObjs.forEach(e => { 
 
         //Making Iterator  
         let head=headForTable[Symbol.iterator]();
 
         let trow=document.createElement("tr");
         tableBody.appendChild(trow);
-        trow.id=e["id"];
+        trow.id=e["_id"];
         // trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
         let checkBoxtd=document.createElement("td");
         checkBoxtd.innerHTML=`<input type="checkbox">`;
@@ -84,7 +81,7 @@ function tableFunction(out)
             else{
                 if(val=="Lead Name")
                     {
-                        tdata.setAttribute("onclick", `rowClickFunction(${e.id})` );
+                        tdata.setAttribute("onclick", `rowClickFunction(${e._id})` );
                         tdata.style.cursor="pointer";
                     }
                 tdata.innerHTML=e[tdata.className];
@@ -96,10 +93,10 @@ function tableFunction(out)
 
 }
 let inpForSearch=document.querySelector("#searchLead");
-function filterField(arrOfObjs)
+function filterField(collectionOfObjs)
 {
     
-    arrOfObjs.forEach((ele)=>
+    collectionOfObjs.forEach((ele)=>
     {
         // console.log(ele[`${selectField}`]);
         if((ele[`${selectField}`].toLowerCase())==((inpForSearch.value).toLowerCase()))
@@ -123,20 +120,19 @@ function filterField(arrOfObjs)
 
 
 
-const allLeadsFetch=async()=>
+const getAllLeads=async()=>
 {
-    let promi=await fetch("http://localhost:3000/leads");
-
-    let out=await promi.json();
-    tableFunction(out);
+    let res=await fetch('/getAll/lead');
+    let collectionOfObjs=await res.json();
+    tableFunction(collectionOfObjs);
     inpForSearch.addEventListener("keyup",(e)=>{
         e.preventDefault();
-        filterField(out);
+        filterField(collectionOfObjs);
         e.stopPropagation();
         return;
     });
 }
-allLeadsFetch();
+getAllLeads();
 
 
 // Filter Icon and Filter Click Event

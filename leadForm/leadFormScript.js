@@ -51,22 +51,22 @@ form.addEventListener("submit", (e) => {
         switch(e)
         {
             case leadName:
-                obj["Lead Name"]=e.value;
+                obj["leadName"]=e.value;
                 break;
             case leadMail:
-                obj["Lead Mail"]=e.value;
+                obj["leadMail"]=e.value;
                 break;
             case leadPhone:
-                obj["Phone"]=e.value;
+                obj["phone"]=e.value;
                 break;
             case leadAddress:
-                obj["Address"]=e.value;
+                obj["address"]=e.value;
                 break;
             case date:
                 obj["date"]=e.value;
                 break;
             case organization:
-                obj["Organization"]=e.value;
+                obj["organization"]=e.value;
                 break;
         }
        
@@ -76,7 +76,7 @@ form.addEventListener("submit", (e) => {
 inpArr.forEach(e=>{
     if(e === "") return; 
 })
-    fetch("http://localhost:3000/leads", {
+    fetch('/post/lead', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -87,6 +87,7 @@ inpArr.forEach(e=>{
     }).then(result => {
         console.log(result);
     });
+    return
     window.location.href = clicked ? "/leadForm/leadList.html" :  "/leadForm/leadForm.html";
     clicked = null;
 });
