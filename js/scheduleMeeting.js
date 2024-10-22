@@ -35,7 +35,7 @@ function addInput(e)
                 alert("Invalid Email!")
             }
         }
-        e.target.value="";
+        e.target.value=""; 
     }
     
 }
@@ -45,20 +45,20 @@ input.addEventListener("keyup", addInput);
 let url=window.location.search;
 let param=new URLSearchParams(url);
 const meetingKeyForEdit=param.get("meetingToBeEdited");
-   if(meetingKeyForEdit)
-   {
-        getMeetingDetailToEdit(meetingKeyForEdit);
-   }
-    //Get Meeting Details
-    async function getMeetingDetailToEdit(meetingKeyForEdit) {
-        try {
-            let res=await fetch(`/getmeeting/${meetingKeyForEdit}`);
-            let existingMeetingObj=await res.json();
-            if(!res.ok){
-                throw new Error("Error: "+res.status+" "+res.statusText);
-            }
-            console.log("Existing Obj: "+existingMeetingObj);
-            setToFormFields(existingMeetingObj.session);
+if(meetingKeyForEdit)
+{
+    getMeetingDetailToEdit(meetingKeyForEdit);
+ }
+//Get Meeting Details
+async function getMeetingDetailToEdit(meetingKeyForEdit) {
+    try {
+        let res=await fetch(`/getmeeting/${meetingKeyForEdit}`);
+        let existingMeetingObj=await res.json(); 
+        if(!res.ok){
+           throw new Error("Error: "+res.status+" "+res.statusText);
+        }
+        console.log("Existing Obj: "+existingMeetingObj);
+        setToFormFields(existingMeetingObj.session);
         } catch (error) {
             
         }
@@ -107,9 +107,9 @@ cancelBtn.addEventListener("click", (e)=>{
 });
 
 //8. Onload event - clear input fields
-window.onload = function() {
-    myForm.reset();
-};
+// window.onload = function() {
+//     myForm.reset();
+// };
 
 myForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
@@ -232,5 +232,3 @@ function setError(tag)
     tag.style.border="1px solid red";
     tag.style.borderRadius="2px"
 }
-
-

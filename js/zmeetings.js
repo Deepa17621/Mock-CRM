@@ -31,6 +31,12 @@ let upComingLink=document.querySelector("#upComingLink");
 let pastLink=document.querySelector("#pastLink");
 let personalRoom=document.querySelector("#personalRoom");
 
+// // Personal Room
+// personalRoom.addEventListener("click", (e)=>{
+//     e.preventDefault();
+
+// });
+
 // click event for navigate from upcoming to past
 upComingLink.addEventListener("click", (e)=>{
     e.preventDefault();

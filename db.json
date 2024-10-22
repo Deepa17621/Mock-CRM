@@ -8,6 +8,15 @@
       "Address": "mexico",
       "date": "2024-09-26",
       "Organization": ""
+    },
+    {
+      "id": "ef73",
+      "Lead Name": "abidh",
+      "Lead Mail": "adi@gmail.com",
+      "Phone": "9876545678",
+      "Address": "maduranthakam",
+      "date": "2024-10-21",
+      "Organization": "zappyworks"
     }
   ],
   "contacts": [
@@ -100,33 +109,21 @@
       "AnnualRevenue": "9800000",
       "Contacts": [],
       "deals": []
-    }
-  ],
-  "deals": [
+    },
     {
-      "standardPipeLine": {
-        "qualification": [],
-        "needAnalysis": [],
-        "valueProposition": [],
-        "identifyDecisionMakers": [],
-        "proposal": [],
-        "negotiation": [],
-        "closedWon": [],
-        "closedLost": [],
-        "closedLostCompetition": []
-      },
-      "deepaPipeLine": {
-        "stage1": [],
-        "stage2": [],
-        "stage3": [],
-        "stage4": [],
-        "stage5": [],
-        "completed": [],
-        "Cancelled": []
-      },
-      "id": "a887"
+      "id": "9646",
+      "AccountOwner": "Alan Turing",
+      "AccountName": "Turing Machine",
+      "AccountMail": "alan@gmail.com",
+      "Phone": "9876543210",
+      "date": "2024-10-22",
+      "AccountAddress": "1600 Amphitheatre Parkway",
+      "AnnualRevenue": "9800000",
+      "Contacts": [],
+      "deals": []
     }
   ],
+  "deals": [],
   "meetings": [
     {
       "id": "abd2",
@@ -362,6 +359,119 @@
       "meetingKey": "1360839227",
       "removedParticipants": "[]",
       "startDate": "Oct 26, 2024 12:00 AM"
+    },
+    {
+      "id": "686f",
+      "dialinUrl": "https://help.zoho.com/portal/kb/articles/zoho-meeting-dial-in-numbers",
+      "timezone": "Asia/Calcutta",
+      "departmentId": "527192000000008011",
+      "addedParticipants": "[]",
+      "webServer": "meeting.zoho.in",
+      "creatorZuid": "60030981356",
+      "source": "Meeting Create page",
+      "endTimeMillisec": 1729625400000,
+      "encryptPwd": "6b6f7e3dd0aef6fa30e2f48f511392bdcda6ce8744ff727a3593d8fc5c41c83e",
+      "sys_id": "527192000000217005",
+      "accessCode": "13879 25124 #",
+      "sessionType": "meeting",
+      "startTime": "Oct 23, 2024 12:00 AM IST",
+      "meeting": {
+        "zsoid": "60017874042"
+      },
+      "participants": [],
+      "departmentName": "My Department",
+      "creator": "60030981356",
+      "presenter": 60030981356,
+      "offset": "19800000",
+      "isRecurring": false,
+      "joinLink": "https://meet.zoho.in/KmSq0ipyPl",
+      "agenda": "Checking the schedule Meeting",
+      "startLink": "https://meeting.zoho.in/meeting/meeting-start?key=1387925124&x-meeting-org=60017874042",
+      "UID": 527192000000217000,
+      "startTimeMillisec": 1729621800000,
+      "topic": "Check whether schedule is working or not ?",
+      "endTime": "Oct 23, 2024 01:00 AM IST",
+      "pwd": "gQm4nf",
+      "meetingKey": "1387925124",
+      "removedParticipants": "[]",
+      "startDate": "Oct 23, 2024 12:00 AM"
+    },
+    {
+      "id": "820f",
+      "dialinUrl": "https://help.zoho.com/portal/kb/articles/zoho-meeting-dial-in-numbers",
+      "timezone": "Asia/Calcutta",
+      "creatorZuid": "60030981356",
+      "departmentId": "527192000000008011",
+      "addedParticipants": "[]",
+      "source": "new_meeting",
+      "type": "meeting",
+      "endTimeMillisec": 1729625400000,
+      "encryptPwd": "6b6f7e3dd0aef6fa30e2f48f511392bdcda6ce8744ff727a3593d8fc5c41c83e",
+      "duration": "3600000",
+      "sys_id": 527192000000217000,
+      "accessCode": "13879 25124 #",
+      "startTime": 1729621800000,
+      "meeting": {
+        "zsoid": "60017874042"
+      },
+      "participants": [],
+      "departmentName": "My Department",
+      "creator": "60030981356",
+      "presenter": 60030981356,
+      "offset": "19800000",
+      "encryptPassword": "6b6f7e3dd0aef6fa30e2f48f511392bdcda6ce8744ff727a3593d8fc5c41c83e",
+      "isRecurring": false,
+      "joinLink": "https://meet.zoho.in/KmSq0ipyPl",
+      "agenda": "Checking the schedule Meeting",
+      "startLink": "https://meeting.zoho.in/meeting/meeting-start?key=1387925124&x-meeting-org=60017874042",
+      "presenterEmail": "deeparajendiran2002@gmail.com",
+      "UID": 527192000000217000,
+      "startTimeMillisec": 1729621800000,
+      "shortenJoinUrl": "https://meet.zoho.in/KmSq0ipyPl",
+      "topic": "Check whether schedule is working or not ? - Check Update working or not.",
+      "endTime": "",
+      "meetingKey": "1387925124",
+      "removedParticipants": "[]",
+      "startDate": "Oct 23, 2024 12:00 AM"
+    },
+    {
+      "id": "caba",
+      "dialinUrl": "https://help.zoho.com/portal/kb/articles/zoho-meeting-dial-in-numbers",
+      "timezone": "Asia/Calcutta",
+      "creatorZuid": "60030981356",
+      "departmentId": "527192000000008011",
+      "addedParticipants": "[]",
+      "source": "new_meeting",
+      "type": "meeting",
+      "endTimeMillisec": 1729710000000,
+      "encryptPwd": "df9dfb6dba633c52a6ce48945147e9025a285d30c4180d5cdfe152006b924ee5",
+      "duration": "1800000",
+      "sys_id": 527192000000214000,
+      "accessCode": "13847 67827 #",
+      "startTime": "Oct 24, 2024 12:00 AM IST",
+      "meeting": {
+        "zsoid": "60017874042"
+      },
+      "participants": [],
+      "departmentName": "My Department",
+      "creator": "60030981356",
+      "presenter": 60030981356,
+      "offset": "19800000",
+      "encryptPassword": "df9dfb6dba633c52a6ce48945147e9025a285d30c4180d5cdfe152006b924ee5",
+      "isRecurring": false,
+      "joinLink": "https://meet.zoho.in/JtI5om5YBy",
+      "agenda": "New Edit",
+      "startLink": "https://meeting.zoho.in/meeting/meeting-start?key=1384767827&x-meeting-org=60017874042",
+      "presenterEmail": "deeparajendiran2002@gmail.com",
+      "UID": 527192000000214000,
+      "startTimeMillisec": 1729708200000,
+      "shortenJoinUrl": "https://meet.zoho.in/JtI5om5YBy",
+      "timeFormat": "Thu, Oct 24, 2024 12:00 AM",
+      "topic": "Recent Edit - 22-10-2024",
+      "endTime": "Oct 24, 2024 12:30 AM IST",
+      "meetingKey": "1384767827",
+      "removedParticipants": "[]",
+      "startDate": "Oct 24, 2024 12:00 AM"
     }
   ]
 }
