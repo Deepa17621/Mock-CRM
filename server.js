@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+// MONGODB
+const {MongoClient, ObjectId}=require('mongodb');
+
 const cors = require('cors');
 const axios = require('axios');
 const { log, error } = require('console');
@@ -9,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5500;
 
 // Load environment variables (consider using dotenv package)
-let ACCESS_TOKEN="1000.ad5e5644ea382066344ee6a292035939.4cbb471a06ea2b0d1f2ff04166709e69";
+let ACCESS_TOKEN="1000.03a1753d13ea87ad8690455cef0b5fb8.8e4f055b8cd75f910f13c7a5dadef522";
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -183,18 +186,6 @@ app.get(`/getmeeting/:meetingKey`, async (req, res) => {
                 }
             }
         );
-        // if(response.status==401)
-        //     {
-        //         (async () => {
-        //             try {
-        //                 const newAccessToken = await getAccessToken();
-        //                 ACCESS_TOKEN=await newAccessToken;
-        //                 // console.log('New access token:', newAccessToken);
-        //             } catch (error) {
-        //                 console.error('Failed to get access token:', error);
-        //             }
-        //         });
-        //     }
         if(!response.ok)
         {
             throw new Error("Error: "+response.status+ " "+ response.message)
@@ -241,6 +232,89 @@ async function getAccessToken() {
 // console.log(ACCESS_TOKEN);
 
 ///===================================================
+
+// For Database Connection
+const router=express.Router();
+const MONGODB_URI=process.env.MONGODB_URI;
+
+// Connect mongoDB with application using mongoDB URI 
+let client=new MongoClient(MONGODB_URI);
+const database=client.db('dmockcrm'); //get specific database from cluster
+
+async function connectToMongoDB() {
+    try {
+        await client.connect();
+        console.log("Connected with MongoDB Atlas");
+        
+    } catch (error) {
+        console.error("Error Connecting with MongoDB: "+ error);
+    }
+}
+
+connectToMongoDB(); // functionCall to make connection with mongoDB
+// Post
+router.post('/post/:module', async (req, res) => {
+    try {
+        const { module }=req.params;
+        const obj = req.body;
+        const result = await database.collection(module).insertOne(obj);
+        res.status(201).send({ id: result.insertedId, message: `Successfully inserted!` });
+    } catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).send({ message: 'Error creating ' });
+    }
+});
+//Get By Id
+router.get('/getById/:module/:id', async(req, res)=>{
+    try {
+        const { module , id}=req.params;
+        const result=await database.collection(module).findOne({_id:ObjectId(id)});
+        if(!result){
+            return res.status(404).send({message: `${module} not Found!`});
+        }
+        res.send(result);
+    } catch (error) {
+        console.error("Error fetching user by ID:", error);
+        res.status(500).send({ message: 'Error fetching user by ID' });
+    }
+});
+
+//Get All
+router.get('/getAll/:module', async(req,res)=>{
+    try {
+        const { module }=req.params;
+        const listOfUsers = await database.collection(module).find({}).toArray();
+        res.json(listOfUsers);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send({ message: 'Error fetching users' });
+    }
+});
+
+
+// Update
+router.put('/update/:module/:id', async (req, res) => {
+    try {
+        const {module, id} = req.params;
+        const updateUser = req.body;
+        await database.collection(module).updateOne({ _id: ObjectId(id) }, { $set: updateUser });
+        res.send({ message: `user Updated!` });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).send({ message: 'Error updating user' });
+    }
+});
+// Delete
+router.delete('/delete/:module/:id', async (req, res) => {
+    try {
+        const { module , id}=req.params;
+        await database.collection(module).deleteOne({ _id: ObjectId(id) });
+        res.send({ message: `User Deleted!` });
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).send({ message: 'Error deleting user' });
+    }
+});
 
 
 // Start the server
