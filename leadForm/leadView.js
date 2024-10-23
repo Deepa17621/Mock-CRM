@@ -13,7 +13,7 @@ function displayData(obj)
     let table=document.querySelector("#view");
     for (const key in obj)
     {
-        if(key=="Lead Mail" || key=="Phone")
+        if(key=="leadMail" || key=="phone")
         {
             mail=obj[key];
             let tr=document.createElement("tr");
@@ -21,12 +21,12 @@ function displayData(obj)
             let td1=document.createElement("td");
             let td2=document.createElement("td");
             td1.textContent=key;
-            td2.innerHTML=(key=="Lead Mail")?`<a href="mailto:${obj[key]}">${obj[key]}</a>`:`<a href="tel:${obj[key]}">${obj[key]}</a>`;
+            td2.innerHTML=(key=="leadMail")?`<a href="mailto:${obj[key]}">${obj[key]}</a>`:`<a href="tel:${obj[key]}">${obj[key]}</a>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
         }
-        if(key=="Lead Name")
+        if(key=="leadName")
         {
             name=obj[key];
         }
@@ -35,8 +35,8 @@ function displayData(obj)
         table.appendChild(tr);
         let td1=document.createElement("td");
         let td2=document.createElement("td");
-        td1.textContent=key;
-        td2.textContent=obj[key];
+        td1.textContent=key.toUpperCase();
+        td2.textContent=(obj[key]);
         tr.appendChild(td1);
         tr.appendChild(td2);
     }
@@ -45,27 +45,33 @@ function displayData(obj)
     document.getElementById("name").innerHTML=`${name}`;
 }
 
-const clickedDataFetch=async()=>{
-    let id=param.get("id");
-    console.log(id);
-    
-    // let url=`http://localhost:3000/leads/`
-     const res=await fetch("http://localhost:3000/leads/"+id);
-     const data=await res.json();
-     organizationName=data["Organization"];
-     console.log(organizationName);
-     displayData(data);
+async function currentLead(identity) {
+    try {
+        let res=await fetch(`/getById/leads/${identity}`);
+        let leadObj=await res.json();
+        if(!res.ok){
+            // console.log(res.status+ " "+res.statusText);
+            
+            throw new Error("Error:"+res.status+" "+res.statusText);
+        }
+        organizationName=leadObj["organization"];
+        console.log(leadObj);
+        displayData(leadObj);
+        
+    } catch (error) {
+        console.log(error);
+            }
 }
 
-clickedDataFetch();
+currentLead(identity); // Actual Execution starts Here...
 
 // Edit Button- Click to Edit the Lead Details
 let editBtn=document.getElementById("editBtn");
 console.log(editBtn);
 
-editBtn.addEventListener("click", ()=>{
+editBtn.addEventListener("click", (event)=>{
+    event.preventDefault();
     window.location.href=`/leadForm/editLeadForm.html?id=${identity}`;
-   
 });
 
 
@@ -121,10 +127,10 @@ function submit1()
 
 //=======================
 
-// Fetch Account Details using Account NAME
+// Fetch Account Details using Account NAME //ERROR-1
 async function fetchAccount(name)
 {
-    let accName=await fetch(`http://localhost:3000/accounts?AccountName=${name}`);
+    let accName=await fetch(`/getById/accounts?AccountName=${name}`);
     let res=await accName.json();
     if(!accName.ok)
     {
@@ -134,16 +140,13 @@ async function fetchAccount(name)
     console.log(objectt);
 
     objectt["Contacts"].push(identity);
-    putAcc(objectt, objectt["id"]);
-
-    // let contactFetch=
-
+    putAcc(objectt, objectt["_id"]);
 }
 
 // Update Account Details By Adding Lead Id To Account
 async function putAcc(obj,accId)
 {
-    let res=await fetch(`http://localhost:3000/accounts/${accId}`, {
+    let res=await fetch(`/update/accounts/${accId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
@@ -160,19 +163,29 @@ convertForm.addEventListener("submit", (e)=>{
     window.location.href=`/contact/contactList.html?id=${identity}`;
 });
 
-async function del(id)
+async function deleteLead(id)
 {
-        let res=await fetch(`http://localhost:3000/leads/${id}`, {
-            method:"DELETE"
-        });
-        let out=res.json();
+        try {
+            let res=await fetch(`/delete/leads/${id}`, {
+                method:"DELETE"
+            });
+            let out=res.json();
+            if(!res.ok){
+                throw new Error("Error: "+ res.status+ " "+res.statusText);
+            }
+            alert("Lead Deleted!");
+        } catch (error) {
+            
+        }
 }
 
 let deleteBtn=document.querySelector("#deleteBtn");
 deleteBtn.addEventListener("click",(e)=>{
     e.preventDefault();
-    del(identity);
-    window.location.href=`/leadForm/leadList.html`;
+    if(confirm("Are you sure? To delete lead.")){
+        deleteLead(identity);
+        window.location.href=`/leadForm/leadList.html`;
+    }
     e.stopPropagation();
 });
 

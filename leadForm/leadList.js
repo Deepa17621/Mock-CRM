@@ -1,15 +1,7 @@
 //Script to Display All Leads.
-
 let table=document.querySelector("table");
 let tableHead=document.querySelector("thead");
 let tableBody=document.querySelector("tbody");
-
-function rowClickFunction(row)
-{
-        let idValue=row;
-        console.log(idValue);
-        window.location.href=`/leadForm/leadView.html?id=${idValue}`;  
-}
 
 // Create Lead - Button
 const createLeadBtn=document.querySelector("#createLeadBtn");
@@ -33,18 +25,17 @@ function tableFunction(collectionOfObjs)
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
     //Table Head
-    let firstObj=collectionOfObjs[0];
-    console.log(Object.keys(firstObj));
-    
-    let headForTable=Object.keys(firstObj);
+    // let firstObj=collectionOfObjs[0];
 
+    // let headForTable=Object.keys(firstObj);
+    let headForTable=["leadName", "leadMail", "phone", "address", "organization"];
     //This is for Table Head
     let checkBoxTd=document.createElement("td");
     checkBoxTd.innerHTML=`<input type="checkbox">`;
     thead.appendChild(checkBoxTd);
     headForTable.forEach(e=>{
         let td=document.createElement("th");
-        td.innerHTML=e;
+        td.innerHTML=e.toUpperCase();
         thead.appendChild(td);
     });
 
@@ -61,30 +52,42 @@ function tableFunction(collectionOfObjs)
         let checkBoxtd=document.createElement("td");
         checkBoxtd.innerHTML=`<input type="checkbox">`;
         trow.appendChild(checkBoxtd);
+        let colCount=0;
         
         // One Row Of Data
         for (const key in e) 
         {
             let val=head.next().value;
+            if(colCount<5){
+                colCount++;
+            }
+            else return;
 
             let tdata=document.createElement("td");
+            let span=document.createElement("span");
+            tdata.appendChild(span);
             tdata.className=val;
             trow.appendChild(tdata);
-            if(val=="Lead Mail" )
+            if(val=="leadMail" )
             {
-                tdata.innerHTML=`<a href=mailto:${e[tdata.className]}>${e[tdata.className]}`;
+                span.innerHTML=`<a href=mailto:${e[tdata.className]}>${e[tdata.className]}`;
             }
-            else if(val =="Phone")
+            else if(val =="phone")
             {
-                tdata.innerHTML=`<a href=tel:${e[tdata.className]}>${e[tdata.className]}`;
+                span.innerHTML=`<a href=tel:${e[tdata.className]}>${e[tdata.className]}`;
             }
             else{
-                if(val=="Lead Name")
+                if(val=="leadName")
                     {
-                        tdata.setAttribute("onclick", `rowClickFunction(${e._id})` );
-                        tdata.style.cursor="pointer";
+                        // span.setAttribute("onclick", `clickToViewLead(e, ${e._id})` );
+                        span.addEventListener("click", (event)=>{
+                            event.preventDefault();
+                            window.location.href=`/leadForm/leadView.html?id=${e._id}`;
+                        });
+                        span.style.cursor="pointer";
+                        span.style.color="blue";
                     }
-                tdata.innerHTML=e[tdata.className];
+                span.innerHTML=e[tdata.className];
             }
 
         }
@@ -122,7 +125,7 @@ function filterField(collectionOfObjs)
 
 const getAllLeads=async()=>
 {
-    let res=await fetch('/getAll/lead');
+    let res=await fetch('/getAll/leads');
     let collectionOfObjs=await res.json();
     tableFunction(collectionOfObjs);
     inpForSearch.addEventListener("keyup",(e)=>{
@@ -149,3 +152,20 @@ document.getElementById("filterIcon").addEventListener("click",()=>
         filterContainer.style.display="none";
     }
 });
+
+// // Test Code - For GetById
+// async function getById(id) {
+//     try {
+//         let res=await fetch(`/getById/leads/${id}`);
+//         let data=await res.json();
+//         if(res.ok)
+//         {
+//             console.log(data);
+            
+//         }
+//         else throw new Error("Error:"+ res.status+ ", "+res.statusText);
+//     } catch (error) {
+//         console.log(error);
+        
+//     }
+// }

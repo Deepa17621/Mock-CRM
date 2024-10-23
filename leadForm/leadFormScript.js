@@ -76,7 +76,7 @@ form.addEventListener("submit", (e) => {
 inpArr.forEach(e=>{
     if(e === "") return; 
 })
-    fetch('/post/lead', {
+    fetch('/post/leads', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -87,7 +87,6 @@ inpArr.forEach(e=>{
     }).then(result => {
         console.log(result);
     });
-    return
     window.location.href = clicked ? "/leadForm/leadList.html" :  "/leadForm/leadForm.html";
     clicked = null;
 });
@@ -135,17 +134,17 @@ function mobileValidation(tag) {
     else setSuccess(tag);
 }
 
-async function getAll() {
-    try {
-        let res=await fetch("/getAll/leads");
-        if(!res.ok)
-        {
-            throw new Error("Error:"+ res.status+ " "+res.statusText);
-        }
-        let data=await res.json();
-        console.log(data);
-    } catch (error) {
-        // console.log(error);   
-    }
-}
-getAll();
+// async function getAll() {
+//     try {
+//         let res=await fetch("/getAll/leads");
+//         if(!res.ok)
+//         {
+//             throw new Error("Error:"+ res.status+ " "+res.statusText);
+//         }
+//         let data=await res.json();
+//         console.log(data);
+//     } catch (error) {
+//         // console.log(error);   
+//     }
+// }
+// getAll();

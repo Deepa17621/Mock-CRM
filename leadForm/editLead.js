@@ -28,11 +28,11 @@ let leadAddress = document.querySelector("#LeadAddress");
 let organization = document.querySelector("#organization");
 let date=document.querySelector("#date");
 let inpArr = [leadName, leadMail, leadPhone, leadAddress, organization, date];
-let keyArr=["Lead Name", "Lead Mail", "Phone", "Date","Address", "Organization"];
+let keyArr=["leadName", "leadMail", "phone", "date","address", "organization"];
 
 
 //================>>>>>>>>>>
-    fetch(`http://localhost:3000/leads/${param.get("id")}`)
+    fetch(`/getById/leads/${param.get("id")}`)
 .then(res=>{
     return res.json();
 }).then(respo=>
@@ -49,19 +49,19 @@ function enterValue(obj)
         if("id"==key) continue;
         switch(key)
         {
-            case "Lead Name":
+            case "leadName":
                 leadName.value=obj[key];
                 break;
-            case "Lead Mail":
+            case "leadMail":
                 leadMail.value=obj[key];
                 break;
-            case "Phone":
+            case "phone":
                 leadPhone.value=obj[key];
                 break;
-            case "Address":
+            case "address":
                 leadAddress.value=obj[key];
                 break;
-            case "Organization":
+            case "organization":
                 organization.value=obj[key];
                 break;
             case "date":
@@ -94,22 +94,22 @@ form.addEventListener("submit", (e) => {
         switch(e)
         {
             case leadName:
-                obj["Lead Name"]=e.value;
+                obj["leadName"]=e.value;
                 break;
             case leadMail:
-                obj["Lead Mail"]=e.value;
+                obj["leadMail"]=e.value;
                 break;
             case leadPhone:
-                obj["Phone"]=e.value;
+                obj["phone"]=e.value;
                 break;
             case leadAddress:
-                obj["Address"]=e.value;
+                obj["address"]=e.value;
                 break;
             case date:
                 obj["date"]=e.value;
                 break;
             case organization:
-                obj["Organization"]=e.value;
+                obj["organization"]=e.value;
                 break;
         }
     })
@@ -120,7 +120,7 @@ form.addEventListener("submit", (e) => {
  inpArr.forEach(e=>{
      if(e === "") return; 
  })
-     fetch(`http://localhost:3000/leads/${param.get("id")}`, {
+     fetch(`/getById/leads/${param.get("id")}`, {
          method: "PUT",
          headers: {
              "Content-Type": "application/json",
