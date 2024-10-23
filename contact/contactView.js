@@ -1,42 +1,35 @@
-import dao from "/controller/dao.js";
 let url=window.location.search;
 let param=new URLSearchParams(url);
 let currentId=param.get("id");
+
 let accountId ;
 let dealsArr;
-let deepa;
-
-const contactInstance=new dao(`http://localhost:3000/contacts/`);
-contactInstance.getById(currentId).then((data)=>{
-    deepa=data;
-    console.log(data);  
-});
-
-setTimeout(()=>{console.log(deepa)}
-, 2000);
-
-// console.log(currentContactObj);
 
 async function getData()
 {
-    let url="http://localhost:3000/contacts/";
-    let res=await fetch(url+currentId);
-    
-    let obj=await res.json();
-    accountId=obj["OrganizationId"];
-    dealsArr=obj["deals"];
-    console.log(obj['deals']);
-    console.log(dealsArr);
-    createTable(obj);
-    listDownDeals();
+    try {
+        let res=await fetch(`/getById/contacts/`+currentId);
+        let contactObj=await res.json();
+        if(!res.ok){
+            throw new Error("Error: "+ res.status+ " "+ res.statusText);
+        }
+            console.log(contactObj);
+            
+            accountId=contactObj["organizationId"];
+            dealsArr=contactObj["deals"];
+            console.log(contactObj['deals']);
+            console.log(dealsArr);
+            createTable(contactObj);
+            listDownDeals();
+    } catch (error) {
+        
+    }
 }
-
-
 let email;
 function createTable(data)
 {
     let name=document.getElementById("name");
-    name.innerHTML=data["Contact Name"];
+    name.innerHTML=data["contactName"];
     let tbl=document.querySelector("#view");
     for (const key in data) 
     {
@@ -44,17 +37,17 @@ function createTable(data)
             tbl.appendChild(tr);
             let td1=document.createElement("td");
             let td2=document.createElement("td");
-        if(key=="Contact Mail") {
+        if(key=="contactMail") {
             email=data[key];
-            td1.textContent=key;
+            td1.textContent=key.toUpperCase();
             td2.innerHTML=`<span><a href="mailto:${data[key]}" class="maill">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
         }
-        if(key==="Phone")
+        if(key==="phone")
         {
-            td1.textContent=key;
+            td1.textContent=key.toUpperCase();
             td2.innerHTML=`<span><a href="tel:${data[key]}">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -70,7 +63,7 @@ function createTable(data)
         row.appendChild(td3);
     }
 }
-// 1. Flow-1
+// 1. step-1
 getData();
 
 // Send Mail Button Event
@@ -82,7 +75,7 @@ mailBtn.addEventListener("click",()=>{
 // Delete Contact
 async function  delContact(id)
 {
-    let res=await fetch(`http://localhost:3000/contacts/${currentId}`, {
+    let res=await fetch(`/delete/contacts/${currentId}`, {
         method:"DELETE"
     });
     let out=res.json();
@@ -90,24 +83,38 @@ async function  delContact(id)
 
 // Update Account Details By Deleting THE Contact id from associated account.
 async function updateOrganizationDetails(contactId) {    
-    let contactRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
-    let contactObj=await contactRes.json();
-    let orgID =contactObj.OrganizationId;  
-    accountId = orgID;
-    if(!accountId){
-        return;
+    try {
+        let contactRes=await fetch(`/getById/contacts/${contactId}`);
+        if(res.ok){
+            let contactObj=await contactRes.json();
+            let orgID =contactObj.OrganizationId;  
+            accountId = orgID;
+            if(!accountId){
+                return;
+            }
+        }
+        else throw new Error("Error In getting Contact"+res.status)
+    } catch (error) {
+        console.log(error);
     }
     
     // Fetch to get organization Details.
-    let orgRes=await fetch(`http://localhost:3000/accounts/${accountId}`);
-    let orgObj=await orgRes.json();
-    let contactArr=(orgObj["Contacts"]).filter((e)=>{
-        e!=contactId;
-    });
-    orgObj["Contacts"]=contactArr;
+    try {
+        let orgRes=await fetch(`/getById/accounts/${accountId}`);
+        let orgObj=await orgRes.json();
+        if(res.ok){
+            let contactArr=(orgObj["Contacts"]).filter((e)=>{
+                e!=contactId;
+            });
+            orgObj["Contacts"]=contactArr;
+        }
+        else throw new Error("Error in fetching account data: "+ res.status);
+    } catch (error) {
+        console.log(error);
+    }
 
     // Fetch To PUT operation in Organization
-    let putRes =await fetch(`http://localhost:3000/accounts/${accountId}`, {
+    let putRes =await fetch(`/update/accounts/${accountId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(orgObj)
@@ -120,10 +127,12 @@ async function updateOrganizationDetails(contactId) {
 let delBtn=document.querySelector("#deleteBtn");
 delBtn.addEventListener("click",async (e)=>{
     e.preventDefault();
-    await updateOrganizationDetails(currentId);
-    await delContact(currentId);
-    window.location.href="contact/contactList.html";
-    e.stopPropagation();
+    if(confirm("are you sure? delete contact!")){
+        await updateOrganizationDetails(currentId);
+        await delContact(currentId);
+        window.location.href="contact/contactList.html";
+        e.stopPropagation();
+    }
 });
 
 //Edit Contact
@@ -139,7 +148,6 @@ let dealBtn=document.querySelector("#convert");// create new deal button
 dealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
-
 });
 
 // List Down Deals Details
@@ -211,7 +219,7 @@ meetingForm.addEventListener("submit", async (e) => {
     };
 
     try {
-        const response = await fetch('http://localhost:5500/postmeeting', {
+        const response = await fetch('/postmeeting', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

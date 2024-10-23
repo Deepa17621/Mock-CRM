@@ -24,19 +24,19 @@ function display(obj)
     for (const key in obj) {
         switch(key)
         {
-            case "Contact Name":
+            case "contactName":
                 contactName.value=obj[key];
                 break;
-            case "Contact Mail":
+            case "contactMail":
                 contactMail.value=obj[key];
                 break;
-            case "Phone":
+            case "phone":
                 phone.value=obj[key];
                 break;
-            case "Address":
+            case "address":
                 address.value=obj[key];
                 break;
-            case "Organization":
+            case "organization":
                 organization.value=obj[key];
                 break;
             case "date":
@@ -48,9 +48,16 @@ function display(obj)
 // fetch clicked Data
 async function getData(id)
 {
-    let res=await fetch(`http://localhost:3000/contacts/${id}`);
-    let out=await res.json();
-    display(out);
+    try {
+        let res=await fetch(`/getById/contacts/${id}`);
+        let out=await res.json();
+        if(!res.ok){
+            throw new Error("Error in fetching contact:"+ res.status);
+        }
+        display(out);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 getData(currentId);
@@ -66,7 +73,7 @@ saveBtn.addEventListener("click",(e)=>{
 
 });
 let formm=document.querySelector("form");
-let keyArr=["Contact Name", "Contact Mail", "Phone", "Date","Address", "Organization"];
+let keyArr=["contactName", "contactMail", "phone", "date","address", "organization"];
 formm.addEventListener("submit", (e)=>{
     e.preventDefault();
     if(!contactMail.value || !contactName.value || !phone.value)
@@ -84,19 +91,19 @@ formm.addEventListener("submit", (e)=>{
         switch(e)
         {
             case contactName:
-                obj["Contact Name"]=e.value;
+                obj["contactName"]=e.value;
                 break;
             case contactMail:
-                obj["Contact Mail"]=e.value;
+                obj["contactMail"]=e.value;
                 break;
             case phone:
-                obj["Phone"]=e.value;
+                obj["phone"]=e.value;
                 break;
             case address:
-                obj["Address"]=e.value;
+                obj["address"]=e.value;
                 break;
             case organization:
-                obj["Organization"]=e.value;
+                obj["organization"]=e.value;
                 break;
             case date:
                 obj["date"]=e.value;
@@ -104,7 +111,7 @@ formm.addEventListener("submit", (e)=>{
         }
     });
 
-    fetch(`http://localhost:3000/contacts/${currentId}`,{
+    fetch(`/update/contacts/${currentId}`,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)

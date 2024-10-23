@@ -4,6 +4,7 @@ let cancelBtn=document.querySelector("#cancelBtn");
 let saveAndNewBtn=document.querySelector("#saveNewBtn");
 let saveBtn=document.querySelector("#contactSubmitBtn");
 let clicked=null;
+
 cancelBtn.addEventListener("click", ()=>{
     window.location.href="/contact/contactList.html";
 });
@@ -30,15 +31,15 @@ let inpArr=[contactName, contactMail, phone, date, address, organization, ];
 
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
-
-    if(!contactName.value || !contactMail.value || !phone.value || !date.value || !address.value || !organization.value)
+    
+    if(!contactName.value || !contactMail.value || !phone.value )
     {
         !contactName.value?setError(contactName):setSuccess(contactName);
         !contactMail.value?mailValidation(contactMail):setSuccess(contactMail);
         !phone.value?mobileValidation(phone):setSuccess(phone);
-        !date.value?setError(date):setSuccess(date);
-        !address.value?setError(address):setSuccess(address);
-        !organization.value?setError(organization):setSuccess(organization);
+        // !date.value?setError(date):setSuccess(date);
+        // !address.value?setError(address):setSuccess(address);
+        // !organization.value?setError(organization):setSuccess(organization);
         return;
     }
     let obj = {
@@ -48,56 +49,62 @@ form.addEventListener("submit", (e)=>{
         switch(e)
         {
             case contactName:
-                obj["Contact Name"]=e.value;
+                obj["contactName"]=e.value;
                 break;
             case contactMail:
-                obj["Contact Mail"]=e.value;
+                obj["contactMail"]=e.value;
                 break;
             case phone:
-                obj["Phone"]=e.value;
+                obj["phone"]=e.value;
                 break;
             case address:
-                obj["Address"]=e.value;
+                obj["address"]=e.value;
                 break;
             case date:
                 obj["date"]=e.value;
                 break;
             case organization:
-                obj["OrganizationId"]=e.value;
+                obj["organizationId"]=e.value;
+                // obj["organization"]="";
                 break;
         }
     });
-
-    inpArr.forEach(e=>{
-        if(e.value==="") return;
-    });
-
-    // Storing Object To Json
-    fetch("http://localhost:3000/contacts", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(obj)
-    }).then(res => {
-        return res.json();
-    }).then(result => {
-        updateAccountFromLookUp(result["id"]);
-        console.log(result);
-        
-    });
-    return;
-    window.location.href = clicked ? "http://127.0.0.1:5500/contact/contactList.html" :  "http://127.0.0.1:5500/contact/contactForm.html";
-    clicked = null;
+    // inpArr.forEach(e=>{
+    //     if(e.value==="") return;
+    // });
+    postContact(obj);
+    // window.location.href = clicked ? "/contact/contactList.html" :  "/contact/contactForm.html";
 });
 
-// Update Account By Adding Cotact Id 
-async function updateAccountFromLookUp(contactId) {
-    let accRes=await fetch(`http://localhost:3000/accounts/${organization.value}`);
+// Post - Contact Data 
+async function postContact(obj) {
+    try {
+        let res=await fetch(`/post/contacts`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(obj)
+        });
+        let data= await res.json();
+        if(res.ok)
+        {
+            console.log(data);
+            updateAccountFormLookUp(result["_id"]); 
+        }
+        else throw new Error("Error: "+ res.status+ " "+ res.statusText);
+    } catch (error) {
+        
+    }
+}
+
+// Update Account By Adding Contact Id 
+async function updateAccountFormLookUp(contactId) {
+    let accRes=await fetch(`/getById/accounts/${organization.value}`);
     let accObj=await accRes.json();
-    accObj["Contacts"].push(contactId);
+    accObj["contacts"].push(contactId);
 
     // PUT FOR Accounts to update the new Contact to Organization
 
-    let putAcc=await fetch(`http://localhost:3000/accounts/${organization.value}`, {
+    let putAcc=await fetch(`/update/accounts/${organization.value}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(accObj)
@@ -148,12 +155,17 @@ function mobileValidation(tag) {
 
 // LookUp For Account Names
 async function getAccounts(){
-    let res=await fetch(`http://localhost:3000/accounts`);
+    let res=await fetch(`/getAll/accounts`);
     let accs=await res.json();
-    accs.forEach(obj => {
-        let option=`<option value="${obj["id"]}">${obj["AccountName"]}</option>`;
-        organization.insertAdjacentHTML('beforeend', option);
-    });
+    if(res.ok){
+        accs.forEach(obj => {
+            let option=`<option value="${obj["_id"]}" >${obj["accountName"]}</option>`;
+            organization.insertAdjacentHTML('beforeend', option);
+        });
+    }
+    else {
+        
+    }  
 }
 getAccounts()
 
@@ -175,7 +187,6 @@ existing.addEventListener("click", (e)=>{
 newAcco.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`/accounts/createAccount.html`;
-
-})
+});
 
 

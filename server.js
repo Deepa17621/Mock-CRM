@@ -253,7 +253,7 @@ async function connectToMongoDB() {
 
 connectToMongoDB(); // functionCall to make connection with mongoDB
 // Post
-router.post('/post/:module', async (req, res) => {
+app.post('/post/:module', async (req, res) => {
     try {
         const { module }=req.params;
         const obj = req.body;
@@ -265,14 +265,14 @@ router.post('/post/:module', async (req, res) => {
     }
 });
 //Get By Id
-router.get('/getById/:module/:id', async(req, res)=>{
+app.get('/getById/:module/:id', async(req, res)=>{
     try {
         const { module , id}=req.params;
-        const result=await database.collection(module).findOne({_id:ObjectId(id)});
+        const result=await database.collection(module).findOne({_id: new ObjectId(`${id}`)});
         if(!result){
             return res.status(404).send({message: `${module} not Found!`});
         }
-        res.send(result);
+        res.json(result);
     } catch (error) {
         console.error("Error fetching user by ID:", error);
         res.status(500).send({ message: 'Error fetching user by ID' });
@@ -280,7 +280,7 @@ router.get('/getById/:module/:id', async(req, res)=>{
 });
 
 //Get All
-router.get('/getAll/:module', async(req,res)=>{
+app.get('/getAll/:module', async(req,res)=>{
     try {
         const { module }=req.params;
         const listOfUsers = await database.collection(module).find({}).toArray();
@@ -293,11 +293,11 @@ router.get('/getAll/:module', async(req,res)=>{
 
 
 // Update
-router.put('/update/:module/:id', async (req, res) => {
+app.put('/update/:module/:id', async (req, res) => {
     try {
         const {module, id} = req.params;
         const updateUser = req.body;
-        await database.collection(module).updateOne({ _id: ObjectId(id) }, { $set: updateUser });
+        await database.collection(module).updateOne({ _id:new ObjectId(id) }, { $set: updateUser });
         res.send({ message: `user Updated!` });
     } catch (error) {
         console.error("Error updating user:", error);
@@ -305,10 +305,10 @@ router.put('/update/:module/:id', async (req, res) => {
     }
 });
 // Delete
-router.delete('/delete/:module/:id', async (req, res) => {
+app.delete('/delete/:module/:id', async (req, res) => {
     try {
         const { module , id}=req.params;
-        await database.collection(module).deleteOne({ _id: ObjectId(id) });
+        await database.collection(module).deleteOne({ _id:new ObjectId(id) });
         res.send({ message: `User Deleted!` });
     } catch (error) {
         console.error("Error deleting user:", error);

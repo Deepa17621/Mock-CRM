@@ -1,6 +1,3 @@
-// const { all } = require("axios");
-
-
 // 1=> If Contact Converted From Lead Means-->Get Url.
 let url = window.location.search;
 let param = new URLSearchParams(url);
@@ -35,7 +32,7 @@ createContactBtn.addEventListener("click", (e)=>{
 function sendToContact(contact, lead) {
     try {
         let del = deleteLead(lead);
-        fetch(`http://localhost:3000/contacts/`, {
+        fetch(`post/contacts/`, {
             method: "POST",
             headers: { "Content-Type": "applicatio/json" },
             body: JSON.stringify(contact)
@@ -47,12 +44,16 @@ function sendToContact(contact, lead) {
 
     }
 }
-function deleteLead(lead) {
+async function deleteLead(lead) {
     try {
-        fetch(`http://localhost:3000/leads/${lead}`, {
+        let res=await fetch(`/delete/leads/${lead}`, {
             method: "DELETE",
             headers: { "Content-Type": "applicatio/json" }
-        }).then(() => { return true })
+        });
+        if(res.ok){
+            let response=await res.json();
+        }
+        else throw new Error("Error: "+ res.status)
     } catch (error) {
     }
 }
@@ -63,11 +64,11 @@ console.log(convert);
 
     try {
         if(convert === true){
-            alert("Converst Success");
+            alert("Convert Success");
             JSON.stringify(localStorage.setItem("convert", "false"));
             return;
         }
-        let URL = `http://localhost:3000/leads/${param.get("id")}`
+        let URL = `/getById/leads/${param.get("id")}`
         const fetching = await fetch(URL, {
             method: "GET",
             headers: {
@@ -85,22 +86,22 @@ console.log(convert);
         for (const key in respo) {
             switch (key) {
                 case "id":
-                    obj["id"] = respo[key];
+                    obj["_id"] = respo[key];
                     break;
-                case "Lead Name":
-                    obj["Contact Name"] = respo[key];
+                case "contactName":
+                    obj["contactName"] = respo[key];
                     break;
-                case "Lead Mail":
-                    obj["Contact Mail"] = respo[key];
+                case "contaactMail":
+                    obj["contactMail"] = respo[key];
                     break;
-                case "Phone":
-                    obj["Phone"] = respo[key];
+                case "phone":
+                    obj["phone"] = respo[key];
                     break;
-                case "Address":
-                    obj["Address"] = respo[key];
+                case "address":
+                    obj["address"] = respo[key];
                     break;
-                case "Organization":
-                    obj["Organization"] = respo[key];
+                case "organization":
+                    obj["organization"] = respo[key];
                     break;
                 case "date":
                     obj["date"] = respo[key];
@@ -118,14 +119,10 @@ if (currentId != null) {
     fetchDataFromLead()
 }
 
-// Table function to Add Data's To Table.
 function tableFunction(allContacts)
 {
-    let keyArr=Object.keys(allContacts[0]);
-    console.log("Key Array");
-    console.log(keyArr);
-    //Create Table And Add Headers to Table.
-    // let table=document.querySelector("table");
+    let keyArr=["contactName", "contactMail", "phone", "address", "organization"];
+    //Table Head
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
     let thForCheckBox=document.createElement("th");
@@ -133,56 +130,67 @@ function tableFunction(allContacts)
     thead.appendChild(thForCheckBox);
     keyArr.forEach(e=>{
         let thh=document.createElement("th");
-        thh.innerHTML=e;
+        let span=document.createElement("span");
+        span.innerHTML=e.toUpperCase();
         thead.appendChild(thh);
+        thh.appendChild(span);
     });
 
-    //create Table Body and Add Content to table body
-    //Accessing Each Object.
+    // Table body 
     allContacts.forEach(obj=>{
 
         //iterator for same order insertion of data.
          let iterator1=keyArr[Symbol.iterator]();
         
          let row=document.createElement("tr");
-         row.id=obj["id"];
+         row.id=obj["_id"];
         //  row.setAttribute("onclick", "rowClickedEvent(this.id)");
          tableBody.appendChild(row);
          let checkBox21=document.createElement("td");
          row.appendChild(checkBox21);
          checkBox21.innerHTML=`<input type="checkbox">`;
-         
+         let colCount=0;
          
          for (const key in obj) 
          {
             let val=iterator1.next().value;
             let tdata=document.createElement("td");
             tdata.className=val;
-            row.appendChild(tdata)
-            if(val=="Contact Mail")
+            row.appendChild(tdata);
+            let span=document.createElement("span");
+            tdata.appendChild(span);
+            if(colCount<5)
             {
-                tdata.innerHTML=`<a href="mailto:${obj[tdata.className]}">${obj[tdata.className]}</a>`;
+                colCount++;
             }
-            else if(val=="Phone")
+            else return
+            if(val=="contactMail")
             {
-                tdata.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
+                span.innerHTML=`<a href="mailto:${obj[tdata.className]}">${obj[tdata.className]}</a>`;
+            }
+            else if(val=="phone")
+            {
+                span.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
             }
             else{
-                if(val=="Contact Name")
+                if(val=="contactName")
                     {
-                        tdata.setAttribute("onclick", `rowClickedEvent("${obj["id"]}")`);
-                        tdata.style.cursor="pointer";
+                        span.addEventListener("click", (eve)=>{
+                            eve.preventDefault();
+                            window.location.href=`/contact/contactView.html?id=${obj._id}`;
+                        })
+                        span.style.cursor="pointer";
                     }
-                tdata.innerHTML=obj[tdata.className];
+                span.innerHTML=obj[tdata.className];
             }
          }
     })
 }
 
-function rowClickedEvent(id)
-{
-    window.location.href=`/contact/contactView.html?id=${id}`; 
-}
+// function rowClickedEvent(id)
+// {
+//     window.location.href=`/contact/contactView.html?id=${id}`; 
+// }
 
 // Filter data From JSON To Display
 
@@ -202,19 +210,20 @@ function filterField(arrOfObjs)
     });
     if(arr.length>0)
     {
-        while(table.hasChildNodes())
+        while(tableHead.hasChildNodes())
         {
-            table.firstChild.remove();
+            tableHead.firstChild.remove();
+        }
+        while(tableBody.hasChildNodes()){
+            tableBody.firstChild.remove();
         }
         tableFunction(arr);
     }
 }
 
 // 2.=>Fetching Contact Data From JSON And Adding to Table List
-const getDataFromContact = async () => {
-    const url = `http://localhost:3000/contacts`;
-
-    const res = await fetch(url);
+const getAllContacts = async () => {
+    const res = await fetch(`/getAll/contacts`);
     let allContacts = await res.json(); 
     if(!res.ok)
     {
@@ -234,7 +243,7 @@ const getDataFromContact = async () => {
     });
 
 }
-getDataFromContact();
+getAllContacts();
 
 //Filter Icon and Filter Click Event
 let filterContainer = document.getElementById("filterForLead");
