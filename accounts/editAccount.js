@@ -15,19 +15,19 @@ let annualRevenue=document.querySelector("#annualRevenue");
 // Fetch Data From JSON
 async function fetchData(id)
 {
-    let res=await fetch(`http://localhost:3000/accounts/${currentId}`);
+    let res=await fetch(`/getById/accounts/${currentId}`);
     let out=await res.json();
     addToForm(out);    
 }
 function addToForm(obj)
 {
-    owner.value=obj["AccountOwner"];
-    accountName.value=obj["AccountName"];
-    accountMail.value=obj["AccountMail"];
-    phone.value=obj["Phone"];
+    owner.value=obj["accountOwner"];
+    accountName.value=obj["accountName"];
+    accountMail.value=obj["accountMail"];
+    phone.value=obj["phone"];
     date.value=obj["date"];
-    accountAddress.value=obj["AccountAddress"];
-    annualRevenue.value=obj["AnnualRevenue"];
+    accountAddress.value=obj["accountAddress"];
+    annualRevenue.value=obj["annualRevenue"];
 }
 fetchData(currentId)
 
@@ -43,7 +43,7 @@ saveBtn.addEventListener("click", (e)=>{
 // PUT Data 
 async function updateData(obj)
 {
-    let result=await fetch(`http://localhost:3000/accounts/${currentId}`, {
+    let result=await fetch(`/getById/accounts/${currentId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
@@ -56,22 +56,23 @@ let myForm=document.querySelector("form");
 myForm.addEventListener("submit",(e)=>{
     e.preventDefault();
 
-    if(!owner.value || !accountName.value || !accountMail.value || !accountAddress.value || !annualRevenue.value)
+    if(!owner.value || !accountName.value || !accountMail.value || !annualRevenue.value)
     {
         !owner.value?setError(owner):setSuccess(owner);
         !accountName.value?setError(accountName):setSuccess(accountName);
         !accountMail.value?setError(accountMail):mailValidation(accountMail);
-        !date.value?setError(date):setSuccess(date);
+        !annualRevenue.valu?setError(annualRevenue):setSuccess(annualRevenue);
+        // !date.value?setError(date):setSuccess(date);
     }
     let obj={
-        "AccountOwner":owner.value,
-        "AccountName":accountName.value,
-        "AccountMail":accountMail.value,
-        "Phone":phone.value,
+        "accountOwner":owner.value,
+        "accountName":accountName.value,
+        "accountMail":accountMail.value,
+        "phone":phone.value,
         "date":date.value,
-        "AccountAddress":accountAddress.value,
-        "AnnualRevenue":annualRevenue.value,
-        "Contacts":[],
+        "accountAddress":accountAddress.value,
+        "annualRevenue":annualRevenue.value,
+        "contacts":[],
         "deals":[]
     };
     updateData(obj);

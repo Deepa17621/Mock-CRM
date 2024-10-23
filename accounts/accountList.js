@@ -19,7 +19,6 @@ function selField()
 }
 function filterField(arrOfObjs)
 {
-    
     arrOfObjs.forEach((ele)=>
     {
         // console.log(ele[`${selectField}`]);
@@ -33,9 +32,12 @@ function filterField(arrOfObjs)
     });
     if(arr.length>0)
     {
-        while(table.hasChildNodes())
+        while(tHead.hasChildNodes())
         {
-            table.firstChild.remove();
+            tHead.firstChild.remove();
+        }
+        while(tBody.hasChildNodes()){
+            tBody.firstChild.remove();
         }
         addToTable(arr);
     }
@@ -43,7 +45,7 @@ function filterField(arrOfObjs)
 // Fetch All the Accounts From JSON
 async function getAllAccounts() 
 {
-    let res=await fetch("http://localhost:3000/accounts");
+    let res=await fetch("/getAll/accounts");
     let allAccounts=await res.json();
     
     // Function Call To Add All the Details To Table
@@ -59,8 +61,8 @@ function addToTable(allAccs)
 {
     // Create Iterator
     let obj_0=allAccs[0];
-    let iteratorArr=["AccountOwner","AccountName", "Phone", "AccountMail"];
-    let tableHead=["Account Owner", "Account Name", "Phone", "Mail"];
+    let iteratorArr=["accountOwner","accountName", "phone", "accountMail"];
+    let tableHead=["accountOwner", "accountName", "phone", "mail"];
     // table header
     let thead=document.createElement("tr");
     tHead.appendChild(thead);
@@ -71,7 +73,9 @@ function addToTable(allAccs)
     thead.appendChild(checkBox);
     tableHead.forEach(e=>{
         let th=document.createElement("th");
-        th.innerHTML=e.toUpperCase();
+        let span=document.createElement("span");
+        th.appendChild(span);
+        span.innerHTML=e.toUpperCase();
         thead.appendChild(th);
     });
 
@@ -80,36 +84,43 @@ function addToTable(allAccs)
         let iterator1=iteratorArr[Symbol.iterator]();
 
         let row=document.createElement("tr");
-        row.id=obj["id"];
+        row.id=obj["_id"];
         // row.setAttribute("onclick", "rowClickedEvent(this.id)");
         tBody.appendChild(row);
         let checkBox21=document.createElement("td");
         row.appendChild(checkBox21);
         checkBox21.innerHTML=`<input type="checkbox">`;
-        
-        
+        let colCount=0;
         for (const key in obj) 
         {
            let val=iterator1.next().value;
            if(val==null) return;
            let tdata=document.createElement("td");
+           let span=document.createElement("span");
+           tdata.appendChild(span);
            tdata.className=val;
-           row.appendChild(tdata)
-           if(val=="Account Mail")
-           {
-               tdata.innerHTML=`<a href="mailto:${obj[tdata.className]}">${obj[tdata.className]}</a>`;
+           row.appendChild(tdata);
+           if(colCount<4){
+            colCount++;
            }
-           else if(val=="Phone")
+           if(val=="accountMail")
            {
-               tdata.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
+               span.innerHTML=`<a href="mailto:${obj[tdata.className]}">${obj[tdata.className]}</a>`;
+           }
+           else if(val=="phone")
+           {
+               span.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
            }
            else{
-                if(val=="AccountName")
+                if(val=="accountName")
                 {
-                    tdata.setAttribute("onclick", `rowClickedEvent("${obj["id"]}")`);
-                    tdata.style.cursor="pointer";
+                    span.addEventListener("click", (e)=>{
+                        e.preventDefault();
+                        window.location.href=`/accounts/viewAccount.html?id=${obj._id}`;
+                    });
+                    span.style.cursor="pointer";
                 }
-               tdata.innerHTML=obj[tdata.className];
+               span.innerHTML=obj[tdata.className];
            }
         }
     });
@@ -117,7 +128,7 @@ function addToTable(allAccs)
     
 }
 getAllAccounts();
-function rowClickedEvent(id)
-{
-    window.location.href=`/accounts/viewAccount.html?id=${id}`;
-}
+// function rowClickedEvent(id)
+// {
+//     window.location.href=`/accounts/viewAccount.html?id=${id}`;
+// }

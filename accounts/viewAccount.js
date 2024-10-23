@@ -8,15 +8,15 @@ let mailButton;
 let accTable=document.getElementById("accTable");
 let contactTable=document.getElementById("contactsInAcc");
 let dealTable=document.querySelector("#dealsInAcc");
-let headArrForContact=["Contact Name", "Contact Mail", "Phone"];
-let headArrForDeals=["DealName", "id", "Amount", "Stage", "ClosingDate"];
+let headArrForContact=["contactName", "contactMail", "phone"];
+let headArrForDeals=["dealName", "id", "amount", "stage", "closingDate"];
 function displayAcc(obj)
 {
     for (const key in obj) {
 
-        if(key=="Contacts"|| key=="deals")
+        if(key=="contacts"|| key=="deals")
         {
-            if(key=="Contacts")
+            if(key=="contacts")
             {
                 let thead=document.createElement("tr");
                 contactTable.appendChild(thead);
@@ -29,8 +29,8 @@ function displayAcc(obj)
                 let td3=document.createElement("th");
                 thead.appendChild(td3);
                 td3.innerHTML="Contact Phone";
-                obj[key].forEach(e => {
-                    fetchContactToAcc(e, headArrForContact); 
+                obj["contacts"].forEach(contactId => {
+                    fetchContactToAcc(contactId, headArrForContact); 
                 });
             }
             else if(key=="deals")
@@ -39,21 +39,21 @@ function displayAcc(obj)
                 dealTable.appendChild(thead);
                 let td1=document.createElement("th");
                 thead.appendChild(td1);
-                td1.innerHTML="DealName";
+                td1.innerHTML="dealName";
                 let td2=document.createElement("th");
                 thead.appendChild(td2);
                 td2.innerHTML="id";
                 let td3=document.createElement("th");
                 thead.appendChild(td3);
-                td3.innerHTML="Amount";
+                td3.innerHTML="amount";
                 let td4=document.createElement("th");
                 thead.appendChild(td4);
-                td4.innerHTML="Stage";
+                td4.innerHTML="stage";
                 let td5=document.createElement("th");
                 thead.appendChild(td5);
-                td5.innerHTML="ClosingDate";
-                obj[key].forEach(e => {
-                    fetchDealToAcc(e, headArrForDeals); 
+                td5.innerHTML="closingDate";
+                obj["deals"].forEach(accId => {
+                    fetchDealToAcc(accId,headArrForDeals); 
                 });
             }
         }
@@ -65,13 +65,13 @@ function displayAcc(obj)
             let td2=document.createElement("td");
             tr.appendChild(td2);
             td1.innerHTML=key.toUpperCase();
-            if(key=="AccountMail")
+            if(key=="accountMail")
             {
                 mailButton=obj[key];
                 td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
                 continue
             }
-            else if(key=="Phone")
+            else if(key=="phone")
             {
                 td2.innerHTML=`<a href="tel:${obj[key]}">${obj[key]}</a>`;
                 continue
@@ -83,7 +83,7 @@ function displayAcc(obj)
 // Fetch Account Data From JSON
 async function fetchAcc(id)
 {
-    let res=await fetch(`http://localhost:3000/accounts/${currentId}`); 
+    let res=await fetch(`/getById/accounts/${currentId}`); 
     let out=await res.json();
     displayAcc(out); 
 }
@@ -99,13 +99,10 @@ function rowClicked(id)
 async function fetchContactToAcc(id, arr)
 {
     try {
-        let res=await fetch(`http://localhost:3000/contacts/${id}`);
+        let res=await fetch(`/getById/contacts/${id}`);
         let out=await res.json();
         if(res.ok)
         {
-            console.log("Contact From Accounts Module");
-        
-            console.log(out);
             let iterator=arr[Symbol.iterator]();
             let trr=document.createElement("tr");
             contactTable.appendChild(trr);
@@ -114,7 +111,6 @@ async function fetchContactToAcc(id, arr)
             for (const key in out)
             {
                     let val=iterator.next().value;
-                    console.log(val); 
                     let td=document.createElement("td");
                     trr.appendChild(td);
                     td.className=val;
@@ -133,7 +129,7 @@ async function fetchContactToAcc(id, arr)
 async function fetchDealToAcc(id, arr)
 {
     try {
-        let res=await fetch(`http://localhost:3000/deals/${id}`);
+        let res=await fetch(`/getById/deals/${id}`);
         let out=await res.json();
         if(res.ok)
         {
@@ -192,9 +188,9 @@ deleteBtn.addEventListener("click", async(e)=>{
 // Update Contact Function
 async function updateContactFromAccount(accId) {
     // GET Organization Details.
-    let accRes=await fetch(`http://localhost:3000/accounts/${accId}`);
+    let accRes=await fetch(`/getById/accounts/${accId}`);
     let accObj=await accRes.json();
-    let contactArr=accObj["Contacts"];
+    let contactArr=accObj["contacts"];
     if(contactArr.length==0)
     {
         return;
@@ -207,13 +203,13 @@ async function updateContactFromAccount(accId) {
 }
 
 async function  fetchAndUpdateContact(contactId) {
-    let conRes=await fetch(`http://localhost:3000/contacts/${contactId}`);
+    let conRes=await fetch(`/getById/contacts/${contactId}`);
     let conObj=await conRes.json();
-    conObj["OrganiztionId"]="";
-    conObj["Organization"]="";
+    conObj["organiztionId"]="";
+    conObj["organization"]="";
 
     // Update contact --PUT Method
-    let putContact=await fetch(`http://localhost:3000/contacts/${contactId}`, {
+    let putContact=await fetch(`/update/contacts/${contactId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(conObj)
@@ -222,7 +218,7 @@ async function  fetchAndUpdateContact(contactId) {
 
 async function deleteAcc(id)
 {
-    let res=await fetch(`http://localhost:3000/accounts/${id}`,{
+    let res=await fetch(`/delete/accounts/${id}`,{
         method:"DELETE", 
         headers:{"Content-Type":"application/json"}
     });

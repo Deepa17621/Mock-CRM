@@ -35,25 +35,24 @@ saveNewBtn.addEventListener("click", (e)=>{
 // / POST Method- Storing Data to JSON
 async function  saveAccount(obj)
 {
-    let res=await fetch("http://localhost:3000/accounts",{
+    let res=await fetch("/post/accounts",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
     });
     let out=await res.json();
     console.log(out);
-    accId=out["id"];
+    accId=out["_id"];
     console.log("Account Id: "+accId);
     if(contactId!=null)
     {
         fetchContactAndUpdateIt(accId, contactId);
     }
-    // return out;
 }
 
 async function fetchContactAndUpdateIt(accountId, ContactId)
 {
-    let res=await fetch(`http://localhost:3000/leads/${ContactId}`);
+    let res=await fetch(`/getById/leads/${ContactId}`);
     if(!res.ok)
     {
         throw new Error("Error in Promise");
@@ -78,7 +77,7 @@ async function fetchContactAndUpdateIt(accountId, ContactId)
 
 // Delete Lead From Leads
 async function deleteFromLead(ContactId){
-    let res=await fetch(`http://localhost:3000/leads/${ContactId}`,{
+    let res=await fetch(`/delete/leads/${ContactId}`,{
         method:"DELETE",
         headers:{"Content-Type":"application/json"}
     });
@@ -88,14 +87,13 @@ async function deleteFromLead(ContactId){
 function createContactObject(leadObj, aId)
 {
     let obj={
-        "Contact Name":leadObj["Lead Name"],
-        "Contact Mail":leadObj["Lead Mail"],
-        "Phone":leadObj["Phone"],
-        "Address":leadObj["Address"],
+        "contactName":leadObj["leadName"],
+        "contactMail":leadObj["leadMail"],
+        "phone":leadObj["phone"],
+        "address":leadObj["address"],
         "date":leadObj["date"],
-        "Organization":leadObj["Organization"], 
-        "id":leadObj["id"],
-        "OrganiztionId":aId,
+        "organization":leadObj["organization"], 
+        "organiztionId":aId,
         "deals":[]
     }
     return obj;
@@ -103,7 +101,7 @@ function createContactObject(leadObj, aId)
 async function postContact(cotactObj)
 {
    try {
-    let res=await fetch(`http://localhost:3000/contacts`, {
+    let res=await fetch(`/post/contacts`, {
         method:"POST", 
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(cotactObj)
@@ -143,26 +141,26 @@ if(id!=null)
 
 accForm.addEventListener("submit", (e)=>{
     e.preventDefault();
-    if(!accountOwner.value || !accountName.value || !accountMail.value || !phone.value || !annualRevenue.value || !address.value)
+    if(!accountOwner.value || !accountName.value || !accountMail.value || !phone.value || !annualRevenue.value)
     {
         !accountOwner.value?setError(accountOwner):setSuccess(accountOwner);
         !accountName.value?setError(accountName):setSuccess(accountName);
         !accountMail.value?setError(accountMail):mailValidation(accountMail);
         !phone.value?setError(phone):mobileValidation(phone);
         !annualRevenue.value?setError(annualRevenue):setSuccess(annualRevenue);
-        !address.value?setError(address):setSuccess(address);
+        // !address.value?setError(address):setSuccess(address);
         return;
     }
 
     let obj={
-        "AccountOwner":accountOwner.value,
-        "AccountName":accountName.value,
-        "AccountMail":accountMail.value,
-        "Phone":phone.value,
+        "accountOwner":accountOwner.value,
+        "accountName":accountName.value,
+        "accountMail":accountMail.value,
+        "phone":phone.value,
         "date":date.value,
-        "AccountAddress":address.value,
-        "AnnualRevenue":annualRevenue.value, 
-        "Contacts":!contactId?[]:[contactId],
+        "accountAddress":address.value,
+        "annualRevenue":annualRevenue.value, 
+        "contacts":!contactId?[]:[contactId],
         "deals":[]
     }
 
