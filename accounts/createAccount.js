@@ -8,13 +8,13 @@ let saveBtn=document.querySelector("#leadSubmitBtn");
 let saveNewBtn=document.querySelector("#saveNewBtn");
 let accForm=document.querySelector("#formm");
 
+let contactId;
+
 cancelBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href="/accounts/accountList.html";
     e.stopPropagation();
 });
-
-
 
 let clicked=null;
 
@@ -42,11 +42,10 @@ async function  saveAccount(obj)
     });
     let out=await res.json();
     console.log(out);
-    accId=out["_id"];
-    console.log("Account Id: "+accId);
+    console.log(out["id"]);
     if(contactId!=null)
     {
-        fetchContactAndUpdateIt(accId, contactId);
+        fetchContactAndUpdateIt(out["id"], contactId);
     }
 }
 
@@ -62,8 +61,11 @@ async function fetchContactAndUpdateIt(accountId, ContactId)
         let fetchedContact=await res.json();
         console.log(fetchedContact);
         
-        let contactObj=createContactObject(fetchedContact, accountId);
-        if(postContact(contactObj))
+        let newContact=createContactObject(fetchedContact, accountId);
+        console.log(newContact);
+        return;
+        
+        if(postContact(newContact))
         {
             deleteFromLead(ContactId);
         }
@@ -92,26 +94,25 @@ function createContactObject(leadObj, aId)
         "phone":leadObj["phone"],
         "address":leadObj["address"],
         "date":leadObj["date"],
-        "organization":leadObj["organization"], 
-        "organiztionId":aId,
+        "organization":leadObj["organization"], ///////---------------------------need to check 
+        "organiztionId":`${aId}`, ///------------------------
         "deals":[]
     }
     return obj;
 }
-async function postContact(cotactObj)
+async function postContact(myObj)
 {
    try {
     let res=await fetch(`/post/contacts`, {
         method:"POST", 
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(cotactObj)
+        body:JSON.stringify(myObj)
     });
     if(res.ok)
     {
         let out=await res.json();
         console.log(out);
-        return true;
-        
+        return true; 
     }
     else{
         throw new Error("Error in Posting Contact")
@@ -131,15 +132,14 @@ let phone=document.querySelector("#phone");
 let date=document.querySelector("#date");
 let address=document.querySelector("#accountAddress");
 let annualRevenue=document.querySelector("#annualRevenue");
-let contactId;
 
 
-if(id!=null)
-    {
-        contactId=id;
-    }
+if(id!=null)   // Here "id" refers Contact Id (Param)
+{
+    contactId=id;
+}
 
-accForm.addEventListener("submit", (e)=>{
+accForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
     if(!accountOwner.value || !accountName.value || !accountMail.value || !phone.value || !annualRevenue.value)
     {
@@ -160,12 +160,12 @@ accForm.addEventListener("submit", (e)=>{
         "date":date.value,
         "accountAddress":address.value,
         "annualRevenue":annualRevenue.value, 
-        "contacts":!contactId?[]:[contactId],
+        "contacts":!contactId?[]:[contactId,],
         "deals":[]
     }
 
-    saveAccount(obj);
-    // window.location.href=clicked?"http://127.0.0.1:5500/accounts/accountList.html":"http://127.0.0.1:5500/accounts/createAccount.html";
+    await saveAccount(obj);
+    // window.location.href=clicked?"/accounts/accountList.html":"/accounts/createAccount.html";
     clicked=null;
 });
 let accId;

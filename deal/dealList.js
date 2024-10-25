@@ -22,7 +22,7 @@ createDealBtn.addEventListener("click", (e)=>{
 // Fetch From Json
 async function fetchData()
 {
-    let result=await fetch("http://localhost:3000/deals");
+    let result=await fetch("/getAll/deals");
     let arrOfObj=await result.json();
 
     sendToTable(arrOfObj); 
@@ -38,24 +38,29 @@ fetchData();
 function filterFunction(arrOfObjs)
 {
     arrOfObjs.forEach(e=>{
-        if((e[selField]).toLowerCase()==(searchField.value).toLowerCase())
+        if((e[selField])==(searchField.value))
         {
             arr.push(e);
         }
     });
     if(arr.length>0)
     {
-        while(table.hasChildNodes())
+        
+        while(tableHead.hasChildNodes())
         {
-            table.firstChild.remove();
+            tableHead.firstChild.remove();
         }
+        while(tableBody.hasChildNodes()){        
+             tableBody.firstChild.remove();
+        }
+
     }
     sendToTable(arr);
 }
 
 function sendToTable(obj)
 {
-    let header=Object.keys(obj[0]);
+    let header=["dealName", "amount","stage", "accountName","contactName","closingDate", "dealOwner"];
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
     header.forEach(e=>{
@@ -67,7 +72,7 @@ function sendToTable(obj)
     
     obj.forEach(e => 
     {
-        let item=(Object.keys(obj[0]))[Symbol.iterator]();
+        let item=header[Symbol.iterator]();
         let tr=document.createElement("tr");
         tr.id=e["id"];
         // tr.setAttribute("onclick", "rowClicked(this.id)")
@@ -75,11 +80,14 @@ function sendToTable(obj)
         for (const key in e)
         {        
             let val=item.next().value;
+            if(!val){
+                return;
+            }
             let td=document.createElement("td");
             td.className=val;
-            if(val=="DealName")
+            if(val=="dealName")
             {
-                td.setAttribute("onclick", `rowClicked("${e["id"]}")`);
+                td.setAttribute("onclick", `rowClicked("${e["_id"]}")`);
                 td.style.cursor="pointer";
             }
             td.innerHTML=e[td.className];

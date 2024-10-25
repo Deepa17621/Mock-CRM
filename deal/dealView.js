@@ -1,4 +1,3 @@
-import dao from "../controller/dao.js";
 let url=window.location.search;
 let param=new URLSearchParams(url);
 
@@ -9,27 +8,33 @@ console.log(currentId);
 let table=document.querySelector("table");
 
 // Fetch Current Data From JSON
-async function fetchData(id)
+async function getDealObj(id)
 {
-    let result=await fetch(`http://localhost:3000/deals/${id}`);
-    let out=await result.json();
-    display(out);    
+    try {
+        let result=await fetch(`/getById/deals/${id}`);
+        let out=await result.json();
+        if(result.ok){
+            display(out);
+        }    
+    } catch (error) {
+        console.log(error);
+    }
 }
-fetchData(currentId);
+getDealObj(currentId);
 
 let contactId;
 let accountId;
 function display(obj)
 {
-    contactId=obj["ContactId"];
-    accountId=obj["AccountId"];
+    contactId=obj["contactId"];
+    accountId=obj["accountId"];
     console.log(contactId);
     console.log(accountId);
     let name=document.querySelector("#name");
-    name.innerHTML=obj["DealName"];
+    name.innerHTML=obj["dealName"];
     for (const key in obj)
     {
-        if(key=="ContactId" || key=="AccountId")
+        if(key=="contactId" || key=="cccountId")
         {
             let cHead=["id", "Contact Name", "Contact Mail", "Organization"];
             let aHead=["id", "AccountName", "AccountMail", "Phone"];
@@ -83,7 +88,7 @@ async function deleteDeal(id)
             // return 
             if(updateContAcc=="true")
             {
-                let response=await fetch(`http://localhost:3000/deals/${id}`, {
+                let response=await fetch(`/delete/deals/${id}`, {
                     method:"DELETE"
                 });
                 if(!response.ok)
@@ -117,9 +122,8 @@ async function updateContactAndAccount(dealId) {
     try {
         console.log("Function");
         
-        let dealInstance=await dao(`http://localhost:3000/deals`);    
-        let contactInstance=dao(`http://localhost:3000/contacts`);
-        let accountInstance=dao(`http://localhost:3000/accounts`);
+        let res=await fetch(`/getById/deals/${dealId}`);
+        let dealInstance=await res.json();
         //1.GetDeal Object to get acc and contact Details
         let currentDeal=dealInstance.getById(dealId);        
         if(currentDeal!=null)

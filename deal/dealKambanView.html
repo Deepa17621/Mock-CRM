@@ -62,7 +62,7 @@
                         <select name="selectView" id="selectView">
                             <option value="">Select View</option>
                             <option value="listView">List View</option>
-                            <option value="kambanView">Kamban View</option>
+                            <option value="kanbanView">Kanban View</option>
                         </select>
                     </li>
                     <li>
@@ -80,13 +80,13 @@
                     <li>
                         <select name="" id="fields" onchange="selectField()">
                             <option value="">---Select---</option>
-                            <option value="id">ID</option>
-                            <option value="DealOwner">Deal Owner</option>
-                            <option value="ContactName">Contact Name</option>
-                            <option value="DealName">Deal Name</option>
-                            <option value="AccountName">AcoountName</option>
-                            <option value="Amount">Amount</option>
-                            <option value="ClosingDate">Closing date</option>
+                            <option value="_id">ID</option>
+                            <option value="dealOwner">Deal Owner</option>
+                            <option value="contactName">Contact Name</option>
+                            <option value="dealName">Deal Name</option>
+                            <option value="accountName">AcoountName</option>
+                            <option value="amount">Amount</option>
+                            <option value="closingDate">Closing date</option>
                         </select>
                     </li>
                     <li>
@@ -271,7 +271,7 @@
                         <span>Stage-1</span>
                         <span class="count" id="stage-1Count">0</span>
                         <span class="dot">.</span>
-                        <span>0%</span>
+                        <span>20%</span>
                     </div>
                     <div id="totalAmountOfStage1" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
                  </div>
@@ -285,7 +285,7 @@
                         <span>stage-2</span>
                         <span class="count stage-2Count">0</span>
                         <span class="dot">.</span>
-                        <span>30%</span>
+                        <span>40%</span>
                     </div>
                     <div id="totalAmountOfStge2" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
                  </div>
@@ -299,7 +299,7 @@
                         <span>stage-3</span>
                         <span class="count stage-3Count">0</span>
                         <span class="dot">.</span>
-                        <span>50%</span>
+                        <span>60%</span>
                     </div>
                     <div id="totalAmountOfStage3" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
                  </div>
@@ -314,6 +314,34 @@
                         <span class="count stage-4Count">0</span>
                         <span class="dot">.</span>
                         <span>80%</span>
+                    </div>
+                    <div id="totalAmountOfStage4" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stageBody -->
+                  <div class="stageBody"></div>
+            </div>
+            <div id="stage5" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>stage-5</span>
+                        <span class="count stage-5Count">0</span>
+                        <span class="dot">.</span>
+                        <span>100%</span>
+                    </div>
+                    <div id="totalAmountOfStage4" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
+                 </div>
+                 <!-- stageBody -->
+                  <div class="stageBody"></div>
+            </div>
+            <div id="closed" class="multipleStagesContainer">
+                <!-- stage Header -->
+                 <div class="stageHeader">
+                    <div class="firstRow">
+                        <span>closed</span>
+                        <span class="count closedCount">0</span>
+                        <span class="dot">.</span>
+                        <span>0%</span>
                     </div>
                     <div id="totalAmountOfStage4" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</div>
                  </div>

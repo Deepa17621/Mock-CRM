@@ -4,27 +4,16 @@ let currentId=param.get("id");
 
 let accountId ;
 let dealsArr;
+let contactObj;
 
-async function getData()
-{
-    try {
-        let res=await fetch(`/getById/contacts/`+currentId);
-        let contactObj=await res.json();
-        if(!res.ok){
-            throw new Error("Error: "+ res.status+ " "+ res.statusText);
-        }
-            console.log(contactObj);
-            
-            accountId=contactObj["organizationId"];
-            dealsArr=contactObj["deals"];
-            console.log(contactObj['deals']);
-            console.log(dealsArr);
-            createTable(contactObj);
-            listDownDeals();
-    } catch (error) {
-        
-    }
-}
+getDataById(currentId, "contacts").then((res)=>{
+    console.log(res);
+    contactObj=res;
+}).then((response)=>{
+    createTable(contactObj);
+    listDownDeals();
+});
+
 let email;
 function createTable(data)
 {
@@ -63,8 +52,6 @@ function createTable(data)
         row.appendChild(td3);
     }
 }
-// 1. step-1
-getData();
 
 // Send Mail Button Event
 let mailBtn=document.querySelector("#mailBtn");
@@ -73,8 +60,7 @@ mailBtn.addEventListener("click",()=>{
 });
 
 // Delete Contact
-async function  delContact(id)
-{
+async function  delContact(id){
     let res=await fetch(`/delete/contacts/${currentId}`, {
         method:"DELETE"
     });
@@ -87,9 +73,9 @@ async function updateOrganizationDetails(contactId) {
         let contactRes=await fetch(`/getById/contacts/${contactId}`);
         if(res.ok){
             let contactObj=await contactRes.json();
-            let orgID =contactObj.OrganizationId;  
+            let orgID =contactObj.organizationId;  
             accountId = orgID;
-            if(!accountId){
+            if(!orgID){
                 return;
             }
         }
@@ -97,16 +83,16 @@ async function updateOrganizationDetails(contactId) {
     } catch (error) {
         console.log(error);
     }
-    
-    // Fetch to get organization Details.
+    if((contactObj.organizationId)){
+        // Fetch to get organization Details.
     try {
         let orgRes=await fetch(`/getById/accounts/${accountId}`);
         let orgObj=await orgRes.json();
         if(res.ok){
-            let contactArr=(orgObj["Contacts"]).filter((e)=>{
+            let contactArr=(orgObj["contacts"]).filter((e)=>{
                 e!=contactId;
             });
-            orgObj["Contacts"]=contactArr;
+            orgObj["contacts"]=contactArr;
         }
         else throw new Error("Error in fetching account data: "+ res.status);
     } catch (error) {
@@ -119,7 +105,54 @@ async function updateOrganizationDetails(contactId) {
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(orgObj)
     });
-
+    }
+}
+// Data Access Functions
+async function getDataById(id, module) {
+    try {
+        let res=await fetch(`/getById/${module}/${id}`);
+        let obj=await res.json();
+        if(res.ok){
+            return obj;
+        }
+        else{
+            throw new Error(`Error In Fetching ${module} data: ${res.status} , ${res.statusText}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function update(id, module, obj) {
+    try {
+        let res=await fetch(`/update/${module}/${id}`,{
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+        });
+        if(res.ok){
+            return true;
+        }
+        else{
+            throw new Error("Error In updating "+module+ "data"+ res.status+res.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function deleteObject(id, module) {
+    try {
+        let res=await fetch(`/delete/${module}/${id}`, {
+            method:"DELETE"
+        });
+        if(res.ok){
+            return true;
+        }
+        else {
+            throw new Error("Error In Delete "+ module+ " "+ res.status+ res.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 // Click Event For Delete Contact.
 
@@ -128,9 +161,9 @@ let delBtn=document.querySelector("#deleteBtn");
 delBtn.addEventListener("click",async (e)=>{
     e.preventDefault();
     if(confirm("are you sure? delete contact!")){
-        await updateOrganizationDetails(currentId);
+        await updateOrganizationDetails(currentId); //CurrentId Refers Contact Id
         await delContact(currentId);
-        window.location.href="contact/contactList.html";
+        window.location.href="/contact/contactList.html";
         e.stopPropagation();
     }
 });
@@ -145,19 +178,19 @@ editBtn.addEventListener("click", (e)=>{
 
 // Create New Deal 
 let dealBtn=document.querySelector("#convert");// create new deal button 
-dealBtn.addEventListener("click", (e)=>{
+dealBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
-    window.location.href=`/deal/createDealForm.html?contactid=${currentId}&accId=${accountId}`;
+    let obj=await getDataById(currentId, "contacts");
+    let accId=await obj["organizationId"];
+    window.location.href=accId?`/deal/createDealForm.html?contactid=${currentId}&accId=${accId}`:`/deal/createDealForm.html?contactid=${currentId}`;
 });
 
 // List Down Deals Details
 let dealTable=document.querySelector("#dealTable");
-function listDownDeals()
-{
+function listDownDeals(){
     let thead=document.createElement("tr");
 
 }
-
 
 // back button event to navigate to previously visited page
 let backBtn=document.querySelector("#backBtn");
