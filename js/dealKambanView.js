@@ -11,33 +11,69 @@ selectView.addEventListener("change", (e)=>{
         window.location.href=`./dealKambanView.html`;
     }
 });
-let standardView=document.querySelector("#stageParent");
-let deepaPipeLine=document.querySelector("#deepaPipeline");
-
-//2. Change PipeLine 
+let wrapperForKanbanView=document.querySelector("#stageParent");
 let pipeLines=document.querySelector("#pipeLine");
-pipeLines.addEventListener("change", (e)=>{
+// 3. PipeLines From MongoDB
+async function getPipeLines(pipeLines) {
+    try {
+        let res=await fetch(`/getAll/pipeLines`);
+        if(res.ok){
+            let pipelines=await res.json();
+            console.log(pipelines);
+            // let option=`<option value="" class="hidden">stages</option>`;
+           let option="";
+            pipelines.forEach(element => {
+                option+=`<option value=${Object.keys(element)[1]}>${Object.keys(element)[1]}</option>`
+            });
+            pipeLines.innerHTML=option;
+            return pipelines;
+        }
+    } catch (error) {
+        
+    }
+}
+// 2. functionCall And Get the pipeLines
+let listOfPipeLines=async ()=>{
+    return await getPipeLines(pipeLines)
+     // select tag has been send as parameter to add options from DB
+}
+listOfPipeLines();
+//4. Change PipeLine 
+pipeLines.addEventListener("change", async(e)=>{
     e.preventDefault();
-    if(pipeLines.value=="standardView")
-    {
-        standardView.style.display="flex";
-        deepaPipeLine.style.display="none";
-
-    }
-    else if(pipeLines.value=="deepa")
-    {
-        deepaPipeLine.style.display="flex";
-        standardView.style.display="none";
-    }
-    else if(pipeLines.value=="allPipeLine")
-    {
-
-    }
+    let selectedPipeLine=e.target.value;
+    let data=await listOfPipeLines();
+    let stageContainer=""
+    data.forEach(element => {
+        if(Object.keys(element)[1]==selectedPipeLine){
+            console.log(Object.values(element)[1]);
+            let stages=Object.values(element)[1];
+            for (const key in stages) {
+                stageContainer+=` <div id="${key}" class="multipleStagesContainer">
+                                    <!-- stage Header -->
+                                    <div class="stageHeader">
+                                        <div class="firstRow">
+                                            <span>${key}</span>
+                                            <span class="count" id="${key}+Count">0</span>
+                                            <span class="dot">.</span>
+                                            <span class="propability">${stages[key]}%</span>
+                                        </div>
+                                        <div class="secondRow">
+                                            <span id="totalAmountOf+${key}" class="rupee"><i class="fa-solid fa-indian-rupee-sign"></i> 0.00</span>
+                                        </div>
+                                    </div>
+                                    <!-- stage Body -->
+                                    <div class="stageBody"></div>
+                                </div>`
+            }
+            wrapperForKanbanView.innerHTML=stageContainer;
+            return;
+        }
+    });   
 });
 
-// 3.Empty Stage - No Deals Found
+// .Empty Stage - No Deals Found
 let allStageBodies=document.querySelectorAll(".stageBody");
-
 allStageBodies.forEach(body => {
     if(!(body.hasChildNodes()))
     {
@@ -50,9 +86,11 @@ allStageBodies.forEach(body => {
     }
 });
 
-// 4. Create Deal From Particular PipeLine
+// . Create Deal From Particular PipeLine
 let createDealBtn=document.querySelector("#createDealBtn");
 createDealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`../deal/createDealForm.html?pipeLine=${pipeLines.value}`;
 });
+
+
