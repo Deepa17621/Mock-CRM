@@ -70,9 +70,9 @@ async function  delContact(id){
 // Update Account Details By Deleting THE Contact id from associated account.
 async function updateOrganizationDetails(contactId) {    
     try {
-        let contactRes=await fetch(`/getById/contacts/${contactId}`);
+        let res=await fetch(`/getById/contacts/${contactId}`);
         if(res.ok){
-            let contactObj=await contactRes.json();
+            let contactObj=await res.json();
             let orgID =contactObj.organizationId;  
             accountId = orgID;
             if(!orgID){
@@ -86,8 +86,8 @@ async function updateOrganizationDetails(contactId) {
     if((contactObj.organizationId)){
         // Fetch to get organization Details.
     try {
-        let orgRes=await fetch(`/getById/accounts/${accountId}`);
-        let orgObj=await orgRes.json();
+        let res=await fetch(`/getById/accounts/${accountId}`);
+        var orgObj=await res.json();
         if(res.ok){
             let contactArr=(orgObj["contacts"]).filter((e)=>{
                 e!=contactId;
@@ -124,6 +124,7 @@ async function getDataById(id, module) {
 }
 async function update(id, module, obj) {
     try {
+        delete obj._id;
         let res=await fetch(`/update/${module}/${id}`,{
             method:"PUT",
             headers:{"Content-Type":"application/json"},

@@ -24,8 +24,14 @@ let contactMail=document.querySelector("#contactMail");
 let phone=document.querySelector("#contactPhone");
 let date=document.querySelector("#date");
 let address=document.querySelector("#contactAddress");
-let organization=document.querySelector("#organization");
-let inpArr=[contactName, contactMail, phone, date, address, organization, ];
+let organizationId=document.querySelector("#organization");
+let orgName;
+let orgId;
+organizationId.addEventListener("change", (e)=>{
+    e.preventDefault();
+    orgId=e.target.value;
+    orgName=organizationId.options[organizationId.selectedIndex].text;
+});
 
 //Form Event--Getting Data From Form
 
@@ -43,35 +49,14 @@ form.addEventListener("submit", (e)=>{
         return;
     }
     let obj = {
+        "contactName":contactName.value,
+        "contactMail":contactMail.value,
+        "phone":phone.value,
+        "address":address.value,
+        "organization":orgName,
+        "organizationId":orgId,
         "deals":[],
     };
-    inpArr.forEach(e => {
-        switch(e)
-        {
-            case contactName:
-                obj["contactName"]=e.value;
-                break;
-            case contactMail:
-                obj["contactMail"]=e.value;
-                break;
-            case phone:
-                obj["phone"]=e.value;
-                break;
-            case address:
-                obj["address"]=e.value;
-                break;
-            case date:
-                obj["date"]=e.value;
-                break;
-            case organization:
-                obj["organizationId"]=e.value;
-                // obj["organization"]="";
-                break;
-        }
-    });
-    // inpArr.forEach(e=>{
-    //     if(e.value==="") return;
-    // });
     postContact(obj);
     // window.location.href = clicked ? "/contact/contactList.html" :  "/contact/contactForm.html";
 });
@@ -88,7 +73,7 @@ async function postContact(obj) {
         if(res.ok)
         {
             console.log(data);
-            updateAccountFormLookUp(result["_id"]); 
+            await updateAccountFormLookUp(data["_id"]); 
         }
         else throw new Error("Error: "+ res.status+ " "+ res.statusText);
     } catch (error) {
@@ -98,17 +83,25 @@ async function postContact(obj) {
 
 // Update Account By Adding Contact Id 
 async function updateAccountFormLookUp(contactId) {
-    let accRes=await fetch(`/getById/accounts/${organization.value}`);
+    console.log("Entered into update account");
+    
+    let accRes=await fetch(`/getById/accounts/${orgId}`);
     let accObj=await accRes.json();
-    accObj["contacts"].push(contactId);
+    if(accRes.ok){
+        console.log(accObj);
+    }
+    accObj["contacts"].push(contactId);    
 
     // PUT FOR Accounts to update the new Contact to Organization
 
-    let putAcc=await fetch(`/update/accounts/${organization.value}`, {
+    let putAcc=await fetch(`/update/accounts/${orgId}`, {
         method:"PUT",
-        headers:{"Content-Type":"application/json"},
         body:JSON.stringify(accObj)
     });
+    if(putAcc.ok){
+        console.log("Account Updated");
+        
+    }
 }
 
 // FlatPickr
@@ -159,8 +152,8 @@ async function getAccounts(){
     let accs=await res.json();
     if(res.ok){
         accs.forEach(obj => {
-            let option=`<option value="${obj["_id"]}" >${obj["accountName"]}</option>`;
-            organization.insertAdjacentHTML('beforeend', option);
+            let option=`<option value="${obj["_id"]}">${obj["accountName"]}</option>`;
+            organizationId.insertAdjacentHTML('beforeend', option);
         });
     }
     else {
