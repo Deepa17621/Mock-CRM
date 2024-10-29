@@ -187,26 +187,24 @@ deleteBtn.addEventListener("click", async(e)=>{
 });
 // Update Contact Function
 async function updateContactFromAccount(accId) {
-    // GET Organization Details.
-    let accRes=await fetch(`/getById/accounts/${accId}`);
-    let accObj=await accRes.json();
-    let contactArr=accObj["contacts"];
-    if(contactArr.length==0)
-    {
-        return;
+    let allContacts=await fetch(`/getAll/contacts`);
+    if(allContacts.ok){
+        let objs=await allContacts.json();
+        objs.forEach(element => {
+            if(element.organizationId==accId){
+                fetchAndUpdateContact(element._id)
+            }
+        });
     }
-    // Iterate Through Contacts Array fetched from Account Detail
-    contactArr.forEach(e=>{
-        fetchAndUpdateContact(e);
-    })
 
 }
 
 async function  fetchAndUpdateContact(contactId) {
     let conRes=await fetch(`/getById/contacts/${contactId}`);
     let conObj=await conRes.json();
-    conObj["organiztionId"]="";
+    conObj["organizationId"]="";
     conObj["organization"]="";
+    delete conObj._id;
 
     // Update contact --PUT Method
     let putContact=await fetch(`/update/contacts/${contactId}`, {

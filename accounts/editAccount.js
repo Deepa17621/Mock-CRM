@@ -43,7 +43,7 @@ saveBtn.addEventListener("click", (e)=>{
 // PUT Data 
 async function updateData(obj)
 {
-    let result=await fetch(`/getById/accounts/${currentId}`, {
+    let result=await fetch(`/update/accounts/${currentId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
