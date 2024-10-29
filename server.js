@@ -258,7 +258,8 @@ app.post('/post/:module', async (req, res) => {
         const { module }=req.params;
         const obj = req.body;
         const result = await database.collection(module).insertOne(obj);
-        res.status(201).send({ id: result.insertedId, message: `Successfully inserted!` });
+        res.send(obj);
+        // res.status(201).send({ id: result.insertedId, message: `Successfully inserted!` });
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).send({ message: 'Error creating ' });
@@ -297,8 +298,8 @@ app.put('/update/:module/:id', async (req, res) => {
     try {
         const {module, id} = req.params;
         const updateUser = req.body;
-        await database.collection(module).updateOne({ _id:new ObjectId(id) }, { $set: updateUser });
-        res.send({ message: `user Updated!` });
+        let updatedData=await database.collection(module).updateOne({ _id: new ObjectId(id) }, { $set: updateUser });
+        res.send(updatedData);
     } catch (error) {
         console.error("Error updating user:", error);
         res.status(500).send({ message: 'Error updating user' });
@@ -308,8 +309,9 @@ app.put('/update/:module/:id', async (req, res) => {
 app.delete('/delete/:module/:id', async (req, res) => {
     try {
         const { module , id}=req.params;
-        await database.collection(module).deleteOne({ _id:new ObjectId(id) });
-        res.send({ message: `User Deleted!` });
+        let deleted=await database.collection(module).deleteOne({ _id:new ObjectId(id) });
+        res.send(deleted)
+        // res.send({ message: `User Deleted!` });
     } catch (error) {
         console.error("Error deleting user:", error);
         res.status(500).send({ message: 'Error deleting user' });

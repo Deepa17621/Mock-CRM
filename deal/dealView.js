@@ -85,9 +85,13 @@ async function deleteDeal(id)
     {
         try {
             let updateContAcc=await updateContactAndAccount(id);
+            console.log(updateContAcc);
+            
             // return 
-            if(updateContAcc=="true")
+            if(updateContAcc==true)
             {
+                console.log("Updated acc and cont --- returned to delete the deal");
+                
                 let response=await fetch(`/delete/deals/${id}`, {
                     method:"DELETE"
                 });
@@ -95,9 +99,13 @@ async function deleteDeal(id)
                 {
                     throw new Error("Error in URL");
                 }
-                alert("Successfully Deleted!");
+                if(response.ok){
+                    alert("Successfully Deleted!");
+                    window.location.href=`/deal/dealList.html`
+                }
             }
         } catch (error) {
+            console.log(error);
             
         }
     }
@@ -119,26 +127,67 @@ editBtn.addEventListener("click", (e)=>{
 
 // Update Contact And Account Details By Deleting the deal id From both the modules
 async function updateContactAndAccount(dealId) {
+    console.log("Entered into Update method");
+    
     try {
-        console.log("Function");
-        
-        let res=await fetch(`/getById/deals/${dealId}`);
-        let dealInstance=await res.json();
-        //1.GetDeal Object to get acc and contact Details
-        let currentDeal=dealInstance.getById(dealId);        
-        if(currentDeal!=null)
-        {
-             
+        let res=await fetch(`/getById/deals/${dealId}`); //getDeal
+        if(res.ok){
+            console.log("Deal Object fetched to update the contact and account objects");
+            
+            let dealObj=await res.json();
+            let contRes=await fetch(`/getById/contacts/${dealObj.contactId}`); //getContacgt
+            let accRes=await fetch(`/getById/accounts/${dealObj.accountId}`);   //getAccount
+            if(contRes.ok && accRes.ok){
+                let contObj=await contRes.json();
+                let accObj=await accRes.json();
+                console.log("Contact & account objects are fetched");
+                
+                
+                //Filter deals Array for Both contact and Account objects
+                let cDealArr=filterDealArray(contObj.deals, currentId);
+                let aDealArr=filterDealArray(accObj.deals, currentId);
+
+                // set deals Arrays in both contact and account Objects
+                contObj.deals=cDealArr;
+                accObj.deals=aDealArr;
+                console.log("objects to send to put method to update deals");
+                
+                console.log(contObj);
+                console.log(accObj);
+            
+                let putResContact=await fetch(`/update/contacts/${contObj._id}`,{
+                    method:"PUT", 
+                    // headers:{"Content-Type":"application/json"},
+                     body:JSON.stringify(contObj)
+                });
+                if(!putResContact.ok){
+                    throw  new Error("Error in updated Contact:"+ putResContact.status);
+                }
+                let putResAccount=await fetch(`/update/accounts/${accObj._id}`,{
+                    method:"PUT",
+                    // headers:{"Content-Type":"application/json"},
+                     body:JSON.stringify(accObj)
+                });
+                if(!putResAccount.ok){
+                    throw new Error("Error in update account "+putResAccount.status );
+                }
+                if(putResAccount.ok && putResContact.ok){
+                    return true;
+                }
+                else return false
+            }
         }
     } catch (error) {
         
     }
     
 }
-
-async function putContactAndAccountDetails(accId,contId) {
-    // let cRes=await fetch(`http://localhost:3000/deals/${}`);
-    let conToBePut=await cRes.json();
+function filterDealArray(arr, currentId){
+    let newArr=arr.filter((id)=>id!=currentId);
+    console.log("Filtered Array: "+newArr);
+    
+    return newArr;
 }
+
 
 

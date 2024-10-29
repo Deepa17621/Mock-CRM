@@ -102,11 +102,11 @@ if(contactId!=null ){
         console.log("AccountId="+accountId);
         getContactAndAccount(contactId, accountId);
     } 
-    getContactAndAccount(contactId, "Dummy")
+    else getContactAndAccount(contactId, "Dummy")
 }
 else if(accIdFromAccModule){
     console.log("THIS DEAL IS CREATE BY ACCOUNT");
-    getOrgDetail(accIdFromAccModule);  ///-------------------------------
+    getOrgDetail(accIdFromAccModule); 
 }
 // Deal Creation from direct Deal Module
 else if(!contactId && !accountId && !accIdFromAccModule && !dealToBeEdited){
@@ -133,7 +133,7 @@ async function getContactAndAccount(cId, aId)
             setDataToFormFields(conById, accObj);
             return;
         }
-        setDataToFormFields(conById, "Dummy");
+        else if(cId!="Dummy" && aId=="Dummy")setDataToFormFields(conById, "Dummy");
     } catch (error) {
         console.error('An error occurred:', error);
     }
@@ -167,10 +167,16 @@ stage.addEventListener("change",()=>{
 // Setting predefined values of existing account and contact
 async function setDataToFormFields(cObj, aObj)
 {
-    if(cObj && aObj ==="Dummy")
+    console.log(cObj);
+    console.log(aObj);
+    let allContacts=await getAll("contacts");
+    let allAccounts=await getAll("accounts");
+    console.log(allContacts);
+    
+    
+    if(cObj==="Dummy" && aObj ==="Dummy")
     {
-        let allContacts=await getAll("contacts");
-        let allAccounts=await getAll("accounts");
+        console.log("One");
         allContacts.forEach(obj => {
             let lii=document.createElement("li")
             lii.innerHTML=`<li value=${obj.id}>${obj["contactName"]}</li>`;
@@ -196,9 +202,13 @@ async function setDataToFormFields(cObj, aObj)
     }
     else if(Array.isArray(cObj) ) // Here cObj Refers Contact Array From Account
     {
+        console.log("two");
+        
         cObj.forEach(async(id)=> {
             let obj=await getById(id, "contacts");
-            let lii=document.createElement("li")
+            let lii=document.createElement("li");
+            let contactsInAccount=[];
+            
             lii.innerHTML=`<li value=${obj.id}>${obj["contactName"]}</li>`;
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
@@ -213,10 +223,32 @@ async function setDataToFormFields(cObj, aObj)
     }
     else if(aObj!=="Dummy")
     {
+        console.log("three");
+        
         contactName.value=cObj["contactName"];
+        contactName.id=cObj._id;
         contactName.setAttribute("disabled", "true");
         accountName.setAttribute("disabled", "true");
         accountName.value=aObj["accountName"];
+        accountName.id=aObj._id;
+    }
+    else if(cObj!=="Dummy" && aObj==="Dummy"){
+        console.log("This will be executed........");
+        
+        contactName.value=cObj["contactName"];
+        contactName.id=cObj._id
+        contactName.setAttribute("disabled", "true");
+        allAccounts.forEach(obj=>{
+            let lii=document.createElement("li")
+            lii.innerHTML=`<li value=${obj.id}>${obj["accountName"]}</li>`;
+            lii.addEventListener("click", (e)=>{
+                e.preventDefault();
+                accountName.id=obj._id;
+                accountName.value=obj.accountName;
+                lookUpForAccount.style.display="none";
+            })
+            accList.appendChild(lii);
+        })
     }
     
 }
@@ -240,25 +272,25 @@ else if((param.get("pipeLine"))=="standardView"){
 // Form with prefilled Data --- To Edit The Deal
  async function setDealDataToForm(dealObj)
 {
-    dealName.value=dealObj.DealName;
-    dealOwner.value=dealObj.DealOwner;
-    contactName.value=dealObj.ContactName;
-    contactName.setAttribute("id", dealObj.ContactId);
-    accountName.value=dealObj.AccountName;
-    accountName.setAttribute("id", dealObj.AccountId);
-    dateOfDealCreation.value=dealObj.DateOf;
-    amount.value=dealObj.Amount;
-    closingDate.value=dealObj.ClosingDate;
+    dealName.value=dealObj.dealName;
+    dealOwner.value=dealObj.dealOwner;
+    contactName.value=dealObj.contactName;
+    contactName.setAttribute("id", dealObj.contactId);
+    accountName.value=dealObj.accountName;
+    accountName.setAttribute("id", dealObj.accountId);
+    dateOfDealCreation.value=dealObj.dateOf;
+    amount.value=dealObj.amount;
+    closingDate.value=dealObj.closingDate;
     pipeLineInp.value=dealObj.pipeLine;
     if(dealObj.pipeLine=="deepa")
     {
         stage.innerHTML=deepaPipeLine;
-        stage.value=dealObj.Stage;
+        stage.value=dealObj.stage;
     }
     else if(dealObj.pipeLine=="standard")
     {
         stage.innerHTML=standardPipeLine;
-        stage.value=dealObj.Stage;
+        stage.value=dealObj.stage;
     }
     setLookUpFields();
 }
@@ -324,31 +356,54 @@ myForm.addEventListener("submit", (e)=>{
 
 //Update Contact and Account by adding deal details.
 async function updateContactAccount(dealObj, cId, aId)
-{
+{    
     try {
-        //fetch contact- to update deal details to contact
-        let contactToBeUpdated= await fetchContById(cId);
+        //fetch contact - to update deal details to contact
+        let contactToBeUpdated=await getById(cId, "contacts");
+        console.log(contactToBeUpdated);
+        
         contactToBeUpdated["deals"].push(dealObj["_id"]);
-
+        delete contactToBeUpdated._id;
+        console.log("Updated Object to be send to DB:");
+        console.log(contactToBeUpdated);
+        
         // fetch account to update  the deal details
-        let accountToBeUpdated=await fetchAccById(aId);
+        let accountToBeUpdated=await getById(aId, "accounts");        
         accountToBeUpdated["deals"].push(dealObj["_id"]);
+        delete accountToBeUpdated["_id"];
+        console.log("Updated Account: ");
+        console.log(accountToBeUpdated);
 
         // put method for contact
         let putContact=await fetch(`/update/contacts/${cId}`, {
-        method:"PUT", 
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(contactToBeUpdated)
+            method:"PUT", 
+            // headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(contactToBeUpdated)
          });
-
-         let updatedCotact=await putContact.json();
-
+         if(!putContact.ok){
+            throw new Error("Error in updating Cotact");
+         }
          // put method for account
          let putAccount=await fetch(`/update/accounts/${aId}`,{
             method:"PUT",
-            headers:{"Content-Type":"application/json"},
+            // headers:{"Content-Type":"application/json"},
             body:JSON.stringify(accountToBeUpdated)
          });
+         if(!putAccount.ok){
+            throw new Error("Error in Updating Account")
+         }
+         if(putAccount.ok && putContact.ok){
+            let c=await putContact.json();
+            let a=await putAccount.json();
+            console.log(c);
+            console.log(a);
+            return true;
+         }
+         else {
+            throw new Error("Error in updating contact and account"+putAccount.statusText);
+         }
+         let updatedCotact=await putContact.json();
+
          let updatedAccount=await putAccount.json();
     } catch (error) {
         console.log(error)
@@ -368,9 +423,12 @@ async function saveDeal(obj)
        if(res.ok)
        {
         let out=await res.json();
-        updateContactAccount(out, out.ContactId, out.AccountId);
-        alert("Successfully Deal Created!")
+        alert("Deal Created!");
         return out;
+        // if(updateContactAccount(out, out['contactId'], out['accountId'])){
+        //     alert("Successfully Deal Created!")
+        //     return out;
+        // }
        }
        else throw new Error("Error in URL");
     } catch (error) {
@@ -378,6 +436,11 @@ async function saveDeal(obj)
     }
 }
 async function updateDeal(obj) {
+    // delete obj["_id"];
+    console.log("Id Deleted in existing data: ");
+    
+    console.log(obj);
+    
     try {
         let res=await fetch(`/update/deals/${dealToBeEdited}`, {
             method:"PUT",
@@ -387,7 +450,7 @@ async function updateDeal(obj) {
        if(res.ok)
        {
             let out=await res.json();
-            updateContactAccount(out, out.ContactId, out.AccountId);
+            // await updateContactAccount(out, out["contactId"], out['accountId']);
             alert("Deal Updated!");
             return out;
        }
@@ -411,6 +474,8 @@ async function getById(conId, module) {
             throw new Error("Error in Fetching Data---"+ res.status + res.statusText);
         }
         let contactObj=await res.json();
+        console.log(`${module}:${contactObj}`);
+        
         return contactObj;
     } catch (error) {
         throw new Error("Error: "+ error);
