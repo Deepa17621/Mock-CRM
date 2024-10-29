@@ -131,6 +131,8 @@ function mobileValidation(tag) {
             setError(tag);
             tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
         }
+
+        
     else setSuccess(tag);
 }
 
