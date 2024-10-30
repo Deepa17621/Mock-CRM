@@ -21,8 +21,7 @@ async function getPipeLines(pipeLines) {
             let pipelines=await res.json();
             return pipelines;
         }
-    } catch (error) {
-        
+    } catch (error) {console.log(error);
     }
 }
 // 2. set Options to different pipeLines Choose
