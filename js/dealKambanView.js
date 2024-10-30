@@ -19,39 +19,62 @@ async function getPipeLines(pipeLines) {
         let res=await fetch(`/getAll/pipeLines`);
         if(res.ok){
             let pipelines=await res.json();
-            console.log(pipelines);
-            // let option=`<option value="" class="hidden">stages</option>`;
-           let option="";
-            pipelines.forEach(element => {
-                option+=`<option value=${Object.keys(element)[1]}>${Object.keys(element)[1]}</option>`
-            });
-            pipeLines.innerHTML=option;
             return pipelines;
         }
     } catch (error) {
         
     }
 }
-// 2. functionCall And Get the pipeLines
-let listOfPipeLines=async ()=>{
-    return await getPipeLines(pipeLines)
-     // select tag has been send as parameter to add options from DB
+// 2. set Options to different pipeLines Choose
+async function setPipeLines(pipeLines) {
+    let pipelines=await getPipeLines();
+    let option=`<option value="" class="hidden">stages</option>`;
+    pipelines.forEach(element => {
+        option+=`<option value=${Object.keys(element)[1]}>${Object.keys(element)[1]}</option>`
+    });
+    pipeLines.innerHTML=option;
 }
-listOfPipeLines();
+setPipeLines(pipeLines);
+
+// 5. Get All Deals to display 
+async function getAllDeals(module) {
+    try {
+        let res=await fetch(`/getAll/${module}`);
+        if(res.ok){
+            let allDeals=await res.json();
+            return allDeals;
+        }
+        else {
+            throw new Error("Error in fetching Deals: "+ res.status+ " "+ res.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //4. Change PipeLine 
 pipeLines.addEventListener("change", async(e)=>{
     e.preventDefault();
     let selectedPipeLine=e.target.value;
-    let data=await listOfPipeLines();
+    let data=await getPipeLines();
+    let allDeals=await getAllDeals("deals");
     let stageContainer=""
-    data.forEach(element => {
+    data.forEach(async(element) => {
         if(Object.keys(element)[1]==selectedPipeLine){
+            let dealsArr=[];
+            allDeals.forEach(async(element) => {    
+                        if(element.pipeLine==selectedPipeLine){
+                            let obj=await element;
+                            console.log(obj);
+                            dealsArr.push(obj);
+                        }               
+            });
             console.log(Object.values(element)[1]);
             let stages=Object.values(element)[1];
             for (const key in stages) {
-                stageContainer+=` <div id="${key}" class="multipleStagesContainer">
+                stageContainer+=`<div id="${key}" class="multipleStagesContainer">
                                     <!-- stage Header -->
-                                    <div class="stageHeader">
+                                    <div class="stageHeader ${stages[key]==0?"lost":stages[key]==100?"won":""}">
                                         <div class="firstRow">
                                             <span>${key}</span>
                                             <span class="count" id="${key}+Count">0</span>
@@ -63,7 +86,7 @@ pipeLines.addEventListener("change", async(e)=>{
                                         </div>
                                     </div>
                                     <!-- stage Body -->
-                                    <div class="stageBody"></div>
+                                    <div class="stageBody">${(await setDataToStageBodies(dealsArr, key))}</div>
                                 </div>`
             }
             wrapperForKanbanView.innerHTML=stageContainer;
@@ -71,7 +94,24 @@ pipeLines.addEventListener("change", async(e)=>{
         }
     });   
 });
-
+async function setDataToStageBodies(dealsArray, stageName) {
+    let arr=await dealsArray;
+    let stage=await stageName;
+    let structure=``;
+    arr.forEach(async(obj )=> {
+        if(obj.stage==stage){
+            console.log(obj);
+            structure+=`<div id=${obj._id} class="contentWrapper" draggble="true">
+                            <span class="spanForDealName" id=${obj._id} onclick="viewDeal(this.id, this)">${obj.dealName}</span>
+                            <span class="spanForDealOwner">${obj.dealOwner}</span>
+                            <span class="spanForAccName">${obj.accountName}</span>
+                            <span class="spanForDealAmount">${obj.amount}</span>
+                            <span class="spanForClosingDate">${obj.closingDate}</span>
+                        </div>`
+        }
+    });
+    return structure!=""?structure:"No Deals";
+}
 // .Empty Stage - No Deals Found
 let allStageBodies=document.querySelectorAll(".stageBody");
 allStageBodies.forEach(body => {
@@ -92,5 +132,11 @@ createDealBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`../deal/createDealForm.html?pipeLine=${pipeLines.value}`;
 });
+
+// Click Event To Display the Deal Details
+function viewDeal(id, tag){
+    tag.style.color="blue"
+    window.location.href=`/deal/dealView.html?id=${id}`;
+}
 
 

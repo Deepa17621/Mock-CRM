@@ -30,19 +30,19 @@
 .stageHeader
 {
     border-top: 3px solid rgb(30, 132, 127, 0.7); ;
-    background-color: rgb(110, 201, 196, 0.7);
+    background-color: rgb(110, 201, 196, 0.5);
     height: 45px;
     width: 100%;
     border-radius: 4px;
     padding-left: 10px;
     padding-top: 5px;
 }
-.closed
+.lost
 {
     background-color: rgb(243, 81, 81, 0.5);
     border-top: 2px solid rgb(240, 39, 39);
 }
-.closed .count{
+.lost .count{
     background-color: rgb(243, 101, 101);
 }
 .won
@@ -77,15 +77,30 @@
 }
 .stageBody
 {
-    width: 96%;
+    width: 104%;
     overflow-y: auto;
     min-height: 85%;
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(221, 221, 221, 0.5);
     border-radius: 4px;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     padding-top: 5px;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
 }
+.contentWrapper{
+    border-radius: 2px;
+    width: 98%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
 
 .hidden{
     display: none;
