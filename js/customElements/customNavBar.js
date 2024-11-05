@@ -32,7 +32,7 @@ class customNavBar extends HTMLElement{
         let styleTag=document.createElement("style");
         styleTag.textContent=this.style();
         shadow.append(styleTag);
-        
+
         navWrapper.addEventListener("click", this.handleMenuClick.bind(this));
         
     }
@@ -62,7 +62,7 @@ class customNavBar extends HTMLElement{
     }
     style(){
         return `@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-                *{
+                body{
                     padding: 0;
                     margin: 0;
                     font-family: "open Sans",sans-serif
