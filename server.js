@@ -36,6 +36,7 @@ app.use('/controller', express.static(path.join(__dirname, 'controller')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/meetingImages', express.static(path.join(__dirname, 'meetingImages')));
+app.use('/mail', express.static(path.join(__dirname, 'mail')));
 
 
 // Access Token Validation
@@ -325,5 +326,5 @@ app.listen(port, () => {
 });
 
 //
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))});
