@@ -76,7 +76,7 @@ form.addEventListener("submit", (e) => {
 inpArr.forEach(e=>{
     if(e === "") return; 
 })
-    fetch('/post/leads', {
+    fetch('/mongodb/post/leads', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

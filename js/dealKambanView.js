@@ -16,7 +16,7 @@ let pipeLines=document.querySelector("#pipeLine");
 // 3. PipeLines From MongoDB
 async function getPipeLines(pipeLines) {
     try {
-        let res=await fetch(`/getAll/pipeLines`);
+        let res=await fetch(`/mongodb/getAll/pipeLines`);
         if(res.ok){
             let pipelines=await res.json();
             return pipelines;
@@ -38,7 +38,7 @@ setPipeLines(pipeLines);
 // 5. Get All Deals to display 
 async function getAllDeals(module) {
     try {
-        let res=await fetch(`/getAll/${module}`);
+        let res=await fetch(`/mongodb/getAll/${module}`);
         if(res.ok){
             let allDeals=await res.json();
             return allDeals;

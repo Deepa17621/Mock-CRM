@@ -11,7 +11,7 @@ let table=document.querySelector("table");
 async function getDealObj(id)
 {
     try {
-        let result=await fetch(`/getById/deals/${id}`);
+        let result=await fetch(`/mongodb/getById/deals/${id}`);
         let out=await result.json();
         if(result.ok){
             display(out);
@@ -92,7 +92,7 @@ async function deleteDeal(id)
             {
                 console.log("Updated acc and cont --- returned to delete the deal");
                 
-                let response=await fetch(`/delete/deals/${id}`, {
+                let response=await fetch(`/mongodb/delete/deals/${id}`, {
                     method:"DELETE"
                 });
                 if(!response.ok)
@@ -130,13 +130,13 @@ async function updateContactAndAccount(dealId) {
     console.log("Entered into Update method");
     
     try {
-        let res=await fetch(`/getById/deals/${dealId}`); //getDeal
+        let res=await fetch(`/mongodb/getById/deals/${dealId}`); //getDeal
         if(res.ok){
             console.log("Deal Object fetched to update the contact and account objects");
             
             let dealObj=await res.json();
-            let contRes=await fetch(`/getById/contacts/${dealObj.contactId}`); //getContacgt
-            let accRes=await fetch(`/getById/accounts/${dealObj.accountId}`);   //getAccount
+            let contRes=await fetch(`/mongodb/getById/contacts/${dealObj.contactId}`); //getContacgt
+            let accRes=await fetch(`/mongodb/getById/accounts/${dealObj.accountId}`);   //getAccount
             if(contRes.ok && accRes.ok){
                 let contObj=await contRes.json();
                 let accObj=await accRes.json();
@@ -155,7 +155,7 @@ async function updateContactAndAccount(dealId) {
                 console.log(contObj);
                 console.log(accObj);
             
-                let putResContact=await fetch(`/update/contacts/${contObj._id}`,{
+                let putResContact=await fetch(`/mongodb/update/contacts/${contObj._id}`,{
                     method:"PUT", 
                     // headers:{"Content-Type":"application/json"},
                      body:JSON.stringify(contObj)
@@ -163,7 +163,7 @@ async function updateContactAndAccount(dealId) {
                 if(!putResContact.ok){
                     throw  new Error("Error in updated Contact:"+ putResContact.status);
                 }
-                let putResAccount=await fetch(`/update/accounts/${accObj._id}`,{
+                let putResAccount=await fetch(`/mongodb/update/accounts/${accObj._id}`,{
                     method:"PUT",
                     // headers:{"Content-Type":"application/json"},
                      body:JSON.stringify(accObj)

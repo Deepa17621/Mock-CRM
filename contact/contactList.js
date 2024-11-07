@@ -32,7 +32,7 @@ createContactBtn.addEventListener("click", (e)=>{
 function sendToContact(contact, lead) {
     try {
         let del = deleteLead(lead);
-        fetch(`post/contacts/`, {
+        fetch(`/mongodb/post/contacts/`, {
             method: "POST",
             headers: { "Content-Type": "applicatio/json" },
             body: JSON.stringify(contact)
@@ -46,7 +46,7 @@ function sendToContact(contact, lead) {
 }
 async function deleteLead(lead) {
     try {
-        let res=await fetch(`/delete/leads/${lead}`, {
+        let res=await fetch(`/mongodb/delete/leads/${lead}`, {
             method: "DELETE",
             headers: { "Content-Type": "applicatio/json" }
         });
@@ -68,7 +68,7 @@ console.log(convert);
             JSON.stringify(localStorage.setItem("convert", "false"));
             return;
         }
-        let URL = `/getById/leads/${param.get("id")}`
+        let URL = `/mongodb/getById/leads/${param.get("id")}`
         const fetching = await fetch(URL, {
             method: "GET",
             headers: {
@@ -187,19 +187,12 @@ function tableFunction(allContacts)
     })
 }
 
-// function rowClickedEvent(id)
-// {
-//     window.location.href=`/contact/contactView.html?id=${id}`; 
-// }
-
 // Filter data From JSON To Display
 
 function filterField(arrOfObjs)
 {
-    
     arrOfObjs.forEach((ele)=>
     {
-        // console.log(ele[`${selectField}`]);
         if((ele[`${option}`].toLowerCase())==((searchInp.value).toLowerCase()))
          {
              console.log("true");
@@ -208,7 +201,7 @@ function filterField(arrOfObjs)
              return;
          } 
     });
-    if(arr.length>0)
+    if(arr.length > 0)
     {
         while(tableHead.hasChildNodes())
         {
@@ -223,7 +216,7 @@ function filterField(arrOfObjs)
 
 // 2.=>Fetching Contact Data From JSON And Adding to Table List
 const getAllContacts = async () => {
-    const res = await fetch(`/getAll/contacts`);
+    const res = await fetch(`/mongodb/getAll/contacts`);
     let allContacts = await res.json(); 
     if(!res.ok)
     {

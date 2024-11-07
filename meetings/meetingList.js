@@ -1,7 +1,7 @@
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
-        const res=await fetch('/getmeetinglist');
+        const res=await fetch('/meeting/getmeetinglist');
         let meetingList=await res.json();
         if(!res.ok)
         {

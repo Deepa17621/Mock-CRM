@@ -1,49 +1,49 @@
-let url=window.location.search;
-let param=new URLSearchParams(url);
+let url = window.location.search;
+let param = new URLSearchParams(url);
 
 // Deal Creation From Account Module-->Redirection From Account View
-let accIdFromAccModule=param.get("id");
+let accIdFromAccModule = param.get("id");
 console.log(accIdFromAccModule);
 
 // Editing Deal Details--> Redirection from dealView
-let dealToBeEdited=param.get("dealToBeEdited");
-if(dealToBeEdited!=null)
+let dealToBeEdited = param.get("dealToBeEdited");
+if(dealToBeEdited != null)
 {
-    let setTitle=document.querySelector("#titleForPage");
-    setTitle.textContent="Edit Deal"
+    let setTitle = document.querySelector("#titleForPage");
+    setTitle.textContent = "Edit Deal"
 }
 // Deal Creation From Contact Module-->Redirection From Contact View
-let contactId=param.get("contactid");
-let accountId=param.get("accId");
+let contactId = param.get("contactid");
+let accountId = param.get("accId");
 
 // Form Fields
-let dealOwner=document.querySelector("#dealOwner");
-let dealName=document.querySelector("#dealName");
-let contactName=document.querySelector("#contactName");
-let accountName=document.querySelector("#accountName");
-let dateOfDealCreation=document.querySelector("#dateOf");
-let amount=document.querySelector("#amount");
-let closingDate=document.querySelector("#closingDate");
-let pipeLineInp=document.querySelector("#pipeLine");
-let stage=document.querySelector("#stages");
-let designation=document.querySelector("#designation");
+let dealOwner = document.querySelector("#dealOwner");
+let dealName = document.querySelector("#dealName");
+let contactName = document.querySelector("#contactName");
+let accountName = document.querySelector("#accountName");
+let dateOfDealCreation = document.querySelector("#dateOf");
+let amount = document.querySelector("#amount");
+let closingDate = document.querySelector("#closingDate");
+let pipeLineInp = document.querySelector("#pipeLine");
+let stage = document.querySelector("#stages");
+let designation = document.querySelector("#designation");
 
-const contsList=document.querySelector("#listOfContacts");
-const accList=document.querySelector("#listOfAccs");
+const contsList = document.querySelector("#listOfContacts");
+const accList = document.querySelector("#listOfAccs");
 let listOfPipeLines;
 
 // PipeLine Options
 async function getPipeLines() {
     try {
-        let res=await fetch(`/getAll/pipeLines`);
-        let pipeLinesFromDB=await res.json();
+        let res = await fetch(`/mongodb/getAll/pipeLines`);
+        let pipeLinesFromDB = await res.json();
         console.log(pipeLinesFromDB);
-        let options="";        
+        let options = "";        
         if(res.ok){
             pipeLinesFromDB.forEach(obj => {
                 options+=`<option value='${Object.keys(obj)[1]}'>${Object.keys(obj)[1]}</option>`;
             }); 
-            pipeLineInp.innerHTML=options;   
+            pipeLineInp.innerHTML = options;   
             setInitialStages(pipeLinesFromDB);
         }
     } catch (error) {
@@ -52,12 +52,14 @@ async function getPipeLines() {
 }
 //Initial stages - Dynamic options for pipeLines and stages
 function setInitialStages(pipeLines){
-    let initialPipeLine=pipeLineInp.value;
-    let stageStructure="";
+
+    let initialPipeLine = pipeLineInp.value;
+    let stageStructure = "";
+
     pipeLines.forEach(element => {
-        if(Object.keys(element)[1]==initialPipeLine){
-            let initialStages=element[`${initialPipeLine}`];
-            let stagesArr=Object.keys(initialStages);
+        if(Object.keys(element)[1] == initialPipeLine){
+            let initialStages = element[`${initialPipeLine}`];
+            let stagesArr = Object.keys(initialStages);
             stagesArr.forEach(stage => {
                 stageStructure+=`<option value='${stage}'>${stage}</option>`;
             });
@@ -72,15 +74,15 @@ let pipeLineChoice=document.querySelector("#pipeLine");
 pipeLineChoice.addEventListener("change", async(e)=>{
     e.preventDefault();
     try {
-        let res=await fetch(`/getAll/pipeLines`);
+        let res=await fetch(`/mongodb/getAll/pipeLines`);
         let pipeLines=await res.json();
         if(res.ok){           
             let stages="";
             pipeLines.forEach(obj => {
                 let currentPipe=Object.keys(obj)[1];
-                if(pipeLineChoice.value==currentPipe){
+                if(pipeLineChoice.value == currentPipe){
                     for (const key in obj[currentPipe]) {
-                        stages+=`<option value="${key}">${key}</option>`;
+                        stages += `<option value="${key}">${key}</option>`;
                     }
                     return;
                 }
@@ -96,8 +98,8 @@ let fetchedContact;
 let fetchedAccount;
 
 // Step-1 ==>If Deal Creation done by Contact Module....
-if(contactId!=null ){
-    if(accountId!=null){
+if(contactId != null ){
+    if(accountId != null){
         console.log("ContactId="+contactId);
         console.log("AccountId="+accountId);
         getContactAndAccount(contactId, accountId);
@@ -133,7 +135,7 @@ async function getContactAndAccount(cId, aId)
             setDataToFormFields(conById, accObj);
             return;
         }
-        else if(cId!="Dummy" && aId=="Dummy")setDataToFormFields(conById, "Dummy");
+        else if(cId != "Dummy" && aId == "Dummy")setDataToFormFields(conById, "Dummy");
     } catch (error) {
         console.error('An error occurred:', error);
     }
@@ -141,23 +143,23 @@ async function getContactAndAccount(cId, aId)
 
 // 2. If Deal Creation Done By Account Module
 async function getOrgDetail(accId) {
-    let accObj=await getById(accId, "accounts");
+    let accObj = await getById(accId, "accounts");
     setDataToFormFields(accObj.contacts, accObj);
 }
 
 // Edit Deal Details 
 async function getDealToBeEdited(id) {
-    let dealObj=await getById(id, "deals");
+    let dealObj = await getById(id, "deals");
     console.log(dealObj);
     setDealDataToForm(dealObj);
 
 }
-let myForm=document.querySelector("form");
+let myForm = document.querySelector("form");
 
 // save and saveNew
-let clicked=null;
+let clicked = null;
 
-let stages=null;
+let stages = null;
 stage.addEventListener("change",()=>{
     stages = stage.value;
     console.log(stages);
@@ -169,33 +171,33 @@ async function setDataToFormFields(cObj, aObj)
 {
     console.log(cObj);
     console.log(aObj);
-    let allContacts=await getAll("contacts");
-    let allAccounts=await getAll("accounts");
+    let allContacts = await getAll("contacts");
+    let allAccounts = await getAll("accounts");
     console.log(allContacts);
     
     
-    if(cObj==="Dummy" && aObj ==="Dummy")
+    if(cObj === "Dummy" && aObj === "Dummy")
     {
         console.log("One");
         allContacts.forEach(obj => {
-            let lii=document.createElement("li")
-            lii.innerHTML=`<li value=${obj.id}>${obj["contactName"]}</li>`;
+            let lii = document.createElement("li")
+            lii.innerHTML =`<li value=${obj.id}>${obj["contactName"]}</li>`;
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
-                contactName.id=obj._id;
-                contactName.value=obj["contactName"];    
-                lookUpForContact.style.display="none";
+                contactName.id = obj._id;
+                contactName.value = obj["contactName"];    
+                lookUpForContact.style.display = "none";
             });
             contsList.appendChild(lii);
         });
         allAccounts.forEach(obj=>{
-            let lii=document.createElement("li")
-            lii.innerHTML=`<li value=${obj.id}>${obj["accountName"]}</li>`;
+            let lii = document.createElement("li")
+            lii.innerHTML = `<li value=${obj.id}>${obj["accountName"]}</li>`;
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
-                accountName.id=obj._id;
-                accountName.value=obj.accountName;
-                lookUpForAccount.style.display="none";
+                accountName.id = obj._id;
+                accountName.value = obj.accountName;
+                lookUpForAccount.style.display = "none";
             })
             accList.appendChild(lii);
         })
@@ -205,16 +207,16 @@ async function setDataToFormFields(cObj, aObj)
         console.log("two");
         
         cObj.forEach(async(id)=> {
-            let obj=await getById(id, "contacts");
-            let lii=document.createElement("li");
-            let contactsInAccount=[];
+            let obj = await getById(id, "contacts");
+            let lii = document.createElement("li");
+            let contactsInAccount = [];
             
-            lii.innerHTML=`<li value=${obj.id}>${obj["contactName"]}</li>`;
+            lii.innerHTML = `<li value=${obj.id}>${obj["contactName"]}</li>`;
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
-                contactName.id=obj._id;
-                contactName.value=obj["contactName"];    
-                lookUpForContact.style.display="none";
+                contactName.id = obj._id;
+                contactName.value = obj["contactName"];    
+                lookUpForContact.style.display = "none";
             });
             contsList.appendChild(lii);
         });
@@ -225,27 +227,27 @@ async function setDataToFormFields(cObj, aObj)
     {
         console.log("three");
         
-        contactName.value=cObj["contactName"];
-        contactName.id=cObj._id;
+        contactName.value = cObj["contactName"];
+        contactName.id = cObj._id;
         contactName.setAttribute("disabled", "true");
         accountName.setAttribute("disabled", "true");
-        accountName.value=aObj["accountName"];
-        accountName.id=aObj._id;
+        accountName.value = aObj["accountName"];
+        accountName.id = aObj._id;
     }
-    else if(cObj!=="Dummy" && aObj==="Dummy"){
+    else if(cObj !== "Dummy" && aObj === "Dummy"){
         console.log("This will be executed........");
         
-        contactName.value=cObj["contactName"];
-        contactName.id=cObj._id
+        contactName.value = cObj["contactName"];
+        contactName.id = cObj._id
         contactName.setAttribute("disabled", "true");
         allAccounts.forEach(obj=>{
-            let lii=document.createElement("li")
-            lii.innerHTML=`<li value=${obj.id}>${obj["accountName"]}</li>`;
+            let lii = document.createElement("li")
+            lii.innerHTML = `<li value=${obj.id}>${obj["accountName"]}</li>`;
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
-                accountName.id=obj._id;
-                accountName.value=obj.accountName;
-                lookUpForAccount.style.display="none";
+                accountName.id = obj._id;
+                accountName.value = obj.accountName;
+                lookUpForAccount.style.display = "none";
             })
             accList.appendChild(lii);
         })
@@ -253,60 +255,62 @@ async function setDataToFormFields(cObj, aObj)
     
 }
 // stages 
-if(pipeLineChoice.value=="standard"){
-    stage.innerHTML=standardPipeLine;
+if(pipeLineChoice.value == "standard"){
+    stage.innerHTML = standardPipeLine;
 }
-else if(pipeLineChoice.value=="deepa"){
-    stage.innerHTML=deepaPipeLine;
+else if(pipeLineChoice.value == "deepa"){
+    stage.innerHTML = deepaPipeLine;
 }
 // Set Stage options - based on url param -Deal Creation From kambanView
-if((param.get("pipeLine")=="deepa")){
-    pipeLineChoice.value="deepa";
-    stage.innerHTML=deepaPipeLine;
+if((param.get("pipeLine") == "deepa")){
+    pipeLineChoice.value = "deepa";
+    stage.innerHTML = deepaPipeLine;
 }
-else if((param.get("pipeLine"))=="standardView"){
-    pipeLineChoice.value="standard"
-    stage.innerHTML=standardPipeLine;
+else if((param.get("pipeLine")) == "standardView"){
+    pipeLineChoice.value = "standard"
+    stage.innerHTML = standardPipeLine;
 }
 
 // Form with prefilled Data --- To Edit The Deal
  async function setDealDataToForm(dealObj)
 {
-    dealName.value=dealObj.dealName;
-    dealOwner.value=dealObj.dealOwner;
-    contactName.value=dealObj.contactName;
+    dealName.value = dealObj.dealName;
+    dealOwner.value = dealObj.dealOwner;
+    contactName.value = dealObj.contactName;
     contactName.setAttribute("id", dealObj.contactId);
-    accountName.value=dealObj.accountName;
+    accountName.value = dealObj.accountName;
     accountName.setAttribute("id", dealObj.accountId);
-    dateOfDealCreation.value=dealObj.dateOf;
-    amount.value=dealObj.amount;
-    closingDate.value=dealObj.closingDate;
-    pipeLineInp.value=dealObj.pipeLine;
-    if(dealObj.pipeLine=="deepa")
-    {
-        stage.innerHTML=deepaPipeLine;
-        stage.value=dealObj.stage;
+    dateOfDealCreation.value = dealObj.dateOf;
+    amount.value = dealObj.amount;
+    closingDate.value = dealObj.closingDate;
+    pipeLineInp.value = dealObj.pipeLine;
+
+    if(dealObj.pipeLine =="deepa"){
+        stage.innerHTML = deepaPipeLine;
+        stage.value = dealObj.stage;
     }
-    else if(dealObj.pipeLine=="standard")
+    else if(dealObj.pipeLine == "standard")
     {
-        stage.innerHTML=standardPipeLine;
-        stage.value=dealObj.stage;
+        stage.innerHTML = standardPipeLine;
+        stage.value = dealObj.stage;
     }
     setLookUpFields();
 }
 // LookUp With All the contacts and Accounts
 async function setLookUpFields()
 {
-    let allContacts=await getAll("contacts");
-        let allAccounts=await getAll("accounts");
+    let allContacts = await getAll("contacts");
+    let allAccounts = await getAll("accounts"); 
+
         allContacts.forEach(obj => {
-            let lii=document.createElement("li")
-            lii.innerHTML=`<li value=${obj.id}>${obj["contactName"]}</li>`;
+            let lii = document.createElement("li")
+            lii.innerHTML = `<li value=${obj.id}>${obj["contactName"]}</li>`;
+
             lii.addEventListener("click", (e)=>{
                 e.preventDefault();
-                contactName.id=obj.id;
-                contactName.value=obj["contactName"];    
-                lookUpForContact.style.display="none";
+                contactName.id = obj.id;
+                contactName.value = obj["contactName"];    
+                lookUpForContact.style.display = "none";
             });
             contsList.appendChild(lii);
         });
@@ -375,7 +379,7 @@ async function updateContactAccount(dealObj, cId, aId)
         console.log(accountToBeUpdated);
 
         // put method for contact
-        let putContact=await fetch(`/update/contacts/${cId}`, {
+        let putContact=await fetch(`/mongodb/update/contacts/${cId}`, {
             method:"PUT", 
             // headers:{"Content-Type":"application/json"},
             body:JSON.stringify(contactToBeUpdated)
@@ -384,7 +388,7 @@ async function updateContactAccount(dealObj, cId, aId)
             throw new Error("Error in updating Cotact");
          }
          // put method for account
-         let putAccount=await fetch(`/update/accounts/${aId}`,{
+         let putAccount=await fetch(`/mongodb/update/accounts/${aId}`,{
             method:"PUT",
             // headers:{"Content-Type":"application/json"},
             body:JSON.stringify(accountToBeUpdated)
@@ -415,14 +419,14 @@ async function updateContactAccount(dealObj, cId, aId)
 async function saveDeal(obj)
 {
     try {
-            let res=await fetch(`/post/deals`, {
+            let res = await fetch(`/mongodb/post/deals`, {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify(obj)
             });
        if(res.ok)
        {
-        let out=await res.json();
+        let out = await res.json();
         alert("Deal Created!");
         return out;
         // if(updateContactAccount(out, out['contactId'], out['accountId'])){
@@ -442,14 +446,14 @@ async function updateDeal(obj) {
     console.log(obj);
     
     try {
-        let res=await fetch(`/update/deals/${dealToBeEdited}`, {
+        let res = await fetch(`/mongodb/update/deals/${dealToBeEdited}`, {
             method:"PUT",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(obj)
         });
        if(res.ok)
        {
-            let out=await res.json();
+            let out = await res.json();
             // await updateContactAccount(out, out["contactId"], out['accountId']);
             alert("Deal Updated!");
             return out;
@@ -469,11 +473,11 @@ flatpickr(".datePicker", {
 // Fetch to get Contact Details By Id
 async function getById(conId, module) {
     try {
-        let res=await fetch(`/getById/${module}/${conId}`);
-        if(!res.status==200) {
+        let res = await fetch(`/mongodb/getById/${module}/${conId}`);
+        if(!res.status == 200) {
             throw new Error("Error in Fetching Data---"+ res.status + res.statusText);
         }
-        let contactObj=await res.json();
+        let contactObj = await res.json();
         console.log(`${module}:${contactObj}`);
         
         return contactObj;
@@ -485,11 +489,11 @@ async function getById(conId, module) {
 // Fetch All Contacts And Accounts
 async function getAll(module) {
     try {
-        let res=await fetch(`/getAll/${module}`);
+        let res = await fetch(`/mongodb/getAll/${module}`);
     if(!res.ok){
         throw new Error("Error in Fetching Data");
     }
-    let arr=await res.json();
+    let arr = await res.json();
     return arr;
     } catch (error) {
         console.log("error"+error);

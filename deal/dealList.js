@@ -22,7 +22,7 @@ createDealBtn.addEventListener("click", (e)=>{
 // Fetch From Json
 async function fetchData()
 {
-    let result=await fetch("/getAll/deals");
+    let result=await fetch("/mongodb/getAll/deals");
     let arrOfObj=await result.json();
 
     sendToTable(arrOfObj); 

@@ -9,7 +9,7 @@ class customNavBar extends HTMLElement{
         let shadow=this.attachShadow({mode:"open"});
 
         let modules={
-            Home:`/index.html`,
+            Home:`/`,
             Leads:`/leadForm/leadList.html`,
             Contacts:`/contact/contactList.html`,
             Accounts:`/accounts/accountList.html`,
@@ -17,7 +17,7 @@ class customNavBar extends HTMLElement{
             Meetings:`/meetings/meetingList.html`,
             Mail:`/mail/mailHome.html`
         }
-        let logoWrapper=`<div id="logoDiv" data-url="/index.html" class="modules"><img src="/assests/iconnn.svg"><span>CRM</span></div>`
+        let logoWrapper=`<div id="logoDiv" data-url="/" ><img src=""><span>CRM</span></div>`
         //Outer Container
         let navWrapper=document.createElement("div"); 
         navWrapper.setAttribute("class", "outerForNavBar");
@@ -54,8 +54,8 @@ class customNavBar extends HTMLElement{
     // Set the clicked element as active
     setActive(clickedElement) {
         // Remove 'active' class from all modules
-        // const allModules = this.shadowRoot.querySelectorAll('.modules');
-        // allModules.forEach((module) => module.classList.remove('active'));
+        const allModules = this.shadowRoot.querySelectorAll('.modules');
+        allModules.forEach((module) => module.classList.remove('active'));
 
         // Add 'active' class to the clicked element
         clickedElement.classList.add('active');
@@ -65,7 +65,10 @@ class customNavBar extends HTMLElement{
                 body{
                     padding: 0;
                     margin: 0;
-                    font-family: "open Sans",sans-serif
+                    // font-family: "open Sans",sans-serif;
+                }
+                *{
+                    font-family: "open Sans",sans-serif;
                 }
                 .outerForNavBar{
                     border: 1px solid black;
@@ -82,7 +85,11 @@ class customNavBar extends HTMLElement{
                     height: inherit;
                     width: inherit;
                     display: flex;
-                    gap: 5px;
+                    // gap: 5px;
+                }
+                #logoDiv>img{
+                    height:50%;
+                    width:50%;
                 }
                 .modules{
                     height: inherit;

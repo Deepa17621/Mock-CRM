@@ -1,12 +1,12 @@
-let url=window.location.search;
-let param=new URLSearchParams(url);
-let id=param.get("id");
+let url = window.location.search;
+let param = new URLSearchParams(url);
+let id = param.get("id");
 console.log("Lead Id : "+id);
 
-let cancelBtn=document.querySelector("#cancelBtn");
-let saveBtn=document.querySelector("#leadSubmitBtn");
-let saveNewBtn=document.querySelector("#saveNewBtn");
-let accForm=document.querySelector("#formm");
+let cancelBtn = document.querySelector("#cancelBtn");
+let saveBtn = document.querySelector("#leadSubmitBtn");
+let saveNewBtn = document.querySelector("#saveNewBtn");
+let accForm = document.querySelector("#formm");
 
 let contactId;
 
@@ -16,18 +16,18 @@ cancelBtn.addEventListener("click", (e)=>{
     e.stopPropagation();
 });
 
-let clicked=null;
+let clicked = null;
 
 saveBtn.addEventListener("click",(e)=>{
     // e.preventDefault();
-    clicked=1;
+    clicked = 1;
     accForm.requestSubmit();
     e.stopPropagation();
 });
 
 saveNewBtn.addEventListener("click", (e)=>{
     // e.preventDefault();
-    clicked=0;
+    clicked = 0;
     accForm.requestSubmit();
     e.stopPropagation();
 });
@@ -35,39 +35,38 @@ saveNewBtn.addEventListener("click", (e)=>{
 // / POST Method- Storing Data to JSON
 async function  saveAccount(obj)
 {
-    let res=await fetch("/post/accounts",{
+    let res=await fetch("/mongodb/post/accounts",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
     });
-    let out=await res.json();
+    let out = await res.json();
     console.log(out);
     console.log(out["id"]);
-    if(contactId!=null)
-    {
+
+    if(contactId != null){
         fetchContactAndUpdateIt(out["id"], contactId);
     }
 }
 
-async function fetchContactAndUpdateIt(accountId, ContactId)
-{
-    let res=await fetch(`/getById/leads/${ContactId}`);
-    if(!res.ok)
-    {
+async function fetchContactAndUpdateIt(accountId, ContactId){
+
+    let res = await fetch(`/mongodb/getById/leads/${ContactId}`);
+
+    if(!res.ok){
         throw new Error("Error in Promise");
     }
-    else
-    {
-        let fetchedContact=await res.json();
+
+    else{
+        let fetchedContact = await res.json();
         console.log(fetchedContact);
         
-        let newContact=createContactObject(fetchedContact, accountId);
+        let newContact = createContactObject(fetchedContact, accountId);
+
         console.log(newContact);
-        return;
-        
-        if(postContact(newContact))
-        {
-            deleteFromLead(ContactId);
+
+        if(postContact(newContact)){
+            await deleteFromLead(ContactId);
         }
         else{
             throw new Error("Error in POsting Contact")
@@ -77,65 +76,60 @@ async function fetchContactAndUpdateIt(accountId, ContactId)
 
 }
 
+
 // Delete Lead From Leads
 async function deleteFromLead(ContactId){
-    let res=await fetch(`/delete/leads/${ContactId}`,{
+    let res = await fetch(`/mongodb/delete/leads/${ContactId}`,{
         method:"DELETE",
         headers:{"Content-Type":"application/json"}
     });
-    let out=await res.json();
+    let out = await res.json();
     return out;
 }
-function createContactObject(leadObj, aId)
-{
-    let obj={
-        "contactName":leadObj["leadName"],
-        "contactMail":leadObj["leadMail"],
-        "phone":leadObj["phone"],
-        "address":leadObj["address"],
-        "date":leadObj["date"],
-        "organization":leadObj["organization"], ///////---------------------------need to check 
-        "organiztionId":`${aId}`, ///------------------------
-        "deals":[]
+
+function createContactObject(leadObj, aId){
+    let obj = {
+        "contactName" : leadObj["leadName"],
+        "contactMail" : leadObj["leadMail"],
+        "phone"       : leadObj["phone"],
+        "address"     : leadObj["address"],
+        "date"        : leadObj["date"],
+        "organization": leadObj["organization"], ///////---------------------------need to check 
+        "organiztionId": `${aId}`, ///------------------------
+        "deals"       : []
     }
     return obj;
 }
-async function postContact(myObj)
-{
+async function postContact(myObj){
    try {
-    let res=await fetch(`/post/contacts`, {
-        method:"POST", 
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(myObj)
+    let res = await fetch(`/mongodb/post/contacts`, {
+        method : "POST", 
+        headers : {"Content-Type":"application/json"},
+        body : JSON.stringify(myObj)
     });
-    if(res.ok)
-    {
-        let out=await res.json();
+    if(res.ok){
+        let out = await res.json();
         console.log(out);
         return true; 
     }
     else{
         throw new Error("Error in Posting Contact")
     }
-   } catch (error) {
-    
-   }
+   } catch (error) {}
     
 }
 
-
 // Form Fields 
-let accountOwner=document.querySelector("#accountOwner");
-let accountName=document.querySelector("#AccountName");
-let accountMail=document.querySelector("#accountMail");
-let phone=document.querySelector("#phone");
-let date=document.querySelector("#date");
-let address=document.querySelector("#accountAddress");
-let annualRevenue=document.querySelector("#annualRevenue");
+let accountOwner = document.querySelector("#accountOwner");
+let accountName = document.querySelector("#AccountName");
+let accountMail = document.querySelector("#accountMail");
+let phone = document.querySelector("#phone");
+let date = document.querySelector("#date");
+let address = document.querySelector("#accountAddress");
+let annualRevenue = document.querySelector("#annualRevenue");
 
 
-if(id!=null)   // Here "id" refers Contact Id (Param)
-{
+if(id!=null){   // Here "id" refers Contact Id (Param)
     contactId=id;
 }
 
@@ -143,24 +137,24 @@ accForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
     if(!accountOwner.value || !accountName.value || !accountMail.value || !phone.value || !annualRevenue.value)
     {
-        !accountOwner.value?setError(accountOwner):setSuccess(accountOwner);
-        !accountName.value?setError(accountName):setSuccess(accountName);
-        !accountMail.value?setError(accountMail):mailValidation(accountMail);
-        !phone.value?setError(phone):mobileValidation(phone);
-        !annualRevenue.value?setError(annualRevenue):setSuccess(annualRevenue);
+        !accountOwner.value ? setError(accountOwner) : setSuccess(accountOwner);
+        !accountName.value ? setError(accountName) : setSuccess(accountName);
+        !accountMail.value ? setError(accountMail) : mailValidation(accountMail);
+        !phone.value ? setError(phone) : mobileValidation(phone);
+        !annualRevenue.value ? setError(annualRevenue) : setSuccess(annualRevenue);
         // !address.value?setError(address):setSuccess(address);
         return;
     }
 
-    let obj={
-        "accountOwner":accountOwner.value,
-        "accountName":accountName.value,
-        "accountMail":accountMail.value,
-        "phone":phone.value,
-        "date":date.value,
-        "accountAddress":address.value,
-        "annualRevenue":annualRevenue.value, 
-        "contacts":!contactId?[]:[contactId,],
+    let obj = {
+        "accountOwner" : accountOwner.value,
+        "accountName" : accountName.value,
+        "accountMail" : accountMail.value,
+        "phone" : phone.value,
+        "date" : date.value,
+        "accountAddress" : address.value,
+        "annualRevenue" : annualRevenue.value, 
+        "contacts" : !contactId?[]:[contactId,],
         "deals":[]
     }
 

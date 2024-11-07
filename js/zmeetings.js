@@ -10,7 +10,7 @@ let url="https://dmock-crm.vercel.app/";
 let listOfMeetings;
 async function getlistOfMeeting() {
     try {
-        let res=await fetch('/getmeetinglist', {
+        let res=await fetch('/meeting/getmeetinglist', {
             method:"GET"
         });
         let response=await res.json();
@@ -51,12 +51,12 @@ personalRoom.addEventListener("click", (e)=>{
     //Need to write code here--->?(FIX)
 });
 // List-Down All the Meetings
-let wrapperForMeetingList=document.querySelector(".actualListContainer");
-let wrapperForToday=document.querySelector(".wrapperForToday");
-let wrapperForTomorrow=document.querySelector(".wrapperForTomorrow");
-let wrapperForThisWeek=document.querySelector(".wrapperForThisWeek");
-let wrapperForThisMonth=document.querySelector(".wrapperForThisMonth");
-let wrapperForLater=document.querySelector(".wrapperForLater");
+let wrapperForMeetingList = document.querySelector(".actualListContainer");
+let wrapperForToday = document.querySelector(".wrapperForToday");
+let wrapperForTomorrow = document.querySelector(".wrapperForTomorrow");
+let wrapperForThisWeek = document.querySelector(".wrapperForThisWeek");
+let wrapperForThisMonth = document.querySelector(".wrapperForThisMonth");
+let wrapperForLater = document.querySelector(".wrapperForLater");
 
 function createList(arrOfObj){
     arrOfObj.forEach(obj => {
@@ -190,7 +190,7 @@ function listStructure(meetingObj)
 // Function to start a Meeting for each Meeting
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getMeeting/${meetingKey}`);
+        let res=await fetch(`/meeting/getMeeting/${meetingKey}`);
         let obj=await res.json();
         if(!res.ok)
         {
@@ -210,7 +210,7 @@ async function startMeeting(meetingKey) {
 // Delete Meeting
 async function deleteMeeting(meetingKey) {
     confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/deletemeeting/${meetingKey}`);
+    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`);
     let response=await res.json();
     if(res.status=="204");
     {

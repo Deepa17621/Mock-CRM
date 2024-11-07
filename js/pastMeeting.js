@@ -1,7 +1,7 @@
 // 1. Navigate From Upcoming to Past And Past To Upcoming Meeting
-let upComingLink=document.querySelector("#upComingLink");
-let pastLink=document.querySelector("#pastLink");
-let personalRoom=document.querySelector("#personalRoom");
+let upComingLink = document.querySelector("#upComingLink");
+let pastLink = document.querySelector("#pastLink");
+let personalRoom = document.querySelector("#personalRoom");
 
 // click event for navigate from upcoming to past
 upComingLink.addEventListener("click", (e)=>{
@@ -20,9 +20,10 @@ personalRoom.addEventListener("click", (e)=>{
 // 2. Get Meeting List From APIResponse
 let url="https://dmock-crm.vercel.app/";
 let listOfMeetings;
+
 async function getlistOfMeeting() {
     try {
-        let res=await fetch('/getmeetinglist', {
+        let res=await fetch('/meeting/getmeetinglist', {
             method:"GET"
         });
         let response=await res.json();
@@ -39,13 +40,14 @@ async function getlistOfMeeting() {
 getlistOfMeeting(); // Execution starts from here
 
 // List-Down All the Meetings
-let wrapperForMeetingList=document.querySelector(".actualListContainer");
-let wrapperForYesterday=document.querySelector(".wrapperForYesterday");
-let wrapperForThisWeek=document.querySelector(".wrapperForThisWeek");
-let wrapperForLastWeek=document.querySelector(".wrapperForLastWeek");
-let wrapperForLastMonth=document.querySelector(".wrapperForLastMonth");
-let wrapperForLastYear=document.querySelector(".wrapperForLastYear");
-let wrapperForThisMonth=document.querySelector(".wrapperForThisMonth");
+let wrapperForMeetingList = document.querySelector(".actualListContainer");
+let wrapperForYesterday = document.querySelector(".wrapperForYesterday");
+let wrapperForThisWeek = document.querySelector(".wrapperForThisWeek");
+let wrapperForLastWeek = document.querySelector(".wrapperForLastWeek");
+let wrapperForLastMonth = document.querySelector(".wrapperForLastMonth");
+let wrapperForLastYear = document.querySelector(".wrapperForLastYear");
+let wrapperForThisMonth = document.querySelector(".wrapperForThisMonth");
+let wrapperForEarlier = document.querySelector(".wrapperForEarlier");
 
 function createList(arrOfObj){
     arrOfObj.forEach(obj => {
@@ -120,7 +122,7 @@ function createList(arrOfObj){
                 li.innerHTML=listStructure(obj);
                 wrapperForLastMonth.appendChild(li);
             }
-        }
+        }  //Earlier
         else if(obj.eventTime=="Last Year")
             {
                 if((obj.startTimeMillisec)<(Date.now()))
@@ -135,6 +137,21 @@ function createList(arrOfObj){
                     wrapperForLastYear.appendChild(li);
                 }
             }
+
+            else if(obj.eventTime=="Earlier")
+                {
+                    if((obj.startTimeMillisec)<(Date.now()))
+                    {
+                        if(!wrapperForEarlier.hasChildNodes())
+                        {
+                            let h4=document.createElement("h4");
+                            wrapperForEarlier.appendChild(h4);
+                            h4.innerHTML="Earlier";
+                        }
+                        li.innerHTML=listStructure(obj);
+                        wrapperForEarlier.appendChild(li);
+                    }
+                }
     });
 }
 
@@ -189,7 +206,7 @@ function listStructure(meetingObj)
 // Function to start a Meeting for each Meeting
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getMeeting/${meetingKey}`);
+        let res=await fetch(`/meeting/getMeeting/${meetingKey}`);
         let obj=await res.json();
         if(!res.ok)
         {
@@ -209,7 +226,7 @@ async function startMeeting(meetingKey) {
 // Delete Meeting
 async function deleteMeeting(meetingKey) {
     confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/deletemeeting/${meetingKey}`);
+    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`);
     let response=await res.json();
     if(res.status=="204");
     {

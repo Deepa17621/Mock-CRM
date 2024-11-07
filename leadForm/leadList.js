@@ -125,7 +125,7 @@ function filterField(collectionOfObjs)
 
 const getAllLeads=async()=>
 {
-    let res=await fetch('/getAll/leads');
+    let res=await fetch('/mongodb/getAll/leads');
     let collectionOfObjs=await res.json();
     tableFunction(collectionOfObjs);
     inpForSearch.addEventListener("keyup",(e)=>{

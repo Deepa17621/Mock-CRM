@@ -61,7 +61,7 @@ mailBtn.addEventListener("click",()=>{
 
 // Delete Contact
 async function  delContact(id){
-    let res=await fetch(`/delete/contacts/${currentId}`, {
+    let res=await fetch(`/mongodb/delete/contacts/${currentId}`, {
         method:"DELETE"
     });
     let out=res.json();
@@ -70,7 +70,7 @@ async function  delContact(id){
 // Update Account Details By Deleting THE Contact id from associated account.
 async function updateOrganizationDetails(contactId) {    
     try {
-        let res=await fetch(`/getById/contacts/${contactId}`);
+        let res=await fetch(`/mongodb/getById/contacts/${contactId}`);
         if(res.ok){
             let contactObj=await res.json();
             let orgID =contactObj.organizationId;  
@@ -86,7 +86,7 @@ async function updateOrganizationDetails(contactId) {
     if((contactObj.organizationId)){
         // Fetch to get organization Details.
     try {
-        let res=await fetch(`/getById/accounts/${accountId}`);
+        let res=await fetch(`/mongodb/getById/accounts/${accountId}`);
         var orgObj=await res.json();
         if(res.ok){
             let contactArr=(orgObj["contacts"]).filter((e)=>{
@@ -100,7 +100,7 @@ async function updateOrganizationDetails(contactId) {
     }
 
     // Fetch To PUT operation in Organization
-    let putRes =await fetch(`/update/accounts/${accountId}`, {
+    let putRes =await fetch(`/mongodb/update/accounts/${accountId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(orgObj)
@@ -110,7 +110,7 @@ async function updateOrganizationDetails(contactId) {
 // Data Access Functions
 async function getDataById(id, module) {
     try {
-        let res=await fetch(`/getById/${module}/${id}`);
+        let res=await fetch(`/mongodb/getById/${module}/${id}`);
         let obj=await res.json();
         if(res.ok){
             return obj;
@@ -125,7 +125,7 @@ async function getDataById(id, module) {
 async function update(id, module, obj) {
     try {
         delete obj._id;
-        let res=await fetch(`/update/${module}/${id}`,{
+        let res=await fetch(`/mongodb/update/${module}/${id}`,{
             method:"PUT",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(obj)
@@ -142,7 +142,7 @@ async function update(id, module, obj) {
 }
 async function deleteObject(id, module) {
     try {
-        let res=await fetch(`/delete/${module}/${id}`, {
+        let res=await fetch(`/mongodb/delete/${module}/${id}`, {
             method:"DELETE"
         });
         if(res.ok){
@@ -253,7 +253,7 @@ meetingForm.addEventListener("submit", async (e) => {
     };
 
     try {
-        const response = await fetch('/postmeeting', {
+        const response = await fetch('/meeting/postmeeting', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

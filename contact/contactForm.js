@@ -1,36 +1,36 @@
-let form=document.querySelector("form");
+let form = document.querySelector("form");
 
-let cancelBtn=document.querySelector("#cancelBtn");
-let saveAndNewBtn=document.querySelector("#saveNewBtn");
-let saveBtn=document.querySelector("#contactSubmitBtn");
-let clicked=null;
+let cancelBtn = document.querySelector("#cancelBtn");
+let saveAndNewBtn = document.querySelector("#saveNewBtn");
+let saveBtn = document.querySelector("#contactSubmitBtn");
+let clicked = null;
 
-cancelBtn.addEventListener("click", ()=>{
+cancelBtn.addEventListener("click", () =>{
     window.location.href="/contact/contactList.html";
 });
 
 saveAndNewBtn.addEventListener("click", ()=>{
-    clicked=0;
+    clicked = 0;
     form.requestSubmit();
 });
 
 saveBtn.addEventListener("click", ()=>{
-    clicked=1;
+    clicked = 1;
     form.requestSubmit();
 });
 
-let contactName=document.querySelector("#contactName");
-let contactMail=document.querySelector("#contactMail");
-let phone=document.querySelector("#contactPhone");
-let date=document.querySelector("#date");
-let address=document.querySelector("#contactAddress");
-let organizationId=document.querySelector("#organization");
+let contactName = document.querySelector("#contactName");
+let contactMail = document.querySelector("#contactMail");
+let phone = document.querySelector("#contactPhone");
+let date = document.querySelector("#date");
+let address = document.querySelector("#contactAddress");
+let organizationId = document.querySelector("#organization");
 let orgName;
 let orgId;
-organizationId.addEventListener("change", (e)=>{
+organizationId.addEventListener("change", (e) =>{
     e.preventDefault();
-    orgId=e.target.value;
-    orgName=organizationId.options[organizationId.selectedIndex].text;
+    orgId = e.target.value;
+    orgName = organizationId.options[organizationId.selectedIndex].text;
 });
 
 //Form Event--Getting Data From Form
@@ -40,9 +40,9 @@ form.addEventListener("submit", (e)=>{
     
     if(!contactName.value || !contactMail.value || !phone.value )
     {
-        !contactName.value?setError(contactName):setSuccess(contactName);
-        !contactMail.value?mailValidation(contactMail):setSuccess(contactMail);
-        !phone.value?mobileValidation(phone):setSuccess(phone);
+        !contactName.value ? setError(contactName) : setSuccess(contactName);
+        !contactMail.value ? mailValidation(contactMail) : setSuccess(contactMail);
+        !phone.value ? mobileValidation(phone) : setSuccess(phone);
         // !date.value?setError(date):setSuccess(date);
         // !address.value?setError(address):setSuccess(address);
         // !organization.value?setError(organization):setSuccess(organization);
@@ -64,7 +64,7 @@ form.addEventListener("submit", (e)=>{
 // Post - Contact Data 
 async function postContact(obj) {
     try {
-        let res=await fetch(`/post/contacts`, {
+        let res=await fetch(`/mongodb/post/contacts`, {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify(obj)
@@ -85,7 +85,7 @@ async function postContact(obj) {
 async function updateAccountFormLookUp(contactId) {
     console.log("Entered into update account");
     
-    let accRes=await fetch(`/getById/accounts/${orgId}`);
+    let accRes=await fetch(`/mongodb/getById/accounts/${orgId}`);
     let accObj=await accRes.json();
     if(accRes.ok){
         console.log(accObj);
@@ -94,7 +94,7 @@ async function updateAccountFormLookUp(contactId) {
 
     // PUT FOR Accounts to update the new Contact to Organization
 
-    let putAcc=await fetch(`/update/accounts/${orgId}`, {
+    let putAcc=await fetch(`/mongodb/update/accounts/${orgId}`, {
         method:"PUT",
         body:JSON.stringify(accObj)
     });
@@ -148,7 +148,7 @@ function mobileValidation(tag) {
 
 // LookUp For Account Names
 async function getAccounts(){
-    let res=await fetch(`/getAll/accounts`);
+    let res=await fetch(`/mongodb/getAll/accounts`);
     let accs=await res.json();
     if(res.ok){
         accs.forEach(obj => {
@@ -171,7 +171,7 @@ let existing=document.querySelector("#Existing");
 let newAcco=document.querySelector("#newAccount");
 individual.addEventListener("click", (e)=>{
     e.preventDefault();
-    organization.disabled="true";
+    organizationId.disabled="true";
 });
 existing.addEventListener("click", (e)=>{
     e.preventDefault();

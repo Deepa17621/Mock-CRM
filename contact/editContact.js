@@ -1,26 +1,26 @@
-let url=window.location.search;
-let param=new URLSearchParams(url);
-console.log("Clicked Data's id:="+param.get("id"));
-let currentId=param.get("id");
+let url = window.location.search;
+let param = new URLSearchParams(url);
+console.log("Clicked Data's id: = "+param.get("id"));
+let currentId = param.get("id");
 
-let cancelBtn=document.querySelector("#cancelBtn");
+let cancelBtn = document.querySelector("#cancelBtn");
+
 cancelBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     window.location.href=`/contact/contactView.html?id=${currentId}`;
 
 });
 
-let contactName=document.querySelector("#contactName");
-let contactMail=document.querySelector("#contactMail");
-let phone=document.querySelector("#phone");
-let date=document.querySelector("#date");
-let address=document.querySelector("#contactAddress");
-let organization=document.querySelector("#organization");
+let contactName = document.querySelector("#contactName");
+let contactMail = document.querySelector("#contactMail");
+let phone = document.querySelector("#phone");
+let date = document.querySelector("#date");
+let address = document.querySelector("#contactAddress");
+let organization = document.querySelector("#organization");
 
-let keys=[contactName,contactMail,phone,date,address,organization];
+let keys = [contactName,contactMail,phone,date,address,organization];
 
-function display(obj)
-{
+function display(obj){
     for (const key in obj) {
         switch(key)
         {
@@ -49,8 +49,8 @@ function display(obj)
 async function getData(id)
 {
     try {
-        let res=await fetch(`/getById/contacts/${id}`);
-        let out=await res.json();
+        let res = await fetch(`/mongodb/getById/contacts/${id}`);
+        let out = await res.json();
         if(!res.ok){
             throw new Error("Error in fetching contact:"+ res.status);
         }
@@ -64,16 +64,15 @@ getData(currentId);
 
 // PUT Method - Put the updated data to JSON
 
-let saveBtn=document.querySelector("#leadSubmitBtn");
+let saveBtn = document.querySelector("#leadSubmitBtn");
 saveBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     formm.requestSubmit();
     window.location.href=`/contact/contactView.html?id=${currentId}`
-
-
 });
-let formm=document.querySelector("form");
-let keyArr=["contactName", "contactMail", "phone", "date","address", "organization"];
+
+let formm = document.querySelector("form");
+let keyArr = ["contactName", "contactMail", "phone", "date","address", "organization"];
 formm.addEventListener("submit", (e)=>{
     e.preventDefault();
     if(!contactMail.value || !contactName.value || !phone.value)
@@ -111,7 +110,7 @@ formm.addEventListener("submit", (e)=>{
         }
     });
 
-    fetch(`/update/contacts/${currentId}`,{
+    fetch(`/mongodb/update/contacts/${currentId}`,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)

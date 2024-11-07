@@ -47,7 +47,7 @@ function displayData(obj)
 
 async function currentLead(identity) {
     try {
-        let res=await fetch(`/getById/leads/${identity}`);
+        let res=await fetch(`/mongodb/getById/leads/${identity}`);
         let leadObj=await res.json();
         if(!res.ok){
             // console.log(res.status+ " "+res.statusText);
@@ -130,7 +130,7 @@ function submit1()
 // Fetch Account Details using Account NAME //ERROR-1
 async function fetchAccount(name)
 {
-    let accName=await fetch(`/getById/accounts?AccountName=${name}`);
+    let accName=await fetch(`/mongodb/getById/accounts?AccountName=${name}`);
     let res=await accName.json();
     if(!accName.ok)
     {
@@ -146,7 +146,7 @@ async function fetchAccount(name)
 // Update Account Details By Adding Lead Id To Account
 async function putAcc(obj,accId)
 {
-    let res=await fetch(`/update/accounts/${accId}`, {
+    let res=await fetch(`/mongodb/update/accounts/${accId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
@@ -166,7 +166,7 @@ convertForm.addEventListener("submit", (e)=>{
 async function deleteLead(id)
 {
         try {
-            let res=await fetch(`/delete/leads/${id}`, {
+            let res=await fetch(`/mongodb/delete/leads/${id}`, {
                 method:"DELETE"
             });
             let out=res.json();

@@ -1,79 +1,79 @@
 // const { Double } = require("mongodb");
-
-let url=window.location.search;
-let param=new URLSearchParams(url);
-let currentId=param.get("id");
+let url = window.location.search;
+let param = new URLSearchParams(url);
+let currentId = param.get("id");
 console.log(currentId);
+
 let mailButton;
-let accTable=document.getElementById("accTable");
-let contactTable=document.getElementById("contactsInAcc");
-let dealTable=document.querySelector("#dealsInAcc");
-let headArrForContact=["contactName", "contactMail", "phone"];
-let headArrForDeals=["dealName", "id", "amount", "stage", "closingDate"];
-function displayAcc(obj)
-{
+let accTable = document.getElementById("accTable");
+let contactTable = document.getElementById("contactsInAcc");
+let dealTable = document.querySelector("#dealsInAcc");
+let headArrForContact = ["contactName", "contactMail", "phone"];
+let headArrForDeals = ["dealName", "id", "amount", "stage", "closingDate"];
+
+function displayAcc(obj){
     for (const key in obj) {
 
-        if(key=="contacts"|| key=="deals")
+        if(key =="contacts"|| key == "deals")
         {
-            if(key=="contacts")
+            if(key == "contacts")
             {
-                let thead=document.createElement("tr");
+                let thead = document.createElement("tr");
                 contactTable.appendChild(thead);
-                let td1=document.createElement("th");
+                let td1 = document.createElement("th");
                 thead.appendChild(td1);
-                td1.innerHTML="Contact Name";
-                let td2=document.createElement("th");
+                td1.innerHTML = "Contact Name";
+                let td2 = document.createElement("th");
                 thead.appendChild(td2);
-                td2.innerHTML="Contact Mail";
-                let td3=document.createElement("th");
+                td2.innerHTML = "Contact Mail";
+                let td3 = document.createElement("th");
                 thead.appendChild(td3);
-                td3.innerHTML="Contact Phone";
+                td3.innerHTML = "Contact Phone";
                 obj["contacts"].forEach(contactId => {
                     fetchContactToAcc(contactId, headArrForContact); 
                 });
             }
-            else if(key=="deals")
+            else if(key == "deals")
             {
-                let thead=document.createElement("tr");
+                let thead = document.createElement("tr");
                 dealTable.appendChild(thead);
-                let td1=document.createElement("th");
+                let td1 = document.createElement("th");
                 thead.appendChild(td1);
-                td1.innerHTML="dealName";
-                let td2=document.createElement("th");
+                td1.innerHTML = "dealName";
+                let td2 = document.createElement("th");
                 thead.appendChild(td2);
-                td2.innerHTML="id";
-                let td3=document.createElement("th");
+                td2.innerHTML = "id";
+                let td3 = document.createElement("th");
                 thead.appendChild(td3);
-                td3.innerHTML="amount";
-                let td4=document.createElement("th");
+                td3.innerHTML = "amount";
+                let td4 = document.createElement("th");
                 thead.appendChild(td4);
-                td4.innerHTML="stage";
-                let td5=document.createElement("th");
+                td4.innerHTML = "stage";
+                let td5 = document.createElement("th");
                 thead.appendChild(td5);
-                td5.innerHTML="closingDate";
+                td5.innerHTML = "closingDate";
                 obj["deals"].forEach(accId => {
                     fetchDealToAcc(accId,headArrForDeals); 
                 });
             }
         }
         else {
-            let tr=document.createElement("tr");
+            let tr = document.createElement("tr");
             accTable.appendChild(tr);
-            let td1=document.createElement("td");
+            let td1 = document.createElement("td");
             tr.appendChild(td1);
-            let td2=document.createElement("td");
+            let td2 = document.createElement("td");
             tr.appendChild(td2);
-            td1.innerHTML=key.toUpperCase();
-            if(key=="accountMail")
+            td1.innerHTML = key.toUpperCase();
+            if(key == "accountMail")
             {
-                mailButton=obj[key];
-                td2.innerHTML=`<a href="mailto:${obj[key]}">${obj[key]}</a>`;
+                mailButton = obj[key];
+                td2.innerHTML = `<a href="mailto:${obj[key]}">${obj[key]}</a>`;
                 continue
             }
-            else if(key=="phone")
+            else if(key == "phone")
             {
-                td2.innerHTML=`<a href="tel:${obj[key]}">${obj[key]}</a>`;
+                td2.innerHTML = `<a href="tel:${obj[key]}">${obj[key]}</a>`;
                 continue
             }
             td2.innerHTML=obj[key];
@@ -83,7 +83,7 @@ function displayAcc(obj)
 // Fetch Account Data From JSON
 async function fetchAcc(id)
 {
-    let res=await fetch(`/getById/accounts/${currentId}`); 
+    let res=await fetch(`/mongodb/getById/accounts/${currentId}`); 
     let out=await res.json();
     displayAcc(out); 
 }
@@ -99,22 +99,22 @@ function rowClicked(id)
 async function fetchContactToAcc(id, arr)
 {
     try {
-        let res=await fetch(`/getById/contacts/${id}`);
-        let out=await res.json();
+        let res = await fetch(`/mongodb/getById/contacts/${id}`);
+        let out = await res.json();
         if(res.ok)
         {
-            let iterator=arr[Symbol.iterator]();
-            let trr=document.createElement("tr");
+            let iterator = arr[Symbol.iterator]();
+            let trr = document.createElement("tr");
             contactTable.appendChild(trr);
             trr.setAttribute("id", id);
             trr.setAttribute("onclick", "rowClicked(this.id)");
             for (const key in out)
             {
-                    let val=iterator.next().value;
-                    let td=document.createElement("td");
+                    let val = iterator.next().value;
+                    let td = document.createElement("td");
                     trr.appendChild(td);
-                    td.className=val;
-                    td.textContent=out[td.className];
+                    td.className = val;
+                    td.textContent = out[td.className];
             }
         }
         else{
@@ -129,29 +129,29 @@ async function fetchContactToAcc(id, arr)
 async function fetchDealToAcc(id, arr)
 {
     try {
-        let res=await fetch(`/getById/deals/${id}`);
-        let out=await res.json();
+        let res = await fetch(`/mongodb/getById/deals/${id}`);
+        let out = await res.json();
         if(res.ok)
         {
             console.log("Deals From Accounts Module");
         
             console.log(out);
-            let iterator=arr[Symbol.iterator]();
-            let trr=document.createElement("tr");
+            let iterator = arr[Symbol.iterator]();
+            let trr = document.createElement("tr");
             dealTable.appendChild(trr);
             trr.setAttribute("id", id);
             trr.addEventListener("click", (e)=>{
                 e.preventDefault();
-                window.location.href=`/deal/dealView.html?id=${id}`
+                window.location.href = `/deal/dealView.html?id=${id}`
             })
             for (const key in out)
             {
-                    let val=iterator.next().value;
+                    let val = iterator.next().value;
                     console.log(val); 
-                    let td=document.createElement("td");
+                    let td = document.createElement("td");
                     trr.appendChild(td);
-                    td.className=val;
-                    td.textContent=out[td.className];
+                    td.className = val;
+                    td.textContent = out[td.className];
             }
         }
         else{
@@ -163,35 +163,36 @@ async function fetchDealToAcc(id, arr)
 }
 
 // Edit Button Event
-let editBtn=document.querySelector("#editBtn");
+let editBtn = document.querySelector("#editBtn");
+
 editBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`/accounts/editAccount.html?id=${currentId}`;
+    window.location.href = `/accounts/editAccount.html?id=${currentId}`;
 });
 
 // Delete Btn Event
-let deleteBtn=document.querySelector("#deleteBtn");
+let deleteBtn = document.querySelector("#deleteBtn");
+
 deleteBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
-    if(window.confirm("Are You Sure delete??"))
-    {
+    if(window.confirm("Are You Sure delete??")){
         // Before Deleting Account...we need to delete the account associated with Contact.
         // Updating Contact By deleting the account ID in Contact Detail.
         await updateContactFromAccount(currentId); // Here Current Id Refers Account ID of Viewed Account.
         // Deletion of Account.
         await deleteAcc(currentId);
         window.alert("Account Deleted Successfully")
-        window.location.href=`/accounts/accountList.html`;
+        window.location.href = `/accounts/accountList.html`;
     }
     e.stopPropagation();
 });
 // Update Contact Function
 async function updateContactFromAccount(accId) {
-    let allContacts=await fetch(`/getAll/contacts`);
+    let allContacts=await fetch(`/mongodb/getAll/contacts`);
     if(allContacts.ok){
         let objs=await allContacts.json();
         objs.forEach(element => {
-            if(element.organizationId==accId){
+            if(element.organizationId == accId){
                 fetchAndUpdateContact(element._id)
             }
         });
@@ -200,14 +201,14 @@ async function updateContactFromAccount(accId) {
 }
 
 async function  fetchAndUpdateContact(contactId) {
-    let conRes=await fetch(`/getById/contacts/${contactId}`);
-    let conObj=await conRes.json();
-    conObj["organizationId"]="";
-    conObj["organization"]="";
+    let conRes = await fetch(`/mongodb/getById/contacts/${contactId}`);
+    let conObj = await conRes.json();
+    conObj["organizationId"] = "";
+    conObj["organization"] = "";
     delete conObj._id;
 
     // Update contact --PUT Method
-    let putContact=await fetch(`/update/contacts/${contactId}`, {
+    let putContact = await fetch(`/mongodb/update/contacts/${contactId}`, {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(conObj)
@@ -216,7 +217,7 @@ async function  fetchAndUpdateContact(contactId) {
 
 async function deleteAcc(id)
 {
-    let res=await fetch(`/delete/accounts/${id}`,{
+    let res=await fetch(`/mongodb/delete/accounts/${id}`,{
         method:"DELETE", 
         headers:{"Content-Type":"application/json"}
     });
@@ -225,7 +226,7 @@ async function deleteAcc(id)
 }
 
 // send Mail Button
-let mailBtn=document.querySelector("#mailBtn");
+let mailBtn = document.querySelector("#mailBtn");
 mailBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     // mailBtn.setAttribute("href", `mailto:${mailButton}`);
@@ -233,14 +234,14 @@ mailBtn.addEventListener("click", (e)=>{
 });
 
 // back button to navigate previously visted page
-let backBtn=document.querySelector("#backBtn");
+let backBtn = document.querySelector("#backBtn");
 backBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.history.go(-1);
 });
 
 // Create Deal For Specified Account Along With Contact Detail.
-let createDealFromAccount=document.querySelector("#convert");
+let createDealFromAccount = document.querySelector("#convert");
 createDealFromAccount.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`../deal/createDealForm.html?id=${currentId}`; // Here current id refers Current Viewed Account s

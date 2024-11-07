@@ -19,7 +19,7 @@ async function getMeetingForDistribution(meetingKey) {
 // Get meeting object
 async function getMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getmeeting/${meetingKey}`);
+        let res=await fetch(`/meeting/getmeeting/${meetingKey}`);
         let meetingObj=await res.json();
     if(!res.ok)
     {
@@ -114,7 +114,7 @@ deleteMeetingBtn.addEventListener("click", (e)=>{
 
 async function deleteMeeting(meetingKey) {
     try {
-        let res=await fetch(`/deletemeeting/${meetingKey}`,{method:"DELETE"});
+        let res=await fetch(`/meeting/deletemeeting/${meetingKey}`,{method:"DELETE"});
         let out=await res.json();
         console.log(out);
         
@@ -187,7 +187,7 @@ function sendToEditForm(obj)
         };
 
         try {
-            const response = await fetch(`/editmeeting/${meetingKey}`, {
+            const response = await fetch(`/meeting/editmeeting/${meetingKey}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json"

@@ -52,7 +52,7 @@ if(meetingKeyForEdit)
 //Get Meeting Details
 async function getMeetingDetailToEdit(meetingKeyForEdit) {
     try {
-        let res=await fetch(`/getmeeting/${meetingKeyForEdit}`);
+        let res=await fetch(`/meeting/getmeeting/${meetingKeyForEdit}`);
         let existingMeetingObj=await res.json(); 
         if(!res.ok){
            throw new Error("Error: "+res.status+" "+res.statusText);
@@ -139,7 +139,7 @@ myForm.addEventListener("submit", async(e)=>{
        }
        // For Create / Schedule New Meeting
        else{
-            let response = await fetch('/postmeeting', {
+            let response = await fetch('/meeting/postmeeting', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -176,7 +176,7 @@ myForm.addEventListener("submit", async(e)=>{
 // Function to update Meeting Details
 async function updateMeeting(meetingKey, obj) {
     try {
-        let response = await fetch(`/editmeeting/${meetingKey}`, {
+        let response = await fetch(`/meeting/editmeeting/${meetingKey}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"

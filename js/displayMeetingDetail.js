@@ -56,7 +56,7 @@ let topic=document.querySelector("#meetingTopicForHeader");
 // 1. Get Meeting Details
 async function getMeetingObj() {
     try {
-        let res=await fetch(`/getmeeting/${meetingK}`, {
+        let res=await fetch(`/meeting/getmeeting/${meetingK}`, {
             method:"GET"
         });
         let response=await res.json();
@@ -85,7 +85,7 @@ function displayMeetingDetail(obj)
 
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/getmeeting/${meetingKey}`, {
+        let res=await fetch(`/meeting/getmeeting/${meetingKey}`, {
             method:"GET"
         });
         let response=await res.json();
@@ -118,7 +118,7 @@ deleteBtn.addEventListener("click", (e)=>{
 // DeleteMeeting
 async function deleteMeeting(meetingKey) {
     confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/deletemeeting/${meetingKey}`);
+    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`);
     let response=await res.json();
     if(res.status=="204");
     {

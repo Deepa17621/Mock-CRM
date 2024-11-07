@@ -36,7 +36,7 @@ router.post('/post/:module', async (req, res) => {
 router.get('/getById/:module/:id', async(req, res)=>{
     try {
         const { module , id}=req.params;
-        const result=await database.collection(module).findOne({_id:ObjectId(id)});
+        const result=await database.collection(module).findOne({_id:new ObjectId(id)});
         if(!result){
             return res.status(404).send({message: `${module} not Found!`});
         }
@@ -65,7 +65,7 @@ router.put('/update/:module/:id', async (req, res) => {
     try {
         const {module, id} = req.params;
         const updateUser = req.body;
-        await database.collection(module).updateOne({ _id: ObjectId(id) }, { $set: updateUser });
+        await database.collection(module).updateOne({ _id: new ObjectId(id) }, { $set: updateUser });
         res.send({ message: `user Updated!` });
     } catch (error) {
         console.error("Error updating user:", error);
@@ -76,7 +76,7 @@ router.put('/update/:module/:id', async (req, res) => {
 router.delete('/delete/:module/:id', async (req, res) => {
     try {
         const { module , id}=req.params;
-        await database.collection(module).deleteOne({ _id: ObjectId(id) });
+        await database.collection(module).deleteOne({ _id: new ObjectId(id) });
         res.send({ message: `User Deleted!` });
     } catch (error) {
         console.error("Error deleting user:", error);

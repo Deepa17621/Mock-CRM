@@ -120,7 +120,7 @@ form.addEventListener("submit", (e) => {
  inpArr.forEach(e=>{
      if(e === "") return; 
  })
-     fetch(`/update/leads/${param.get("id")}`, {
+     fetch(`/mongodb/update/leads/${param.get("id")}`, {
          method: "PUT",
          headers: {
              "Content-Type": "application/json",
