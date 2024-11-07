@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
+
 const router = express.Router();
 const cookieParser = require('cookie-parser');
+
 router.use(cookieParser());
 const axios = require('axios');
 
@@ -32,7 +34,7 @@ router.use(async (req, res, next) => {
 let getToken = async (req, res) => {
     console.log(res);
 
-    let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
+    let myreq = await axios.post(`/token/meetingAccess`);
     if (myreq) {
         let result = await myreq.data;
         console.log(result);
