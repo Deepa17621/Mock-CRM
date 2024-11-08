@@ -17,7 +17,7 @@ class customNavBar extends HTMLElement{
             Meetings:`/meetings/meetingList.html`,
             Mail:`/mail/mailHome.html`
         }
-        let logoWrapper=`<div id="logoDiv" data-url="/" ><img src=""><span>CRM</span></div>`
+        let logoWrapper=`<div id="logoDiv" data-url="/" ><img class="iconImg" src="/assets/iconnn.svg"><span>CRM</span></div>`
         //Outer Container
         let navWrapper=document.createElement("div"); 
         navWrapper.setAttribute("class", "outerForNavBar");
@@ -88,8 +88,9 @@ class customNavBar extends HTMLElement{
                     // gap: 5px;
                 }
                 #logoDiv>img{
-                    height:50%;
-                    width:50%;
+                    height:35%;
+                    width:35%;
+                    padding:3px 3px 0 0;
                 }
                 .modules{
                     height: inherit;
@@ -101,14 +102,14 @@ class customNavBar extends HTMLElement{
                 }
                 .modules:hover{
                     &.modules>span, .logo{
-                        border-bottom:2px solid green; 
+                        border-bottom:2px solid white; 
                     }   
                 }
                 li{
                     list-style:none;
                 }
                 .active{
-                    border-bottom:2px solid green;
+                    border-bottom:2px solid white;
                 }`
     }
 }
