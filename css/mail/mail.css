@@ -1,0 +1,27 @@
+.outerWrapper{
+    display: flex;
+    height:93vh;
+    background-color: black;
+}
+.sideBarContainer{
+    width: 18vw;
+    background-color: grey;
+    row-gap: 10px;
+}
+.btnForFolders{
+    width:100%;
+    margin-top: 10px;
+    margin-left: 3px;
+    justify-content: center;
+    height: 30px;
+    color: rgb(251, 250, 250);
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    /* padding-left: 10px; */
+    &:hover{
+        background-color: azure;
+        border-radius: 2px;
+        color: black;
+    }
+}

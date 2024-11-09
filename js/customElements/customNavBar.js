@@ -15,7 +15,7 @@ class customNavBar extends HTMLElement{
             Accounts:`/accounts/accountList.html`,
             Deals:`/deal/dealList.html`,
             Meetings:`/meetings/meetingList.html`,
-            Mail:`/mail/mailHome.html`
+            Mail:`/mail/mail.html`
         }
         let logoWrapper=`<div id="logoDiv" data-url="/" ><img class="iconImg" src="/assets/iconnn.svg"><span>CRM</span></div>`
         //Outer Container

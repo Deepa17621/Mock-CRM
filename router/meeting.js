@@ -8,12 +8,7 @@ router.use(cookieParser());
 const axios = require('axios');
 
 let ACCESS_TOKEN;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI;
 const ZOHO_API_URL = process.env.ZOHO_API_URL;
-const TOKEN_URL = process.env.TOKEN_URL;
 
 
 router.use(async (req, res, next) => {
@@ -34,7 +29,7 @@ router.use(async (req, res, next) => {
 let getToken = async (req, res) => {
     console.log(res);
 
-    let myreq = await axios.post(`/token/meetingAccess`);
+    let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
     if (myreq) {
         let result = await myreq.data;
         console.log(result);
@@ -99,6 +94,8 @@ router.delete('/deletemeeting/:meetingKey', async (req, res) => {
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });
+
+console.log(ACCESS_TOKEN);
 
 // 3. Get Meeting List
 router.get('/getmeetinglist', async (req, res) => {
