@@ -12,26 +12,32 @@ let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
 router.use(cookieParser());
 
 router.use(async (req, res, next) => {  
-    let mailfolder_access = res.cookie.mailfolder_accessToken;
-    let mailmessages_access = res.cookie.mailmessage_accessToken;
-     
-    if (mailfolder_access && mailmessages_access) {
-        MAIL_FOLDER_ACCESS = mailfolder_access;
-        MAIL_MESSAGES_ACCESS = mailmessages_access;
+
+    console.log("Router ------>");
+    
+    MAIL_FOLDER_ACCESS =await  req.cookies.mailfolder_accessToken;
+    MAIL_MESSAGES_ACCESS =await req.cookies.mailmessage_accessToken;
+    if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
+        console.log("Tokens Found");
         next();
     }
     else {
+        console.log("Token Not Found");
+        
         let result = await getTokens(req, res);
 
-        if (result?.success) {
+        if (result.success) {
+
             MAIL_FOLDER_ACCESS = await result.folderToken;
-            MAIL_MESSAGES_ACCESS=await result.messageToken
+            MAIL_MESSAGES_ACCESS = await result.messageToken
             next();
         }
     }
 });
 
 let getTokens = async (req, res) => {
+    console.log("Entered Into GetTokens() - Function");
+    
     let folderReq = await axios.post(`${process.env.BASE_URI}/token/mailfolderAccess`);
     let messagesReq = await axios.post(`${process.env.BASE_URI}/token/mailmessageAccess`);    
 
@@ -39,6 +45,10 @@ let getTokens = async (req, res) => {
 
         let folderResult = await folderReq.data;
         let messageResult = await messagesReq.data;
+        console.log(messageResult.data);
+        console.log(folderResult.data);
+        
+        
 
         await res.cookie("mailfolder_accessToken", folderResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
         await res.cookie("mailmessage_accessToken", messageResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
@@ -76,6 +86,32 @@ router.get('/getFoldersList', async (req, res) => {
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });
+
+router.get(`/getListOfEmails/:folderId`, async(req, res)=>{
+    try {
+        const { folderId } = req.params;
+
+        let response=await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/messages/view?folderId=${folderId}`, 
+            {
+                method:"GET",
+                headers:{
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json",
+                    "Authorization" : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+                }
+            }
+        )
+        if(!response.ok){
+         throw new Error(response.status+ " Mail-Messages-Access-Token-Error "+ response.statusText);       
+        }
+        let obj=await response.json();
+        // console.log(obj);
+        res.json(obj);
+    } catch (error) {
+        console.log(error);
+        res.status(error.response?.status || 500).json({ error: error.message });
+    }
+})
 
 module.exports=router;
 
