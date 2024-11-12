@@ -32,6 +32,7 @@ async function sidebar(allFolders){
 
 // step - 3
 async function getListOfMail(folderId) {
+
     try {
         console.log(folderId);
         console.log("DIvya - Before get mail list");
@@ -40,8 +41,7 @@ async function getListOfMail(folderId) {
             method : "GET"
         });
         if (response.ok) {
-            let mailList = await response.json();
-            // console.log(mailList.data);            
+            let mailList = await response.json();           
             await displayListOfMail(mailList.data); // step - 4
         }
         else {
@@ -55,30 +55,42 @@ async function getListOfMail(folderId) {
 
 // step - 5
  async function displayListOfMail(mailList) {
+    let existingElement = document.querySelector(".aside");
 
+    if( existingElement ){
+        existingElement.remove();
+    }
     console.log(mailList);
-    console.log("Display - Prakash Rajendiran");
-    
+
     let wrapperForMailList = document.createElement("div");
     wrapperForMailList.setAttribute("class", "aside");
     outerWrapper.appendChild( wrapperForMailList );
 
+    let classA=document.querySelector(".styleForEmpty");
+
+    if(mailList.length==0){
+        let emptyPageContent = `<div class= "emptyContainer"> <b> No messages found in this folder</b></div>`;
+        wrapperForMailList.innerHTML=emptyPageContent;
+        wrapperForMailList.classList.add("styleForEmpty");
+    }
+    else if(classA){
+        classA.classList.remove(".styleForEmpty");
+    }
+    let topForMailList = `<div> <div> <input type="checkbox" name="" class="overAllCheckBox"> <span><span></div></div><hr>`
     mailList.forEach(mail => {
 
-        console.log("For Each ===> Deepa Rajendiran");
-        
-        console.log(mail);
-
-        let mailDiv = document.createElement("div");
-        wrapperForMailList.appendChild(mailDiv);
-        mailDiv.id=mail.messageId;
-        mailDiv.setAttribute("class", "listt")
-        mailDiv.style.cursor="pointer";
-        let html = `<span>${mail.sender}</span>`;
-        html += `<span>${mail.summary}</span>`;
-        mailDiv.innerHTML=html;
-
-
+        let li = document.createElement("div");
+        li.setAttribute("class", "list");
+        let htm = `
+                    <div class="selOption" id="${mail.messageId}"><input type="checkbox" name="" id="${mail.messageId}" class="check"></div>
+                    <div class="mailIcon"><i class="fa-regular fa-envelope"></i></div>
+                    <div class = "listt" id=${mail.messageId}>
+                        <span class="span"><b>${mail.sender}</b></span>
+                        <span class="span">${mail.subject}</span>
+                    </div>
+                  `
+        li.innerHTML = htm;
+        wrapperForMailList.appendChild(li);
     });
  }
 
