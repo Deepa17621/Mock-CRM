@@ -12,18 +12,12 @@ let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
 router.use(cookieParser());
 
 router.use(async (req, res, next) => {  
-
-    console.log("Router ------>");
-    
-    MAIL_FOLDER_ACCESS =await  req.cookies.mailfolder_accessToken;
-    MAIL_MESSAGES_ACCESS =await req.cookies.mailmessage_accessToken;
+    MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
+    MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
     if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
-        console.log("Tokens Found");
         next();
     }
     else {
-        console.log("Token Not Found");
-        
         let result = await getTokens(req, res);
 
         if (result.success) {
@@ -45,11 +39,7 @@ let getTokens = async (req, res) => {
 
         let folderResult = await folderReq.data;
         let messageResult = await messagesReq.data;
-        console.log(messageResult.data);
-        console.log(folderResult.data);
         
-        
-
         await res.cookie("mailfolder_accessToken", folderResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
         await res.cookie("mailmessage_accessToken", messageResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
 
@@ -105,11 +95,33 @@ router.get(`/getListOfEmails/:folderId`, async(req, res)=>{
          throw new Error(response.status+ " Mail-Messages-Access-Token-Error "+ response.statusText);       
         }
         let obj=await response.json();
-        // console.log(obj);
         res.json(obj);
     } catch (error) {
         console.log(error);
         res.status(error.response?.status || 500).json({ error: error.message });
+    }
+})
+
+router.get(`/displayMail/:folderId/:messageId`, async(req, res)=>{
+    try {
+        const {folderId, messageId } = req.params;
+        let response = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/folders/${folderId}/messages/${messageId}/content`, {
+            method:"GET",
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+            }
+        });
+        if(response.ok){
+            let mailContent = await response.json();
+            res.json(mailContent);
+        }
+        else{
+            throw new Error("Error in Getting Mail content- "+ response.status+ response.statusText);
+        }
+    } catch (error) {
+        console.log(error);
     }
 })
 

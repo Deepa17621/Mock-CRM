@@ -26,7 +26,6 @@ async function sidebar(allFolders){
         sideBarHtml += `<div id="${f1.folderId}" class="btnForFolders" onclick="getListOfMail(this.id)">${f1.folderName}</div>`;
     });
     sideBarHtml += `</div>`;
-
     outerWrapper.innerHTML=sideBarHtml;
 }
 
@@ -34,9 +33,6 @@ async function sidebar(allFolders){
 async function getListOfMail(folderId) {
 
     try {
-        console.log(folderId);
-        console.log("DIvya - Before get mail list");
-        
         let response = await fetch(`/mail/getListOfEmails/${folderId}`, {
             method : "GET"
         });
@@ -49,14 +45,15 @@ async function getListOfMail(folderId) {
         }
     } catch (error) {
         console.log(error);
-        
     }
 }
 
 // step - 5
  async function displayListOfMail(mailList) {
     let existingElement = document.querySelector(".aside");
-
+    if(document.querySelector(".displayContainer")){
+        (document.querySelector(".displayContainer")).remove();
+    }
     if( existingElement ){
         existingElement.remove();
     }
@@ -81,6 +78,13 @@ async function getListOfMail(folderId) {
 
         let li = document.createElement("div");
         li.setAttribute("class", "list");
+        li.addEventListener("click", (e)=>{
+            e.preventDefault();
+            if(document.querySelector(".displayContainer")){
+                (document.querySelector(".displayContainer")).remove();
+            }
+            displayMail(mail.folderId, mail.messageId);
+        })
         let htm = `
                     <div class="selOption" id="${mail.messageId}"><input type="checkbox" name="" id="${mail.messageId}" class="check"></div>
                     <div class="mailIcon"><i class="fa-regular fa-envelope"></i></div>
@@ -92,6 +96,34 @@ async function getListOfMail(folderId) {
         li.innerHTML = htm;
         wrapperForMailList.appendChild(li);
     });
+ }
+
+ async function displayMail(folderId, messageId){
+    let mailContent = await getMailContent(folderId, messageId);
+    console.log(mailContent.data.content);
+    
+    if(mailContent){
+        let displayContainer = document.createElement("section");
+        displayContainer.setAttribute("class", "displayContainer");
+        displayContainer.innerHTML = mailContent.data.content;
+        outerWrapper.appendChild(displayContainer);
+        
+    }
+ }
+
+ async function getMailContent(folderId, messageId) {
+    try {
+        let response = await fetch(`/mail/displayMail/${folderId}/${messageId}`, {
+            method : "GET"
+        });
+        if(response.ok){
+            let mailContent = await response.json();
+            return mailContent;
+        }
+        else return null;
+    } catch (error) {
+        console.log(error);
+    }
  }
 
 
