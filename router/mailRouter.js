@@ -30,7 +30,7 @@ router.use(async (req, res, next) => {
 });
 
 let getTokens = async (req, res) => {
-    console.log("Entered Into GetTokens() - Function");
+    console.log("Entered Into GetTokens() Generate New Access - Function");
     
     let folderReq = await axios.post(`${process.env.BASE_URI}/token/mailfolderAccess`);
     let messagesReq = await axios.post(`${process.env.BASE_URI}/token/mailmessageAccess`);    
@@ -119,6 +119,33 @@ router.get(`/displayMail/:folderId/:messageId`, async(req, res)=>{
         }
         else{
             throw new Error("Error in Getting Mail content- "+ response.status+ response.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+router.post(`/sendMail`, async(req, res)=>{
+    try {
+        console.log(`Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`);
+        let obj = req.body;
+        let response = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/messages`, {
+            method : "POST",
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+            },
+            body : JSON.stringify(obj)
+        });
+        if(response.ok){
+            let data = await response.json();
+            console.log(response.ok);
+            
+            res.json(data);
+        }
+        else {
+            throw new Error("Error in Send Mail: "+ response.status + " "+ response.statusText);
         }
     } catch (error) {
         console.log(error);

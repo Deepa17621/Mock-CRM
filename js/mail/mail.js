@@ -143,22 +143,24 @@ async function getListOfMail(folderId) {
     if( existingElement ){
         existingElement.remove();
     }
-    await getAllFolders()
-    let newMailContainer = document.querySelector("div");
+
+    let newMailContainer = document.createElement("div");
     newMailContainer.setAttribute("class", "newMailContainer");
 
-    let newMailForm = newMailFormStructure();
+    let newMailForm = newMailFormStructure();  // step - 10
 
     newMailContainer.innerHTML = newMailForm;
-    outerWrapper.appendChild(newMailContainer)
+    outerWrapper.appendChild(newMailContainer);
+
+    attachFormSubmitListner();
     
  }
 
  function newMailFormStructure(){
 
                 return `
-                        <div class="headerForMail"><div class="sendMailBtn" title="send mail"> <i class="fa-regular fa-paper-plane" style="color: #2c66dd;"></i> Send</div></div>
                         <form class="composeMailForm">
+                            <div class="headerForMail"><div class="sendMailBtn" title="send mail" onclick="sendMail(this.parentElement)"> <i class="fa-regular fa-paper-plane" style="color: #2c66dd;"></i> Send</div></div>
                             <div class="form-Group">
                                 <label for="fromAddress">From</label>
                                 <input type="email" name="fromAddress" id="fromAddress" class="inps">
@@ -186,9 +188,85 @@ async function getListOfMail(folderId) {
                             </div>
                         </form>`
  }
+async function sendMail(form){
+console.log("SendMail -Function");
+
+console.log("Deepa -R");
+
+    var mailForm = document.querySelector(".composeMailForm");
+    console.log(mailForm);
+
+    // mailForm.requestSubmit();   
+    mailForm.requestSubmit();
+}
+function attachFormSubmitListner(){
+    let form = document.querySelector(".composeMailForm");
+    if(form){
+        form.addEventListener("submit", async(e)=>{
+            console.log("Submit Event --->");
+            
+            e.preventDefault();
+        
+            let fromAddress = document.querySelector("#fromAddress");
+            let toAddress   = document.querySelector("#toAddress");
+            let ccAddresses = document.querySelector("#ccAddresses");
+            let bccAddresses= document.querySelector("#bccAddress");
+            let subject     = document.querySelector("#subject");
+            let mailContent = document.querySelector("#message");
+        
+            if(!fromAddress.value || !toAddress.value){
+                !fromAddress.value ? setError(fromAddress) : setSuccess(fromAddress);
+                !toAddress.value ? setError(toAddress) : setSuccess(toAddress);
+                return ;
+            }
+        
+            const requestBody = {
+                "fromAddress" : fromAddress.value,
+                "toAddress"   : toAddress.value,
+                "ccAddress"   : ccAddresses.value,
+                "bccAddress"  : bccAddresses.value,
+                "subject"     : subject.value,
+                "content"     :  mailContent.value,
+                // "attachments": [
+                //     {
+                //         "storeName": "NN2:-167775813820412438",
+                //         "attachmentPath": "/1425407266885_ourholidays",
+                //         "attachmentName": "ourholidays.jpg"
+                //     }
+                // ]
+            }
+        
+            console.log(requestBody);
+            
+            let response = await fetch(`/mail/sendMail`, {
+                method : "POST", 
+                body : JSON.stringify(requestBody),
+                headers: {"Content-Type":"application/json"}
+            });
+            if(response.ok){
+                let result = await response.json();
+                alert("Mail Sent!")
+            }
+            else {
+                alert("Mail not sent!!!");
+            }
+        
+        })
+    }
+}
 
 
-
-
-
-
+// Form Validation
+function setError(tag)
+{
+    if(!tag.value)
+    {
+        tag.style.borderBottom="1px solid red";
+        alert("To send Mail - From Address and To Address Required");
+    }
+    else setSuccess(tag);
+}
+function setSuccess(tag)
+{
+    tag.style.borderBottom="1px solid black";
+}

@@ -23,8 +23,8 @@ router.get(`/getAuthCode/:scope`, async (req, res) => {
 
 router.get(`/callback/:code`, async (req, res) => {
     let { code } = req.params;
-    console.log(code);
-    console.log("Authorization Code:");
+    // console.log(code);
+    // console.log("Authorization Code:");
 });
 
 router.post('/meetingAccess', async (req, res) => {
@@ -43,9 +43,9 @@ router.post('/meetingAccess', async (req, res) => {
             res.json(result);
         }
     } catch (error) {
-        console.log(error)
-        res.json(error);
-        console.log(res.status);
+        // console.log(error)
+        // res.json(error);
+        // console.log(res.status);
     }
 });
 
@@ -70,9 +70,9 @@ router.post(`/mailfolderAccess`, async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error.message)
-        console.log(res.status);
-        res.json(error);
+        // console.log(error.message)
+        // console.log(res.status);
+        // res.json(error);
     }
 });
 
@@ -94,8 +94,8 @@ router.post(`/mailmessageAccess`, async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        res.json(error);
-        console.log(res.status);
+        // res.json(error);
+        // console.log(res.status);
     }
 });
 module.exports = router;

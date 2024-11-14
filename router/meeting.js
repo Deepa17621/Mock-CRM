@@ -32,8 +32,7 @@ let getToken = async (req, res) => {
     let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
     if (myreq) {
         let result = await myreq.data;
-        console.log(result);
-
+        
         await res.cookie("meeting_accessToken", result.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
         return {
             "success": true,

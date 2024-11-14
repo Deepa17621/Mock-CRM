@@ -6,7 +6,7 @@ const {MongoClient, ObjectId}=require('mongodb');
 
 const cors = require('cors');
 const axios = require('axios');
-const { log, error } = require('console');
+// const { log, error } = require('console');
 const app = express();
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5500;

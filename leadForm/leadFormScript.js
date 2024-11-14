@@ -43,9 +43,7 @@ form.addEventListener("submit", (e) => {
         // organization.value ? setSuccess(organization) :setError(organization);
         return;
     }
-
-    // Object to be Stored in JSON
-    // let keyArr = ["Lead Name", "Lead Mail", "Phone", "Address","date" ,"Organization"];
+    
     let obj = {};
     inpArr.forEach(e => {
         switch(e)
