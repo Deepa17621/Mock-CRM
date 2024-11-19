@@ -50,7 +50,7 @@ router.use(async (req, res, next) => {
     }
 });
 
-let getToken = async (req, res) => {
+ async function getToken(req, res) {
     // console.log(res);
 
     let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
