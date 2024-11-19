@@ -10,12 +10,12 @@ class customNavBar extends HTMLElement{
 
         let modules={
             Home:`/`,
-            Leads:`/leadForm/leadList.html`,
-            Contacts:`/contact/contactList.html`,
-            Accounts:`/accounts/accountList.html`,
-            Deals:`/deal/dealList.html`,
-            Meetings:`/meetings/meetingList.html`,
-            Mail:`/mail/mail.html`
+            Leads:`/html/leads/leadList.html`,
+            Contacts:`/html/contacts/contactList.html`,
+            Accounts:`/html/accounts/accountList.html`,
+            Deals:`/html/deals/dealList.html`,
+            Meetings:`/html/meetings/meetingList.html`,
+            Mail:`/html/mail/mail.html`
         }
         let logoWrapper=`<div id="logoDiv" data-url="/" ><img class="iconImg" src="/assets/iconnn.svg"><span>CRM</span></div>`
         //Outer Container
@@ -65,7 +65,7 @@ class customNavBar extends HTMLElement{
                 body{
                     padding: 0;
                     margin: 0;
-                    // font-family: "open Sans",sans-serif;
+                    font-family: "open Sans",sans-serif;
                 }
                 *{
                     font-family: "open Sans",sans-serif;

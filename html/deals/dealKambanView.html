@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
+    <title> Deals - Zoho CRM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <link rel="stylesheet" href="../../css/deals/dealKamban.css">
+    <script src="../../js/customElements/customNavBar.js"></script>
+</head>
+
+<body>
+
+   <custom-navbar></custom-navbar>
+
+    <!-- Second Navbar -->
+    <div id="secondNav">
+        <!---->
+            <ul id="ull">
+                <div id="left">
+                    <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li>
+                        <select name="" id="leadOption" class="disabled">
+                            <option value="All Deals">All Deals</option>
+                            <option value="Locked Deals">Locked Deals</option>
+                            <option value="Junk Deals">New Deals</option>
+                        </select>
+                    </li>
+                </div>
+               <div id="right">
+                    <li>
+                        <select name="selectView" id="selectView">
+                            <option value="dgrd" class="hidden">Select View</option>
+                            <option value="listView">List View</option>
+                            <option value="kanbanView">Kanban View</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select name="pipeLine" id="pipeLine">
+                            <!-- <option value="standardView">Standard</option>
+                            <option value="deepa">Deepa</option> -->
+                            <!-- <option value="allPipeLine">All PipeLine</option> -->
+                        </select>
+                    </li>
+                    <li>
+                        <button class="createBtnForAllModules" id="createDealBtn">
+                            Create Deal
+                        </button>
+                    </li>
+                    <li>
+                        <select name="" id="fields" onchange="selectField()">
+                            <option value="">---Select---</option>
+                            <option value="_id">ID</option>
+                            <option value="dealOwner">Deal Owner</option>
+                            <option value="contactName">Contact Name</option>
+                            <option value="dealName">Deal Name</option>
+                            <option value="accountName">AcoountName</option>
+                            <option value="amount">Amount</option>
+                            <option value="closingDate">Closing date</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" name="" id="searchField" placeholder="search here..." style="height: 23px;" >
+                    </li>
+                    <li class="disabled">
+                        <select name="" id="actionOption">
+                            <option value="">action</option>
+                            <option value="Mass Update">Mass Update</option>
+                            <option value="Mass Delete">Mass Delete</option>
+                            <option value="Mass Transfer">Mass Transfer</option>
+                            <option value="Mass Email">Mass Email</option>
+                        </select>
+                    </li>
+               </div>
+            </ul>
+    </div>
+    <!-- Second Nav Ending -->
+
+    <!-- Contact List  Body Container -->
+    <div id="parent">
+
+        <!-- Filter Container Starts Here -->
+        <div id="filterForDeal">
+            <div id="searchBar">
+                <input type="text" name="" id="searchBarInp" placeholder="Search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <!-- Kanban View Body Starts Here -->
+         <section id="stageParent" class="pipeLines"></section>
+    </div>
+    <script src="../../js/deals/dealKambanView.js"></script>
+</body>
+
+</html>

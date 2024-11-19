@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
+    <title>Contact View - Zoho CRM</title>
+    <script src="/js/customElements/customNavBar.js" type="module"></script>
+    <link rel="stylesheet" href="/css/leads/crmFront.css">
+</head>
+<body>
+    
+    <custom-navbar></custom-navbar>
+
+     <!-- Second Nav Starts -->
+     <div id="secondNav">
+        <ul id="leadFormSecondNavUl">
+        <div id="left">
+            <li ><button id="backBtn">back</button></li>
+             <li><h4 id="name"></h4></li>
+        </div>
+        <div id="right">
+            <li><button id="meetingBtn">New Meeting</button></li>
+            <li><button id="mailBtn"><a id="mail" href="" class="maill">Send Email</a></button></li>
+            <li><button id="convert">Create Deal</button></li>
+            <li >
+                <button id="editBtn" >Edit</button>
+            </li>
+            <li><button id="deleteBtn">Delete</button></li>
+        </div>
+        </ul>
+    </div>
+     <!-- Second Nav Ends -->
+      
+     <!-- Create New Meeting -->
+      <dialog id="dialogbox">
+        <h4>Meeting Information</h4>
+        <form action="" id="meetingForm">
+            <input type="text" value="New Meeting*" class="meetInp" id="topic">
+            <br>
+            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
+            <br>
+            <label for="startTime">From</label><br>
+            <input type="datetime-local" name="time" id="startTime" class="meetInp">
+            <br>
+            <label for="presenterId">PresenterId</label>
+            <input type="number" name="presenterId" id="presenterId" class="meetInp" value="60030981356" readonly>
+            <br>
+            <label for="agenda">Agenda Of Meeting</label>
+            <input type="text" name="agenda" id="agenda" class="meetInp">
+            <br>
+            <label for="participants">Participants</label><br>
+            <input type="email" name="participantsMail" id="participants" class="meetInp">
+            <br><br>
+            <button id="meetingCancelBtn" class="meetBtn">Cancel</button> <button id="meetingSaveBtn" class="meetBtn">Save</button>
+        </form>
+      </dialog>
+      
+     <!-- Home Container For Lead View -->
+     <div id="parentContainer">
+        <div id="filterContainer">
+
+        </div>
+        <div id="leadViewHomeContainer">
+           <table id="view" >
+           </table>
+   
+       </div>
+     </div>
+     <div id="meetingListContainer">
+        <h2>Meeting Details</h2>
+     </div>
+     <br><br>
+     <div id="deals">
+        <h2>Deals</h2>
+        <table id="dealTable">
+            
+        </table>
+     </div>
+     
+     <script type="module" src="/js/contacts/contactView.js"  defer></script>
+</body>
+</html>

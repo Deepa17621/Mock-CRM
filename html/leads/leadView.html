@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Detail View</title>
+    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../../js/customElements/customNavBar.js" type="module"></script>
+</head>
+<body>
+     
+    <custom-navbar></custom-navbar>
+
+     <!-- Second Nav Starts -->
+    <div id="secondNav">
+        <ul id="leadFormSecondNavUl">
+        <div id="left">
+            <li><button id="backBtn">back</button></li>
+             <li><h4 id="name"></h4></li>
+        </div>
+        <div id="right">
+            <li><button><a id="mail" href="">Send Email</a></button></li>
+            <li><button id="convert">Convert</button></li>
+            <li >
+                <button id="editBtn" >Edit</button>
+            </li>
+            <li><button id="deleteBtn">Delete</button></li>
+        </div>
+        </ul>
+    </div>
+     <!-- Second Nav Ends -->
+
+    <!-- Home Container For Lead View -->
+     <div id="parentContainer">
+        <div id="filterContainer">
+
+        </div>
+        <div id="leadViewHomeContainer">
+           <table id="view">
+           </table>
+   
+       </div>
+     </div>
+
+     <!-- PopUp For Conversion -->
+
+     <div id="popupContainer">
+       <div id="actualContainer">
+        <h4 id="leadName">Lead to be Converted:</h4>
+        <br>
+        <form id="convertForm">
+            <input type="radio" name="options" id="contactOnly" value="ContactOnly">
+            <label for="convertOnlyContact">Only Contact</label>
+            <p></p>
+            <br>
+            <input type="radio" name="options" id="hasAccount" value="hasAccount">
+            <label for="hasAccount">Existing Account</label>
+            <p></p>
+            <br>
+            <input type="radio" name="options" id="accountAlso" value="CreateAccount">
+            <label for="accountAlso">New Account</label>
+            <p></p>
+            <br>
+            <input style="width: 99px; height: 28px;" type="button" value="Convert" id="convertOk" onclick="submit1()">
+           <button id="popupCancel">Cancel</button>
+        </form>
+       </div>
+     </div>
+    <script src="../../js/leads/leadView.js"></script>
+</body>
+</html>

@@ -16,18 +16,11 @@ app.use(express.json()); // For parsing application/json
 app.use(cookieParser());
 
 // Static file serving
-app.use('/accounts', express.static(path.join(__dirname, 'accounts')));
-app.use('/contact', express.static(path.join(__dirname, 'contact')));
+
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use('/deal', express.static(path.join(__dirname, 'deal')));
-app.use('/frontPage', express.static(path.join(__dirname, 'frontPage')));
-app.use('/leadForm', express.static(path.join(__dirname, 'leadForm')));
-app.use('/meetings', express.static(path.join(__dirname, 'meetings')));
-app.use('/controller', express.static(path.join(__dirname, 'controller')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
-app.use('/meetingImages', express.static(path.join(__dirname, 'meetingImages')));
-app.use('/mail', express.static(path.join(__dirname, 'mail')));
+app.use('/html', express.static(path.join(__dirname, 'html')));
 app.use('/router', express.static(path.join(__dirname, 'router')));
 
 let mail_Router = require("./router/mailRouter");

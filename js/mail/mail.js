@@ -191,9 +191,6 @@ async function getListOfMail(folderId) {
                         </form>`
  }
 async function sendMail(form){
-console.log("SendMail -Function");
-
-console.log("Deepa -R");
 
     var mailForm = document.querySelector(".composeMailForm");
     console.log(mailForm);
@@ -205,8 +202,7 @@ function attachFormSubmitListner(){
     let form = document.querySelector(".composeMailForm");
     if(form){
         form.addEventListener("submit", async(e)=>{
-            console.log("Submit Event --->");
-            
+             
             e.preventDefault();
         
             let fromAddress = document.querySelector("#fromAddress");
