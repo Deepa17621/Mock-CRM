@@ -85,7 +85,6 @@ class customNavBar extends HTMLElement{
                     height: inherit;
                     width: inherit;
                     display: flex;
-                    // gap: 5px;
                 }
                 #logoDiv>img{
                     height:35%;

@@ -1,33 +1,57 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require(`cors`);
 
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 
+const MEETING_CLIENT_ID = process.env.CLIENT_ID;
+const MEETING_CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+const MAIL_CLIENT_ID = process.env.MAIL_CLIENT_ID;
+const MAIL_CLIENT_SECRET = process.env.MAIL_CLIENT_SECRET;
+
+const REDIRECT_URI = process.env.REDIRECT_URI_LOCALHOST;
+
+router.use(cors());
 router.use(cookieParser());
 const axios = require('axios');
 
 let ACCESS_TOKEN;
+let ZSOID;
 const ZOHO_API_URL = process.env.ZOHO_API_URL;
-
+let scopesForMeeting = `ZohoMeeting.manageOrg.READ,ZohoMeeting.meeting.ALL`;
 
 router.use(async (req, res, next) => {
-    let meeting_access = res.cookie.meeting_access;
+
+    let meeting_access = req.cookies.meeting_access;
+    let user_details = req.cookies.meeting_user_details;
     if (meeting_access) {
-        ACCESS_TOKEN = meeting_access;
-        next();
+        let userData = await fetch(`/getZohoMeetingUserDetails/${meeting_access}`);
+        if(userData.ok){
+            let obj = await userData.json();
+            if(user_details.zsoid === obj.userDetails.zsoid){
+                ACCESS_TOKEN = meeting_access;
+                ZSOID = obj.userDetails.zsoid;
+                next();
+            }
+        }
+        else {
+            res.redirect(`https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`);
+        }
     }
     else {
-        let result = await getToken(req, res);
-        if (result.success) {
-            ACCESS_TOKEN = await result.token;
-            next();
-        }
+        res.redirect(`https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`);
+        // console.log("Entered into Meeting MiddleWare");
+        // let authCodeReq = await fetch(`${process.env.BASE_URI}/token/getAuthCode/${scopesForMeeting}`);
+        // console.log("AuthCodeRequest:");
+        // console.log(authCodeReq);  
+        // res.redirect(authCodeReq.url);
     }
 });
 
 let getToken = async (req, res) => {
-    console.log(res);
+    // console.log(res);
 
     let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
     if (myreq) {
@@ -43,6 +67,26 @@ let getToken = async (req, res) => {
         throw new Error("Access token for Meeting Not found");
     }
 }
+
+router.get(`/getZohoMeetingUserDetails/:accessToken`, async(req, res)=>{
+    try {
+        const { accessToken } = req.params;
+        let data = await fetch(`https://meeting.zoho.com/api/v2/user.json`, {
+            headers:{
+                "Authorization": `Zoho-oauthtoken ${accessToken}`
+            }
+        });
+        if(data.ok){
+            let result = await data.json();
+            res.json(result);
+        }
+        else {
+            throw new Error("Fetch User Details encounterd with Error: "+ data.status+ " "+ data.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 // 1. [--POST--] request to Zoho API
 router.post('/postmeeting', async (req, res) => {
@@ -122,8 +166,8 @@ router.get('/getmeetinglist', async (req, res) => {
 
 // 4. Edit Existing Meeting Details
 router.put('/editmeeting/:meetingKey', async (req, res) => {
-    let { meetingKey } = req.params;
     try {
+        let { meetingKey } = req.params;
         let session = req.body;
         const response = await fetch(
             `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,

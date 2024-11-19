@@ -19,7 +19,6 @@ router.use(async (req, res, next) => {
     }
     else {
         let result = await getTokens(req, res);
-
         if (result.success) {
 
             MAIL_FOLDER_ACCESS = await result.folderToken;

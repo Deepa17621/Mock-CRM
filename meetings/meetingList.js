@@ -22,6 +22,7 @@ async function getList() {
     let table=document.querySelector("#meetingListTable");
     let tHead=document.querySelector("thead");
     let tBody=document.querySelector("tbody");
+    
 function sendToTable(obj)
 {
     //Table Head

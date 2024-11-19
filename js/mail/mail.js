@@ -150,8 +150,10 @@ async function getListOfMail(folderId) {
     let newMailForm = newMailFormStructure();  // step - 10
 
     newMailContainer.innerHTML = newMailForm;
-    outerWrapper.appendChild(newMailContainer);
-
+    if(!(document.querySelector(".newMailContainer"))){
+        outerWrapper.appendChild(newMailContainer);
+    }
+    
     attachFormSubmitListner();
     
  }

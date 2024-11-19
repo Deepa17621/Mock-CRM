@@ -10,21 +10,49 @@ const MEETING_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const MAIL_CLIENT_ID = process.env.MAIL_CLIENT_ID;
 const MAIL_CLIENT_SECRET = process.env.MAIL_CLIENT_SECRET;
 
-const REDIRECT_URI = process.env.REDIRECT_URI;
+const REDIRECT_URI = process.env.REDIRECT_URI_LOCALHOST;
 
 
 router.use(cookieParser());
 
 router.get(`/getAuthCode/:scope`, async (req, res) => {
+
+    console.log("Get Auth Token --");
+    
     let { scope } = req.params;
-    let authorizeURL = `${MAIL_AUTH_URL}?scope=${scope}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`;
+    let authorizeURL =`${process.env.MAIL_AUTH_URL}?scope=${scope}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`;
     res.redirect(authorizeURL);
+    
 });
 
-router.get(`/callback/:code`, async (req, res) => {
-    let { code } = req.params;
-    // console.log(code);
-    // console.log("Authorization Code:");
+router.get(`/callBack`, async (req, res) => {
+    let { code, loc } = req.query;
+    console.log("code "+ code);
+    
+    try {
+        let res = await post.axios(`https://accounts.zoho.com/oauth/v2/token`, null, {
+            params: {
+                code : code,
+                client_id: MAIL_CLIENT_ID,
+                client_secret: MAIL_CLIENT_SECRET,
+                redirect_uri: REDIRECT_URI,
+                grant_type: "authorization_code"
+            }
+        });
+        if(res){
+            let data = await res.json();
+            console.log(data);
+            // let TokenWithExpiryTime = {
+            //     "accessToken": data.access_token,
+            //     "maxAge": (new Date().getTime())+data.expires_in
+            // }
+            // res.json(true);
+        }
+    } catch (error) {
+        
+    }
+    console.log("Authorization Code:");
+    console.log(code);
 });
 
 router.post('/meetingAccess', async (req, res) => {
