@@ -50,23 +50,23 @@ router.use(async (req, res, next) => {
     }
 });
 
- async function getToken(req, res) {
-    // console.log(res);
+//  async function getToken(req, res) {
+//     // console.log(res);
 
-    let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
-    if (myreq) {
-        let result = await myreq.data;
+//     let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
+//     if (myreq) {
+//         let result = await myreq.data;
         
-        await res.cookie("meeting_accessToken", result.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
-        return {
-            "success": true,
-            "token": result.access_token
-        }
-    }
-    else {
-        throw new Error("Access token for Meeting Not found");
-    }
-}
+//         await res.cookie("meeting_accessToken", result.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
+//         return {
+//             "success": true,
+//             "token": result.access_token
+//         }
+//     }
+//     else {
+//         throw new Error("Access token for Meeting Not found");
+//     }
+// }
 
 router.get(`/getZohoMeetingUserDetails/:accessToken`, async(req, res)=>{
     try {
