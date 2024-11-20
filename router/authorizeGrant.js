@@ -20,7 +20,9 @@ async function myFunction(){
         }
     }
     else {
-
+        // "zoho_meeting-integra": "^1.0.0"
+    
+        // "api-auth-zoho": "^1.0.15",
        return handleRedirect(req, res, MAIL_CLIENT_ID, REDIRECT_URI,scopesForMeeting);
         // res.redirect(`https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`);
         // // console.log("Entered into Meeting MiddleWare");
