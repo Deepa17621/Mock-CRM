@@ -5,11 +5,13 @@ const { handleRedirect } = require('./authorizeGrant')
 
 const router = express.Router();
 const cookieParser = require('cookie-parser');
+
+router.use(cors());
 //corssss
-router.use(cors({ 
-    origin: [ 'http://localhost:5500','https://accounts.zoho.com', ],
-    methods: ['GET', 'POST'],
-    }));
+// router.use(cors({ 
+//     origin: [ 'http://localhost:5500','https://accounts.zoho.com', ],
+//     methods: ['GET', 'POST'],
+//     }));
 
 const MEETING_CLIENT_ID = process.env.CLIENT_ID;
 const MEETING_CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -31,35 +33,17 @@ let scopesForMeeting = `ZohoMeeting.manageOrg.READ,ZohoMeeting.meeting.ALL`;
 router.use(async (req, res, next) => {
 
     try {
-        let meeting_access = req.cookies.meeting_access;
-        let user_details = req.cookies.meeting_user_details;
-        if (meeting_access) {
-            let userData = await fetch(`/getZohoMeetingUserDetails/${meeting_access}`);
-            if(userData.ok){
-                let obj = await userData.json();
-                if(user_details.zsoid === obj.userDetails.zsoid){
-                    ACCESS_TOKEN = meeting_access;
-                    ZSOID = obj.userDetails.zsoid;
-                    next();
-                }
-            }
-            else {
-                res.redirect(`https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`);
-            }
+        let accessToken = req.cookies.meeting_accessToken;
+        if(accessToken){
+            ACCESS_TOKEN = accessToken ;
+            next();
         }
         else {
-
-           return handleRedirect(req, res, MAIL_CLIENT_ID, REDIRECT_URI,scopesForMeeting);
-            // res.redirect(`https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${MAIL_CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent`);
-            // // console.log("Entered into Meeting MiddleWare");
-            // // let authCodeReq = await fetch(`${process.env.BASE_URI}/token/getAuthCode/${scopesForMeeting}`);
-            // // console.log("AuthCodeRequest:");
-            // // console.log(authCodeReq);  
-            // // res.redirect(authCodeReq.url);
+            let token = await getToken(req, res);
+            next();
         }
         } catch (error) {
             console.log(error);
-            
         }
     });
 
@@ -70,7 +54,11 @@ router.use(async (req, res, next) => {
         if (myreq) {
             let result = await myreq.data;
             
-            await res.cookie("meeting_accessToken", result.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
+            await res.cookie("meeting_accessToken", result.access_token, {
+                maxAge: 3600000,
+                secure: false,
+                httpOnly: true,
+                sameSite: none});
             return {
                 "success": true,
                 "token": result.access_token
