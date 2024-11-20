@@ -160,13 +160,13 @@ function setImage(time)
 {
     switch (time) {
         case "MORNING":
-            return`/html/meetingImages/morningTime.svg`;
+            return`/asset/meetingImages/morningTime.svg`;
         case "AFTERNOON":
-            return `/html/meetingImages/afternoonTime.svg`;
+            return `/asset/meetingImages/afternoonTime.svg`;
         case "EVENING":
-            return '/html/meetingImages/eveningTime.svg';
+            return '/asset/meetingImages/eveningTime.svg';
         case "NIGHT":
-            return '/html/meetingImages/nightTime.svg';
+            return '/asset/meetingImages/nightTime.svg';
         default:
             break;
     }
