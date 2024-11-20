@@ -32,7 +32,7 @@ let organization = document.querySelector("#organization");
 let inpArr = [leadName, leadMail, leadPhone, leadAddress,date, organization];
 
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async(e) => {
     e.preventDefault();
     if(!leadAddress.value || !leadMail.value || !leadName.value || !leadPhone.value)
     {
@@ -74,20 +74,35 @@ form.addEventListener("submit", (e) => {
 inpArr.forEach(e=>{
     if(e === "") return; 
 })
-    fetch('/mongodb/post/leads', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(obj)
-    }).then(res => {
-        return res.json();
-    }).then(result => {
-        console.log(result);
-    });
-    window.location.href = clicked ? "/html/leads/leadList.html" :  "/html/leads/leadForm.html";
-    clicked = null;
+    let postLeadData = await saveLead(obj);
+    if(postLeadData){
+        window.location.href = clicked ? "/html/leads/leadList.html" :  "/html/leads/leadForm.html";
+        clicked = null;
+    }
+
 });
+
+async function saveLead(obj) {
+    try {
+        let res = await fetch('/mongodb/post/leads', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(obj)
+        });
+        if(res.ok){
+            let data = await res.json();
+            return data;
+        }
+        else {
+            throw new Error("Error in save Lead"+res.status);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
 // Flatpicker
 flatpickr(".datePicker", {
     // You can add options here

@@ -160,7 +160,7 @@ convertForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     // let contactOnly=document.querySelector("#contactOnly");
     document.querySelector("#popupContainer").style.display="none";
-    window.location.href=`html/contacts/contactList.html?id=${identity}`;
+    window.location.href=`/html/contacts/contactList.html?id=${identity}`;
 });
 
 async function deleteLead(id)

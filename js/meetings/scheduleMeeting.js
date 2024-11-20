@@ -66,7 +66,9 @@ async function getMeetingDetailToEdit(meetingKeyForEdit) {
 
 //2. Calendar - Date Format
 flatpickr(".datePicker",{
-    dateFormat: "M j, Y h:i K"
+    enableTime: true,        // Enable time selection
+        dateFormat: "M j, Y  H:i K", // Format for date and time (e.g., 2024-11-20 14:30)
+        time_12hr: true          // Use 24-hour format
 });
 //3. Get All the inputs to create Meeting
 let topic=document.querySelector("#topic");

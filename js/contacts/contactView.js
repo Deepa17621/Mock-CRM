@@ -183,7 +183,7 @@ dealBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
     let obj=await getDataById(currentId, "contacts");
     let accId=await obj["organizationId"];
-    window.location.href=accId?`/html/deals/createDealForm.html?contactid=${currentId}&accId=${accId}`:`/html/deal/createDealForm.html?contactid=${currentId}`;
+    window.location.href=accId?`/html/deals/createDealForm.html?contactid=${currentId}&accId=${accId}`:`/html/deals/createDealForm.html?contactid=${currentId}`;
 });
 
 // List Down Deals Details

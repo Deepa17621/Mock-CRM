@@ -6,7 +6,7 @@ let tableBody=document.querySelector("tbody");
 // Create Lead - Button
 const createLeadBtn=document.querySelector("#createLeadBtn");
 
-createLeadBtn.addEventListener("click",e=>{
+createLeadBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     window.location.href=`/html/leads/leadForm.html`
 });
@@ -19,6 +19,7 @@ function selField()
     selectField=document.querySelector("#lookupForLead").value;
     console.log(selectField);
 }
+
 //Display Table Function
 function tableFunction(collectionOfObjs)
 {
@@ -98,11 +99,10 @@ function tableFunction(collectionOfObjs)
 let inpForSearch=document.querySelector("#searchLead");
 function filterField(collectionOfObjs)
 {
-    
     collectionOfObjs.forEach((ele)=>
     {
         // console.log(ele[`${selectField}`]);
-        if((ele[`${selectField}`].toLowerCase())==((inpForSearch.value).toLowerCase()))
+        if((ele[`${selectField}`].toLowerCase()) === ((inpForSearch.value).toLowerCase()))
          {
              console.log("true");
              arr.push(ele);

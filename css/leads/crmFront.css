@@ -8,16 +8,8 @@ body{
     background-color: #f1f4f7;
     min-width: 700px;
 }
-/* Common Height For All the body Containers-7vh */
-#navBar
-{
-    width: 100vw;
-    min-width: 700px;
-    height: 7vh;
-    background-color: #313949;
-    border: 1px solid #313949;
-    display: flex;
-    flex-direction: row;   
+custom-navbar{
+    position: sticky;
 }
 
 /* Disbaled Event For Non-Functionality Elements */
@@ -25,10 +17,9 @@ body{
 {
     pointer-events: none;
     opacity: 0.5;
-}
-.disabled:hover
-{
-    cursor: not-allowed;
+    &:hover{
+        cursor: not-allowed;
+    }
 }
 #searchBar
 {
@@ -39,7 +30,7 @@ body{
 }
 #searchBar button{
     border: none;
-    width: 50px;
+    width: 40px;
 }
 ul{
     display: flex;
@@ -105,12 +96,12 @@ a{
 {
     border: 1px solid white;
     background-color: rgba(0, 0, 255, 0.958);
-    height: 35px ;
-    width: 130px;
+    height: 30px ;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: medium;
+    font-size: small;
     border-radius: 4px;
     color:white;
 }
@@ -119,7 +110,7 @@ a{
 }
 #leadFormContainer
 {
-    height: 80vh;
+    height: 90vh;
     width: 93vw;
 }
 #leadFormSecondNavUl div, #ull div
@@ -154,8 +145,8 @@ button a{
 }
 #leadSubmitBtn, #contactSubmitBtn
 {
-    height: 28px;
-    width: 70px;
+    height: 25px;
+    width: 60px;
     background-color: blue;
     color: white;
     border: 1px solid blue;
@@ -168,9 +159,9 @@ button a{
 #leadFormContainer, #contactForm, #accountFormContainer
 {
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
     
@@ -321,8 +312,8 @@ select{
     width: 22%;
     height: 75vh;
     margin-top: 30px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px;
+    border-radius: 2px;
+    /* box-shadow: 0 0 2px; */
     margin-left:10px;
     display: none;
 }

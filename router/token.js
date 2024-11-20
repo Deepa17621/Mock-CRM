@@ -71,9 +71,6 @@ router.post('/meetingAccess', async (req, res) => {
             res.json(result);
         }
     } catch (error) {
-        // console.log(error)
-        // res.json(error);
-        // console.log(res.status);
     }
 });
 
