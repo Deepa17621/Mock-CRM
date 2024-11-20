@@ -38,7 +38,7 @@ fetchData();
 function filterFunction(arrOfObjs)
 {
     arrOfObjs.forEach(e=>{
-        if((e[selField])==(searchField.value))
+        if((e[selField])===(searchField.value))
         {
             arr.push(e);
         }

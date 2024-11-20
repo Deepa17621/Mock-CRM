@@ -197,7 +197,7 @@ function listStructure(meetingObj)
             <span id="presenterName">${meetingObj.presenterFullName}</span>
         </div>
         <div class="startBtnContainer division">
-            <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
+            
         </div>
         `;
         return structure;

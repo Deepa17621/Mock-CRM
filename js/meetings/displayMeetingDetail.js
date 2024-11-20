@@ -117,12 +117,15 @@ deleteBtn.addEventListener("click", (e)=>{
 
 // DeleteMeeting
 async function deleteMeeting(meetingKey) {
-    confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`);
-    let response=await res.json();
+    // confirm("Are you sure to cancel/Delete meeting?")
+    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`, {
+        method:"DELETE"
+    });
+    // let response=await res.json();
     if(res.status=="204");
     {
         alert("Meeting Deleted!")
+        window.history.href = `/html/meetings/zohoMeetingmeetings.html`
     }
 }
 //Back to previous page

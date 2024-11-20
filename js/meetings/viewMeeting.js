@@ -115,8 +115,12 @@ deleteMeetingBtn.addEventListener("click", (e)=>{
 async function deleteMeeting(meetingKey) {
     try {
         let res=await fetch(`/meeting/deletemeeting/${meetingKey}`,{method:"DELETE"});
-        let out=await res.json();
-        console.log(out);
+        if(res.ok){
+            console.log("Deleted");
+            
+        }
+        // let out=await res.json();
+        // console.log(out);
         
     } catch (error) {
         console.log(error);

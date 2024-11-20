@@ -39,8 +39,11 @@ router.use(async (req, res, next) => {
             next();
         }
         else {
-            let token = await getToken(req, res);
-            next();
+            let data = await getToken(req, res);
+            if(data.success){
+                ACCESS_TOKEN = data.token;
+                next();
+            }
         }
         } catch (error) {
             console.log(error);
@@ -53,12 +56,12 @@ router.use(async (req, res, next) => {
         let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
         if (myreq) {
             let result = await myreq.data;
+            console.log(result);
             
             await res.cookie("meeting_accessToken", result.access_token, {
                 maxAge: 3600000,
                 secure: false,
-                httpOnly: true,
-                sameSite: none});
+                httpOnly: true});
             return {
                 "success": true,
                 "token": result.access_token
@@ -72,9 +75,9 @@ router.use(async (req, res, next) => {
 router.get(`/getZohoMeetingUserDetails/:accessToken`, async(req, res)=>{
     try {
         const { accessToken } = req.params;
-        let data = await fetch(`https://meeting.zoho.com/api/v2/user.json`, {
+        let data = await fetch(`https://meeting.zoho.in/api/v2/user.json`, {
             headers:{
-                "Authorization": `Zoho-oauthtoken ${accessToken}`
+                // "Authorization": `Zoho-oauthtoken ${accessToken}`
             }
         });
         if(data.ok){
@@ -92,9 +95,11 @@ router.get(`/getZohoMeetingUserDetails/:accessToken`, async(req, res)=>{
 // 1. [--POST--] request to Zoho API
 router.post('/postmeeting', async (req, res) => {
     try {
-        const obj = req.body; // Get the request body
+        const obj = req.body; // Get the request body    
+        console.log(obj);
+            
         const response = await fetch(
-            ZOHO_API_URL,
+            `https://meeting.zoho.in/api/v2/60017874042/sessions.json`,
             {
                 method: "POST",
                 headers: {
@@ -104,12 +109,14 @@ router.post('/postmeeting', async (req, res) => {
                 body: JSON.stringify(obj)
             }
         );
-        if (!response.ok) throw new Error("Error: " + response.status + " " + response.statusText);
+        if (!response.ok) {throw new Error("Error: " + response.status + " " + response.statusText);}
         let postedObj = await response.json();
         res.json(postedObj);
 
     } catch (error) {
-        console.error('Error:', error.message); // Log the error
+        console.log(error);
+        
+        // console.error('Error:', error.message); // Log the error
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });

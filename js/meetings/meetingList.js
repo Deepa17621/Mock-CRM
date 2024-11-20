@@ -1,15 +1,17 @@
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
-        const res=await fetch('/meeting/getmeetinglist');
+        let res=await fetch('/meeting/getmeetinglist');
         let meetingList=await res.json();
         if(!res.ok)
         {
             throw new Error("Error in URL"+res.status);
         }
-            console.log(meetingList);
-            console.log(meetingList["session"]);
-            sendToTable(meetingList["session"]);
+       else {
+        console.log("Deepa");
+        
+        sendToTable(meetingList["session"]);
+       }
     } catch (error) {
         console.log(error);  
     }
