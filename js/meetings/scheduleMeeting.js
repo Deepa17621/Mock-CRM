@@ -74,6 +74,7 @@ let agenda = document.querySelector("#agendaForForm");
 let startTime = document.querySelector("#startTime");
 let endTime = document.querySelector("#endTime");
 let host = "60030981356";
+
 // document.querySelector("#hostInForm");
 let participants = arr.map(email => (JSON.stringify({ email })));
 console.log(participants);
@@ -85,11 +86,11 @@ let myForm = document.querySelector("#form");
 
 // ii) Set Values to input feilds - (Existing Details will be Displayed in form feilds)
 function setToFormFields(obj) {
-    topic.value = obj.topic;
+    topic.value    = obj.topic;
     timeZone.value = obj.timezone;
-    agenda.value = obj.agenda;
-    startTime.value = obj.startTime;
-    endTime.value = obj.endTime;
+    agenda.value   = obj.agenda;
+    startTime.value= obj.startTime;
+    endTime.value  = obj.endTime;
 }
 
 //6. form submission event
@@ -103,11 +104,6 @@ cancelBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.history.back();
 });
-
-//8. Onload event - clear input fields
-// window.onload = function() {
-//     myForm.reset();
-// };
 
 myForm.addEventListener("submit", async (e) => {
 console.log(`${startTime.value}`);

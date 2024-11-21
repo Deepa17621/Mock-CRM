@@ -175,7 +175,7 @@ function setImage(time)
 let scheduleMeeting=document.querySelector("#schedule");
 scheduleMeeting.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`/html/meetings/zMeetingCreate.html`;
+    window.location.href=`/html/meetings/scheduleMeeting.html`;
 });
 
 // List Html Structure Function
@@ -208,8 +208,7 @@ async function startMeeting(meetingKey) {
     try {
         let res=await fetch(`/meeting/getMeeting/${meetingKey}`);
         let obj=await res.json();
-        if(!res.ok)
-        {
+        if(!res.ok){
             throw new Error("Error in Url: "+ res.status+ " "+ res.statusText)
         }
         console.log(obj);
