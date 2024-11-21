@@ -77,7 +77,7 @@ let topic = document.querySelector("#topic");
 let timeZone = document.querySelector("#timeZone");
 let agenda = document.querySelector("#agendaForForm");
 let startTime = document.querySelector("#startTime");
-let durationOfMeeting = document.querySelector("#durationOfMeeting");
+// let durationOfMeeting = document.querySelector("#durationOfMeeting");
 let host = "60030981356";
 
 // document.querySelector("#hostInForm");
@@ -127,7 +127,7 @@ console.log(`${startTime.value}`);
             "presenter": `${host}`,
             "startTime": `${startTime.value}`,
             "timezone": "Asia/Calcutta",
-            "duration": durationOfMeeting.value,
+            // "duration": durationOfMeeting.value,
             "participants": []
         }
     };
