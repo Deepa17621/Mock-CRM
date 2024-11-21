@@ -1,31 +1,30 @@
 // 1. get meeting key from url
-let currentUrl=window.location.search;
-let param=new URLSearchParams(currentUrl);
-let meetingK=param.get("meetingKey");
+let currentUrl = window.location.search;
+let param = new URLSearchParams(currentUrl);
+let meetingK = param.get("meetingKey");
 
 // i) If it is Past Meeting
-let past=param.get("pastMeeting");
-let url="https://dmock-crm.vercel.app/";
+let past = param.get("pastMeeting");
+let url = "https://dmock-crm.vercel.app/";
 console.log(past);
 
 let listOfMeetings;
-let editBtn=document.querySelector("#edit");
-let deleteBtn=document.querySelector("#cancel");
+let editBtn = document.querySelector("#edit");
+let deleteBtn = document.querySelector("#cancel");
 // ii) Alter UI to past meeting view
-if(past)
-{
-    let btns=document.querySelector("#btns");
+if (past) {
+    let btns = document.querySelector("#btns");
     while (btns.hasChildNodes()) {
         btns.childNodes[0].remove();
     }
-    btns.innerHTML=`<button type="button" id="edit" class="btnsInMeetingView repeatMeet" style="width:140px" onclick="editMeeting(${meetingK})">Repeat meeting</button>
+    btns.innerHTML = `<button type="button" id="edit" class="btnsInMeetingView repeatMeet" style="width:140px" onclick="editMeeting(${meetingK})">Repeat meeting</button>
                     <button type="button" id="cancel" class="btnsInMeetingView" onclick=deleteMeeting(${meetingK})>Cancel</button>`;
 
-    let forCompleted=document.querySelector("#forCompleted");
-    let completed=document.createElement("button");
+    let forCompleted = document.querySelector("#forCompleted");
+    let completed = document.createElement("button");
     forCompleted.appendChild(completed);
-    completed.innerHTML="Completed";
-    completed.style.cssText=`border:1px solid green;
+    completed.innerHTML = "Completed";
+    completed.style.cssText = `border:1px solid green;
                              background-color:green;
                              height:25px;
                              width:100px;
@@ -34,83 +33,78 @@ if(past)
                              font-size:14px`;
 
 }
-else{
+else {
     //Buttons
-    let startMeetingBtn=document.querySelector("#startMeeting");
+    let startMeetingBtn = document.querySelector("#startMeeting");
     // StartMeeting
-    startMeetingBtn.addEventListener("click", (e)=>{
-    e.preventDefault();
-    startMeeting(meetingK);
-});
+    startMeetingBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        startMeeting(meetingK);
+    });
 }
 
 //function for repeat meeting
-function editMeeting(meetingKey)
-{
-    window.location.href=`/html/meetings/scheduleMeeting.html?meetingToBeEdited=${meetingKey}`
+function editMeeting(meetingKey) {
+    window.location.href = `/html/meetings/scheduleMeeting.html?meetingToBeEdited=${meetingKey}`
 }
 
 //Header
-let topic=document.querySelector("#meetingTopicForHeader");
+let topic = document.querySelector("#meetingTopicForHeader");
 
 // 1. Get Meeting Details
 async function getMeetingObj() {
     try {
-        let res=await fetch(`/meeting/getmeeting/${meetingK}`, {
-            method:"GET"
+        let res = await fetch(`/meeting/getmeeting/${meetingK}`, {
+            method: "GET"
         });
-        let response=await res.json();
-        if(res.ok)
-        {
+        let response = await res.json();
+        if (res.ok) {
             console.log(response.session);
             displayMeetingDetail(response.session);
 
         }
-        else throw new Error("Error: "+ res.statusText+" "+res.status)
+        else throw new Error("Error: " + res.statusText + " " + res.status)
     } catch (error) {
-        
+
     }
 }
 getMeetingObj(); // Execution starts from here
 
-let innerContainer=document.querySelector("#innerContainer");
+let innerContainer = document.querySelector("#innerContainer");
 
 // Display Meeting Details 
-function displayMeetingDetail(obj)
-{
-    topic.innerHTML=obj.topic;
-    innerContainer.innerHTML=structure(obj);
+function displayMeetingDetail(obj) {
+    topic.innerHTML = obj.topic;
+    innerContainer.innerHTML = structure(obj);
 }
 
 
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/meeting/getmeeting/${meetingKey}`, {
-            method:"GET"
+        let res = await fetch(`/meeting/getmeeting/${meetingKey}`, {
+            method: "GET"
         });
-        let response=await res.json();
-        if(res.ok)
-        {
+        let response = await res.json();
+        if (res.ok) {
             console.log(response.session);
-            window.location.href=response.session.startLink
+            window.location.href = response.session.startLink
         }
-        else throw new Error("Error: "+ res.statusText+" "+res.status)
-        
+        else throw new Error("Error: " + res.statusText + " " + res.status)
+
     } catch (error) {
-        
+
     }
 }
 
 // Edit meeting details
-editBtn.addEventListener("click",(e)=>{
+editBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/scheduleMeeting.html?meetingToBeEdited=${meetingK}`;
+    window.location.href = `/html/meetings/scheduleMeeting.html?meetingToBeEdited=${meetingK}`;
 })
 //delete meeting - Click Event
-deleteBtn.addEventListener("click", (e)=>{
+deleteBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    if(confirm("Are You sure? delete meeting"))
-    {
+    if (confirm("Are You sure? delete meeting")) {
         deleteMeeting(meetingK)
     }
 })
@@ -118,27 +112,26 @@ deleteBtn.addEventListener("click", (e)=>{
 // DeleteMeeting
 async function deleteMeeting(meetingKey) {
     // confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`, {
-        method:"DELETE"
+    let res = await fetch(`/meeting/deletemeeting/${meetingKey}`, {
+        method: "DELETE"
     });
     // let response=await res.json();
-    if(res.status=="204");
+    if (res.status == "204");
     {
         alert("Meeting Deleted!")
         window.location.href = `/html/meetings/zohoMeetingmeetings.html`
     }
 }
 //Back to previous page
-let backBtn=document.querySelector("#backBtn");
-backBtn.addEventListener("click", (e)=>{
+let backBtn = document.querySelector("#backBtn");
+backBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.history.back();
 });
 
 // Structure For Display meeting Details
-function structure(obj)
-{
-    let meetingStructure=`<div class="colInDisplayMeet">
+function structure(obj) {
+    let meetingStructure = `<div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="calendar">
                                 <img src="/assets/meetingImages/calendar.svg" alt="">
@@ -201,5 +194,5 @@ function structure(obj)
                         </div>
                     </div>`
 
-                    return meetingStructure;
+    return meetingStructure;
 }

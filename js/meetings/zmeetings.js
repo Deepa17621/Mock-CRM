@@ -1,42 +1,41 @@
 
 // console.log(res);
-let url="https://dmock-crm.vercel.app/";
+let url = "https://dmock-crm.vercel.app/";
 let listOfMeetings;
 
 async function getlistOfMeeting() {
     try {
-        let res=await fetch('/meeting/getmeetinglist', {
-            method:"GET"
+        let res = await fetch('/meeting/getmeetinglist', {
+            method: "GET"
         });
-        let response=await res.json();
-        if(res.ok)
-        {
+        let response = await res.json();
+        if (res.ok) {
             console.log(response.session);
             createList(response.session);
         }
-        else throw new Error("Error: "+ res.statusText+" "+res.status)
+        else throw new Error("Error: " + res.statusText + " " + res.status)
     } catch (error) {
-        
+
     }
 }
 getlistOfMeeting(); // Execution starts from here
 
 // Navigate From Upcoming to Past And Past To Upcoming Meeting
-let upComingLink=document.querySelector("#upComingLink");
-let pastLink=document.querySelector("#pastLink");
-let personalRoom=document.querySelector("#personalRoom");
+let upComingLink = document.querySelector("#upComingLink");
+let pastLink = document.querySelector("#pastLink");
+let personalRoom = document.querySelector("#personalRoom");
 
 
 // click event for navigate from upcoming to past
-upComingLink.addEventListener("click", (e)=>{
+upComingLink.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/zohoMeetingmeetings.html`;
+    window.location.href = `/html/meetings/zohoMeetingmeetings.html`;
 });
-pastLink.addEventListener("click", (e)=>{
+pastLink.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/pastMeeting.html`;
+    window.location.href = `/html/meetings/pastMeeting.html`;
 });
-personalRoom.addEventListener("click", (e)=>{
+personalRoom.addEventListener("click", (e) => {
     e.preventDefault();
     //Need to write code here--->?(FIX)
 });
@@ -49,80 +48,69 @@ let wrapperForThisWeek = document.querySelector(".wrapperForThisWeek");
 let wrapperForThisMonth = document.querySelector(".wrapperForThisMonth");
 let wrapperForLater = document.querySelector(".wrapperForLater");
 
-function createList(arrOfObj){
+function createList(arrOfObj) {
     arrOfObj.forEach(obj => {
-        let li=document.createElement("li");
-        li.className="list"
+        let li = document.createElement("li");
+        li.className = "list"
         li.setAttribute("id", obj.meetingKey);
-        li.addEventListener("click", (e)=>{
+        li.addEventListener("click", (e) => {
             e.preventDefault();
-            window.location.href=`/html/meetings/displayMeetingDetail.html?meetingKey=${obj.meetingKey}`
+            window.location.href = `/html/meetings/displayMeetingDetail.html?meetingKey=${obj.meetingKey}`
         });
-        if(obj.eventTime=="Later")
-        {
-            if((obj.startTimeMillisec)>=(Date.now()))
-            {
-                if(!wrapperForLater.hasChildNodes())
-                    {
-                        let h4=document.createElement("h4");
-                        wrapperForLater.appendChild(h4)
-                        h4.innerHTML="Later";
-                    }
-                li.innerHTML=listStructure(obj);
+        if (obj.eventTime == "Later") {
+            if ((obj.startTimeMillisec) >= (Date.now())) {
+                if (!wrapperForLater.hasChildNodes()) {
+                    let h4 = document.createElement("h4");
+                    wrapperForLater.appendChild(h4)
+                    h4.innerHTML = "Later";
+                }
+                li.innerHTML = listStructure(obj);
                 wrapperForLater.appendChild(li);
             }
         }
-        else if(obj.eventTime=="This Week")
-            {
-                if((obj.startTimeMillisec)>=(Date.now())){
-                    if(!wrapperForThisWeek.hasChildNodes()){
-                        let h4=document.createElement("h4");
-                        wrapperForThisWeek.appendChild(h4);
-                        h4.innerHTML="This Week";
-                    }
-                    li.innerHTML=listStructure(obj);
-                    wrapperForThisWeek.appendChild(li);
+        else if (obj.eventTime == "This Week") {
+            if ((obj.startTimeMillisec) >= (Date.now())) {
+                if (!wrapperForThisWeek.hasChildNodes()) {
+                    let h4 = document.createElement("h4");
+                    wrapperForThisWeek.appendChild(h4);
+                    h4.innerHTML = "This Week";
                 }
+                li.innerHTML = listStructure(obj);
+                wrapperForThisWeek.appendChild(li);
             }
-            else if(obj.eventTime=="This Month")
-                {
-                    if((obj.startTimeMillisec)>=(Date.now())){
-                        if(!wrapperForThisMonth.hasChildNodes()){
-                            let h4=document.createElement("h4");
-                            wrapperForThisMonth.appendChild(h4);
-                            h4.innerHTML="This Month";
-                        }
-                        li.innerHTML=listStructure(obj);
-                        wrapperForThisMonth.appendChild(li);
-                    }
+        }
+        else if (obj.eventTime == "This Month") {
+            if ((obj.startTimeMillisec) >= (Date.now())) {
+                if (!wrapperForThisMonth.hasChildNodes()) {
+                    let h4 = document.createElement("h4");
+                    wrapperForThisMonth.appendChild(h4);
+                    h4.innerHTML = "This Month";
                 }
-    
-        else if(obj.eventTime=="Today")
-        {
-            if((obj.startTimeMillisec)>=(Date.now()))
-            {
-                if(!wrapperForToday.hasChildNodes())
-                {
-                    let h4=document.createElement("h4");
+                li.innerHTML = listStructure(obj);
+                wrapperForThisMonth.appendChild(li);
+            }
+        }
+
+        else if (obj.eventTime == "Today") {
+            if ((obj.startTimeMillisec) >= (Date.now())) {
+                if (!wrapperForToday.hasChildNodes()) {
+                    let h4 = document.createElement("h4");
                     wrapperForToday.appendChild(h4);
-                    h4.innerHTML="Today"
+                    h4.innerHTML = "Today"
                 }
-                li.innerHTML=listStructure(obj);
+                li.innerHTML = listStructure(obj);
                 wrapperForToday.appendChild(li);
             }
-                
+
         }
-        else if(obj.eventTime=="Tomorrow")
-        {
-            if((obj.startTimeMillisec)>=(Date.now()))
-            {
-                if(!wrapperForTomorrow.hasChildNodes())
-                {
-                    let h4=document.createElement("h4");
+        else if (obj.eventTime == "Tomorrow") {
+            if ((obj.startTimeMillisec) >= (Date.now())) {
+                if (!wrapperForTomorrow.hasChildNodes()) {
+                    let h4 = document.createElement("h4");
                     wrapperForTomorrow.appendChild(h4);
-                    h4.innerHTML="Tomorrow";
+                    h4.innerHTML = "Tomorrow";
                 }
-                li.innerHTML=listStructure(obj);
+                li.innerHTML = listStructure(obj);
                 wrapperForTomorrow.appendChild(li);
             }
         }
@@ -130,11 +118,10 @@ function createList(arrOfObj){
 }
 
 // Time Image Function
-function setImage(time)
-{
+function setImage(time) {
     switch (time) {
         case "MORNING":
-            return`/assets/meetingImages/morningTime.svg`;
+            return `/assets/meetingImages/morningTime.svg`;
         case "AFTERNOON":
             return `/assets/meetingImages/afternoonTime.svg`;
         case "EVENING":
@@ -147,16 +134,15 @@ function setImage(time)
 }
 
 // Schedule Meeting
-let scheduleMeeting=document.querySelector("#schedule");
-scheduleMeeting.addEventListener("click", (e)=>{
+let scheduleMeeting = document.querySelector("#schedule");
+scheduleMeeting.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/zMeetingCreate.html`;
+    window.location.href = `/html/meetings/zMeetingCreate.html`;
 });
 
 // List Html Structure Function
-function listStructure(meetingObj)
-{
-    let structure=`
+function listStructure(meetingObj) {
+    let structure = `
         <div class="dateTimeContainer division">
             <span><img src=${setImage(meetingObj.timePeriod)} alt="Time-Image"></span>
             <div id="dateTime">
@@ -175,44 +161,42 @@ function listStructure(meetingObj)
             <button id="startBtn" onclick="startMeeting(${meetingObj.meetingKey})">Start</button>
         </div>
         `;
-        return structure;
+    return structure;
 }
 
 // Function to start a Meeting for each Meeting
 async function startMeeting(meetingKey) {
     try {
-        let res=await fetch(`/meeting/getMeeting/${meetingKey}`);
-        let obj=await res.json();
-        if(!res.ok)
-        {
-            throw new Error("Error in Url: "+ res.status+ " "+ res.statusText)
+        let res = await fetch(`/meeting/getMeeting/${meetingKey}`);
+        let obj = await res.json();
+        if (!res.ok) {
+            throw new Error("Error in Url: " + res.status + " " + res.statusText)
         }
         console.log(obj);
         console.log(obj.session.startLink);
-        if(confirm("start Immediately?"))
-        {
-            window.location.href=obj.session.startLink;
+        if (confirm("start Immediately?")) {
+            window.location.href = obj.session.startLink;
         }
     } catch (error) {
-        
+
     }
 }
 
 // Delete Meeting
 async function deleteMeeting(meetingKey) {
     confirm("Are you sure to cancel/Delete meeting?")
-    let res=await fetch(`/meeting/deletemeeting/${meetingKey}`);
-    let response=await res.json();
-    if(res.status=="204");
+    let res = await fetch(`/meeting/deletemeeting/${meetingKey}`);
+    let response = await res.json();
+    if (res.status == "204");
     {
         alert("Meeting Deleted!")
     }
 }
 // Schedule Meeting Button-click Event
-let schedule=document.querySelector("#schedule");
-schedule.addEventListener("click", (e)=>{
+let schedule = document.querySelector("#schedule");
+schedule.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/scheduleMeeting.html`;
+    window.location.href = `/html/meetings/scheduleMeeting.html`;
 });
 
 // DropDown Menu - Three Dots
@@ -237,7 +221,7 @@ schedule.addEventListener("click", (e)=>{
 //     // Need to create form to schdule a meeting
 // });
 
-// // Meeting Options -- Three Dot Menu Bar 
+// // Meeting Options -- Three Dot Menu Bar
 
 
 // For now not required ...will be used in future if required.

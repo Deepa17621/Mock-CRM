@@ -2,6 +2,7 @@
 let ul = document.querySelector("#inpsUL");
 let input = document.querySelector("#participants")
 let arr = [];
+
 function addTag() {
     ul.querySelectorAll("li").forEach(li => { li.remove() })
     arr.slice().reverse().forEach(inp => {
@@ -9,6 +10,7 @@ function addTag() {
         ul.insertAdjacentHTML("afterbegin", li)
     });
 }
+
 // Remove input By Clicking xmark
 function remove(ele, inpFromArr) {
     let index = arr.indexOf(inpFromArr);
@@ -91,10 +93,10 @@ let myForm = document.querySelector("#form");
 
 // ii) Set Values to input feilds - (Existing Details will be Displayed in form feilds)
 function setToFormFields(obj) {
-    topic.value    = obj.topic;
+    topic.value = obj.topic;
     timeZone.value = obj.timezone;
-    agenda.value   = obj.agenda;
-    startTime.value= obj.startTime;
+    agenda.value = obj.agenda;
+    startTime.value = obj.startTime;
     // durationOfMeeting.value  = obj.durationOfMeeting;
 }
 
@@ -111,7 +113,7 @@ cancelBtn.addEventListener("click", (e) => {
 });
 
 myForm.addEventListener("submit", async (e) => {
-console.log(`${startTime.value}`);
+    console.log(`${startTime.value}`);
 
     e.preventDefault();
     //Check Valid Inputs or not

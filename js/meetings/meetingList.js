@@ -1,105 +1,102 @@
 // Fetch to get the meeting list from meeting API
 async function getList() {
     try {
-        let res=await fetch('/meeting/getmeetinglist');
-        let meetingList=await res.json();
-        if(!res.ok)
-        {
-            throw new Error("Error in URL"+res.status);
+        let res = await fetch('/meeting/getmeetinglist');
+        let meetingList = await res.json();
+        if (!res.ok) {
+            throw new Error("Error in URL" + res.status);
         }
-       else {
-        console.log("Deepa");
-        
-        sendToTable(meetingList["session"]);
-       }
+        else {
+            console.log("Deepa");
+
+            sendToTable(meetingList["session"]);
+        }
     } catch (error) {
-        console.log(error);  
+        console.log(error);
     }
 }
 
-    getList();  // Execution Starts Here...
+getList();  // Execution Starts Here...
 
-    // Table to List All the meetings
+// Table to List All the meetings
 
-    let table=document.querySelector("#meetingListTable");
-    let tHead=document.querySelector("thead");
-    let tBody=document.querySelector("tbody");
-    
-function sendToTable(obj)
-{
+let table = document.querySelector("#meetingListTable");
+let tHead = document.querySelector("thead");
+let tBody = document.querySelector("tbody");
+
+function sendToTable(obj) {
     //Table Head
-    let thead=document.createElement("tr");
+    let thead = document.createElement("tr");
     tHead.appendChild(thead);
-    let theadArr=["Title", "From", "To", "Host"];
-    theadArr.forEach(e=>{
-        let th=document.createElement("th");
-        th.innerHTML=e;
+    let theadArr = ["Title", "From", "To", "Host"];
+    theadArr.forEach(e => {
+        let th = document.createElement("th");
+        th.innerHTML = e;
         thead.appendChild(th)
     });
     for (let i = 0; i < obj.length; i++) {
-        let tr=document.createElement("tr");
+        let tr = document.createElement("tr");
         tBody.appendChild(tr);
-        let titleTD=document.createElement("td");
+        let titleTD = document.createElement("td");
         tr.appendChild(titleTD);
-        titleTD.innerHTML=obj[i]["topic"];
+        titleTD.innerHTML = obj[i]["topic"];
         titleTD.setAttribute("id", obj[i]["meetingKey"])
         titleTD.setAttribute("onclick", "rowClickedEvent(this.id)");
-        titleTD.style.cursor="pointer";
-        let fromTD=document.createElement("td");
+        titleTD.style.cursor = "pointer";
+        let fromTD = document.createElement("td");
         tr.appendChild(fromTD);
-        fromTD.innerHTML=obj[i]["startTime"];
-        let toTD=document.createElement("td");
+        fromTD.innerHTML = obj[i]["startTime"];
+        let toTD = document.createElement("td");
         tr.appendChild(toTD);
-        toTD.innerHTML=obj[i]["endTime"];
-        let hostTD=document.createElement("td");
+        toTD.innerHTML = obj[i]["endTime"];
+        let hostTD = document.createElement("td");
         tr.appendChild(hostTD);
-        hostTD.innerHTML=obj[i]["presenterFullName"];
-        
+        hostTD.innerHTML = obj[i]["presenterFullName"];
+
     }
 }
 // Row Clicked Event===> To Display Meeting Details
 
-function rowClickedEvent(meetingKey)
-{
-    window.location.href=`/html/meetings/viewMeeting.html?meetingKey=${meetingKey}`;
+function rowClickedEvent(meetingKey) {
+    window.location.href = `/html/meetings/viewMeeting.html?meetingKey=${meetingKey}`;
 }
 
 // 1. Meeting Creation Event-----> Create Meeting <----------
-let dialog=document.querySelector("#dialogbox");
-let meetingBtn=document.querySelector("#createMeeting");
-let meetingCancelBtn=document.querySelector("#meetingCancelBtn");
-meetingBtn.addEventListener("click", (e)=>{
+let dialog = document.querySelector("#dialogbox");
+let meetingBtn = document.querySelector("#createMeeting");
+let meetingCancelBtn = document.querySelector("#meetingCancelBtn");
+meetingBtn.addEventListener("click", (e) => {
     e.preventDefault();
     dialog.showModal();
 });
 
 // Meeting close event-dialog box closing event
-meetingCancelBtn.addEventListener("click", (e)=>{
+meetingCancelBtn.addEventListener("click", (e) => {
     e.preventDefault();
     dialog.close();
-    window.location.href=`/html/meetings/meetingList.html`;
+    window.location.href = `/html/meetings/meetingList.html`;
 });
 
 // meeting save button
-let meetingSaveBtn=document.querySelector("#meetingSaveBtn");
+let meetingSaveBtn = document.querySelector("#meetingSaveBtn");
 
-meetingSaveBtn.addEventListener("click", (e)=>{
+meetingSaveBtn.addEventListener("click", (e) => {
     e.preventDefault();
     meetingForm.requestSubmit();
 });
 // Meeting Form Data
-let meetingTopic=document.querySelector("#topic");
-let startTime=document.querySelector("#startTime");
-let agenda=document.querySelector("#agenda");
+let meetingTopic = document.querySelector("#topic");
+let startTime = document.querySelector("#startTime");
+let agenda = document.querySelector("#agenda");
 // let endTime=document.querySelector("#endTime");
-let presenterId=document.querySelector("#presenterId");
-let participants=document.querySelector("#participants");
+let presenterId = document.querySelector("#presenterId");
+let participants = document.querySelector("#participants");
 // Meeting Form  submit Event
-const meetingForm=document.querySelector("#meetingForm");
+const meetingForm = document.querySelector("#meetingForm");
 meetingForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log(startTime.value);
-    
+
     // Request Body
     const session = {
         "session": {
@@ -131,18 +128,17 @@ meetingForm.addEventListener("submit", async (e) => {
         }
         const responseBody = await response.json();
         dialog.close();
-        let newMeetingResStoredInJson=await fetch(`http://localhost:3000/meetings`, 
+        let newMeetingResStoredInJson = await fetch(`http://localhost:3000/meetings`,
             {
-                method:"POST",
-                headers:{"Content-Type": "application/json"},
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(responseBody)
             }
         );
-        if(!newMeetingResStoredInJson.ok)
-        {
+        if (!newMeetingResStoredInJson.ok) {
             throw new Error("Meeting Data Not Stored In Json File");
         }
-        window.location.href=`/html/meetings/meetingList.html`;
+        window.location.href = `/html/meetings/meetingList.html`;
         alert("Meeting Created SuccessFully");
         console.log(responseBody);
     } catch (error) {
@@ -151,8 +147,9 @@ meetingForm.addEventListener("submit", async (e) => {
 });
 
 // Navigate to mock meeting
-let mockMeeting=document.querySelector("#mockMeeting");
-mockMeeting.addEventListener("click", (e)=>{
+let mockMeeting = document.querySelector("#mockMeeting");
+
+mockMeeting.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href=`/html/meetings/zohoMeeting.html`
+    window.location.href = `/html/meetings/zohoMeeting.html`
 })
