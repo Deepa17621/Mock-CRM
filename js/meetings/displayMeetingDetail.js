@@ -125,7 +125,7 @@ async function deleteMeeting(meetingKey) {
     if(res.status=="204");
     {
         alert("Meeting Deleted!")
-        window.history.href = `/html/meetings/zohoMeetingmeetings.html`
+        window.location.href = `/html/meetings/zohoMeetingmeetings.html`
     }
 }
 //Back to previous page
@@ -141,7 +141,7 @@ function structure(obj)
     let meetingStructure=`<div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="calendar">
-                                <img src="../meetingImages/calendar.svg" alt="">
+                                <img src="/assets/meetingImages/calendar.svg" alt="">
                             </div>
                         </div>
                         <div class="textContainer">
@@ -152,7 +152,7 @@ function structure(obj)
                     <div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="host">
-                                <img src="../meetingImages/cohost-icon.svg" alt="">
+                                <img src="/assets/meetingImages/cohost-icon.svg" alt="">
                             </div>
                         </div>
                         <div class="textContainer" id="hostTextContainer">
@@ -169,7 +169,7 @@ function structure(obj)
                     <div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="participant">
-                                <img src="../meetingImages/participants.svg" alt="">
+                                <img src="/assets/meetingImages/participants.svg" alt="">
                             </div>
                         </div>
                         <div class="textContainer">
@@ -181,7 +181,7 @@ function structure(obj)
                     <div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="reminder">
-                                <img src="../meetingImages/reminder-icon.svg" alt="">
+                                <img src="/assets/meetingImages/reminder-icon.svg" alt="">
                             </div>
                         </div>
                         <div class="textContainer">
@@ -192,7 +192,7 @@ function structure(obj)
                     <div class="colInDisplayMeet">
                         <div class="iconContainer">
                             <div class="imgContainer" id="agenda">
-                                <img src="../meetingImages/agenda-icon.svg" alt="">
+                                <img src="/assets/meetingImages/agenda-icon.svg" alt="">
                             </div>
                         </div>
                         <div class="textContainer">

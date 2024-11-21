@@ -229,6 +229,7 @@ async function deleteMeeting(meetingKey) {
     let response=await res.json();
     if(res.status=="204");
     {
-        alert("Meeting Deleted!")
+        alert("Meeting Deleted!");
+        window.location.href = `/html/meetings/pastMeeting.html`;
     }
 }

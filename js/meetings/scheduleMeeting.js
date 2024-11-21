@@ -53,7 +53,7 @@ async function getMeetingDetailToEdit(meetingKeyForEdit) {
         if (!res.ok) {
             throw new Error("Error: " + res.status + " " + res.statusText);
         }
-        console.log("Existing Obj: " + existingMeetingObj);
+        console.log(existingMeetingObj);
         setToFormFields(existingMeetingObj.session);
     } catch (error) {
 
@@ -66,13 +66,18 @@ flatpickr(".datePicker", {
     dateFormat: "M j, Y h:i K", // Format for date and time (e.g., 2024-11-20 14:30)
     time_24hr: false          // Use 24-hour format
 });
+flatpickr(".duration", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i"
+})
 
 //3. Get All the inputs to create Meeting
 let topic = document.querySelector("#topic");
 let timeZone = document.querySelector("#timeZone");
 let agenda = document.querySelector("#agendaForForm");
 let startTime = document.querySelector("#startTime");
-let endTime = document.querySelector("#endTime");
+let durationOfMeeting = document.querySelector("#durationOfMeeting");
 let host = "60030981356";
 
 // document.querySelector("#hostInForm");
@@ -90,7 +95,7 @@ function setToFormFields(obj) {
     timeZone.value = obj.timezone;
     agenda.value   = obj.agenda;
     startTime.value= obj.startTime;
-    endTime.value  = obj.endTime;
+    // durationOfMeeting.value  = obj.durationOfMeeting;
 }
 
 //6. form submission event
@@ -112,7 +117,7 @@ console.log(`${startTime.value}`);
     //Check Valid Inputs or not
     !startTime.value ? setError(startTime) : dateTimeValidation(startTime);
     !topic.value ? setError(topic) : setSuccess(topic);
-    endTime.value ? dateTimeValidation(endTime) : "";
+    // durationOfMeeting.value ? dateTimeValidation(durationOfMeeting) : "";
 
     //Request Body
     const session = {
@@ -122,7 +127,7 @@ console.log(`${startTime.value}`);
             "presenter": `${host}`,
             "startTime": `${startTime.value}`,
             "timezone": "Asia/Calcutta",
-            "endTime": endTime.value,
+            "duration": durationOfMeeting.value,
             "participants": []
         }
     };

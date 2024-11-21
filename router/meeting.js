@@ -182,21 +182,22 @@ router.put('/editmeeting/:meetingKey', async (req, res) => {
             {
                 method: "PUT",
                 headers: {
-                    "Authorization": "Zoho-oauthtoken " + ACCESS_TOKEN,
+                    "Authorization": `Zoho-oauthtoken ${ACCESS_TOKEN}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(session)
             }
         );
         if (!response.ok) {
-            throw new Error("Error: " + response.status + " " + response.message)
+            let res =await response.json()
+            throw new Error(response.status+ " "+ response.statusText)
         }
         const parsedResponse = await response.json();
         res.json(parsedResponse);
 
     } catch (error) {
-        console.error('Error:', error.message); // Log the error
-        res.status(error.response?.status || 500).json({ error: error.message });
+        console.error('Error:', error); // Log the error
+        res.json({ e: error });
     }
 });
 
