@@ -34,15 +34,13 @@ let inpArr = [leadName, leadMail, leadPhone, leadAddress,date, organization];
 
 form.addEventListener("submit", async(e) => {
     e.preventDefault();
-    if(!leadAddress.value || !leadMail.value || !leadName.value || !leadPhone.value)
-    {
+    
         leadName.value ? setSuccess(leadName) :setError(leadName) ;
         leadMail.value ? mailValidation(leadMail) :setError(leadMail) ;
         leadPhone.value ? mobileValidation(leadPhone) :setError(leadPhone) ;
         leadAddress.value ? setSuccess(leadAddress) :setError(leadAddress) ;
         // organization.value ? setSuccess(organization) :setError(organization);
         return;
-    }
     
     let obj = {};
     inpArr.forEach(e => {
