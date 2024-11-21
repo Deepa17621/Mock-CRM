@@ -6,7 +6,7 @@ let personalRoom = document.querySelector("#personalRoom");
 // click event for navigate from upcoming to past
 upComingLink.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.location.href=`.html/meetings/zohoMeetingmeetings.html`;
+    window.location.href=`/html/meetings/zohoMeetingmeetings.html`;
 });
 pastLink.addEventListener("click", (e)=>{
     e.preventDefault();
@@ -41,13 +41,13 @@ getlistOfMeeting(); // Execution starts from here
 
 // List-Down All the Meetings
 let wrapperForMeetingList = document.querySelector(".actualListContainer");
-let wrapperForYesterday = document.querySelector(".wrapperForYesterday");
-let wrapperForThisWeek = document.querySelector(".wrapperForThisWeek");
-let wrapperForLastWeek = document.querySelector(".wrapperForLastWeek");
-let wrapperForLastMonth = document.querySelector(".wrapperForLastMonth");
-let wrapperForLastYear = document.querySelector(".wrapperForLastYear");
-let wrapperForThisMonth = document.querySelector(".wrapperForThisMonth");
-let wrapperForEarlier = document.querySelector(".wrapperForEarlier");
+let wrapperForYesterday   = document.querySelector(".wrapperForYesterday");
+let wrapperForThisWeek    = document.querySelector(".wrapperForThisWeek");
+let wrapperForLastWeek    = document.querySelector(".wrapperForLastWeek");
+let wrapperForLastMonth   = document.querySelector(".wrapperForLastMonth");
+let wrapperForLastYear    = document.querySelector(".wrapperForLastYear");
+let wrapperForThisMonth   = document.querySelector(".wrapperForThisMonth");
+let wrapperForEarlier     = document.querySelector(".wrapperForEarlier");
 
 function createList(arrOfObj){
     arrOfObj.forEach(obj => {

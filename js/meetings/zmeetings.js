@@ -1,13 +1,8 @@
-// import dao from "../controller/dao.js";
-// let getAllMeetings=new dao('http://localhost:5500/getmeetinglist');
-
-// const { forIn } = require("lodash");
-
-// let res=getAllMeetings.getAll();
 
 // console.log(res);
 let url="https://dmock-crm.vercel.app/";
 let listOfMeetings;
+
 async function getlistOfMeeting() {
     try {
         let res=await fetch('/meeting/getmeetinglist', {
@@ -31,11 +26,6 @@ let upComingLink=document.querySelector("#upComingLink");
 let pastLink=document.querySelector("#pastLink");
 let personalRoom=document.querySelector("#personalRoom");
 
-// // Personal Room
-// personalRoom.addEventListener("click", (e)=>{
-//     e.preventDefault();
-
-// });
 
 // click event for navigate from upcoming to past
 upComingLink.addEventListener("click", (e)=>{
@@ -50,6 +40,7 @@ personalRoom.addEventListener("click", (e)=>{
     e.preventDefault();
     //Need to write code here--->?(FIX)
 });
+
 // List-Down All the Meetings
 let wrapperForMeetingList = document.querySelector(".actualListContainer");
 let wrapperForToday = document.querySelector(".wrapperForToday");
