@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Lead - Zoho CRM</title>
     <script src="../../js/customElements/customNavBar.js" type="module"></script>
-    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <!-- <link rel="stylesheet" href="../../css/leads/crmFront.css"> -->
+     <link rel="stylesheet" href="../../css/leads/leadList.css">
 </head>
 <body>
 
@@ -15,26 +16,24 @@
      <!-- Second Navbar -->
      <div id="secondNav">
         <!---->
-            <ul id="ull">
+            <ul id="ulWrapper">
                 <div id="left">
-                    <!-- <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li style="cursor: pointer;" id="filterIcon" class="btnOfSecondLayer"><i class="fa-solid fa-filter"></i></li>
                     <li>
-                        <select name="" id="leadOption" class="disabled">
+                        <select name="" id="leadOption" class="disabled btnOfSecondLayer">
                             <option value="All Leads">All Leads</option>
                             <option value="Locked Leads">Locaked Leads</option>
                             <option value="Junk Leads">Junk Leads</option>
                         </select>
-                    </li> -->
+                    </li>
                 </div>
                <div id="right">
                     <li>
-                        <button class="createBtnForAllModules" id="createLeadBtn">
-                            Create Lead
-                        </button>
+                        <button class="createBtnForAllModules btnOfSecondLayer" id="createLeadBtn">Create Lead</button>
                     </li>
                     <li>
-                        <select name="lookups" id="lookupForLead" onchange="selField()">
-                            <option value="">--Select--</option>
+                        <select name="lookups" id="lookupForLead" class="btnOfSecondLayer" onchange="selField()">
+                            <option value="">select</option>
                             <option value="id">id</option>
                             <option value="Lead Name">Lead Name</option>
                             <option value="Lead Mail">Lead Mail</option>
@@ -47,7 +46,7 @@
                         <input type="text" name="search" id="searchLead" placeholder="search here..."> 
                     </li>
                     <li class="disabled">
-                        <select name="" id="actionOption" >
+                        <select name="" id="actionOption" class="btnOfSecondLayer" >
                             <option value="">action</option>
                             <option value="Mass Update">Mass Update</option>
                             <option value="Mass Delete">Mass Delete</option>
@@ -59,16 +58,15 @@
             </ul>
     </div>
     <!-- Body Container -->
-    <div id="parent">
+    <div id="wrapperForList">
 
-        <!-- Filter Container Starts Here
-        <div id="filterForLead">
-            
+        <!--Filter Container Starts Here -->
+        <div id="filterForLead"> 
             <div id="searchBar">
                 <input type="text" name="" id="searchBarInp" placeholder="Search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </div>
-        </div> -->
+        </div> 
         <!-- Lead Container Starts Here-->
         <div id="leadListContainer">
             <table>

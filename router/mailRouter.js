@@ -9,19 +9,24 @@ const { default: axios } = require('axios');
 // let MAIL_MESSAGES_ACCESS;
 // let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
 let MAIL_ACCESS_ALL;
-let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL "
+let ACC_DETAILS;
+let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL"
 
 router.use(cookieParser());
 
 router.use(async (req, res, next) => {  
     // MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
     // MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
-
-    if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
+    // if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
+    //     next();
+    // }
+    MAIL_ACCESS_ALL = req.cookies.mail_access_all;
+    ACC_DETAILS = req.cookies.mail_acc_details;
+    if(MAIL_ACCESS_ALL && ACC_DETAILS){
         next();
     }
     else {
-
+               
         // let result = await getTokens(req, res);
         // if (result.success) {
 
@@ -62,12 +67,14 @@ router.get(`/getAccountDetails`, async(req,res)=>{
         let response = await fetch(`https://mail.zoho.com/api/accounts`,{
             method: "GET",
             headers: {
-                "Authorization": `Zoho-oauthtoken ${Accounts_ACCESS_TOKEN}`,  //ZohoMail.accounts.ALL
+                "Authorization": `Zoho-oauthtoken ${MAIL_ACCESS_ALL}`,  //ZohoMail.accounts.ALL
                 "Content-Type": "application/json"
             }
         });
         if(response.ok){
             let accDetails = await response.json();
+            console.log("Acc-Details-Mail:===> ");
+            console.log(accDetails);
             res.json(accDetails.data); // Account Id And Mail box MailAddress -FROM Address of this Account can be fetch
         }
         else {
