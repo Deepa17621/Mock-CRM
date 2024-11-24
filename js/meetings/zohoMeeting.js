@@ -25,7 +25,7 @@ function setImage() {
     else if ((date.getHours()) >= 15 && (date.getHours()) <= 17) {
         imgTagForTime.setAttribute("src", "/assets/meetingImages/eveningTime.svg");
     }
-    else if ((date.getHours()) >= 18 && (date.getHours()) <= 24 && (date.getHours()) <= 5) {
+    else if ((date.getHours()) <= 5 || date.getHours() >= 18) {
         imgTagForTime.setAttribute("src", "/assets/meetingImages/nightTime.svg");
     }
 }

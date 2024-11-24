@@ -5,26 +5,30 @@ const router=express.Router();
 const cookieParser = require('cookie-parser');
 const { default: axios } = require('axios');
 
-let MAIL_FOLDER_ACCESS;
-let MAIL_MESSAGES_ACCESS;
-let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
+// let MAIL_FOLDER_ACCESS;
+// let MAIL_MESSAGES_ACCESS;
+// let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
+let MAIL_ACCESS_ALL;
+let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL "
 
 router.use(cookieParser());
 
 router.use(async (req, res, next) => {  
-    MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
-    MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
+    // MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
+    // MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
+
     if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
         next();
     }
     else {
-        let result = await getTokens(req, res);
-        if (result.success) {
 
-            MAIL_FOLDER_ACCESS = await result.folderToken;
-            MAIL_MESSAGES_ACCESS = await result.messageToken
-            next();
-        }
+        // let result = await getTokens(req, res);
+        // if (result.success) {
+
+        //     MAIL_FOLDER_ACCESS = await result.folderToken;
+        //     MAIL_MESSAGES_ACCESS = await result.messageToken
+        //     next();
+        // }
     }
 });
 
@@ -52,6 +56,27 @@ let getTokens = async (req, res) => {
         throw new Error("Access token for Meeting Not found");
     }
 }
+
+router.get(`/getAccountDetails`, async(req,res)=>{
+    try {
+        let response = await fetch(`https://mail.zoho.com/api/accounts`,{
+            method: "GET",
+            headers: {
+                "Authorization": `Zoho-oauthtoken ${Accounts_ACCESS_TOKEN}`,  //ZohoMail.accounts.ALL
+                "Content-Type": "application/json"
+            }
+        });
+        if(response.ok){
+            let accDetails = await response.json();
+            res.json(accDetails.data); // Account Id And Mail box MailAddress -FROM Address of this Account can be fetch
+        }
+        else {
+            throw new Error("err-get-Acc-Details- "+response.statusText+", "+response.status)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 router.get('/getFoldersList', async (req, res) => {
     try {
@@ -113,10 +138,14 @@ router.get(`/displayMail/:folderId/:messageId`, async(req, res)=>{
             }
         });
         if(response.ok){
+            console.log(response);
+            
             let mailContent = await response.json();
             res.json(mailContent);
         }
         else{
+            console.log(response);
+            
             throw new Error("Error in Getting Mail content- "+ response.status+ response.statusText);
         }
     } catch (error) {
@@ -151,6 +180,27 @@ router.post(`/sendMail`, async(req, res)=>{
     }
 })
 
+router.get(`/metaDataOfMail/:folderId/:messageId`, async(req,res)=>{
+    try {
+        let { folderId, messageId } = req.params;
+        let result = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/folders/${folderId}/messages/${messageId}/details`, {
+            method:"GET",
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+            },
+        })
+        if(result.ok){
+            let data = await result.json();
+            res.json(data);
+        }
+        else{
+            throw new Error(result.status+" err in get MetaData "+ result.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports=router;
-
-

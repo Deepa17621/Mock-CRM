@@ -89,93 +89,59 @@
 .list:has(.check:checked){
     background-color:rgb(214, 222, 228) ;
 }
+/* Display Mail - Container */
 .displayContainer{
     height: 90vh;
-    overflow-y:scroll ;
-    border: 1px solid black;
-    color: white;
+    width: 70vw;
+    overflow:scroll ;
     background-color: white;
 }
-/* Compose EMail - Style */
-.newMailContainer{
-    height: 100%; 
-    width: 100%;
-    background-color: white;
-    color: rgb(5, 4, 4);
-    flex-grow: 1;
+.headerForDisplayMail{ 
+    height: 10%;
+    padding: 5px 8px 10px;
+    /* border-bottom: 2px solid black; */
 }
-.composeMailForm{
-    height: inherit;
-    width: inherit;
+.topRow{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 8px;
+    gap: 10px;
+    color: black;
+    background-color: antiquewhite;
+    margin-bottom: 10px;
 }
-.form-Group{
+.secondRow{
+    display: flex;
+    gap: 30px;
+    padding: 5px 8px 5px;
+    justify-content: end;
+    color: black;
+    margin-top: 12px;
+    margin-bottom: 10px;
     border-bottom: 1px solid black;
-    width: inherit;
-    height: 45px;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
 }
-.inps{
-    border: none;
-    font-size: small;
-    color: rgb(13, 14, 13);
-    outline: none;
-    width: 100%;
-    height: 100%;
-    padding-left: 5px;
-    padding-bottom: 0px;
-}
-.txtArea{
-    font-size: medium;
-}
-label{
-
-    width: 20px;
-    margin: auto;
-    padding-left: 10px;
-}
-
-.middleBar{
-    height: 40px;
-    background-color: rgb(207, 204, 204);
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-}
-#message{
-    height: 200px;
-    overflow-y: auto;
-    width: inherit;
-    outline: none;
-    border: none;
-}
-.headerForMail{
-    height: 30px;
-    background-color: azure;
-    margin-top: 20px;
-}
-.sendMailBtn{
-    width: 70px;
-    height: 25px;
-    margin-top: 10px;
-    margin-left: 10px;
-    border: 1px solid #2c66dd;
-    border-radius: 3px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-
-    color: #2c66dd;
+.symbols{
+    cursor: pointer;
     &:hover{
-        cursor: pointer;
-        background-color: rgb(169, 190, 231, 0.3);
+        color:#5c9dce ;
+        text-shadow: #5c9dce;
     }
 }
-.attachFile:hover{
+.closeMail{
     cursor: pointer;
-    color: #2c66dd;
+    height: 19px;
+    width: 19px;
+    padding: 5px;
+    &:hover{
+        /* border-radius: 50%; */
+        background-color: rgb(230, 225, 225, 0.9);
+    }
 }
+.summary{
+    font-weight: 500;
+}
+.contentContaier{
+    width: inherit;
+    padding:0px 3px 0px 10px;
+}
+

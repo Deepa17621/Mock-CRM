@@ -87,7 +87,18 @@ async function startMeeting(meetingKey) {
         let response = await res.json();
         if (res.ok) {
             console.log(response.session);
-            window.location.href = response.session.startLink
+            let startTime = response.session.startTimeMillisec;
+            let duration = response.session.duration;
+            let calculateEndTimeOfMeeting = startTime + duration;
+            if(((response.session.startTimeMillisec)-600000)<=Date.now() && !(Date.now())>(calculateEndTimeOfMeeting+1000)){
+                window.open(response.session.startLink, "_blank");
+            }
+            else{
+                alert("Meeting can be start before 10mins of start Time")
+                if(confirm("Do You Want Start Immediately? press OK")){
+                    window.open(response.session.startLink, "_blank")
+                }
+            }
         }
         else throw new Error("Error: " + res.statusText + " " + res.status)
 

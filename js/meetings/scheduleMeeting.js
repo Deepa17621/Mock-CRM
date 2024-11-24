@@ -188,10 +188,10 @@ async function updateMeeting(meetingKey, obj) {
             // If response status is not in the range 200-299, throw an error
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         } else {
-            let responseBody = await response.json();
+            // let responseBody = await response.json();
             window.location.href = `/html/meetings/displayMeetingDetail.html?meetingKey=${responseBody.session.meetingKey}`
             alert("Meeting Updated SuccessFully");
-            console.log(responseBody);
+            // console.log(responseBody);
         }
     } catch (error) {
 

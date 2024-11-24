@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose - Mail</title>
+    <script src="../../js/customElements/customNavBar.js" type="module"></script>
+    <link rel="stylesheet" href="../../css/mail/composeMail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+    <custom-navbar></custom-navbar>
+    <!-- <section class="outerWrapper"> -->
+        <div class="newMailContainer">
+            <div class="sideContainer">
+                
+            </div>
+            <form class="composeMailForm">
+                <div class="headerForMail"><div class="sendMailBtn" title="send mail" > <i class="fa-regular fa-paper-plane" style="color: #2c66dd;"></i> Send</div></div>
+                <div class="form-Group">
+                    <label for="fromAddress">From</label>
+                    <input type="email" name="fromAddress" id="fromAddress" class="inps">
+                </div>
+                <div class="form-Group">
+                    <label for="toAddress">To</label>
+                    <input type="email" name="toAddress" id="toAddress" class="inps">
+                </div>
+                <div class="form-Group">
+                    <label for="ccAddresses">cc</label>
+                    <input type="text" name="ccAddresses" id="ccAddresses" class="inps">
+                </div>
+                <div class="form-Group">
+                    <label for="bccAddress">bcc</label>
+                    <input type="text" name="bccAddress" id="bccAddress" class="inps">
+                </div>
+                <div class="form-Group">
+                    <input type="text" name="subject" id="subject"  class="inps" placeholder="Subject">
+                </div>
+                <div class="middleBar">
+                    <span title="attach file here"><i class="fa-solid fa-paperclip attachFile"></i></span>-attach file
+                </div>
+                <div class="form-Group">
+                    <textarea name="message" id="message"  class="txtArea"></textarea>
+                </div>
+            </form>
+        </div>
+    <!-- </section> -->
+
+    <script src="../../js/mail/composeMail.js" defer></script>
+</body>
+</html>
