@@ -73,7 +73,13 @@ body{
     height: inherit;
     border-radius: 7px;
     padding: 5px;
-
+}
+li:has(> #filterIcon){
+    width: 30px;
+    height: 30px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #leadListContainer{
     border: 1px solid rgb(241, 239, 239);
@@ -99,9 +105,6 @@ tr{
 }
 th,td{
     border-bottom: 1px solid rgb(234, 228, 228);
-    
-}
-td,th{
     align-items: center;
     text-align: left;
     padding: 5px;

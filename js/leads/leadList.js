@@ -86,7 +86,6 @@ function tableFunction(collectionOfObjs)
                             window.location.href=`/html/leads/leadView.html?id=${e._id}`;
                         });
                         span.style.cursor="pointer";
-                        span.style.color="blue";
                     }
                 span.innerHTML=e[tdata.className];
             }

@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+*{
+    padding:0 ;
+    margin: 0;
+}
+body{
+    font-family: "Open Sans",sans-serif;
+    background-color: rgb(233, 238, 245);
+    font-size: 15px;
+    min-width: 800px;
+}
+#secondNav{
+    font-size: small;
+    height: 10%;
+    background: white;
+    border-bottom:0.5px solid rgb(218, 212, 212) ;
+}
+#leadFormSecondNavUl{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+#name, #backBtn{
+    font-size: large;
+    cursor: pointer;
+}
+#left{
+    padding-left: 20px;
+}
+#right{
+    padding-right: 20px;
+}
+#left>li, #right>li{
+    float: left;
+    padding: 23px 10px;
+    list-style-type: none;
+}
+.btn{
+    padding: 5px 20px;
+    font-size: small;
+    box-shadow: 2px 1px 1px rgb(206, 225, 232);
+    border-radius: 5px;
+    border: 1px solid rgb(230, 227, 227);
+    cursor: pointer;
+    &:hover{
+        box-shadow:2px 1px 1px rgb(232, 237, 239) ;
+        background-color: rgb(229, 231, 232);
+    }
+}
+i{
+    align-items: center;
+}
+.sendMail{
+    background-color: rgb(52, 132, 236);
+    border: none;
+    box-shadow: 2px 2px 2px rgb(200, 227, 237);
+    &>a{
+        text-decoration: none;
+        color: white;
+    }
+}
+.body-container{
+    width: 100%;
+    height: calc(100vh - 20vh);
+    display: flex;
+}
+.sidebar{
+    width: 17%;
+    height: 94.5%;
+    background-color: white;
+    padding: 2% 0 0 2%;
+}
+.list{
+    margin-top: 10%;
+}
+.relatedList{
+    padding-left: 10px;
+}
+.list>li{
+    list-style-type: none;
+    width: 85%;
+    padding: 8px;
+    display: inline-block;
+    font-weight: 500;
+    font-size: small;
+    &:hover{
+        border-radius: 3px;
+        background-color: rgb(84, 184, 223, 0.10);
+    }
+    &>a{
+        text-decoration: none;
+        color: inherit;
+    }
+}
+.popup-container{
+    display: none;
+}
+.detailed-view-container{
+    height: 100%;
+    width: 83%;
+    position: relative;
+}
+.header-detailed-view{
+    height: 10%;
+    width: 100%;
+    z-index: 1;
+    position: sticky;
+    top: 0;
+}
+.wrapper{
+    height: 90%;
+    width: 100%;
+    overflow: scroll;
+    position: absolute;
+    scrollbar-width: none;
+}
+.widgets{
+    height: 30%;
+    width: 96%;
+    border-radius: 6px;
+    margin: auto;
+    margin-bottom: 2%;
+    background-color: white;
+    box-shadow: 1px 1px 0.5px rgb(219, 216, 216);
+    &>.title{
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px;
+        border-bottom: 1px solid rgb(33, 33, 43, 0.3);
+    }
+}
+
+  
+
+
+

@@ -75,6 +75,8 @@ class customNavBar extends HTMLElement {
                     height: 7vh;
                     background-color: #313949;
                     color:white;
+                    position:sticky;
+                    top:0px;
                 }
                 .leftMenu{
                     height: inherit;
@@ -95,6 +97,7 @@ class customNavBar extends HTMLElement {
                     height: inherit;
                     display: flex;
                     cursor: pointer;
+                    font-size:14px;
                 }
                 .modules>span, .modules>div{
                     padding: 10px;
