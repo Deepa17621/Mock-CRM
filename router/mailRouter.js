@@ -5,9 +5,9 @@ const router=express.Router();
 const cookieParser = require('cookie-parser');
 const { default: axios } = require('axios');
 
-// let MAIL_FOLDER_ACCESS;
-// let MAIL_MESSAGES_ACCESS;
-// let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
+let MAIL_FOLDER_ACCESS;
+let MAIL_MESSAGES_ACCESS;
+let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
 let MAIL_ACCESS_ALL;
 let ACC_DETAILS;
 let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL"
@@ -15,11 +15,11 @@ let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL"
 router.use(cookieParser());
 
 router.use(async (req, res, next) => {  
-    // MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
-    // MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
-    // if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
-    //     next();
-    // }
+    MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
+    MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
+    if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
+        next();
+    }
     MAIL_ACCESS_ALL = req.cookies.mail_access_all;
     ACC_DETAILS = req.cookies.mail_acc_details;
     if(MAIL_ACCESS_ALL && ACC_DETAILS){
@@ -27,13 +27,13 @@ router.use(async (req, res, next) => {
     }
     else {
                
-        // let result = await getTokens(req, res);
-        // if (result.success) {
+        let result = await getTokens(req, res);
+        if (result.success) {
 
-        //     MAIL_FOLDER_ACCESS = await result.folderToken;
-        //     MAIL_MESSAGES_ACCESS = await result.messageToken
-        //     next();
-        // }
+            MAIL_FOLDER_ACCESS = await result.folderToken;
+            MAIL_MESSAGES_ACCESS = await result.messageToken
+            next();
+        }
     }
 });
 

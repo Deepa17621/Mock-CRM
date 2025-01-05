@@ -19,7 +19,11 @@
         <!---->
             <ul id="ulWrapper">
                 <div id="left">
-                    <li style="cursor: pointer;"  class="btnOfSecondLayer"><i class="fas fa-filter" id="filterIcon"></i></li>
+                    <li style="cursor: pointer;"  class="btnOfSecondLayer">
+                        <span>
+                            <i class="fas fa-filter" id="filterIcon"></i>
+                        </span>
+                    </li>
                     <li>
                         <select name="" id="leadOption" class="disabled btnOfSecondLayer">
                             <option value="All Leads">All Leads</option>
@@ -63,9 +67,9 @@
 
         <!--Filter Container Starts Here -->
         <div id="filterForLead"> 
+            <span class="title-search">Filter Leads by</span>
             <div id="searchBar">
-                <input type="text" name="" id="searchBarInp" placeholder="Search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <i class="fa fa-search"></i><input type="search" name="" id="searchBarInp" placeholder="Search">
             </div>
         </div> 
         <!-- Lead Container Starts Here-->

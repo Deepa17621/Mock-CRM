@@ -36,7 +36,7 @@ function tableFunction(collectionOfObjs)
     thead.appendChild(checkBoxTd);
     headForTable.forEach(e=>{
         let td=document.createElement("th");
-        td.innerHTML=e.toUpperCase();
+        td.innerHTML=e;
         thead.appendChild(td);
     });
 
@@ -51,7 +51,7 @@ function tableFunction(collectionOfObjs)
         trow.id=e["_id"];
         // trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
         let checkBoxtd=document.createElement("td");
-        checkBoxtd.innerHTML=`<input type="checkbox">`;
+        checkBoxtd.innerHTML=`<input type="checkbox" name="" id="${e._id}">`;
         trow.appendChild(checkBoxtd);
         let colCount=0;
         
@@ -92,6 +92,34 @@ function tableFunction(collectionOfObjs)
 
         }
         
+    });
+    let allCheckBoxes = document.querySelectorAll(`input[type="checkbox"]`);
+    allCheckBoxes.forEach(element => {
+        element.addEventListener("change", (e)=>{
+            const row = element.closest('tr');
+            if(row.closest("thead")){
+                if(element.checked){
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.add("selected");
+                        element.checked=true;
+                    })
+                }
+                else{
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.remove("selected");
+                        element.checked=false;
+                    })
+                }
+            }
+            if (element.checked) {
+            row.classList.add('selected');
+            } else {
+            row.classList.remove('selected');
+            }
+                    
+        })
     });
 
 }
