@@ -4,7 +4,7 @@ let tHead = document.querySelector("thead");
 let tBody = document.querySelector("tbody");
 
 // create Account Button Event
-const createAccount = document.querySelector("#createAccountBtn");
+const createAccount = document.querySelector("#btn-create-acc");
 
 createAccount.addEventListener("click", (e)=>{
     e.preventDefault();
@@ -121,5 +121,47 @@ function addToTable(allAccs)
            }
         }
     });  
+    let allCheckBoxes = document.querySelectorAll(`input[type="checkbox"]`);
+    allCheckBoxes.forEach(element => {
+        element.addEventListener("change", (e)=>{
+            const row = element.closest('tr');
+            if(row.closest("thead")){
+                if(element.checked){
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.add("selected");
+                        element.checked=true;
+                    })
+                }
+                else{
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.remove("selected");
+                        element.checked=false;
+                    })
+                }
+            }
+            if (element.checked) {
+            row.classList.add('selected');
+            } else {
+            row.classList.remove('selected');
+            }          
+        })
+    });
 }
 getAllAccounts();
+
+// Filter Icon and Filter Click Event
+let filterContainer=document.getElementById("container-filter-acc");
+
+document.getElementById("filterIcon").addEventListener("click",()=>
+{
+    if(filterContainer.style.display=="none")
+    {
+        filterContainer.style.display="block"
+    }
+    else
+    {
+        filterContainer.style.display="none";
+    }
+});

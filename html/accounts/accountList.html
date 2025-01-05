@@ -5,32 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title> Accounts - Zoho CRM</title>
-    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <link rel="stylesheet" href="../../css/accounts/accountsList.css">
+    <!-- <link rel="stylesheet" href="../../css/leads/crmFront.css"> -->
     <script src="../../js/customElements/customNavBar.js"></script>
 </head>
 
 <body>
-    <!-- Navbar Container -->
     <custom-navbar></custom-navbar>
-   
- <!-- Second Navbar -->
  <div id="secondNav">
     <!---->
-        <ul id="ull">
+        <ul id="ulWrapper">
             <div id="left">
-                <!-- <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                <li style="cursor: pointer;"  class="btnOfSecondLayer">
+                    <span>
+                        <i class="fas fa-filter" id="filterIcon"></i>
+                    </span>
+                </li>
                 <li>
                     <select name="" id="leadOption" class="disabled">
                         <option value="All Accounts">All Accounts</option>
                         <option value="Locked Accounts">Locaked Accounts</option>
                         <option value="Junk Accounts">Junk Accounts</option>
                     </select>
-                </li> -->
+                </li>
             </div>
            <div id="right">
                 <li>
-                    <button class="createBtnForAllModules" id="createAccountBtn">
+                    <button class="createBtnForAllModules" id="btn-create-acc">
                        Create Account
                     </button>
                 </li>
@@ -60,26 +63,19 @@
         </ul>
 </div>
 
-<div id="parent">
-
-    <!-- Filter Container Starts Here -->
-    <!-- <div id="filterForLead" class="disabled">
-        
+<div id="list-wrapper">
+    <div id="container-filter-acc" class="disabled">
+        <span class="title-search">Filter Accounts by</span>
         <div id="searchBar">
-            <input type="text" name="" id="searchBarInp" placeholder="Search">
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <i class="fa fa-search"></i><input type="search" name="" id="searchBarInp" placeholder="Search">
         </div>
-    </div> -->
-    <!-- Account List Starts Here-->
-    <div id="leadListContainer">
+    </div>
+    <div id="container-list-acc">
         <table>
             <thead></thead>
             <tbody></tbody>
         </table>
     </div>
-    <!--Account List Ends Here -->
-
-    
 </div>
 <script src="../../js/accounts/accountList.js"></script>
 </body>
