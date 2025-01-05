@@ -22,7 +22,7 @@ function selectField()
 }
 
 // create Contact Button 
-const createContactBtn=document.querySelector("#createContactBtn");
+const createContactBtn=document.querySelector("#btn-create-contact");
 createContactBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href='/html/contacts/contactForm.html';
@@ -184,11 +184,38 @@ function tableFunction(allContacts)
                 span.innerHTML=obj[tdata.className];
             }
          }
-    })
+    });
+
+    let allCheckBoxes = document.querySelectorAll(`input[type="checkbox"]`);
+    allCheckBoxes.forEach(element => {
+        element.addEventListener("change", (e)=>{
+            const row = element.closest('tr');
+            if(row.closest("thead")){
+                if(element.checked){
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.add("selected");
+                        element.checked=true;
+                    })
+                }
+                else{
+                    allCheckBoxes.forEach(element=>{
+                        let rw = element.closest("tr");
+                        rw.classList.remove("selected");
+                        element.checked=false;
+                    })
+                }
+            }
+            if (element.checked) {
+            row.classList.add('selected');
+            } else {
+            row.classList.remove('selected');
+            }          
+        })
+    });
 }
 
 // Filter data From JSON To Display
-
 function filterField(arrOfObjs)
 {
     arrOfObjs.forEach((ele)=>
@@ -239,7 +266,7 @@ const getAllContacts = async () => {
 getAllContacts();
 
 //Filter Icon and Filter Click Event
-let filterContainer = document.getElementById("filterForLead");
+let filterContainer = document.getElementById("container-filter-contacts");
 
 document.getElementById("filterIcon").addEventListener("click", () => {
     if (filterContainer.style.display == "none") {

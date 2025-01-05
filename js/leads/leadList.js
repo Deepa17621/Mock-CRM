@@ -117,8 +117,7 @@ function tableFunction(collectionOfObjs)
             row.classList.add('selected');
             } else {
             row.classList.remove('selected');
-            }
-                    
+            }          
         })
     });
 

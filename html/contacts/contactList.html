@@ -5,31 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Contacts - Zoho CRM</title>
     <script src="../../js/customElements/customNavBar.js"></script>
-    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <link rel="stylesheet" href="../../css/contacts/contactList.css">
 </head>
 <body>
-     
     <custom-navbar></custom-navbar>
-
      <!-- Second Navbar -->
      <div id="secondNav">
-        <!---->
-            <ul id="ull">
+            <ul id="ulWrapper">
                 <div id="left">
-                    <!-- <li style="cursor: pointer;" id="filterIcon">Filter</li>
+                    <li style="cursor: pointer;"  class="btnOfSecondLayer">
+                        <span>
+                            <i class="fas fa-filter" id="filterIcon"></i>
+                        </span>
+                    </li>
                     <li>
-                        <select name="" id="leadOption" class="disabled">
-                            <option value="All Contacts">All Contacts</option>
-                            <option value="Locked Contacts">Locked Contacts</option>
-                            <option value="Junk Contacts">New Contacts</option>
+                        <select name="" id="contacts-filter" class="disabled btnOfSecondLayer">
+                            <option value="AllContacts">All Contacts</option>
+                            <option value="LockedContacts">Locaked Contacts</option>
+                            <option value="JunkContacts">Junk Contacts</option>
                         </select>
-                    </li> -->
+                    </li>
                 </div>
                <div id="right">
                     <li>
-                        <button class="createBtnForAllModules" id="createContactBtn">
+                        <button class="createBtnForAllModules" id="btn-create-contact">
                             Create Contact
                         </button>
                     </li>
@@ -60,29 +62,21 @@
                </div>
             </ul>
     </div>
-    <!-- Second Nav Ending -->
-
     <!-- Contact List  Body Container -->
-    <div id="parent">
-
-        <!-- Filter Container Starts Here -->
-        <!-- <div id="filterForLead">
-            
+    <div id="wrapperForList">
+        <div id="container-filter-contacts">  
+            <span class="title-search">Filter Leads by</span>
             <div id="searchBar">
-                <input type="text" name="" id="searchBarInp" placeholder="Search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <i class="fa fa-search"></i><input type="search" name="" id="searchBarInp" placeholder="Search">
             </div>
-        </div> -->
+        </div>
         <!-- Lead Container Starts Here-->
-        <div id="contactListContainer">
+        <div id="contact-list-container">
             <table>
                 <thead></thead>
                 <tbody></tbody>
             </table>
         </div>
-        <!-- Lead Container Ends Here -->
-    
-        
     </div>
     <script src="../../js/contacts/contactList.js"></script>
 </body>
