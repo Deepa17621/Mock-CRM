@@ -41,15 +41,11 @@ function tableFunction(collectionOfObjs)
     });
 
     // Fetching Single Object From Group of Objects-Using For Each
-    collectionOfObjs.forEach(e => { 
-
-        //Making Iterator  
+    collectionOfObjs.forEach(e => {   
         let head=headForTable[Symbol.iterator]();
-
         let trow=document.createElement("tr");
         tableBody.appendChild(trow);
         trow.id=e["_id"];
-        // trow.setAttribute("onclick", `rowClickFunction(this.id)` );        
         let checkBoxtd=document.createElement("td");
         checkBoxtd.innerHTML=`<input type="checkbox" name="" id="${e._id}">`;
         trow.appendChild(checkBoxtd);
