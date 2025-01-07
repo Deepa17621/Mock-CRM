@@ -2,7 +2,6 @@ let submitBtn = document.querySelector("#leadSubmitBtn");
 
 let form = document.querySelector("form");
 
-// Cancel Button Event
 let clicked = null;
 
 let cancelBtn = document.querySelector("#cancelBtn");
@@ -10,73 +9,73 @@ cancelBtn.addEventListener("click", () => {
     window.location.href = "/html/leads/leadList.html";
 });
 
-// Save And New Button
 let saveAndNew = document.querySelector("#saveNewBtn");
 saveAndNew.addEventListener("click", () => {
     clicked = 0;
     form.requestSubmit();
 });
-// Button Event
+
 submitBtn.addEventListener("click", () => {
     clicked = 1;
     form.requestSubmit();
 });
 
 // Form Input Fields
-let leadName = document.querySelector("#leadName");
-let leadMail = document.querySelector("#leadMail");
-let leadPhone = document.querySelector("#phone");
-let leadAddress = document.querySelector("#LeadAddress");
+let leadOwner = document.querySelector("#lead-owner");
+let firstName = document.querySelector("#first-name");
+let lastName = document.querySelector("#last-name");
+let titlerole = document.querySelector("#role-title");
+let email = document.querySelector("#email");
+let phone = document.querySelector("#phone");
+let fax = document.querySelector("#fax");
+let website = document.querySelector("#website");
 let date=document.querySelector("#date");
-let organization = document.querySelector("#organization");
-let inpArr = [leadName, leadMail, leadPhone, leadAddress,date, organization];
+let empCount = document.querySelector("#emp-count");
+let annualRevenue = document.querySelector("#revenue");
+let city = document.querySelector("#city");
+let state = document.querySelector("#state");
+let country = document.querySelector("#country");
+let postalCode = document.querySelector("#postal-code")
+// let inpArr = [leadName, leadMail, leadPhone, leadAddress,date, organization];
 
 
 form.addEventListener("submit", async(e) => {
     e.preventDefault();
-    if(!leadAddress.value || !leadMail.value || !leadName.value || !leadPhone.value)
+    let flag = false;
+    if(!leadOwner.value || !email.value || !firstName.value || !phone.value)
     {
-        leadName.value ? setSuccess(leadName) :setError(leadName) ;
-        leadMail.value ? mailValidation(leadMail) :setError(leadMail) ;
-        leadPhone.value ? mobileValidation(leadPhone) :setError(leadPhone) ;
-        leadAddress.value ? setSuccess(leadAddress) :setError(leadAddress) ;
-        // organization.value ? setSuccess(organization) :setError(organization);
+        flag = leadOwner.value ? setSuccess(leadOwner) : setError(leadOwner);
+        flag = firstName.value ? setSuccess(firstName) :setError(firstName) ;
+        flag = email.value ? mailValidation(email) :setError(email) ;
+        flag = phone.value ? mobileValidation(phone) :setError(phone);
     }
     
     let obj = {};
-    inpArr.forEach(e => {
-        switch(e)
-        {
-            case leadName:
-                obj["leadName"]=e.value;
-                break;
-            case leadMail:
-                obj["leadMail"]=e.value;
-                break;
-            case leadPhone:
-                obj["phone"]=e.value;
-                break;
-            case leadAddress:
-                obj["address"]=e.value;
-                break;
-            case date:
-                obj["date"]=e.value;
-                break;
-            case organization:
-                obj["organization"]=e.value;
-                break;
-        }
-       
-    });
+    obj.leadOwner = leadOwner.value;
+    obj.firstName = firstName.value;
+    obj.lastName = lastName.value;
+    obj.role = titlerole.value;
+    obj.email = email.value;
+    obj.phone = phone.value;
+    obj.fax = fax.value;
+    obj.website = website.value;
+    obj.date = date.value;
+    obj.employeeCount = empCount.value;
+    obj.annualRevenue = annualRevenue.value;
+    obj.city = city.value;
+    obj.state= state.value;
+    obj.country = country.value;
+    obj.postalCode = postalCode.value;
 
     // Fetch Starts Here== POST Method
-inpArr.forEach(e=>{
-    if(e === "") return; 
-})
-    let postLeadData = await saveLead(obj);
-    if(postLeadData){
-        window.location.href = clicked ? "/html/leads/leadList.html" :  "/html/leads/leadForm.html";
-        clicked = null;
+
+    if(flag){
+        let postLeadData = await saveLead(obj);
+        if(postLeadData){
+            window.location.href = clicked ? "/html/leads/leadList.html" :  "/html/leads/leadForm.html";
+            clicked = null;
+        }
+
     }
 
 });
@@ -102,9 +101,8 @@ async function saveLead(obj) {
     }
     
 }
-// Flatpicker
+
 flatpickr(".datePicker", {
-    // You can add options here
     dateFormat: "Y-m-d",
 });
 
@@ -112,12 +110,14 @@ flatpickr(".datePicker", {
 //Set Error
 function setError(tag) {
     tag.style.borderColor = "red";
-    tag.nextElementSibling.innerHTML = "Required..,";
-    tag.nextElementSibling.style.color = "red";
+    tag.nextElementSibling.innerHTML = "Required";
+    (tag.nextElementSibling).classList.add("err");
+    return false;
 }
 function setSuccess(tag) {
     tag.style.borderColor = "black";
     tag.nextElementSibling.innerHTML = "";
+    return true;
 }
 
 function mailValidation(tag) {

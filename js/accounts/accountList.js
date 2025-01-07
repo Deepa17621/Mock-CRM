@@ -72,7 +72,7 @@ function addToTable(allAccs)
         let th = document.createElement("th");
         let span = document.createElement("span");
         th.appendChild(span);
-        span.innerHTML = e.toUpperCase();
+        span.innerHTML = e;
         thead.appendChild(th);
     });
 

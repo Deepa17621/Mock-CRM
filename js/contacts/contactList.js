@@ -131,7 +131,7 @@ function tableFunction(allContacts)
     keyArr.forEach(e=>{
         let thh=document.createElement("th");
         let span=document.createElement("span");
-        span.innerHTML=e.toUpperCase();
+        span.innerHTML=e;
         thead.appendChild(thh);
         thh.appendChild(span);
     });
