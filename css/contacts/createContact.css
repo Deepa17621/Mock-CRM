@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: "Open Sans",sans-serif;
+    background-color: #f1f4f7;
+    min-width: 700px;
+}
+custom-navbar{
+    position: sticky;
+}
+#container-title{
+    height: 3.7rem;
+    background-color: white;
+    border-bottom: 0.2px solid rgba(128, 128, 128, 0.539);
+}
+#ul-for-title{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+#left-title{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    &>li{
+        margin-left: 0.5rem;
+        padding: 1rem;
+    }
+}
+#right-title{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    &>li{
+        margin-left: 0.5rem;
+        padding: 1rem;
+    }
+}
+#right-title button,#right-title input, li>select{
+    padding: 0.4rem 1.2rem;
+    border-radius: 0.3em;
+    outline: none;
+    cursor: pointer;
+}
+li>select{
+    border: 1px solid grey;
+}
+#cancelBtn, #saveNewBtn{
+    border: 1.3px solid rgba(207, 204, 204, 0.717);
+    transition: background-color 0.4s ease;
+    &:hover{
+        background-color: rgba(182, 179, 179, 0.324);
+    }
+}
+li>input{
+    border: none;
+    transition: background-color 0.4s ease;
+    background-color: blue;
+    color: white;
+    &:hover{
+        background-color: rgba(42, 4, 255, 0.865);
+    }
+}

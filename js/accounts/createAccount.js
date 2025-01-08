@@ -40,13 +40,16 @@ async function  saveAccount(obj)
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(obj)
     });
-    let out = await res.json();
-    console.log(out);
-    console.log(out["id"]);
-
-    if(contactId != null){
-        fetchContactAndUpdateIt(out["id"], contactId);
+    if(res.ok){
+        let out = await res.json();
+        console.log(out);
+        console.log(out["_id"]);
+        if(contactId != null){
+            await fetchContactAndUpdateIt(out["_id"], contactId);
+        }
+        return true;
     }
+    
 }
 
 async function fetchContactAndUpdateIt(accountId, ContactId){
@@ -56,15 +59,9 @@ async function fetchContactAndUpdateIt(accountId, ContactId){
     if(!res.ok){
         throw new Error("Error in Promise");
     }
-
     else{
         let fetchedContact = await res.json();
-        console.log(fetchedContact);
-        
         let newContact = createContactObject(fetchedContact, accountId);
-
-        console.log(newContact);
-
         if(postContact(newContact)){
             await deleteFromLead(ContactId);
         }
@@ -120,14 +117,23 @@ async function postContact(myObj){
 }
 
 // Form Fields 
-let accountOwner = document.querySelector("#accountOwner");
-let accountName = document.querySelector("#AccountName");
-let accountMail = document.querySelector("#accountMail");
-let phone = document.querySelector("#phone");
+let accountOwner = document.querySelector("#acc-owner");
+let accountName = document.querySelector("#acc-name");
+let accountMail = document.querySelector("#acc-mail");
+let accSite = document.querySelector("#acc-site");
 let date = document.querySelector("#date");
-let address = document.querySelector("#accountAddress");
-let annualRevenue = document.querySelector("#annualRevenue");
-
+// let address = document.querySelector("#accountAddress");
+let annualRevenue = document.querySelector("#revenue");
+let phone = document.querySelector("#phone");
+let contact = document.querySelector("#contact");
+let website = document.querySelector("#website");
+let billingCity = document.querySelector("#billing-city");
+let billingState = document.querySelector("#billing-state");
+let billingCountry = document.querySelector("#billing-country");
+let shippingCity = document.querySelector("#shipping-city");
+let shippingState = document.querySelector("#shipping-state");
+let shippingCountry = document.querySelector("#shipping-country");
+let amount = document.querySelector("#amount");
 
 if(id!=null){   // Here "id" refers Contact Id (Param)
     contactId=id;
@@ -135,42 +141,63 @@ if(id!=null){   // Here "id" refers Contact Id (Param)
 
 accForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
+    let flag = false;
     if(!accountOwner.value || !accountName.value || !accountMail.value || !phone.value || !annualRevenue.value)
     {
-        !accountOwner.value ? setError(accountOwner) : setSuccess(accountOwner);
-        !accountName.value ? setError(accountName) : setSuccess(accountName);
-        !accountMail.value ? setError(accountMail) : mailValidation(accountMail);
-        !phone.value ? setError(phone) : mobileValidation(phone);
-        !annualRevenue.value ? setError(annualRevenue) : setSuccess(annualRevenue);
-        // !address.value?setError(address):setSuccess(address);
-        return;
+        flag = !accountOwner.value ? setError(accountOwner) : setSuccess(accountOwner);
+        flag = !accountName.value ? setError(accountName) : setSuccess(accountName);
+        flag = !accountMail.value ? setError(accountMail) : mailValidation(accountMail);
+        flag = !phone.value ? setError(phone) : mobileValidation(phone);
+        flag = !annualRevenue.value ? setError(annualRevenue) : setSuccess(annualRevenue);
+    }
+    else{
+        flag = !accountOwner.value ? setError(accountOwner) : setSuccess(accountOwner);
+        console.log(flag);
+        flag = !accountName.value ? setError(accountName) : setSuccess(accountName);
+        console.log(flag);
+        flag = !accountMail.value ? setError(accountMail) : mailValidation(accountMail);
+        console.log(flag);
+        flag = !phone.value ? setError(phone) : mobileValidation(phone);
+        console.log(flag);
+        flag = !annualRevenue.value ? setError(annualRevenue) : setSuccess(annualRevenue);
     }
 
     let obj = {
         "accountOwner" : accountOwner.value,
         "accountName" : accountName.value,
         "accountMail" : accountMail.value,
-        "phone" : phone.value,
+        "accountSite" : accSite.value,
         "date" : date.value,
-        "accountAddress" : address.value,
+        "phone" : phone.value,
         "annualRevenue" : annualRevenue.value, 
-        "contacts" : !contactId?[]:[contactId,],
+        "website" : website.value,
+        "billingCity": billingCity.value,
+        "billingState": billingState.value,
+        "billingCountry": billingCountry.value,
+        "shippingCity": shippingCity.value,
+        "shippingState": shippingState.value,
+        "shippingCountry": shippingCountry.value,
+        "amount": amount.value,
+        "contacts" : !contactId?[contact.id]:[contactId,],
         "deals":[]
     }
 
-    await saveAccount(obj);
-    window.location.href=clicked?"/html/accounts/accountList.html":"/html/accounts/createAccount.html";
-    clicked=null;
+    if(flag){
+        let data = await saveAccount(obj);
+        if(data)
+        {
+            alert("Account Added Successfully!");
+            window.location.href=clicked?"/html/accounts/accountList.html":"/html/accounts/createAccount.html";
+            clicked=null;
+        }
+    }
 });
 let accId;
 
 flatpickr(".datePicker", {
-    // You can add options here
     dateFormat: "Y-m-d",
 });
 
-
-// Form Field Validation
 function setError(tag)
 {
     if(tag.value=="")
@@ -178,8 +205,10 @@ function setError(tag)
         tag.style.borderColor="red";
         tag.nextElementSibling.textContent="Required...";
         tag.nextElementSibling.style.color="red";
+        tag.nextElementSibling.classList.add("err");
+        return false;
     }
-    else setSuccess(tag)
+    else return setSuccess(tag)
 }
 
 function setSuccess(tag)
@@ -188,6 +217,8 @@ function setSuccess(tag)
     {
         tag.style.borderColor="black";
         tag.nextElementSibling.textContent="";
+        tag.nextElementSibling.classList.add("err");
+        return true;
     }
 }
 
@@ -195,21 +226,21 @@ function mailValidation(tag)
 {
     if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
     {
-           setError(tag);
-            tag.nextElementSibling.innerHTML = "Enter Valid Email...";
+        tag.nextElementSibling.innerHTML = "Enter Valid Email...";
+        return setError(tag);
     }
-    else setSuccess(tag);
+    else return setSuccess(tag);
 }
 
 function mobileValidation(tag)
 {
     if (!(/^[6-9]\d{9}$/).test(tag.value)) {
-        setError(tag);
-        tag.nextElementSibling.innerHTML = "number should start with 6-9."
+        tag.nextElementSibling.innerHTML = "number should start with 6-9.";
+        return setError(tag);
     }else if((tag.value).length!=10)
     {
-        setError(tag);
         tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
+        return  setError(tag);
     }
-    else setSuccess(tag);
+    else return setSuccess(tag);
 }

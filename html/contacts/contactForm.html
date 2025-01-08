@@ -7,29 +7,27 @@
     <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
     <title>Create Contact - Zoho CRM</title>
     <script src="../../js/customElements/customNavBar.js"></script>
-    <link rel="stylesheet" href="../../css/leads/crmFront.css">
+    <!-- <link rel="stylesheet" href="../../css/leads/crmFront.css"> -->
+     <link rel="stylesheet" href="../../css/contacts/createContact.css">
 </head>
 <body>
-    
     <custom-navbar></custom-navbar>
-
-    <!-- Second Nav Bar -->
-    <div id="secondNav">
-        <ul id="leadFormSecondNavUl">
-        <div id="left">
+    <div id="container-title">
+        <ul id="ul-for-title">
+        <div id="left-title">
              <li><h3>Create Contact</h3></li>
-             <li>
+             <!-- <li>
                  <select name="" id="leadOption" class="disabled">
                      <option value="All Contacts">All Contacts</option>
                      <option value="Locked Contacts">Located Contacts</option>
                      <option value="Junk Contacts">Junk Contacts</option>
                  </select>
-             </li>
+             </li> -->
              <li>
                  <a href="#">Edit Page Layout</a>
              </li>
         </div>
-        <div id="right">
+        <div id="right-title">
          <li><button id="cancelBtn">Cancel</button></li>
          <li><button id="saveNewBtn">Save and New</button></li>
          <li><input type="button" 
@@ -39,7 +37,7 @@
      </div>
      <!-- Second Nav Ends -->
 
-     <div id="contactBody">
+     <div id="form-container">
         <div id="dynamicFieldContainer">
             <ol id="dynamicField">
                 <li><button id="Individual">Individual</button></li>
