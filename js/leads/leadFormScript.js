@@ -42,40 +42,53 @@ let postalCode = document.querySelector("#postal-code")
 form.addEventListener("submit", async(e) => {
     e.preventDefault();
     let flag = false;
-    if(!leadOwner.value || !email.value || !firstName.value || !phone.value)
+    if(!leadOwner.value || !firstName.value || !phone.value || !email.value)
     {
         flag = leadOwner.value ? setSuccess(leadOwner) : setError(leadOwner);
         flag = firstName.value ? setSuccess(firstName) :setError(firstName) ;
-        flag = email.value ? mailValidation(email) :setError(email) ;
         flag = phone.value ? mobileValidation(phone) :setError(phone);
+        flag = email.value ? mailValidation(email) :setError(email) ;
     }
-    
+    else{
+        flag = leadOwner.value ? setSuccess(leadOwner) : setError(leadOwner);
+        console.log(flag + " owner validation");
+        flag = firstName.value ? setSuccess(firstName) :setError(firstName) ;
+        console.log(flag + " firsatName validation");
+        flag = phone.value ? mobileValidation(phone) :setError(phone);
+        console.log(flag + " phone validation");
+        flag = email.value ? mailValidation(email) :setError(email) ;
+        console.log(flag + " Else Part");
+    }
     let obj = {};
-    obj.leadOwner = leadOwner.value;
-    obj.firstName = firstName.value;
-    obj.lastName = lastName.value;
-    obj.role = titlerole.value;
-    obj.email = email.value;
-    obj.phone = phone.value;
-    obj.fax = fax.value;
-    obj.website = website.value;
-    obj.date = date.value;
-    obj.employeeCount = empCount.value;
-    obj.annualRevenue = annualRevenue.value;
-    obj.city = city.value;
-    obj.state= state.value;
-    obj.country = country.value;
-    obj.postalCode = postalCode.value;
+        obj.leadOwner = leadOwner.value;
+        obj.firstName = firstName.value;
+        obj.lastName = lastName.value;
+        obj.role = titlerole.value;
+        obj.email = email.value;
+        obj.phone = phone.value;
+        obj.fax = fax.value;
+        obj.website = website.value;
+        obj.date = date.value;
+        obj.employeeCount = empCount.value;
+        obj.annualRevenue = annualRevenue.value;
+        obj.city = city.value;
+        obj.state= state.value;
+        obj.country = country.value;
+        obj.postalCode = postalCode.value;
 
-    // Fetch Starts Here== POST Method
-
+        // alert(`${flag}`)
     if(flag){
+        console.log("Flag -- True!");
+        
         let postLeadData = await saveLead(obj);
         if(postLeadData){
+            alert("Successfully created!")
             window.location.href = clicked ? "/html/leads/leadList.html" :  "/html/leads/leadForm.html";
             clicked = null;
         }
-
+    }
+    else{
+        console.log("Flag -- False!");
     }
 
 });
@@ -109,43 +122,41 @@ flatpickr(".datePicker", {
 
 //Set Error
 function setError(tag) {
-    tag.style.borderColor = "red";
+    tag.style.border = "2px solid red";
+    tag.style.borderRadius = "3px"
     tag.nextElementSibling.innerHTML = "Required";
     (tag.nextElementSibling).classList.add("err");
     return false;
 }
 function setSuccess(tag) {
-    tag.style.borderColor = "black";
+    tag.style.border = "0.5px solid grey";
+    tag.style.borderRadius = "3px";
     tag.nextElementSibling.innerHTML = "";
     return true;
 }
 
 function mailValidation(tag) {
-    if (tag.value == "") 
+    if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
     {
-        setError(tag);
-    }
-    else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
-    {
-        setError(tag);
         tag.nextElementSibling.innerHTML = "Enter Valid Email...";
+        setError(tag);
     }
-    else setSuccess(tag);
+    else  return setSuccess(tag);
 }
 
-function mobileValidation(tag) {
-    if (!(/^[6-9]\d{9}$/).test(tag.value)) {
-        setError(tag);
-        tag.nextElementSibling.innerHTML = "number should start with 6-9."
+function mobileValidation(element) {
+    if (!(/^[6-9]\d{9}$/).test(element.value)) {
+        element.nextElementSibling.innerHTML = "number should start with 6-9."
+        setError(element);
     }
-    else if((tag.value).length!=10)
-        {
-            setError(tag);
-            tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
-        }
-
-        
-    else setSuccess(tag);
+    else if((element.value).length!=10)
+    {
+        element.nextElementSibling.innerHTML="Number Should be 10 Digits";
+        setError(element);
+    }  
+    else {
+         return setSuccess(element);
+    }
 }
 
 // async function getAll() {

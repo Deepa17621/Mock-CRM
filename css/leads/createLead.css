@@ -89,6 +89,10 @@ form{
 .right-form{
     background-color: red;
 } */
+.form-groups{
+    margin-bottom: 1.8rem;
+    position: relative;
+}
 .leadInp{
     margin-right: 8rem;
     padding: 0.4rem;
@@ -99,18 +103,17 @@ form{
         box-shadow: 0 0 1 1 rgb(4, 128, 177);
     }
 }
-.form-groups{
-    margin-bottom: 1.8rem;
-    position: relative;
-}
 label{
     margin-right: 1rem;
     font-size: 14px;
 }
 .err{
     color: red;
-    font-size: smaller;
+    font-size: x-small;
     display: block;
+    font-weight: 500;
     position: absolute;
-    margin-left: 0;
+    margin-top: 0.1rem;
+    right: 420px;
+    /* background-color: rgb(36, 0, 128); */
 }
