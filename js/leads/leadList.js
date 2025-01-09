@@ -25,11 +25,7 @@ function tableFunction(collectionOfObjs)
 {
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
-    //Table Head
-    // let firstObj=collectionOfObjs[0];
-
-    // let headForTable=Object.keys(firstObj);
-    let headForTable=["leadName", "leadMail", "phone", "address", "organization"];
+    let headForTable=["firstName","lastName", "email", "phone", "date", "leadOwner"];
     //This is for Table Head
     let checkBoxTd=document.createElement("td");
     checkBoxTd.innerHTML=`<input type="checkbox">`;
@@ -55,7 +51,7 @@ function tableFunction(collectionOfObjs)
         for (const key in e) 
         {
             let val=head.next().value;
-            if(colCount<5){
+            if(colCount<=5){
                 colCount++;
             }
             else return;
@@ -65,7 +61,7 @@ function tableFunction(collectionOfObjs)
             tdata.appendChild(span);
             tdata.className=val;
             trow.appendChild(tdata);
-            if(val=="leadMail" )
+            if(val=="email" )
             {
                 span.innerHTML=`<a href=mailto:${e[tdata.className]}>${e[tdata.className]}`;
             }
@@ -74,9 +70,8 @@ function tableFunction(collectionOfObjs)
                 span.innerHTML=`<a href=tel:${e[tdata.className]}>${e[tdata.className]}`;
             }
             else{
-                if(val=="leadName")
+                if(val=="firstName")
                     {
-                        // span.setAttribute("onclick", `clickToViewLead(e, ${e._id})` );
                         span.addEventListener("click", (event)=>{
                             event.preventDefault();
                             window.location.href=`/html/leads/leadView.html?id=${e._id}`;
@@ -159,7 +154,6 @@ const getAllLeads=async()=>
 }
 getAllLeads();
 
-
 // Filter Icon and Filter Click Event
 let filterContainer=document.getElementById("filterForLead");
 
@@ -174,3 +168,5 @@ document.getElementById("filterIcon").addEventListener("click",()=>
         filterContainer.style.display="none";
     }
 });
+let date = new Date();
+console.log(date.toDateString());

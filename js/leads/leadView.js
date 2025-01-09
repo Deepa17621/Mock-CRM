@@ -2,8 +2,8 @@ let url=window.location.search;
 console.log(url);
 let param=new URLSearchParams(url);
 let identity=param.get("id");
-console.log(identity);
 let organizationName;
+
 // This is For Display the Clicked Lead Detail
 function displayData(obj)
 {    
@@ -13,20 +13,21 @@ function displayData(obj)
     let table=document.querySelector("#view");
     for (const key in obj)
     {
-        if(key=="leadMail" || key=="phone")
+        if(key=="email" || key=="phone")
         {
             mail=obj[key];
             let tr=document.createElement("tr");
             table.appendChild(tr);
             let td1=document.createElement("td");
+            td1.classList.add("key");
             let td2=document.createElement("td");
             td1.textContent=key;
-            td2.innerHTML=(key=="leadMail")?`<a href="mailto:${obj[key]}">${obj[key]}</a>`:`<a href="tel:${obj[key]}">${obj[key]}</a>`;
+            td2.innerHTML=(key=="email")?`<a href="mailto:${obj[key]}">${obj[key]}</a>`:`<a href="tel:${obj[key]}">${obj[key]}</a>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
             continue
         }
-        if(key=="leadName")
+        if(key=="firstName")
         {
             name=obj[key];
         }
@@ -35,7 +36,8 @@ function displayData(obj)
         table.appendChild(tr);
         let td1=document.createElement("td");
         let td2=document.createElement("td");
-        td1.textContent=key.toUpperCase();
+        td1.textContent=key;
+        td1.classList.add("key")
         td2.textContent=(obj[key]);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -50,17 +52,14 @@ async function currentLead(identity) {
         let res=await fetch(`/mongodb/getById/leads/${identity}`);
         let leadObj=await res.json();
         if(!res.ok){
-            // console.log(res.status+ " "+res.statusText);
-            
             throw new Error("Error:"+res.status+" "+res.statusText);
         }
         organizationName=leadObj["organization"];
-        console.log(leadObj);
         displayData(leadObj);
         
     } catch (error) {
         console.log(error);
-            }
+    }
 }
 
 currentLead(identity); // Actual Execution starts Here...
@@ -80,7 +79,7 @@ let convertBtn=document.querySelector("#convert");
 
 convertBtn.addEventListener("click", (e)=>{
     e.preventDefault();
-    document.querySelector("#popupContainer").style.display="flex";
+    document.querySelector(".popup-container").style.display="flex";
     e.stopPropagation();
 });
 
@@ -88,17 +87,15 @@ convertBtn.addEventListener("click", (e)=>{
 let cancelPopup=document.querySelector("#popupCancel");
     cancelPopup.addEventListener("click", (e)=>{
         e.preventDefault();
-        document.querySelector("#popupContainer").style.display="none";
+        document.querySelector(".popup-container").style.display="none";
     });
 
-    //convertForm
+//convertForm
 let convertForm=document.querySelector("form");
 
 function submit1()
 {
     let options=document.getElementsByName("options");
-    console.log(options);
-    
     let selected='';
     for (const e of options) 
     {
@@ -159,7 +156,7 @@ async function putAcc(obj,accId)
 convertForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     // let contactOnly=document.querySelector("#contactOnly");
-    document.querySelector("#popupContainer").style.display="none";
+    document.querySelector(".popup-container").style.display="none";
     window.location.href=`/html/contacts/contactList.html?id=${identity}`;
 });
 
@@ -189,11 +186,9 @@ deleteBtn.addEventListener("click",(e)=>{
     e.stopPropagation();
 });
 
-
-
 // back to previous page event
 let back=document.querySelector("#backBtn");
 back.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.history.back();
+    window.location.href = `/html/leads/leadList.html`;
 })

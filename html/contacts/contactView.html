@@ -5,34 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
     <title>Contact View - Zoho CRM</title>
+    <link rel="stylesheet" href="../../css/contacts/contactView.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/v5-font-face.min.css" integrity="sha512-dC4AauJwDHOpEpJi2/BsDf/b9vyLVt79nmO0x5gQWbRm62Q/xFS9iZpzCOFNLjTQsAD4mp9jJel6nPAjnBN2Ag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="/js/customElements/customNavBar.js" type="module"></script>
-    <link rel="stylesheet" href="/css/leads/crmFront.css">
 </head>
 <body>
-    
     <custom-navbar></custom-navbar>
-
-     <!-- Second Nav Starts -->
-     <div id="secondNav">
-        <ul id="leadFormSecondNavUl">
-        <div id="left">
-            <li ><button id="backBtn">back</button></li>
+    <div id="secondNav">
+        <ul id="ul-title-contact-view">
+        <div id="left-title">
+            <li><i id="backBtn" class="fa-solid fa-arrow-left fa-xl"></li>
              <li><h4 id="name"></h4></li>
         </div>
-        <div id="right">
-            <li><button id="meetingBtn">New Meeting</button></li>
-            <li><button id="mailBtn"><a id="mail" href="" class="maill">Send Email</a></button></li>
-            <li><button id="convert">Create Deal</button></li>
-            <li >
-                <button id="editBtn" >Edit</button>
+        <div id="right-title">
+            <li><div class="btn create-meeting">new meeting</div></li>
+            <!-- <li><button id="meetingBtn">New Meeting</button></li> -->
+            <li><div class="btn sendMail"><a id="mail" href="">Send Email</a></div></li>
+            <li>
+                <div class="btn" id="convert">Create Deal</div>
             </li>
-            <li><button id="deleteBtn">Delete</button></li>
+            <li >
+                <div id="editBtn" class="btn" >Edit</div>
+            </li>
+            <li><div id="deleteBtn" class="btn">Delete</div></li>
+            <li><div class="threeDotMenu btn"><i class="fa-solid fa-ellipsis"></i></div></li>
+            <li class="previous"><i class="fa-solid fa-chevron-left"></i></li>
+            <li class="next"><i class="fa-solid fa-chevron-left fa-rotate-180"></i></li>
         </div>
         </ul>
     </div>
-     <!-- Second Nav Ends -->
-      
-     <!-- Create New Meeting -->
       <dialog id="dialogbox">
         <h4>Meeting Information</h4>
         <form action="" id="meetingForm">
@@ -57,16 +58,58 @@
       </dialog>
       
      <!-- Home Container For Lead View -->
-     <div id="parentContainer">
-        <div id="filterContainer">
-
-        </div>
+     <!-- <div id="parentContainer">
+        <div id="filterContainer"></div>
         <div id="leadViewHomeContainer">
            <table id="view" >
            </table>
-   
        </div>
-    </div>
-     <script type="module" src="/js/contacts/contactView.js"  defer></script>
+    </div> -->
+    <div class="body-container">
+        <div class="sidebar">
+            <div class="relatedList"><b>Related List</b></div>
+            <ul class="list">
+                <li class="lite-items"><a href="#notes">Notes</a></li>
+                <li class="lite-items"><a href="#messages">Messages</a></li>
+                <li class="lite-items"><a href="#attachments">Attachments</a></li>
+                <li class="lite-items"><a href="#open-activities">Open Activities</a></li>
+                <li class="lite-items"><a href="#closed-activities">Closed Activities</a></li>
+                <li class="lite-items"><a href="#test">Test</a></li>
+                <li class="lite-items"><a href="#voice">Voice of the Customer</a></li>
+            </ul>
+        </div>
+        <div class="detailed-view-container">
+            <div class="header-detailed-view"></div>
+            <div class="wrapper">
+                    <div class="table-container">
+                        <div class="title">Contact Information</div>
+                        <table id="view">
+                        </table>
+                    </div>
+                    <div class="notes widgets" id="notes">
+                        <div class="title">Notes</div>
+                    </div>
+                    <div class="messages widgets" id="messages">
+                        <div class="title">messages</div>
+                    </div>
+                    <div class="attachments widgets" id="attachments">
+                        <div class="title">attachments</div>
+                    </div>
+                    <div class="open-activities widgets" id="open-activities">
+                        <div class="title">open Activities</div>
+                    </div>
+                    <div class="closed-activities widgets" id="closed-activities">
+                        <div class="title">Closed Activities</div>
+                    </div>
+                    <div class="test widgets" id="test">
+                        <div class="title">Test</div>
+                    </div>
+                    <div class="voice widgets" id="voice">
+                        <div class="title">Voice Of Customers</div>
+                    </div>
+            </div>
+       </div>
+     </div>
+    <script type="module" src="/js/contacts/contactView.js"  defer></script>
 </body>
 </html>

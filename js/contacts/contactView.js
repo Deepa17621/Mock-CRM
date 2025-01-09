@@ -28,7 +28,8 @@ function createTable(data)
             let td2=document.createElement("td");
         if(key=="contactMail") {
             email=data[key];
-            td1.textContent=key.toUpperCase();
+            td1.textContent=key;
+            td1.classList.add("key")
             td2.innerHTML=`<span><a href="mailto:${data[key]}" class="maill">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -36,7 +37,8 @@ function createTable(data)
         }
         if(key==="phone")
         {
-            td1.textContent=key.toUpperCase();
+            td1.textContent=key;
+            td1.classList.add("key");
             td2.innerHTML=`<span><a href="tel:${data[key]}">${data[key]}</a></span>`;
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -45,7 +47,8 @@ function createTable(data)
         let row=document.createElement("tr");
         tbl.appendChild(row);
         let td=document.createElement("td");
-        td.innerHTML=key.toUpperCase();
+        td.innerHTML=key;
+        td.classList.add("key")
         row.appendChild(td);
         let td3=document.createElement("td");
         td3.textContent=data[key];
@@ -54,7 +57,7 @@ function createTable(data)
 }
 
 // Send Mail Button Event
-let mailBtn=document.querySelector("#mailBtn");
+let mailBtn=document.querySelector(".sendMail");
 mailBtn.addEventListener("click",()=>{
     mailBtn.children[0].href=`mailto:${email}`;
 });
@@ -203,7 +206,7 @@ backBtn.addEventListener("click", (e)=>{
  // ========================================== Test Meeting =======================================================
 // 1. Meeting Creation Event-----> Create Meeting <----------
 let dialog=document.querySelector("#dialogbox");
-let meetingBtn=document.querySelector("#meetingBtn");
+let meetingBtn=document.querySelector(".create-meeting");
 let meetingCancelBtn=document.querySelector("#meetingCancelBtn");
 meetingBtn.addEventListener("click", (e)=>{
     e.preventDefault();

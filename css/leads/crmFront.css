@@ -363,7 +363,6 @@ select{
     width: 90%;
 }
 
-
 /* PupUp-Form-For-Converting-The-Lead-To-Acc,Deal */
 #popupContainer
 {
@@ -502,10 +501,5 @@ select{
 .cards{
     width: 80%;
     box-shadow: 0 0 4px;
-    /* height: 25%; */
     border-radius: 4px;
 }
-
-
-
-

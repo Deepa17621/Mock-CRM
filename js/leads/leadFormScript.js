@@ -51,13 +51,9 @@ form.addEventListener("submit", async(e) => {
     }
     else{
         flag = leadOwner.value ? setSuccess(leadOwner) : setError(leadOwner);
-        console.log(flag + " owner validation");
         flag = firstName.value ? setSuccess(firstName) :setError(firstName) ;
-        console.log(flag + " firsatName validation");
         flag = phone.value ? mobileValidation(phone) :setError(phone);
-        console.log(flag + " phone validation");
         flag = email.value ? mailValidation(email) :setError(email) ;
-        console.log(flag + " Else Part");
     }
     let obj = {};
         obj.leadOwner = leadOwner.value;
@@ -76,10 +72,7 @@ form.addEventListener("submit", async(e) => {
         obj.country = country.value;
         obj.postalCode = postalCode.value;
 
-        // alert(`${flag}`)
     if(flag){
-        console.log("Flag -- True!");
-        
         let postLeadData = await saveLead(obj);
         if(postLeadData){
             alert("Successfully created!")

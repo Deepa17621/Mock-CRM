@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lead Detail View</title>
     <link rel="stylesheet" href="../../css/leads/viewLead.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <script src="../../js/customElements/customNavBar.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+    <script src="../../js/customElements/customNavBar.js" type="module"></script>
 </head>
 <body>
-     
     <custom-navbar></custom-navbar>
-
     <div id="secondNav">
         <ul id="leadFormSecondNavUl">
         <div id="left">
@@ -48,8 +47,11 @@
         <div class="detailed-view-container">
             <div class="header-detailed-view"></div>
             <div class="wrapper">
-                    <table id="view">
-                    </table>
+                    <div class="table-container">
+                        <div class="title">Lead Information</div>
+                        <table id="view">
+                        </table>
+                    </div>
                     <div class="notes widgets" id="notes">
                         <div class="title">Notes</div>
                     </div>
@@ -95,7 +97,7 @@
             <p></p>
             <br>
             <input style="width: 99px; height: 28px;" type="button" value="Convert" id="convertOk" onclick="submit1()">
-           <button id="popupCancel">Cancel</button>
+            <button id="popupCancel">Cancel</button>
         </form>
        </div>
      </div>

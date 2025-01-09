@@ -8,7 +8,7 @@
     <title>Create Contact - Zoho CRM</title>
     <script src="../../js/customElements/customNavBar.js"></script>
     <!-- <link rel="stylesheet" href="../../css/leads/crmFront.css"> -->
-     <link rel="stylesheet" href="../../css/contacts/createContact.css">
+     <link rel="stylesheet" href="/css/contacts/createContact.css">
 </head>
 <body>
     <custom-navbar></custom-navbar>
@@ -36,46 +36,91 @@
         </ul>
      </div>
      <!-- Second Nav Ends -->
-
-     <div id="form-container">
-        <div id="dynamicFieldContainer">
-            <ol id="dynamicField">
-                <li><button id="Individual">Individual</button></li>
-                <li><button id="Existing">Existing Account</button></li>
-                <li><button id="newAccount">New Account</button></li>
-            </ol>
-        </div>
-        <div id="contactForm">
+        <div id="form-container">
             <form action="">
-                <label for="contactName">Contact Name</label>
-                <input type="text" name="contactName" id="contactName" class="contactInp">
-                <p></p>
-                <br>
-                <label for="contactMail">E-Mail</label>
-                <input type="email" name="contactMail" id="contactMail" class="contactInp">
-                <p></p>
-                <br>
-                <label for="contactPhone">Phone</label>
-                <input type="tel" name="contactPhone" id="contactPhone" class="contactInp" maxlength="10">
-                <P></P>
-                <br>
-                <label for="date">Date</label>
-                <input type="date" name="date" id="date" class="contactInp datePicker">
-                <p></p>
-                <br>
-                <label for="contactAddress">Address</label>
-                <input type="text" name="contactAddress" id="contactAddress" class="contactInp">
-                <p></p>
-                <br>
-                <label for="organization">Organization</label>
-                <!-- <input type="text" name="organization" id="organization" class="contactInp"> -->
-                <select name="organization" id="organization" class="contactInp">
-                    <option value="">Select</option>
-                </select>
-                <p></p>
+                <section class="left-form">
+                    <div class="form-groups">
+                        <label for="contact-owner">Contact Owner</label>
+                        <input type="text" name="contact-owner" id="contact-owner" class="contact-inp">
+                    </div>
+                    <div class="form-groups">
+                        <label for="firstName">First Name</label>
+                        <input type="text" name="firstName" id="firstName" class="contact-inp">
+                        <p></p>
+                    </div>
+                    <div class="form-groups">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" name="lastName" id="lastName" class="contact-inp">
+                        <p></p>
+                    </div>
+                    <div class="form-groups">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" id="date" class="contact-inp datePicker">
+                        <p></p>
+                    </div>
+                    <div class="form-groups">
+                        <label for="contactMail">E-Mail</label>
+                        <input type="email" name="contactMail" id="contactMail" class="contact-inp">
+                        <p></p>
+                    </div>
+                    <div class="form-groups">
+                        <label for="contactPhone">Phone</label>
+                        <input type="tel" name="contactPhone" id="contactPhone" class="contact-inp" maxlength="10">
+                        <P></P>
+                    </div>
+                    <div class="form-groups">
+                        <label for="contact-city">Contact City</label>
+                        <input type="text" name="contact-city" id="contact-city" class="contact-inp">
+                        <p></p>
+                    </div>      
+                    <div class="form-groups">
+                        <label for="contact-state">Contact State</label>
+                        <input type="text" name="contact-state" id="contact-state" class="contact-inp">
+                        <p></p>
+                    </div>  
+               </section>
+               <section class="right-form">
+                <div class="form-groups">
+                    <label for="organization">Organization</label>
+                    <!-- <input type="text" name="organization" id="organization" class="contact-inp"> -->
+                    <select name="organization" id="organization" class="contact-inp">
+                        <option value="">Select</option>
+                    </select>
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="department">Department</label>
+                    <input type="text" name="department" id="department" class="contact-inp">
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="org-email">Organization Mail</label>
+                    <input type="text" name="org-email" id="org-email" class="contact-inp">
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="org-phone">Organization Phone</label>
+                    <input type="tel" name="org-phone" id="org-phone" class="contact-inp" maxlength="10">
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="annual-income">Annual Income</label>
+                    <input type="number" name="annual-income" id="annual-income" class="contact-inp">
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="org-address">Organization Address</label>
+                    <input type="text" name="org-address" id="org-address" class="contact-inp">
+                    <p></p>
+                </div>
+                <div class="form-groups">
+                    <label for="contact-country">Contact Country</label>
+                    <input type="text" name="contact-country" id="contact-country" class="contact-inp">
+                    <p></p>
+                </div>   
+               </section>
             </form>
          </div>
-     </div>
      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
      <script src="../../js/contacts/contactForm.js"></script>
 </body>
