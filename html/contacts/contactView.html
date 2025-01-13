@@ -6,8 +6,7 @@
     <link rel="shortcut icon" href="/assets/crm-icon.ico" type="image/x-icon">
     <title>Contact View - Zoho CRM</title>
     <link rel="stylesheet" href="../../css/contacts/contactView.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/v5-font-face.min.css" integrity="sha512-dC4AauJwDHOpEpJi2/BsDf/b9vyLVt79nmO0x5gQWbRm62Q/xFS9iZpzCOFNLjTQsAD4mp9jJel6nPAjnBN2Ag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="/js/customElements/customNavBar.js" type="module"></script>
+    <script src="../../js/customElements/customNavBar.js" type="module"></script>
 </head>
 <body>
     <custom-navbar></custom-navbar>
@@ -34,37 +33,6 @@
         </div>
         </ul>
     </div>
-      <dialog id="dialogbox">
-        <h4>Meeting Information</h4>
-        <form action="" id="meetingForm">
-            <input type="text" value="New Meeting*" class="meetInp" id="topic">
-            <br>
-            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
-            <br>
-            <label for="startTime">From</label><br>
-            <input type="datetime-local" name="time" id="startTime" class="meetInp">
-            <br>
-            <label for="presenterId">PresenterId</label>
-            <input type="number" name="presenterId" id="presenterId" class="meetInp" value="60030981356" readonly>
-            <br>
-            <label for="agenda">Agenda Of Meeting</label>
-            <input type="text" name="agenda" id="agenda" class="meetInp">
-            <br>
-            <label for="participants">Participants</label><br>
-            <input type="email" name="participantsMail" id="participants" class="meetInp">
-            <br><br>
-            <button id="meetingCancelBtn" class="meetBtn">Cancel</button> <button id="meetingSaveBtn" class="meetBtn">Save</button>
-        </form>
-      </dialog>
-      
-     <!-- Home Container For Lead View -->
-     <!-- <div id="parentContainer">
-        <div id="filterContainer"></div>
-        <div id="leadViewHomeContainer">
-           <table id="view" >
-           </table>
-       </div>
-    </div> -->
     <div class="body-container">
         <div class="sidebar">
             <div class="relatedList"><b>Related List</b></div>
@@ -83,8 +51,7 @@
             <div class="wrapper">
                     <div class="table-container">
                         <div class="title">Contact Information</div>
-                        <table id="view">
-                        </table>
+                        <table id="view"></table>
                     </div>
                     <div class="notes widgets" id="notes">
                         <div class="title">Notes</div>
@@ -110,6 +77,28 @@
             </div>
        </div>
      </div>
+     <dialog id="dialogbox">
+        <h4>Meeting Information</h4>
+        <form action="" id="meetingForm">
+            <input type="text" value="New Meeting*" class="meetInp" id="topic">
+            <br>
+            <input type="text" name="location" id="location" placeholder="location" class="meetInp">
+            <br>
+            <label for="startTime">From</label><br>
+            <input type="datetime-local" name="time" id="startTime" class="meetInp">
+            <br>
+            <label for="presenterId">PresenterId</label>
+            <input type="number" name="presenterId" id="presenterId" class="meetInp" value="60030981356" readonly>
+            <br>
+            <label for="agenda">Agenda Of Meeting</label>
+            <input type="text" name="agenda" id="agenda" class="meetInp">
+            <br>
+            <label for="participants">Participants</label><br>
+            <input type="email" name="participantsMail" id="participants" class="meetInp">
+            <br><br>
+            <button id="meetingCancelBtn" class="meetBtn">Cancel</button> <button id="meetingSaveBtn" class="meetBtn">Save</button>
+        </form>
+      </dialog>
     <script type="module" src="/js/contacts/contactView.js"  defer></script>
 </body>
 </html>

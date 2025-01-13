@@ -9,9 +9,11 @@ let accTable = document.getElementById("accTable");
 let contactTable = document.getElementById("contactsInAcc");
 let dealTable = document.querySelector("#dealsInAcc");
 let headArrForContact = ["contactName", "contactMail", "phone"];
+let nameOfAcc = document.querySelector("#name");
 let headArrForDeals = ["dealName", "id", "amount", "stage", "closingDate"];
 
 function displayAcc(obj){
+    nameOfAcc.textContent = obj["accountName"]
     for (const key in obj) {
 
         if(key =="contacts"|| key == "deals")
@@ -62,9 +64,10 @@ function displayAcc(obj){
             accTable.appendChild(tr);
             let td1 = document.createElement("td");
             tr.appendChild(td1);
+            td1.classList.add("key");
             let td2 = document.createElement("td");
             tr.appendChild(td2);
-            td1.innerHTML = key.toUpperCase();
+            td1.innerHTML = key;
             if(key == "accountMail")
             {
                 mailButton = obj[key];
@@ -226,7 +229,7 @@ async function deleteAcc(id)
 }
 
 // send Mail Button
-let mailBtn = document.querySelector("#mailBtn");
+let mailBtn = document.querySelector(".sendMail");
 mailBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     // mailBtn.setAttribute("href", `mailto:${mailButton}`);

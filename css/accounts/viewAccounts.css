@@ -4,7 +4,7 @@
     margin: 0;
 }
 body{
-    font-family:  "Open Sans",  sans-serif;
+    font-family: "Open Sans",sans-serif;
     background-color: rgb(233, 238, 245);
     font-size: 15px;
     min-width: 800px;
@@ -15,8 +15,7 @@ body{
     background: white;
     border-bottom:0.5px solid rgb(218, 212, 212) ;
 }
-#ul-title-contact-view{
-    list-style: none;
+#ul-title{
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -60,7 +59,7 @@ i{
         color: white;
     }
 }
-.body-container{
+#body-container{
     width: 100%;
     height: calc(100vh - 20vh);
     display: flex;
@@ -71,11 +70,11 @@ i{
     background-color: white;
     padding: 2% 0 0 2%;
 }
-.list{
-    margin-top: 10%;
-}
 .relatedList{
     padding-left: 10px;
+}
+.list{
+    margin-top: 10%;
 }
 .list>li{
     list-style-type: none;
@@ -93,10 +92,7 @@ i{
         color: inherit;
     }
 }
-/* .popup-container{
-    display: none;
-} */
-.detailed-view-container{
+#detailed-view-container{
     height: 100%;
     width: 83%;
     position: relative;
@@ -144,7 +140,7 @@ i{
         border-bottom: 1px solid rgb(33, 33, 43, 0.3);
     }
 }
-#view{
+#accTable{
     padding: 20px 40px;
 }
 table, tr, td{
@@ -156,65 +152,3 @@ table, tr, td{
     text-align: right;
     font-weight: 500;
 }
-/* PupUp-Form-For-Converting-The-Lead-To-Acc,Deal */
-.popup-container
-{
-    display: none;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    position: fixed;
-    overflow: auto;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-#actualContainer
-{
-    height: 200px;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: white;
-}
-#popupCancel
-{
-    height: 28px;
-    width: 100px;
-    &:hover{
-        cursor: pointer;
-    }
-}
-
-#dialogbox
-{
-    width: 300px;
-    height: 400px;
-    padding: 30px;
-    margin-left: 500px;
-    border-color: grey;
-    box-shadow: 0 0 10px;
-    border-radius: 10px;
-    line-height:29px;
-    align-items: center;
-}
-#dialogbox:has(body)
-{
-    background-color: rgba(0, 0, 0, 0.6);
-}
-.meetInp
-{
-    width: 100%;
-}
-.meetBtn
-{
-    width: 49%;
-} 
