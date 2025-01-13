@@ -40,20 +40,6 @@ function display(obj)
             let aHead=["id", "AccountName", "AccountMail", "Phone"];
             let contactTable=document.querySelector("#contactInDeal");
             let accountTable=document.querySelector("#accountInDeal");
-
-            // let header1=document.createElement("tr");
-            // contactTable.appendChild(header1);
-            // accountTable.appendChild(header1);
-            // cHead.forEach(e=>{
-            //     let th=document.createElement("th");
-            //     th.innerHTML=e;
-            //     header1.appendChild(th);
-            // });
-            // aHead.forEach(e=>{
-            //     let th=document.createElement("th");
-            //     th.innerHTML=e;
-            //     header1.appendChild(th);
-            // });
             continue
         }
         let tr=document.createElement("tr");
@@ -61,6 +47,7 @@ function display(obj)
         let td1=document.createElement("td");
         let td2=document.createElement("td");
         tr.appendChild(td1);
+        td1.classList.add("key");
         tr.appendChild(td2);
         td1.innerHTML=key;
         td2.innerHTML=obj[key];
@@ -73,9 +60,6 @@ let deleteBtn=document.querySelector("#deleteBtn");
 deleteBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     deleteDeal(currentId);
-
-    // window.location.href=`../deal/dealList.html`;
-    
 });
 
 async function deleteDeal(id) 
