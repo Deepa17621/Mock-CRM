@@ -57,13 +57,22 @@ custom-navbar{
     display: flex;
     justify-content: space-evenly;
 }
-.row1-cards, .row3-cards{
-    /* border: 1px solid black; */
+.row1-cards{
     width: 270px;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 4px;
     margin-top: 10px;
-    padding: 15px;
+    padding: 13px;
+}
+.row3-cards{
+    width: 298px;
+    background-color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 0 0 15px 0;
+    &:hover{
+        cursor: pointer;
+    }
 }
 .title,.title-count, .count{
     font-size: 14px;
@@ -71,9 +80,19 @@ custom-navbar{
 }
 .title-count{
     background-color: rgba(0, 255, 255, 0.352);
+    border-top: 2px solid rgba(7, 100, 100, 0.6);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding-bottom: 5px;
 }
 .count{
     font-size: large;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.count>i{
+    display: none;
 }
 .row2-container{
     display: flex;

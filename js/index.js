@@ -23,3 +23,11 @@
 // }
 
 // getAuthCode(code, loc)
+
+let countContainer = document.querySelectorAll(".count");
+countContainer.forEach(element => {
+    element.addEventListener("click", (e)=>{
+        e.preventDefault();
+        
+    });
+});
