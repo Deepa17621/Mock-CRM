@@ -6,20 +6,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/crm-icon.ico" type="image/x-icon">
     <title> Home Page - Zoho CRM</title>
-    <link rel="stylesheet" href="./css/leads/crmFront.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="./js/customElements/customNavBar.js" type="module"></script>
 </head>
 
 <body>
-
     <custom-navbar></custom-navbar>
-    <!-- Nav Container End -->
+    <section class="title-container">
+        <div class="left-title-container">
+            <div class="org-icon-wrapper">
+                <i class="fa-regular fa-building"></i>
+            </div>
+            <div class="welcom-user-container">
+                <h3 id="welcome-user">Welcome! Deepa R</h3>
+            </div>
+        </div>
+        <div class="right-title-container">
+            <div class="layout-dropdown">manager's Home</div>
+        </div>
+    </section>
+    <main class="main-container">
+        <div class="row1-container">
+            <div class="leads-created row1-cards">
+                <p class="title">Leads Created this Month</p>
+                <p class="count">0</p>
+            </div>
+            <div class="deals-created row1-cards">
+                <p class="title">Deals Created This Month</p>
+                <p class="count">0</p>
+            </div>
+            <div class="revenue row1-cards">
+                <p class="title">Revenue</p>
+                <p class="count">0</p>
+            </div>
+            <div class="deals-closing row1-cards">
+                <p class="title">
+                    Deals Closing this month
+                </p>
+                <p class="count">0</p>
+            </div>
+        </div>
+        <div class="row3-container">
+            <div class="total-leads row3-cards">
+                <p class="title-count">Total Leads</p>
+                <p class="count">0</p>
+            </div>
+            <div class="total-contacts row3-cards">
+                <p class="title-count">Total Contacts</p>
+                <p class="count">0</p>
+            </div>
+            <div class="total-accounts row3-cards">
+                <p class="title-count">Total Accounts</p>
+                <p class="count">0</p>
+            </div>
+            <div class="Total-deals row3-cards">
+                <p class="title-count">
+                    Total Deals
+                </p>
+                <p class="count">0</p>
+            </div>
 
-
-    <!-- Home Container Starts -->
-    <div id="HomeContainer" style="display: flex; height: 92vh; align-items: center; justify-content: center; ">
-        <li><h2>Home Page Work In Progress</h2></li>
-    </div>
+        </div>
+        <div class="row2-container">
+                <table class="performace-table">
+                    <tr>
+                        <td class="row-title col-title" id="empty-cell"></td>
+                        <td class="col-title">FY 2024-Q1</td>
+                        <td class="col-title">FY 2024-Q2</td>
+                        <td class="col-title">FY 2024-Q3</td>
+                        <td class="col-title">FY 2024-Q4</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Leads Created</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Contacts Converted/Created</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">No.Of Acc's</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Deals Created</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Deals Won</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td class="row-title">Revenue</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+        </div>
+    </main>
 </body>
 
 <script src="./js/index.js"></script>

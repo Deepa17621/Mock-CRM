@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: "Open Sans",sans-serif;
+    background-color: #c1cbd698;
+    min-width: 700px;
+}
+custom-navbar{
+    position: sticky;
+}
+.title-container{
+    position: sticky;
+    top: 7vh;
+    display: flex;
+    height: 4.5rem;
+    background-color: white;
+    border-bottom: 0.1px solid rgba(128, 128, 128, 0.539);
+}
+.left-title-container{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    &>div{
+        margin:0 5px 0 20px ;
+    }
+}
+.right-title-container{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    &>div{
+        margin:0 20px 0 20px ;
+    }
+}
+.org-icon-wrapper{
+    &>i{
+        color: rgba(128, 128, 128, 0.648);
+        font-size: 33px;
+        border: 0.5px solid rgb(99, 96, 96);
+        padding: 10px 15px;
+        background-color: rgba(68, 76, 122, 0.146);
+        border-radius: 3px;
+        font-weight: 100;
+    }
+}
+.layout-dropdown{
+    border: 1px solid black;
+    padding: 0.4rem;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.row1-container, .row3-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+.row1-cards, .row3-cards{
+    /* border: 1px solid black; */
+    width: 270px;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 15px;
+}
+.title,.title-count, .count{
+    font-size: 14px;
+    padding: 0.3rem 0.5rem 0.3rem;
+}
+.title-count{
+    background-color: rgba(0, 255, 255, 0.352);
+}
+.count{
+    font-size: large;
+}
+.row2-container{
+    display: flex;
+    padding: 15px;
+}
+table{
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    border-radius: 5px;
+    padding: 10px;
+}
+.col-title:not(.row-title){
+    border-bottom: 1.5px solid skyblue;
+    border-right: none;
+    text-align: center;
+}
+td:not(.row-title){
+    padding: 30px;
+    text-align: center;
+    border-right: 1px solid black;
+}
+td.row-title{
+    border-right: 1px solid black;
+    /* background-color: green; */
+    padding-right: -30px;
+    text-align: center;
+}
+#empty-cell, td:last-child{
+    border-right:none;
+}
+tr:nth-child(odd):not(:first-child) {
+    background-color: rgba(181, 132, 241, 0.096);
+}
+
+
+
