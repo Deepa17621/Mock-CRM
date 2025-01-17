@@ -93,6 +93,10 @@ custom-navbar{
 }
 .count>i{
     display: none;
+    color: grey;
+}
+.count:hover >i{
+    display: block;
 }
 .row2-container{
     display: flex;
