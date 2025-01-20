@@ -3,6 +3,10 @@
 // let code=param.get("code");
 // let loc = param.get("location");
 
+// const { functions } = require("lodash");
+
+// const { get } = require("lodash");
+
 // const { get } = require("lodash");
 
 // const { random } = require("lodash");
@@ -229,3 +233,82 @@ async function setDonutChart() {
 }
 setBarChart();
 setDonutChart();
+
+function addToObject(obj, newObj) {
+    for (const key in obj) {
+        newObj[key] = obj[key];
+    }
+}
+async function pipeLineChart() {
+    const xValues = [];
+    const yValues = [];
+    let pipelineList = await getAll("pipeLines");
+    let deals = await getAll("deals");
+    let object1 = {};
+    pipelineList.forEach(obj => {
+        if(obj.standard){
+            addToObject(obj.standard, object1);
+        }
+        else if(obj.deepa){
+           addToObject(obj.deepa, object1);
+        }
+        else if(obj.Newe){
+            addToObject(obj.Newe, object1);
+        }
+    });
+    for (const key in object1) {
+        xValues.push(key);
+    }
+    for (let i = 0; i < xValues.length; i++) {
+        yValues[i] = 0 ;
+        deals.forEach(element => {
+            if(element.stage === xValues[i]){
+                yValues[i]++;
+            }
+        });
+    }
+    const barColors = [
+        "Red",
+        "#5733FF",  // Hex: Blue shade
+        "Green",
+        "Black",
+        "hsl(60, 100%, 50%)",  // HSL: Yellow
+        "hsla(0, 100%, 50%, 0.6)", // HSLA: Semi-transparent Red
+        "White",
+        "Crimson",
+        "Teal",
+        "CornflowerBlue",
+        "LightGray",
+        "DarkSlateGray",
+        "#FF5733",  // Hex: Orange shade
+        "#33FF57",  // Hex: Green shade
+        "rgb(255, 99, 71)",   // RGB: Tomato
+        "Blue",
+        "Yellow",
+        "rgb(144, 238, 144)", // RGB: LightGreen
+        "rgba(255, 165, 0, 0.8)", // RGBA: Orange with transparency
+        "hsl(240, 100%, 50%)", // HSL: Pure Blue
+      ];
+      
+
+    new Chart("pipeline-chart", {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        legend: {display: false},
+        title: {
+        display: true,
+        text: "PipeLine By Stages"
+        }
+    }
+    });
+}
+pipeLineChart();
