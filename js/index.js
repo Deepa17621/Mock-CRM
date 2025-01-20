@@ -36,6 +36,8 @@ let contacts = document.querySelector("#contacts");
 let accounts = document.querySelector("#accounts");
 let deals = document.querySelector("#deals");
 
+let row1_Cards = document.querySelectorAll(".row1-cards");
+
 let countContainer = document.querySelectorAll(".count");
 countContainer.forEach(element => {
     element.addEventListener("click", (e)=>{
@@ -60,6 +62,38 @@ let contactCount = document.querySelector(".contact-count");
 let accountCount = document.querySelector(".account-count");
 let dealCount = document.querySelector(".deal-count");
 
+async function setCountOfFirstRow(leadList, contactList, accountList, dealList) {
+    let leadCount = 0 ;
+    let dealCount = 0 ;
+    let revenueAmount = 0 ;
+    let dealClosingCount = 0;
+    let arrOfList = [await leadList, await contactList, await accountList, await dealList];
+    let currentDate = new Date();
+    arrOfList.forEach(list => {
+        list.forEach(record => {
+                let recordDate = new Date(record.date);
+                if(recordDate.getMonth() === currentDate.getMonth()){
+                    if(arrOfList.indexOf(list) === 0 ){
+                        leadCount++;
+                    }   
+                    else if(arrOfList.indexOf(list) === 3){
+                        dealCount++;
+                    }
+                }
+                let closingDate = new Date(record.closingDate);
+                if(closingDate.getMonth() === currentDate.getMonth()){
+                    dealClosingCount++;
+                }
+                if((record.stage) === ("won" || "closed Won" || "l5")){
+                    revenueAmount += record.amount;
+                }
+        });
+    });
+    (document.querySelector(".this-month-lead-count")).textContent = leadCount;
+    (document.querySelector(".this-month-deals-count")).textContent = dealCount;
+    (document.querySelector(".revenue-amount-sum")).textContent = revenueAmount;
+    (document.querySelector(".deal-closing-count")).textContent = dealClosingCount;
+}
 async function setCount() {
     let leadData = await getAll("leads");
     leadCount.textContent = await leadData.length;
@@ -69,6 +103,7 @@ async function setCount() {
     accountCount.textContent = await accountData.length;
     let dealData = await getAll("deals");
     dealCount.textContent = await dealData.length;
+    await setCountOfFirstRow(leadData, contactData, accountData, dealData);
 }
 setCount();
 
@@ -102,27 +137,33 @@ async function setQuarterYearPerformance() {
     let currentDate = new Date();
     let columnTitle = document.querySelectorAll(".col-title");
     let q = 0;
-    console.log(columnTitle);
-    
     columnTitle.forEach(element => {
         if((Array.from(columnTitle).indexOf(element)) !== 0 ){
             element.textContent = `FY ${currentDate.getFullYear()} - Q${++q}`;
         }
     });
-    await setEachQuarterOfEachModules(await getAll("leads"), leadRow.children);
-    await setEachQuarterOfEachModules(await getAll("contacts"), contactRow.children);
-    await setEachQuarterOfEachModules(await getAll("accounts"), accountRow.children);
-    await setEachQuarterOfEachModules(await getAll("deals"), dealRow.children);
-    
+    await setEachQuarterOfEachModules(await getAll("leads"), leadRow.children, false);
+    await setEachQuarterOfEachModules(await getAll("contacts"), contactRow.children, false);
+    await setEachQuarterOfEachModules(await getAll("accounts"), accountRow.children, false);
+    await setEachQuarterOfEachModules(await getAll("deals"), dealRow.children, false);
+    await setEachQuarterOfEachModules(await getAll("deals"), dealWonRow.children, true);
 }
 setQuarterYearPerformance();
 
-async function setEachQuarterOfEachModules(arrOfData, nodeList) {
+async function setEachQuarterOfEachModules(arrOfData, nodeList, flag) {
     let firstQuarter = 0;
     let secondQuarter = 0;
     let threeQuarter = 0;
     let fourthQuarter = 0;
-    arrOfData.forEach(record => {
+    let arrayOfData = await arrOfData;
+    if(flag){
+        arrOfData.forEach(async element => {
+            if((element.stage) === ("won" || "closed Won" || "l5")){
+                await arrayOfData.push(element);
+            }
+        });
+    }
+    arrayOfData.forEach(record => {
         let leadDate = new Date(record.date);
         let month = leadDate.getMonth();
         if(([0,1,2]).includes(month)){
@@ -161,11 +202,9 @@ async function setBarChart() {
     y:yArray,
     type:"bar",
     orientation:"v",
-    marker: {color:"rgba(0,0,255,0.6)"}
+    marker: {color:"rgba(0, 0, 255, 0.46)"}
     }];
-
     const layout = {title:"Records Created"};
-
     Plotly.newPlot("bar-chart", data, layout);
 }
 
@@ -186,7 +225,6 @@ async function setDonutChart() {
     // });
     const layout2 = {title:"Records Created"};
     const data2 =[{labels:xxArray, values:yyArray, hole:.4, type:"pie"}];
-    console.log(yyArray);
     await Plotly.newPlot("donut-chart", data2, layout2);
 }
 setBarChart();
