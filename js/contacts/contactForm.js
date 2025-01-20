@@ -160,10 +160,7 @@ async function getAccounts(){
         
     }  
 }
-getAccounts()
-
-
-
+getAccounts();
 
 // Dynamic Field Form
 let individual=document.querySelector("#Individual");
@@ -181,5 +178,3 @@ newAcco.addEventListener("click", (e)=>{
     e.preventDefault();
     window.location.href=`/html/accounts/createAccount.html`;
 });
-
-

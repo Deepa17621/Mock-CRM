@@ -344,7 +344,7 @@ myForm.addEventListener("submit", async(e)=>{
         "dealName":dealName.value,
         "contactName":contactName.value,
         "accountName":accountName.value,
-        "dateOf":dateOfDealCreation.value,
+        "date":dateOfDealCreation.value,
         "amount":amount.value,
         "closingDate":closingDate.value,
         "pipeLine":pipeLineInp.value,
@@ -442,9 +442,7 @@ async function saveDeal(obj)
 async function updateDeal(obj) {
     // delete obj["_id"];
     console.log("Id Deleted in existing data: ");
-    
     console.log(obj);
-    
     try {
         let res = await fetch(`/mongodb/update/deals/${dealToBeEdited}`, {
             method:"PUT",
@@ -562,5 +560,3 @@ function setSuccess(tag)
     tag.style.border="1px solid black";
     tag.nextElementSibling.innerHTML="";
 }
-
-
