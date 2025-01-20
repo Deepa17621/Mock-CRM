@@ -24,7 +24,7 @@ custom-navbar{
     padding: 0 10px;
 }
 #left-title{
-    width: 50%;
+    width: 40%;
     display: flex;
     align-items: center;
     &>li{
@@ -32,8 +32,11 @@ custom-navbar{
         padding: 1rem;
     }
 }
+.middle-title{
+    width: 20%;
+}
 #right-title{
-    width: 50%;
+    width: 40%;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -73,6 +76,7 @@ li>input{
 }
 form{
     display: inline-flex;
+    justify-content: center;
     width: inherit;
     background-color: white;
 }
@@ -116,4 +120,13 @@ label{
     margin-top: 0.1rem;
     right: 420px;
     /* background-color: rgb(36, 0, 128); */
+}
+.right-form{
+    display: none;
+}
+.active-organization{
+    display: flex;
+}
+fieldset{
+    border: none;
 }

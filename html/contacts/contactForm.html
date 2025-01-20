@@ -27,6 +27,16 @@
                  <a href="#">Edit Page Layout</a>
              </li>
         </div>
+        <div class="middle-title">
+            <li>
+                <fieldset>
+                    <input type="radio" name="dynamic-field" id="individual" checked>
+                    <label for="individual">individual</label>
+                    <input type="radio" name="dynamic-field" id="company">
+                    <label for="company">company</label>
+                </fieldset>
+            </li>
+        </div>
         <div id="right-title">
          <li><button id="cancelBtn">Cancel</button></li>
          <li><button id="saveNewBtn">Save and New</button></li>
@@ -85,6 +95,7 @@
                     <!-- <input type="text" name="organization" id="organization" class="contact-inp"> -->
                     <select name="organization" id="organization" class="contact-inp">
                         <option value="">Select</option>
+                        <option value="new-account" id="newAcc">New Account</option>
                     </select>
                     <p></p>
                 </div>

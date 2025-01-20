@@ -1,3 +1,5 @@
+// const { every } = require("lodash");
+
 let form = document.querySelector("form");
 
 let cancelBtn = document.querySelector("#cancelBtn");
@@ -25,10 +27,27 @@ let phone = document.querySelector("#contactPhone");
 let date = document.querySelector("#date");
 let address = document.querySelector("#contactAddress");
 let organizationId = document.querySelector("#organization");
+
 let orgName;
 let orgId;
+// LookUp For Account Names
+async function getAccounts(){
+    let res=await fetch(`/mongodb/getAll/accounts`);
+    let accs=await res.json();
+    if(res.ok){
+        accs.forEach(obj => {
+            let option=`<option value="${obj["_id"]}">${obj["accountName"]}</option>`;
+            organizationId.insertAdjacentHTML('beforeend', option);
+        });
+    }
+    else {
+        
+    }  
+}
+getAccounts();
 organizationId.addEventListener("change", (e) =>{
     e.preventDefault();
+    console.log(organizationId);
     orgId = e.target.value;
     orgName = organizationId.options[organizationId.selectedIndex].text;
 });
@@ -146,35 +165,36 @@ function mobileValidation(tag) {
     else setSuccess(tag);
 }
 
-// LookUp For Account Names
-async function getAccounts(){
-    let res=await fetch(`/mongodb/getAll/accounts`);
-    let accs=await res.json();
-    if(res.ok){
-        accs.forEach(obj => {
-            let option=`<option value="${obj["_id"]}">${obj["accountName"]}</option>`;
-            organizationId.insertAdjacentHTML('beforeend', option);
-        });
-    }
-    else {
-        
-    }  
-}
-getAccounts();
-
 // Dynamic Field Form
-let individual=document.querySelector("#Individual");
-let existing=document.querySelector("#Existing");
-let newAcco=document.querySelector("#newAccount");
-individual.addEventListener("click", (e)=>{
-    e.preventDefault();
-    organizationId.disabled="true";
-});
-existing.addEventListener("click", (e)=>{
-    e.preventDefault();
-    organization.removeAttribute("disabled");
-});
-newAcco.addEventListener("click", (e)=>{
-    e.preventDefault();
-    window.location.href=`/html/accounts/createAccount.html`;
+// let individual=document.querySelector("#Individual");
+// let existing=document.querySelector("#Existing");
+// let newAcco=document.querySelector("#newAccount");
+// individual.addEventListener("click", (e)=>{
+//     e.preventDefault();
+//     organizationId.disabled="true";
+// });
+// existing.addEventListener("click", (e)=>{
+//     e.preventDefault();
+//     organization.removeAttribute("disabled");
+// });
+// newAcco.addEventListener("click", (e)=>{
+//     e.preventDefault();
+//     window.location.href=`/html/accounts/createAccount.html`;
+// });
+
+// Dynamic Field 
+let radioForDynamicField = document.querySelectorAll(`input[name="dynamic-field"]`);
+radioForDynamicField.forEach(element => {
+    element.addEventListener("change", (e)=>{
+        // e.preventDefault();
+        if((e.target).id === "company"){
+            (document.querySelector(".right-form")).classList.add("active-organization");
+        }
+        else if((e.target).id === "newAcc"){
+            window.location.href=`/html/account/createAccount.html`;
+        }
+        else{
+            (document.querySelector(".right-form")).classList.remove("active-organization");
+        }
+    });
 });
