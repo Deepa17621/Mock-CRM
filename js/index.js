@@ -3,6 +3,8 @@
 // let code=param.get("code");
 // let loc = param.get("location");
 
+// const { get } = require("lodash");
+
 // const { random } = require("lodash");
 
 // const { get } = require("lodash");
@@ -116,10 +118,10 @@ async function setQuarterYearPerformance() {
 setQuarterYearPerformance();
 
 async function setEachQuarterOfEachModules(arrOfData, nodeList) {
-    let firstQuarter = 0 ;
+    let firstQuarter = 0;
     let secondQuarter = 0;
     let threeQuarter = 0;
-    let fourthQuarter = 0 ;
+    let fourthQuarter = 0;
     arrOfData.forEach(record => {
         let leadDate = new Date(record.date);
         let month = leadDate.getMonth();
@@ -141,3 +143,51 @@ async function setEachQuarterOfEachModules(arrOfData, nodeList) {
     nodeList[3].textContent = threeQuarter;
     nodeList[4].textContent = fourthQuarter;
 }
+
+// Graphical Representation of Records
+async function setBarChart() {
+    const xArray = ["Leads", "Contacts", "Accounts", "Deals"];
+    const yArray = [];
+    let leadData = await getAll("leads");
+    yArray.push(leadData.length);
+    let contactData = await getAll("contacts");
+    yArray.push(contactData.length);
+    let accountData = await getAll("accounts");
+    yArray.push(accountData.length);
+    let dealData = await getAll("deals");
+    yArray.push(dealData.length);
+    const data = [{
+    x:xArray,
+    y:yArray,
+    type:"bar",
+    orientation:"v",
+    marker: {color:"rgba(0,0,255,0.6)"}
+    }];
+
+    const layout = {title:"Records Created"};
+
+    Plotly.newPlot("bar-chart", data, layout);
+}
+
+async function setDonutChart() {
+    const xxArray = ["Leads", "Contacts", "Accounts", "Deals"];
+    const yyArray = [];
+    let leadData = await getAll("leads");
+    yyArray.push(leadData.length);
+    let contactData = await getAll("contacts");
+    yyArray.push(contactData.length);
+    let accountData = await getAll("accounts");
+    yyArray.push(accountData.length);
+    let dealData = await getAll("deals");
+    yyArray.push(dealData.length);
+    // xxArray.forEach(async element => {
+    //     let data = await getAll((element).toLocaleLowerCase());
+    //     yyArray.push(data.length*10); 
+    // });
+    const layout2 = {title:"Records Created"};
+    const data2 =[{labels:xxArray, values:yyArray, hole:.4, type:"pie"}];
+    console.log(yyArray);
+    await Plotly.newPlot("donut-chart", data2, layout2);
+}
+setBarChart();
+setDonutChart();

@@ -16,8 +16,8 @@ custom-navbar{
     top: 7vh;
     display: flex;
     height: 4.5rem;
-    background-color: white;
-    border-bottom: 0.1px solid rgba(128, 128, 128, 0.539);
+    background-color: rgba(240, 236, 236, 0.792);
+    /* border-bottom: 0.1px solid rgba(128, 128, 128, 0.539); */
 }
 .left-title-container{
     width: 50%;
@@ -131,6 +131,24 @@ td.row-title{
 tr:nth-child(odd):not(:first-child) {
     background-color: rgba(181, 132, 241, 0.096);
 }
-
-
-
+.graph-container{
+    display: flex;
+    justify-content: space-around;
+}
+.bar-chart-container{
+    background-color: white;
+    border-radius:5px;
+    width: 48%;
+    height: 400px;
+}
+.pie-chart-container{
+    background-color: white;
+    border-radius:5px;
+    width: 48%;height: 400px;
+}
+.donut-chart{
+    width: 700px;
+}
+.bar-chart{
+    width: 700px;
+}
