@@ -14,6 +14,7 @@ async function getDealObj(id)
         let result=await fetch(`/mongodb/getById/deals/${id}`);
         let out=await result.json();
         if(result.ok){
+            salesPipelineStages(out);
             display(out);
         }    
     } catch (error) {
@@ -169,9 +170,68 @@ async function updateContactAndAccount(dealId) {
 function filterDealArray(arr, currentId){
     let newArr=arr.filter((id)=>id!=currentId);
     console.log("Filtered Array: "+newArr);
-    
     return newArr;
 }
 
-
+// Sales pipeline-stages 
+async function salesPipelineStages(dealData) {
+    let data = await dealData;
+    let currentPipeLine = data.pipeLine;
+    try {
+        let res = await fetch("/mongodb/getAll/pipeLines", {
+            method:"GET",
+            headers:{"Content-Type":"application/json"}
+        });
+        if(res.ok){
+            let pipelineList = await res.json();
+            pipelineList.forEach(async element => {
+                if(element[`${currentPipeLine}`]){
+                    structurePipeLine(element[`${currentPipeLine}`], data.stage, data);
+                    return;
+                }
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+function structurePipeLine(pipeLineObj, currentStage, dealObj) {
+    let stageListContainer = document.querySelector(".pipeline-stages");
+    let ul = document.createElement("ul");
+    stageListContainer.appendChild(ul);
+    ul.classList.add("pipeline-list");
+    for (const key in pipeLineObj) {
+        let li = document.createElement("li");
+        li.classList.add("stages");
+        li.innerHTML =key;
+        if(key === currentStage){
+            li.classList.add("current-stage");
+        }
+        ul.appendChild(li);
+    }
+    let stages = document.querySelectorAll(".stages");
+    Array.from(stages).forEach(element => {
+        element.addEventListener("click", async(e)=>{
+            let exStage = document.querySelector(".current-stage");
+           if(exStage){
+            exStage.classList.remove("current-stage");
+           }
+            (e.target).classList.add("current-stage");
+            dealObj.stage = e.target.textContent;
+            delete dealObj._id;
+            try {
+                let updateRes = await fetch(`/mongodb/update/deals/${currentId}`,{
+                    method:"PUT",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify(dealObj)
+                });
+                if(updateRes.ok){
+                    window.location.reload();
+                }
+            } catch (error) {
+                
+            }
+        });
+    });
+}
 

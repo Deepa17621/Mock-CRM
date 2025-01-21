@@ -164,3 +164,29 @@ table, tr, td{
     text-align: right;
     font-weight: 500;
 }
+.pipeline-stages{
+    width: 100%;
+}
+.pipeline-list{
+    list-style: none;
+    display: flex;
+    max-width: 100%;
+    padding: 10px;
+    overflow-x: scroll;
+    &>li{
+        font-size: small;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5px solid grey;
+        padding: 5px;
+        cursor: pointer;
+        /* flex: 1; */
+        width: 800px;
+        text-align: center;
+    }
+}
+
+.current-stage{
+    background-color: rgb(0, 204, 255);
+}
