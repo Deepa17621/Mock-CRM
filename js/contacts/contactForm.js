@@ -1,5 +1,3 @@
-// const { every } = require("lodash");
-
 let form = document.querySelector("form");
 
 let cancelBtn = document.querySelector("#cancelBtn");
@@ -27,17 +25,35 @@ let phone = document.querySelector("#contactPhone");
 let date = document.querySelector("#date");
 let address = document.querySelector("#contactAddress");
 let organizationId = document.querySelector("#organization");
+let lookupForOrg = document.querySelector(".org-list");
+organizationId.addEventListener("click", (e)=>{
+    e.preventDefault();
+    (document.querySelector(".lookup-for-organization")).style.display="flex";
+});
 
 let orgName;
 let orgId;
+function selectedOrg(liTag) {
+    let orgId = liTag.id;
+    let orgName = liTag.textContent;
+    organizationId.value=orgName;
+    (document.querySelector(".lookup-for-organization")).style.display="none";
+    console.log(orgId);
+    console.log(orgName);
+}
+document.addEventListener('click', (event) => {
+    if (!organizationId.contains(event.target) && !(document.querySelector(".lookup-for-organization")).contains(event.target)) {
+        (document.querySelector(".lookup-for-organization")).style.display = 'none';
+    }
+  });
 // LookUp For Account Names
 async function getAccounts(){
     let res=await fetch(`/mongodb/getAll/accounts`);
     let accs=await res.json();
     if(res.ok){
         accs.forEach(obj => {
-            let option=`<option value="${obj["_id"]}">${obj["accountName"]}</option>`;
-            organizationId.insertAdjacentHTML('beforeend', option);
+            let option=`<li value="${obj["accountName"]}" id="${obj["_id"]}" onclick='selectedOrg(this)'>${obj["accountName"]}</li>`;
+            lookupForOrg.insertAdjacentHTML('beforeend', option);
         });
     }
     else {
@@ -45,15 +61,15 @@ async function getAccounts(){
     }  
 }
 getAccounts();
-organizationId.addEventListener("change", (e) =>{
-    e.preventDefault();
-    console.log(organizationId);
-    orgId = e.target.value;
-    orgName = organizationId.options[organizationId.selectedIndex].text;
-});
+// (lookupForOrg.children).addEventListener("click", (e) =>{
+//     e.preventDefault();
+//     console.log(organizationId);
+//     orgId = e.target.id;
+//     // orgName = organizationId.options[organizationId.selectedIndex].text;
+//     orgName = e.target.value;
+// });
 
 //Form Event--Getting Data From Form
-
 form.addEventListener("submit", async(e)=>{
     e.preventDefault();
     

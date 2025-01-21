@@ -130,3 +130,20 @@ label{
 fieldset{
     border: none;
 }
+.lookup-for-organization{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 310px;
+    margin-left: 105px;
+    margin-top: 5px;
+    display: none;
+    background-color: white;
+    &>ul{
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        text-align: left;
+            list-style: none;
+        }
+}
