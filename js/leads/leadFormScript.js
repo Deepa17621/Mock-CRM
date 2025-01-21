@@ -132,7 +132,7 @@ function mailValidation(tag) {
     if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
     {
         tag.nextElementSibling.innerHTML = "Enter Valid Email...";
-        setError(tag);
+        return setError(tag);
     }
     else  return setSuccess(tag);
 }
@@ -140,29 +140,14 @@ function mailValidation(tag) {
 function mobileValidation(element) {
     if (!(/^[6-9]\d{9}$/).test(element.value)) {
         element.nextElementSibling.innerHTML = "number should start with 6-9."
-        setError(element);
+        return setError(element);
     }
     else if((element.value).length!=10)
     {
         element.nextElementSibling.innerHTML="Number Should be 10 Digits";
-        setError(element);
+        return setError(element);
     }  
     else {
          return setSuccess(element);
     }
 }
-
-// async function getAll() {
-//     try {
-//         let res=await fetch("/getAll/leads");
-//         if(!res.ok)
-//         {
-//             throw new Error("Error:"+ res.status+ " "+res.statusText);
-//         }
-//         let data=await res.json();
-//         console.log(data);
-//     } catch (error) {
-//         // console.log(error);   
-//     }
-// }
-// getAll();

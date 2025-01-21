@@ -133,12 +133,12 @@ fieldset{
 .lookup-for-organization{
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 0.5px solid rgb(207, 201, 201);
     width: 310px;
     margin-left: 105px;
     margin-top: 5px;
     display: none;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     &>ul{
         display: flex;
         cursor: pointer;
@@ -146,4 +146,18 @@ fieldset{
         text-align: left;
             list-style: none;
         }
+        position: absolute;
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 1000;
+}
+.contact-inp+p{
+    color: red;
+    font-size: x-small;
+    display: block;
+    font-weight: 500;
+    position: absolute;
+    margin-top: 0.1rem;
+    right: 412px;
+    /* background-color: rgb(36, 0, 128); */
 }

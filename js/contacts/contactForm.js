@@ -19,12 +19,23 @@ saveBtn.addEventListener("click", ()=>{
     form.requestSubmit();
 });
 
-let contactName = document.querySelector("#contactName");
+let contactOwner = document.querySelector("#contact-owner");
+let firstName = document.querySelector("#firstName");
+let lastName = document.querySelector("#lastName");
 let contactMail = document.querySelector("#contactMail");
 let phone = document.querySelector("#contactPhone");
 let date = document.querySelector("#date");
-let address = document.querySelector("#contactAddress");
+let city = document.querySelector("#contact-city");
+let state = document.querySelector("#contact-state");
+
 let organizationId = document.querySelector("#organization");
+let department = document.querySelector("#department");
+let orgMail = document.querySelector("#org-email");
+let orgPhone = document.querySelector("#org-phone");
+let annualIncome = document.querySelector("#annual-income");
+let orgAddress = document.querySelector("#org-address");
+let contactCountry = document.querySelector("#contact-country");
+
 let lookupForOrg = document.querySelector(".org-list");
 organizationId.addEventListener("click", (e)=>{
     e.preventDefault();
@@ -34,12 +45,10 @@ organizationId.addEventListener("click", (e)=>{
 let orgName;
 let orgId;
 function selectedOrg(liTag) {
-    let orgId = liTag.id;
-    let orgName = liTag.textContent;
+    orgId = liTag.id;
+    orgName = liTag.textContent;
     organizationId.value=orgName;
     (document.querySelector(".lookup-for-organization")).style.display="none";
-    console.log(orgId);
-    console.log(orgName);
 }
 document.addEventListener('click', (event) => {
     if (!organizationId.contains(event.target) && !(document.querySelector(".lookup-for-organization")).contains(event.target)) {
@@ -61,39 +70,50 @@ async function getAccounts(){
     }  
 }
 getAccounts();
-// (lookupForOrg.children).addEventListener("click", (e) =>{
-//     e.preventDefault();
-//     console.log(organizationId);
-//     orgId = e.target.id;
-//     // orgName = organizationId.options[organizationId.selectedIndex].text;
-//     orgName = e.target.value;
-// });
 
-//Form Event--Getting Data From Form
 form.addEventListener("submit", async(e)=>{
     e.preventDefault();
-    
-    if(!contactName.value || !contactMail.value || !phone.value )
+    let flag = false;
+    if(!contactOwner.value || !firstName.value || !contactMail.value || !phone.value )
     {
-        !contactName.value ? setError(contactName) : setSuccess(contactName);
-        !contactMail.value ? mailValidation(contactMail) : setSuccess(contactMail);
-        !phone.value ? mobileValidation(phone) : setSuccess(phone);
-        // !date.value?setError(date):setSuccess(date);
-        // !address.value?setError(address):setSuccess(address);
-        // !organization.value?setError(organization):setSuccess(organization);
-        return;
+        // flag = !contactOwner.value ? setError(contactOwner) : setSuccess(contactOwner);
+        flag = !firstName.value ? setError(firstName) : setSuccess(firstName);
+        flag = !contactMail.value ? mailValidation(contactMail) : setSuccess(contactMail);
+        flag = !phone.value ? mobileValidation(phone) : setSuccess(phone);
+    }
+    else{
+        flag = !contactOwner.value ? setError(contactOwner) : setSuccess(contactOwner);
+        flag = !firstName.value ? setError(firstName) : setSuccess(firstName);
+        flag = !contactMail.value ? mailValidation(contactMail) : setSuccess(contactMail);
+        flag = !phone.value ? mobileValidation(phone) : setSuccess(phone);
     }
     let obj = {
-        "contactName":contactName.value,
+        "contactOwner":contactOwner.value,
+        "firstName":firstName.value,
+        "lastName":lastName.value,
+        "date": date.value,
         "contactMail":contactMail.value,
         "phone":phone.value,
-        "address":address.value,
+        "contactCity":city.value,
+        "contactState":state.value,
         "organization":orgName,
         "organizationId":orgId,
+        "department":department.value,
+        "organizationMail":orgMail.value,
+        "organizationPhone":orgPhone.value,
+        "annualIncome":annualIncome.value,
+        "organzationAddress":orgAddress.value,
+        "contactCountry":contactCountry.value,
         "deals":[],
     };
-    await postContact(obj);
-    window.location.href = clicked ? "/html/contacts/contactList.html" :  "/html/contacts/contactForm.html";
+    if(flag){
+        let postContactData = await postContact(obj);
+        alert("SuccessFully Contact Created!");
+        window.location.href = clicked ? "/html/contacts/contactList.html" :  "/html/contacts/contactForm.html";
+    }
+    else{
+
+    }
 });
 
 // Post - Contact Data 
@@ -139,65 +159,6 @@ async function updateAccountFormLookUp(contactId) {
     }
 }
 
-// FlatPickr
-flatpickr(".datePicker", {
-    // You can add options here
-    dateFormat: "Y-m-d",
-});
-//Set Error
-function setError(tag) {
-    tag.style.borderColor = "red";
-    tag.nextElementSibling.innerHTML = "Required..,";
-    tag.nextElementSibling.style.color = "red";
-}
-function setSuccess(tag) {
-    tag.style.borderColor = "black";
-    tag.nextElementSibling.innerHTML = "";
-}
-
-function mailValidation(tag) {
-    if (tag.value == "") 
-    {
-        setError(tag);
-    }
-    else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
-    {
-        setError(tag);
-        tag.nextElementSibling.innerHTML = "Enter Valid Email...";
-    }
-    else setSuccess(tag);
-}
-
-function mobileValidation(tag) {
-    if (!(/^[6-9]\d{9}$/).test(tag.value)) {
-        setError(tag);
-        tag.nextElementSibling.innerHTML = "number should start with 6-9."
-    }
-    else if((tag.value).length!=10)
-    {
-        setError(tag);
-        tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
-    }
-    else setSuccess(tag);
-}
-
-// Dynamic Field Form
-// let individual=document.querySelector("#Individual");
-// let existing=document.querySelector("#Existing");
-// let newAcco=document.querySelector("#newAccount");
-// individual.addEventListener("click", (e)=>{
-//     e.preventDefault();
-//     organizationId.disabled="true";
-// });
-// existing.addEventListener("click", (e)=>{
-//     e.preventDefault();
-//     organization.removeAttribute("disabled");
-// });
-// newAcco.addEventListener("click", (e)=>{
-//     e.preventDefault();
-//     window.location.href=`/html/accounts/createAccount.html`;
-// });
-
 // Dynamic Field 
 let radioForDynamicField = document.querySelectorAll(`input[name="dynamic-field"]`);
 radioForDynamicField.forEach(element => {
@@ -214,3 +175,49 @@ radioForDynamicField.forEach(element => {
         }
     });
 });
+
+flatpickr(".datePicker", {
+    dateFormat: "Y-m-d",
+});
+
+function setError(tag) {
+    tag.style.border= "1.5px solid red";
+    tag.style.borderRadius = "3px";
+    tag.nextElementSibling.innerHTML = "Required..,";
+    tag.nextElementSibling.style.color = "red";
+    return false;
+}
+function setSuccess(tag) {
+    tag.style.border = "1px solid black";
+    tag.style.borderRadius = "3px"
+    tag.nextElementSibling.innerHTML = "";
+    return true;
+}
+
+function mailValidation(tag) {
+    if (tag.value == "") 
+    {
+        return setError(tag);
+    }
+    else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(tag.value)) 
+    {
+        tag.nextElementSibling.innerHTML = "Enter Valid Email...";
+        return setError(tag);
+    }
+    else return setSuccess(tag);
+}
+
+function mobileValidation(tag) {
+    if (!(/^[6-9]\d{9}$/).test(tag.value)) {
+        
+        tag.nextElementSibling.innerHTML = "number should start with 6-9."
+        return setError(tag);
+    }
+    else if((tag.value).length!=10)
+    {
+        
+        tag.nextElementSibling.innerHTML="Number Should be 10 Digits";
+        return setError(tag);
+    }
+    else return setSuccess(tag);
+}

@@ -121,7 +121,7 @@ if (currentId != null) {
 
 function tableFunction(allContacts)
 {
-    let keyArr=["contactName", "contactMail", "phone", "address", "organization"];
+    let keyArr=["firstName", "contactMail", "phone", "contactCity", "organization"];
     //Table Head
     let thead=document.createElement("tr");
     tableHead.appendChild(thead);
@@ -173,7 +173,7 @@ function tableFunction(allContacts)
                 span.innerHTML=`<a href="tel:${obj[tdata.className]}">${obj[tdata.className]}</a>`
             }
             else{
-                if(val=="contactName")
+                if(val=="firstName")
                     {
                         span.addEventListener("click", (eve)=>{
                             eve.preventDefault();
@@ -251,9 +251,7 @@ const getAllContacts = async () => {
     }
     else if(allContacts!=null)
     {
-        tableFunction(allContacts)
-    console.log("All Contacts:==>");
-    console.log(allContacts);
+        tableFunction(allContacts);
     }
     searchInp.addEventListener("keyup", (e)=>{
         e.preventDefault();
