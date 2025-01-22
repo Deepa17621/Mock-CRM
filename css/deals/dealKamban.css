@@ -77,28 +77,40 @@
 }
 .stageBody
 {
-    width: 104%;
+    width: 105%;
     overflow-y: auto;
     min-height: 85%;
-    background-color: rgb(221, 221, 221, 0.5);
     border-radius: 4px;
     /* padding-left: 20px; */
     padding-top: 5px;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     row-gap: 10px;
 }
+.no-deal{
+        background-color: rgb(221, 221, 221, 0.5);
+}
+.data-not-available{
+    min-height: 85%;
+}
+.data-available{
+    height: 0;
+}
 .contentWrapper{
     border-radius: 2px;
-    width: 98%;
+    background-color: white;
+    width: 90%;
     height: auto;
     display: flex;
+    padding: 10px;
     flex-direction: column;
-    cursor: pointer;
-    border: 1px solid black;
+    /* justify-content: flex-start; */
+    cursor: move;
+    /* border: 1px solid black; */
+    justify-content: space-between;
 }
 .hidden{
     display: none;
