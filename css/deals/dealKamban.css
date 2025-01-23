@@ -78,7 +78,7 @@
 .stageBody
 {
     width: 105%;
-    overflow-y: auto;
+    overflow-y: scroll;
     min-height: 85%;
     border-radius: 4px;
     /* padding-left: 20px; */
