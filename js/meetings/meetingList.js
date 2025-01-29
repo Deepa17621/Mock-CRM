@@ -151,5 +151,5 @@ let mockMeeting = document.querySelector("#mockMeeting");
 
 mockMeeting.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = `/html/meetings/zohoMeeting.html`
+    window.location.href = `/html/meetings/meetingHome.html`
 })

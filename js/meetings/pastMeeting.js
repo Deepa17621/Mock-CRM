@@ -6,7 +6,7 @@ let personalRoom = document.querySelector("#personalRoom");
 // click event for navigate from upcoming to past
 upComingLink.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = `/html/meetings/zohoMeetingmeetings.html`;
+    window.location.href = `/html/meetings/upcomingMeetings.html`;
 });
 pastLink.addEventListener("click", (e) => {
     e.preventDefault();

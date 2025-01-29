@@ -51,5 +51,18 @@ scheduleMeetBtn.addEventListener("click", (e) => {
 //         link.classList("active")
 //     })
 // });
+const backToHomePageBtn = document.querySelector(".back-to-crm-btn");
+backToHomePageBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href = `/`;
+});
 
-
+const generateTokenBtn = document.querySelector(".generate-token-btn");
+generateTokenBtn.addEventListener("click", async(e)=>{
+    e.preventDefault();
+    try {
+        let req = await fetch(`/`)
+    } catch (error) {
+        
+    }
+});
