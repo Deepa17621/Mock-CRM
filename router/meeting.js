@@ -1,109 +1,86 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require(`cors`);
+const session = require('express-session');
+const axios = require('axios');
 const { handleRedirect } = require('./authorizeGrant')
 
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 
 router.use(cors());
-//corssss
-// router.use(cors({ 
-//     origin: [ 'http://localhost:5500','https://accounts.zoho.com', ],
-//     methods: ['GET', 'POST'],
-//     }));
-
-const MEETING_CLIENT_ID = process.env.CLIENT_ID;
-const MEETING_CLIENT_SECRET = process.env.CLIENT_SECRET;
-
-const MAIL_CLIENT_ID = process.env.MAIL_CLIENT_ID;
-const MAIL_CLIENT_SECRET = process.env.MAIL_CLIENT_SECRET;
-
-const REDIRECT_URI = process.env.REDIRECT_URI_LOCALHOST;
-
-// router.use(cors());
 router.use(cookieParser());
-const axios = require('axios');
 
-let ACCESS_TOKEN;
-let ZSOID;
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+
 const ZOHO_API_URL = process.env.ZOHO_API_URL;
 let scopesForMeeting = `ZohoMeeting.manageOrg.READ,ZohoMeeting.meeting.ALL`;
 
-router.use(async (req, res, next) => {
-
+router.use(async (req, res, next) =>{
     try {
-        let accessToken = req.cookies.meeting_accessToken;
-        if(accessToken){
-            ACCESS_TOKEN = accessToken ;
-            next();
+        if(!(req.session.meetingAccess)){
+            console.log("grant ");
+            let url = `https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent&state=meeting`;
+            res.send({url});
+            return;
         }
-        else {
-            let data = await getToken(req, res);
-            if(data.success){
-                ACCESS_TOKEN = data.token;
+        else if(!(req.session.meetingAccess.expiryTime > Date.now())){
+            let refreshToken = await fetch(`/refreshToken/meeting`,{
+                method: "GET"
+            });
+            if(refreshToken.ok){
+                let accessFromRefresh = await refreshToken.json();
+            }
+            else{
+                throw new Error("error in getting access from refresh in meeting")
+            }
+        }
+        else{
+            if(!req.session.meetingAccess.zsoid){
+                console.log("get User Details");
+                
+                let data = await fetch(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/user.json`, {
+                    headers:{
+                            "Authorization": `Zoho-oauthtoken ${req.session.meetingAccess.access_token}`
+                    }
+                });
+                if(data.ok){
+                    let result = await data.json();
+                    req.session.meetingAccess.zsoid=result.userDetails.zsoid;
+                    req.session.meetingAccess.zuid = result.userDetails.zuid;
+                    req.session.meetingAccess.primaryMail = result.userDetails.primaryEMail;
+                    console.log(result);
+                    next();
+                }
+                else {
+                    console.log("user fetch error");
+                    console.log(data.status + ","+ data.message);
+                    throw new Error("Fetch User Details encounterd with Error: "+ data.status+ " "+ data.statusText);
+                }
+
+            }
+            else{
                 next();
             }
         }
-        } catch (error) {
-            console.log(error);
-        }
-    });
-
-    async function getToken(req, res) {
-        // console.log(res);
-
-        let myreq = await axios.post(`${process.env.BASE_URI}/token/meetingAccess`);
-        if (myreq) {
-            let result = await myreq.data;
-            console.log(result);
-            
-            await res.cookie("meeting_accessToken", result.access_token, {
-                maxAge: 3600000,
-                secure: false,
-                httpOnly: true});
-            return {
-                "success": true,
-                "token": result.access_token
-            }
-        }
-    else {
-        throw new Error("Access token for Meeting Not found");
-    }
-}
-
-router.get(`/getZohoMeetingUserDetails/:accessToken`, async(req, res)=>{
-    try {
-        const { accessToken } = req.params;
-        let data = await fetch(`https://meeting.zoho.in/api/v2/user.json`, {
-            headers:{
-                // "Authorization": `Zoho-oauthtoken ${accessToken}`
-            }
-        });
-        if(data.ok){
-            let result = await data.json();
-            res.json(result);
-        }
-        else {
-            throw new Error("Fetch User Details encounterd with Error: "+ data.status+ " "+ data.statusText);
-        }
     } catch (error) {
+        console.log("error in middleware");
+        
         console.log(error);
     }
-})
+});
 
-// 1. [--POST--] request to Zoho API
 router.post('/postmeeting', async (req, res) => {
     try {
-        const obj = req.body; // Get the request body    
-        console.log(obj);
-            
-        const response = await fetch(
-            `https://meeting.zoho.in/api/v2/60017874042/sessions.json`,
+        const obj = req.body;   
+        obj.presenter = req.session.meetingAccess.zuid;
+        const response = await fetch(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions.json`,
             {
                 method: "POST",
                 headers: {
-                    "Authorization": "Zoho-oauthtoken " + ACCESS_TOKEN,
+                    "Authorization": "Zoho-oauthtoken " + req.session.meetingAccess.access_token,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(obj)
@@ -114,23 +91,22 @@ router.post('/postmeeting', async (req, res) => {
         res.json(postedObj);
 
     } catch (error) {
-        console.log(error);
+        console.log("error in post meeting");
         
-        // console.error('Error:', error.message); // Log the error
+        console.log(error);
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });
 
-// 2. [---Cancel---] Meeting Request To ZOHO Meeting API
 router.delete('/deletemeeting/:meetingKey', async (req, res) => {
     try {
-        const { meetingKey } = req.params; // Get the meeting key from request body
+        const { meetingKey } = req.params;
         const response = await fetch(
-            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
+            `https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions/${meetingKey}.json`,
             {
                 method: "DELETE",
                 headers: {
-                    "Authorization": "Zoho-oauthtoken " + ACCESS_TOKEN
+                    "Authorization": "Zoho-oauthtoken " + req.session.meetingAccess.access_token
                 }
             }
         );
@@ -141,48 +117,48 @@ router.delete('/deletemeeting/:meetingKey', async (req, res) => {
         }
         else if (!response.ok) throw new Error("Error: " + response.status + " " + response.statusText);
     } catch (error) {
-        console.error('Error:', error.message); // Log the error
+        console.log("error in delete meeting");
+        console.error('Error:', error.message);
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });
 
-console.log(ACCESS_TOKEN);
-
-// 3. Get Meeting List
 router.get('/getmeetinglist', async (req, res) => {
     try {
-        let response = await fetch("https://meeting.zoho.in/api/v2/60017874042/sessions.json",
+        let response = await fetch(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions.json`,
             {
                 method: "GET",
                 headers: {
-                    "Authorization": `Zoho-oauthtoken ${ACCESS_TOKEN}`,
+                    "Authorization": `Zoho-oauthtoken ${req.session.meetingAccess.access_token}`,
                     "Content-Type": "application/json"
                 }
             }
         );
         if (!response.ok) {
+            console.log(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions.json`);
+            
             throw new Error("Error: " + response.status + " " + response.message)
         }
         let obj = await response.json();
         res.json(obj);
 
     } catch (error) {
+        console.log("error in get meeting list");
         console.error('Error:', error.message);
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });
 
-// 4. Edit Existing Meeting Details
 router.put('/editmeeting/:meetingKey', async (req, res) => {
     try {
         let { meetingKey } = req.params;
         let session = req.body;
         const response = await fetch(
-            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
+            `https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions/${meetingKey}.json`,
             {
                 method: "PUT",
                 headers: {
-                    "Authorization": `Zoho-oauthtoken ${ACCESS_TOKEN}`,
+                    "Authorization": `Zoho-oauthtoken ${req.session.meetingAccess.access_token}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(session)
@@ -196,21 +172,21 @@ router.put('/editmeeting/:meetingKey', async (req, res) => {
         res.json(parsedResponse);
 
     } catch (error) {
-        console.error('Error:', error); // Log the error
+        console.log("error in edit meeting");
+        console.error('Error:', error);
         res.json({ e: error });
     }
 });
 
-// 5. Get Meeting By MeetingKey
 router.get(`/getmeeting/:meetingKey`, async (req, res) => {
     try {
         let { meetingKey } = req.params;
         const response = await fetch(
-            `https://meeting.zoho.in/api/v2/60017874042/sessions/${meetingKey}.json`,
+            `https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions/${meetingKey}.json`,
             {
                 method: "GET",
                 headers: {
-                    "Authorization": "Zoho-oauthtoken " + ACCESS_TOKEN,
+                    "Authorization": "Zoho-oauthtoken " + req.session.meetingAccess.access_token,
                     "Content-Type": "application/json"
                 }
             }
@@ -221,7 +197,8 @@ router.get(`/getmeeting/:meetingKey`, async (req, res) => {
         const parsedResponse = await response.json();
         res.json(parsedResponse);
     } catch (error) {
-        console.error('Error:', error.message); // Log the error
+        console.log("error in get meeting");
+        console.error('Error:', error.message);
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 });

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const session = require("express-session");
 
 const {MongoClient, ObjectId}=require('mongodb');
 
@@ -16,6 +17,12 @@ app.use(express.json()); // For parsing application/json
 app.use(cookieParser());
 
 // Static file serving
+app.use(session({
+    secret: 'your-secret-key', // Strong secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true in production with HTTPS
+  }))
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/css', express.static(path.join(__dirname, 'css')));

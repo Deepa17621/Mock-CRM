@@ -61,7 +61,11 @@ const generateTokenBtn = document.querySelector(".generate-token-btn");
 generateTokenBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
     try {
-        let req = await fetch(`/`)
+        let req = await fetch(`/meeting/getmeetinglist`);
+        if(req.ok){
+            let u = await req.json();
+            window.location.href = u.url;
+        }
     } catch (error) {
         
     }
