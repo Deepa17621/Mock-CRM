@@ -130,7 +130,7 @@ async function deleteMeeting(meetingKey) {
     if (res.status == "204");
     {
         alert("Meeting Deleted!")
-        window.location.href = `/html/meetings/zohoMeetingmeetings.html`
+        window.location.href = `/html/meetings/upcomingMeetings.html`
     }
 }
 //Back to previous page

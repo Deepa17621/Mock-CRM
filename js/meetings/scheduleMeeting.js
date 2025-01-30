@@ -51,12 +51,14 @@ if (meetingKeyForEdit) {
 async function getMeetingDetailToEdit(meetingKeyForEdit) {
     try {
         let res = await fetch(`/meeting/getmeeting/${meetingKeyForEdit}`);
-        let existingMeetingObj = await res.json();
         if (!res.ok) {
             throw new Error("Error: " + res.status + " " + res.statusText);
         }
-        console.log(existingMeetingObj);
-        setToFormFields(existingMeetingObj.session);
+        else{
+            let existingMeetingObj = await res.json();
+            console.log(existingMeetingObj);
+            setToFormFields(existingMeetingObj.session);
+        }
     } catch (error) {
 
     }
@@ -114,14 +116,10 @@ cancelBtn.addEventListener("click", (e) => {
 
 myForm.addEventListener("submit", async (e) => {
     console.log(`${startTime.value}`);
-
     e.preventDefault();
-    //Check Valid Inputs or not
     !startTime.value ? setError(startTime) : dateTimeValidation(startTime);
     !topic.value ? setError(topic) : setSuccess(topic);
-    // durationOfMeeting.value ? dateTimeValidation(durationOfMeeting) : "";
-
-    //Request Body
+    
     const session = {
         "session": {
             "topic": `${topic.value}`,
@@ -135,32 +133,19 @@ myForm.addEventListener("submit", async (e) => {
     };
 
     try {
-        // Edit meeting existing meeting
         if (meetingKeyForEdit) {
             updateMeeting(meetingKeyForEdit, session)
         }
-        // For Create / Schedule New Meeting
         else {
-            // try {
-            //     const createMeeting = await axios.post('/meeting/postmeeting', session)
-            //     if (createMeeting.status == 200) {
-            //         alert("Meeting Created SuccessFully");
-            //         window.location.href = `/html/meetings/displayMeetingDetail.html?meetingKey=${createMeeting.data.session.meetingKey}`
-            //     }
-            // } catch (err) {
-            //     console.log(err.message);
-            // }
-
             let response = await fetch('/meeting/postmeeting', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(session) // Convert the session object to a JSON string
+                body: JSON.stringify(session) 
             });
 
             if (!response.ok) {
-                // If response status is not in the range 200-299, throw an error
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
             let responseBody = await response.json();
@@ -173,7 +158,6 @@ myForm.addEventListener("submit", async (e) => {
     }
 });
 
-// Function to update Meeting Details
 async function updateMeeting(meetingKey, obj) {
     try {
         let response = await fetch(`/meeting/editmeeting/${meetingKey}`, {
@@ -181,17 +165,15 @@ async function updateMeeting(meetingKey, obj) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(obj) // Convert the session object to a JSON string
+            body: JSON.stringify(obj) 
         });
 
         if (!response.ok) {
-            // If response status is not in the range 200-299, throw an error
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         } else {
-            // let responseBody = await response.json();
-            window.location.href = `/html/meetings/displayMeetingDetail.html?meetingKey=${responseBody.session.meetingKey}`
+            let responseBody = await response.json();
             alert("Meeting Updated SuccessFully");
-            // console.log(responseBody);
+            window.location.href = `/html/meetings/displayMeetingDetail.html?meetingKey=${responseBody.session.meetingKey}`
         }
     } catch (error) {
 

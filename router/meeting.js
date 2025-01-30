@@ -75,7 +75,9 @@ router.use(async (req, res, next) =>{
 router.post('/postmeeting', async (req, res) => {
     try {
         const obj = req.body;   
-        obj.presenter = req.session.meetingAccess.zuid;
+        obj.session.presenter = req.session.meetingAccess.zuid;
+        console.log(obj);
+        console.log(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions.json`);
         const response = await fetch(`https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions.json`,
             {
                 method: "POST",
@@ -153,6 +155,7 @@ router.put('/editmeeting/:meetingKey', async (req, res) => {
     try {
         let { meetingKey } = req.params;
         let session = req.body;
+        session.session.presenter = req.session.meetingAccess.zuid;
         const response = await fetch(
             `https://meeting.zoho.${req.session.meetingAccess.location}/api/v2/${req.session.meetingAccess.zsoid}/sessions/${meetingKey}.json`,
             {
