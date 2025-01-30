@@ -10,7 +10,7 @@ router.use(cookieParser());
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
-router.get(`/`, async (req, res) => {
+router.get(`/token`, async (req, res) => {
     try {
         let { code, state, location } = req.query;
         console.log(code);
