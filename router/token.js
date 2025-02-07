@@ -12,7 +12,6 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 router.get(`/`, async (req, res) => {
     try {
-        res.send("VERCEL");
         let { code, state, location } = req.query;
         console.log(code);
         console.log(state);
@@ -63,7 +62,7 @@ router.get(`/`, async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error:error});
     }
 });
 
