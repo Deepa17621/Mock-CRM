@@ -13,10 +13,10 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 router.get(`/`, async (req, res) => {
     try {
         let { code, state, location } = req.query;
-        res.send({'code':code,
-            "state": state,
-            "loc":location,
-        "urlQuery":req.query});
+        // res.send({'code':code,
+        //     "state": state,
+        //     "loc":location,
+        // "urlQuery":req.query});
         if(code){
             console.log("code"+code);
             console.log(state);
@@ -29,40 +29,44 @@ router.get(`/`, async (req, res) => {
                 grant_type: "authorization_code"
             });
 
-            let accessRes = await fetch(`https://accounts.zoho.com/oauth/v2/token?${authParams}`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            });
-            if (accessRes.ok) {
-                let responseOBJ = await accessRes.json();
-                if (state === "meeting") {
-                    console.log(req.session);
-                    req.session.meetingAccess = req.session.meetingAccess || {};
-                    req.session.meetingAccess = {
-                        ...responseOBJ,
-                        "expiryTime": Date.now() + 60 * 60 * 1000, // 1 hour expiry
-                        "location" : location === "us" ? "com" : "in",
-                    };
-                    res.send(`<script>
+            try {
+                let accessRes = await fetch(`https://accounts.zoho.com/oauth/v2/token?${authParams}`, {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+                if (accessRes.ok) {
+                    let responseOBJ = await accessRes.json();
+                    if (state === "meeting") {
+                        console.log(req.session);
+                        req.session.meetingAccess = req.session.meetingAccess || {};
+                        req.session.meetingAccess = {
+                            ...responseOBJ,
+                            "expiryTime": Date.now() + 60 * 60 * 1000, // 1 hour expiry
+                            "location" : location === "us" ? "com" : "in",
+                        };
+                        res.send(`<script>
+                                    alert('Tokens received successfully!');
+                                    window.location.href = '/html/meetings/upcomingMeetings.html';  
+                                </script>`);
+                    } else if (state === "mail") {
+                        req.session.mailAccess = req.session.mailAccess || {};
+                        req.session.mailAccess = {
+                            ...responseOBJ,
+                            "expiryTime": Date.now() + 60 * 60 * 1000,
+                            "location" : location === "us" ? "com" : "in",
+                        };
+                        req.send(`
+                            <script>
                                 alert('Tokens received successfully!');
-                                window.location.href = '/html/meetings/upcomingMeetings.html';  
-                            </script>`);
-                } else if (state === "mail") {
-                    req.session.mailAccess = req.session.mailAccess || {};
-                    req.session.mailAccess = {
-                        ...responseOBJ,
-                        "expiryTime": Date.now() + 60 * 60 * 1000,
-                        "location" : location === "us" ? "com" : "in",
-                    };
-                    req.send(`
-                        <script>
-                            alert('Tokens received successfully!');
-                            window.location.href = '/html/mail/mail.html';  
-                        </script>
-                        `);
+                                window.location.href = '/html/mail/mail.html';  
+                            </script>
+                            `);
+                    }
+                } else {
+                    throw new Error("Error getting access token using auth code");
                 }
-            } else {
-                throw new Error("Error getting access token using auth code");
+            } catch (error) {
+                res.status(400).send(error)
             }
         }
         else{
@@ -70,7 +74,7 @@ router.get(`/`, async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ "Error":error});
+        res.status(400).json({ "Error":error});
     }
 });
 
