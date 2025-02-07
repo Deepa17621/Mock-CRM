@@ -18,6 +18,7 @@ router.get(`/`, async (req, res) => {
         //     "loc":location,
         // "urlQuery":req.query});
         if(code){
+            // res.send(code);
             console.log("code"+code);
             console.log(state);
             console.log(location);
@@ -35,6 +36,7 @@ router.get(`/`, async (req, res) => {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 });
                 if (accessRes.ok) {
+                    res.send("Access Token Generated!!");
                     let responseOBJ = await accessRes.json();
                     if (state === "meeting") {
                         console.log(req.session);
