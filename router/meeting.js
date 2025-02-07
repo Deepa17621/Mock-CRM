@@ -22,11 +22,13 @@ router.use(async (req, res, next) =>{
     try {
         if(!(req.session.meetingAccess)){
             console.log("grant ");
+            // let stateValue = encodeURIComponent(JSON.stringify({}))
             let url = `https://accounts.zoho.com/oauth/v2/auth?scope=${scopesForMeeting}&client_id=${CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent&state=meeting`;
             res.send({url});
             return;
         }
         else if(!(req.session.meetingAccess.expiryTime > Date.now())){
+            console.log("refresh-token");
             let refreshToken = await fetch(`/refreshToken/meeting`,{
                 method: "GET"
             });

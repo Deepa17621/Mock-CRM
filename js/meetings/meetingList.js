@@ -16,7 +16,7 @@ async function getList() {
     }
 }
 
-getList();  // Execution Starts Here...
+// getList();  // Execution Starts Here...
 
 // Table to List All the meetings
 

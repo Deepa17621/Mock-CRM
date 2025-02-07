@@ -10,7 +10,7 @@ const axios = require('axios');
 // const { log, error } = require('console');
 const app = express();
 const cookieParser = require('cookie-parser');
-const port = process.env.PORT || 5500;
+const port = process.env.PORT || 5000;
   
 app.use(cors());
 app.use(express.json()); // For parsing application/json
@@ -34,7 +34,6 @@ let mail_Router = require("./router/mailRouter");
 let meeting_Router = require("./router/meeting");
 let mongoDB_Router = require("./router/mongodb");
 let token_Router = require("./router/token");
-
 
 app.use("/mail", mail_Router);
 app.use("/token", token_Router);
