@@ -13,7 +13,10 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 router.get(`/`, async (req, res) => {
     try {
         let { code, state, location } = req.query;
-        res.send(req.query);
+        res.send({'code':code,
+            "state": state,
+            "loc":location,
+        "urlQuery":req.query});
         if(code){
             console.log("code"+code);
             console.log(state);
