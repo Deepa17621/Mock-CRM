@@ -29,11 +29,11 @@ router.get(`/`, async (req, res) => {
                 redirect_uri: REDIRECT_URI,
                 grant_type: "authorization_code"
             });
-
+            let loc = location === "us"?"com":"in";
             try {
-                let accessRes = await fetch(`https://accounts.zoho.com/oauth/v2/token?${authParams}`, {
+                let accessRes = await fetch(`https://accounts.zoho.${loc}/oauth/v2/token?${authParams}`, {
                     method: "POST",
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    headers: { 'Content-Type': 'application/json' }
                 });
                 if (accessRes.ok) {
                     let responseOBJ = await accessRes.json();
@@ -64,10 +64,10 @@ router.get(`/`, async (req, res) => {
                             `);
                     }
                 } else {
-                    throw new Error("Error getting access token using auth code");
+                    throw new Error(accessRes.status+", "+accessRes.error);
                 }
             } catch (error) {
-                res.status(400).send("Access -Catch --- 101")
+                res.send(accessRes.status+","+accessRes.error);
             }
         }
         else{
