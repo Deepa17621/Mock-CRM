@@ -36,7 +36,6 @@ router.get(`/`, async (req, res) => {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 });
                 if (accessRes.ok) {
-                    res.send("Access Token Generated!!");
                     let responseOBJ = await accessRes.json();
                     if (state === "meeting") {
                         console.log(req.session);
@@ -68,7 +67,7 @@ router.get(`/`, async (req, res) => {
                     throw new Error("Error getting access token using auth code");
                 }
             } catch (error) {
-                res.status(400).send(error)
+                res.status(400).send("Access -Catch --- 101")
             }
         }
         else{
