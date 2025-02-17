@@ -13,75 +13,58 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 router.get(`/`, async (req, res) => {
     try {
         let { code, state, location } = req.query;
-        // res.send({'code':code,
-        //     "state": state,
-        //     "loc":location,
-        // "urlQuery":req.query});
-        if(code){
-            // res.send(code);
-            console.log("code"+code);
-            console.log(state);
-            console.log(location);
-            const authParams = new URLSearchParams({
-                code: code,
-                client_id: CLIENT_ID,
-                client_secret: CLIENT_SECRET,
-                redirect_uri: REDIRECT_URI,
-                grant_type: "authorization_code"
-            });
-            let loc = location === "us"?"com":"in";
+        if (code) {
+            let loc = location === "us" ? "com" : "in";
             try {
-                let accessRes = await fetch(`https://accounts.zoho.${loc}/oauth/v2/token?${authParams}`, {
+                // let accessRes = await fetch(`https://accounts.zoho.${loc}/oauth/v2/token?${authParams}`, {
+                let accessRes = await fetch(`https://accounts.zoho.${loc}/oauth/v2/token?code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}&grant_type=authorization_code`, {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' }
                 });
-                if (accessRes.ok) {
-                    let responseOBJ = await accessRes.json();
-                    if (state === "meeting") {
-                        console.log(req.session);
-                        req.session.meetingAccess = req.session.meetingAccess || {};
-                        req.session.meetingAccess = {
-                            ...responseOBJ,
-                            "expiryTime": Date.now() + 60 * 60 * 1000, // 1 hour expiry
-                            "location" : location === "us" ? "com" : "in",
-                        };
-                        res.send(`<script>
+                if (!accessRes.ok) throw new Error(accessRes.status + ", " + accessRes.error);
+                let responseOBJ = await accessRes.json();
+                if (state === "meeting") {
+                    console.log(req.session);
+                    req.session.meetingAccess = req.session.meetingAccess || {};
+                    req.session.meetingAccess = {
+                        ...responseOBJ,
+                        "expiryTime": Date.now() + 60 * 60 * 1000, // 1 hour expiry
+                        "location": location === "us" ? "com" : "in",
+                    };
+                    res.send(`<script>
                                     alert('Tokens received successfully!');
                                     window.location.href = '/html/meetings/upcomingMeetings.html';  
                                 </script>`);
-                    } else if (state === "mail") {
-                        req.session.mailAccess = req.session.mailAccess || {};
-                        req.session.mailAccess = {
-                            ...responseOBJ,
-                            "expiryTime": Date.now() + 60 * 60 * 1000,
-                            "location" : location === "us" ? "com" : "in",
-                        };
-                        req.send(`
+                } else if (state === "mail") {
+                    req.session.mailAccess = req.session.mailAccess || {};
+                    req.session.mailAccess = {
+                        ...responseOBJ,
+                        "expiryTime": Date.now() + 60 * 60 * 1000,
+                        "location": location === "us" ? "com" : "in",
+                    };
+                    res.send(`
                             <script>
                                 alert('Tokens received successfully!');
                                 window.location.href = '/html/mail/mail.html';  
                             </script>
                             `);
-                    }
-                } else {
-                    throw new Error(accessRes.status+", "+accessRes.error);
                 }
             } catch (error) {
-                res.send(accessRes.status+","+accessRes.error);
+                res.send("Access Error:" + error);
             }
         }
-        else{
+        else {
             throw new Error("Rejected!");
         }
     } catch (error) {
         console.log(error);
-        res.status(400).json({ "Error":error});
+        res.status(400).json({ "Error": error });
     }
 });
 
 router.get(`/refreshToken/:state`, async (req, res) => {
     try {
-        let { state } = req.params; 
+        let { state } = req.params;
         let refreshToken;
         if (state === "meeting" && req.session.meetingAccess) {
             refreshToken = req.session.meetingAccess.refresh_token;

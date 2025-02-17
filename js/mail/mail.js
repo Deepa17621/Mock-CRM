@@ -3,8 +3,10 @@ let outerWrapper = document.querySelector(".outerWrapper");
 async function getAllFolders() {
     try {
         let res = await fetch(`/mail/getFoldersList`);
-        if (res.ok) {
-            let folders = await res.json();
+        let result = await res.json();
+       if (res.ok && !result.url) {
+            let folders = result;
+            console.log(folders);
             await sidebar(folders); // step-2
         }
         else {
@@ -14,10 +16,19 @@ async function getAllFolders() {
         console.log(error);
     }
 }
+async function getAuthCode() {
+    let res = await fetch(`/mail/getFoldersList`);
+    let result = await res.json();
+    if (res.ok && result.url) {
+        window.location.href = result.url;
+    }
+    else if (res.ok && !result.url) {
+        console.log(result);
+        await sidebar(result); // step-2
+    }
 
-// Step - 1
-getAllFolders(); // Execution Starts From Here...
-
+}
+getAuthCode();
 async function sidebar(allFolders) {
     let sideBar = document.createElement("div");
     sideBar.setAttribute("class", "sideBarContainer")
@@ -84,7 +95,7 @@ async function displayListOfMail(mailList) {
 
         let li = document.createElement("div");
         li.setAttribute("class", "list");
-        li.addEventListener("click", async(e) => {  //step - 6
+        li.addEventListener("click", async (e) => {  //step - 6
             e.preventDefault();
             if (document.querySelector(".displayContainer")) {
                 (document.querySelector(".displayContainer")).remove();
@@ -109,12 +120,12 @@ async function displayMail(maill, mailMetaData) {
     // console.log("folderId"+folderId);
     // console.log("messageId"+messageId);
     let mailContent = await getMailContent(maill.folderId, maill.messageId);
-    console.log(maill.folderId+","+maill.messageId);
-    
+    console.log(maill.folderId + "," + maill.messageId);
+
     // console.log(mailContent.data.content);
     console.log(mailContent);
     // console.log(mailMetaData);
-    
+
     if (mailContent) {
         let displayContainer = document.createElement("section");
         let headerForDisplayMailContent = `<div id="headerForDisplayMail">
@@ -139,18 +150,18 @@ async function displayMail(maill, mailMetaData) {
     }
 }
 
-async function replyToMail(mId, classList){
+async function replyToMail(mId, classList) {
 
-    console.log("FolderId: "+classList[2]);
-    console.log("MessageId: "+mId);
-    window.location.href =`/html/mail/composeMail.html?composeType=replyMail&messageId=${mId}&folderId=${classList[2]}`;
+    console.log("FolderId: " + classList[2]);
+    console.log("MessageId: " + mId);
+    window.location.href = `/html/mail/composeMail.html?composeType=replyMail&messageId=${mId}&folderId=${classList[2]}`;
 }
 
-async function replyAll(mId, classList){
+async function replyAll(mId, classList) {
     window.location.href = `/html/mail/composeMail.html?composeType=replyAll&messageId=${mId}&folderId=${classList[2]}`;
 }
 
-async function forwardMail(mId,classList){
+async function forwardMail(mId, classList) {
     window.location.href = `/html/mail/composeMail.html?composeType=forward&messageId=${mId}&folderId=${classList[2]}`;
 }
 
@@ -173,5 +184,5 @@ async function getMailContent(folderId, messageId) {
 // step - 9 
 function composeMail() {
 
-    window.location.href =`/html/mail/composeMail.html`;
+    window.location.href = `/html/mail/composeMail.html`;
 }

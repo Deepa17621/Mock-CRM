@@ -15,7 +15,6 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 
-const ZOHO_API_URL = process.env.ZOHO_API_URL;
 let scopesForMeeting = `ZohoMeeting.manageOrg.READ,ZohoMeeting.meeting.ALL`;
 
 router.use(async (req, res, next) =>{

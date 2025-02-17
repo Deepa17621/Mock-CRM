@@ -4,95 +4,90 @@ const cors = require('cors');
 const router=express.Router();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const { default: axios } = require('axios');
+const { default: axios, all } = require('axios');
 
-let MAIL_FOLDER_ACCESS;
-let MAIL_MESSAGES_ACCESS;
-let ACC_ID=process.env.ZOHO_MAIL_ACCOUNT_ID;
-let MAIL_ACCESS_ALL;
-let ACC_DETAILS;
 let scope = "ZohoMail.accounts.ALL,ZohoMail.folders.ALL,ZohoMail.messages.ALL"
 
 router.use(cookieParser());
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
 router.use(async (req, res, next) => {  
-    MAIL_FOLDER_ACCESS = await  req.cookies.mailfolder_accessToken;
-    MAIL_MESSAGES_ACCESS = await req.cookies.mailmessage_accessToken;
-    if(MAIL_FOLDER_ACCESS && MAIL_MESSAGES_ACCESS){
-        next();
-    }
-    MAIL_ACCESS_ALL = req.cookies.mail_access_all;
-    ACC_DETAILS = req.cookies.mail_acc_details;
-    if(MAIL_ACCESS_ALL && ACC_DETAILS){
-        next();
-    }
-    else {
-               
-        let result = await getTokens(req, res);
-        if (result.success) {
-
-            MAIL_FOLDER_ACCESS = await result.folderToken;
-            MAIL_MESSAGES_ACCESS = await result.messageToken
-            next();
-        }
-    }
-});
-
-let getTokens = async (req, res) => {
-    console.log("Entered Into GetTokens() Generate New Access - Function");
-    
-    let folderReq = await axios.post(`${process.env.BASE_URI}/token/mailfolderAccess`);
-    let messagesReq = await axios.post(`${process.env.BASE_URI}/token/mailmessageAccess`);    
-
-    if (folderReq && messagesReq) {
-
-        let folderResult = await folderReq.data;
-        let messageResult = await messagesReq.data;
-        
-        await res.cookie("mailfolder_accessToken", folderResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
-        await res.cookie("mailmessage_accessToken", messageResult.access_token, { maxAge: 3600000, secure: false, httpOnly: true });
-
-        return {
-            "success": true,
-            "folderToken": folderResult.access_token,
-            "messageToken":messageResult.access_token
-        }
-    }
-    else {
-        throw new Error("Access token for Meeting Not found");
-    }
-}
-
-router.get(`/getAccountDetails`, async(req,res)=>{
     try {
-        let response = await fetch(`https://mail.zoho.com/api/accounts`,{
-            method: "GET",
-            headers: {
-                "Authorization": `Zoho-oauthtoken ${MAIL_ACCESS_ALL}`,  //ZohoMail.accounts.ALL
-                "Content-Type": "application/json"
+            if(!(req.session.mailAccess)){
+                console.log("grant ");
+                let url = `https://accounts.zoho.com/oauth/v2/auth?scope=${scope}&client_id=${CLIENT_ID}&response_type=code&access_type=offline&redirect_uri=${REDIRECT_URI}&prompt=consent&state=mail`;
+                res.send({url});
+                return;
             }
-        });
-        if(response.ok){
-            let accDetails = await response.json();
-            console.log("Acc-Details-Mail:===> ");
-            console.log(accDetails);
-            res.json(accDetails.data); // Account Id And Mail box MailAddress -FROM Address of this Account can be fetch
+            else if(!(req.session.mailAccess.expiryTime > Date.now())){
+                console.log("refresh-token");
+                let refreshToken = await fetch(`/refreshToken/mail`,{
+                    method: "GET"
+                });
+                if(refreshToken.ok){
+                    let accessFromRefresh = await refreshToken.json();
+                    req.session.mailAccess.refreshToken= accessFromRefresh.data.refresh_token;
+                }
+                else{
+                    throw new Error("error in getting access from refresh in mail")
+                }
+            }
+            else{
+                if(!req.session.mailAccess.currentAccDetails){
+                    let mailAccountRes = await fetch(`https://mail.zoho.${req.session.mailAccess.location}/api/accounts`,{
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Zoho-oauthtoken ${req.session.mailAccess.access_token}`,  //ZohoMail.accounts.ALL
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    if(mailAccountRes.ok){
+                        let allAccountResult = await mailAccountRes.json();
+                        req.session.mailAccess.allAccounts = allAccountResult.data;
+                        try {
+                            let specificAccRes = await fetch(`https://mail.zoho.${req.session.mailAccess.location}/api/accounts/${allAccountResult.data[0].accountId}`, {
+                                method: "GET",
+                                headers: {
+                                    "Authorization" : `Zoho-oauthtoken ${req.session.mailAccess.access_token}`,
+                                    "Content-Type": "application/json",
+                                }
+                            });
+                            if(specificAccRes.ok){
+                                let specificAcc = await specificAccRes.json();
+                                req.session.mailAccess.currentAccDetails = specificAcc.data;
+                                next();
+                            }
+                            else {
+                                console.log(specificAccRes.status + ", "+ specificAccRes.message);
+                                throw new Error("Error in getting Account Detail: "+ specificAccRes.status+ ", "+ specificAccRes.message);
+                            }
+                        } catch (error) {
+                            res.send(error);
+                        }
+                    }
+                    else {
+                        throw new Error("Error in getting All : "+ mailAccountRes.status+ " "+ mailAccountRes.statusText);
+                    }
+                }
+                else{
+                    next();
+                }
+            }
+        } catch (error) {
+           console.log(error);
+           res.send("Error in Middle Ware"+error);
         }
-        else {
-            throw new Error("err-get-Acc-Details- "+response.statusText+", "+response.status)
-        }
-    } catch (error) {
-        console.log(error);
-    }
 });
 
 router.get('/getFoldersList', async (req, res) => {
     try {
-        let response = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/folders`,
+        let response = await fetch(`https://mail.zoho.com/api/accounts/${req.session.mailAccess.currentAccDetails.accountId}/folders`,
             {
                 method: "GET",
                 headers: {
-                    "Authorization": `Zoho-oauthtoken ${MAIL_FOLDER_ACCESS}`,
+                    "Authorization": `Zoho-oauthtoken ${req.session.mailAccess.access_token}`,
                     "Content-Type": "application/json"
                 }
             }
@@ -112,14 +107,13 @@ router.get('/getFoldersList', async (req, res) => {
 router.get(`/getListOfEmails/:folderId`, async(req, res)=>{
     try {
         const { folderId } = req.params;
-
-        let response=await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/messages/view?folderId=${folderId}`, 
+        let response=await fetch(`https://mail.zoho.com/api/accounts/${req.session.mailAccess.currentAccDetails.accountId}/messages/view?folderId=${folderId}`, 
             {
                 method:"GET",
                 headers:{
                     "Accept" : "application/json",
                     "Content-Type" : "application/json",
-                    "Authorization" : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+                    "Authorization" : `Zoho-oauthtoken ${req.session.mailAccess.access_token}`
                 }
             }
         )
@@ -137,66 +131,60 @@ router.get(`/getListOfEmails/:folderId`, async(req, res)=>{
 router.get(`/displayMail/:folderId/:messageId`, async(req, res)=>{
     try {
         const {folderId, messageId } = req.params;
-        let response = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/folders/${folderId}/messages/${messageId}/content`, {
+        let response = await fetch(`https://mail.zoho.com/api/accounts/${req.session.mailAccess.currentAccDetails.accountId}/folders/${folderId}/messages/${messageId}/content`, {
             method:"GET",
             headers:{
                 'Accept': 'application/json',
                 'Content-Type' : 'application/json',
-                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+                'Authorization' : `Zoho-oauthtoken ${req.session.mailAccess.access_token}`
             }
         });
         if(response.ok){
-            console.log(response);
-            
             let mailContent = await response.json();
             res.json(mailContent);
         }
         else{
-            console.log(response);
-            
             throw new Error("Error in Getting Mail content- "+ response.status+ response.statusText);
         }
     } catch (error) {
         console.log(error);
+        res.send(error);
     }
 })
 
 router.post(`/sendMail`, async(req, res)=>{
     try {
-        console.log(`Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`);
         let obj = req.body;
-        let response = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/messages`, {
+        let response = await fetch(`https://mail.zoho.com/api/accounts/${req.session.mailAccess.currentAccDetails.accountId}/messages`, {
             method : "POST",
             headers : {
                 'Accept': 'application/json',
                 'Content-Type' : 'application/json',
-                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+                'Authorization' : `Zoho-oauthtoken ${req.session.mailAccess.access_token}`
             },
             body : JSON.stringify(obj)
         });
         if(response.ok){
             let data = await response.json();
-            console.log(response.ok);
-            
             res.json(data);
         }
         else {
             throw new Error("Error in Send Mail: "+ response.status + " "+ response.statusText);
         }
     } catch (error) {
-        console.log(error);
+        res.send(error);
     }
 })
 
 router.get(`/metaDataOfMail/:folderId/:messageId`, async(req,res)=>{
     try {
         let { folderId, messageId } = req.params;
-        let result = await fetch(`https://mail.zoho.com/api/accounts/${ACC_ID}/folders/${folderId}/messages/${messageId}/details`, {
+        let result = await fetch(`https://mail.zoho.com/api/accounts/${req.session.mailAccess.currentAccDetails.accountId}/folders/${folderId}/messages/${messageId}/details`, {
             method:"GET",
             headers : {
                 'Accept': 'application/json',
                 'Content-Type' : 'application/json',
-                'Authorization' : `Zoho-oauthtoken ${MAIL_MESSAGES_ACCESS}`
+                'Authorization' : `Zoho-oauthtoken ${req.session.mailAccess.access_token}`
             },
         })
         if(result.ok){
@@ -207,7 +195,7 @@ router.get(`/metaDataOfMail/:folderId/:messageId`, async(req,res)=>{
             throw new Error(result.status+" err in get MetaData "+ result.statusText);
         }
     } catch (error) {
-        console.log(error);
+        res.send(error);
     }
 })
 
