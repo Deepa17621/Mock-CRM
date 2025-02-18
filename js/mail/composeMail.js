@@ -40,14 +40,17 @@ async function getAndSetMailDataToFormFields(folderId,messageId) {
     if (composeType == "replyMail") {
         fromAddress.setAttribute("readonly", true);
         toAddress.setAttribute("readonly", true);
+        document.querySelector(".previous_mail_content_container").innerHTML =``;
     }
     else if (composeType == "replyAll") {
         ccAddresses.value = mailMetaData.data.ccAddress;
         bccAddresses.value = mailMetaData.data.bccAddress;
+        document.querySelector(".previous_mail_content_container").innerHTML = ``;
     }
     else if (composeType == "forward") {
         toAddress.value ="";
         mailContent.value = mailObject.data.content;
+
     }
 }
 async function getMailContent(folderId, messageId) {

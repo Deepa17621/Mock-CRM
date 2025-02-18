@@ -35,6 +35,10 @@
     flex-direction: row;
     gap: 20px;
 }
+.text_area{
+    display: flex;
+    flex-direction: column;
+}
 .inps{
     border: none;
     font-size: small;

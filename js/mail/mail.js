@@ -1,21 +1,21 @@
 let outerWrapper = document.querySelector(".outerWrapper");
 
-async function getAllFolders() {
-    try {
-        let res = await fetch(`/mail/getFoldersList`);
-        let result = await res.json();
-       if (res.ok && !result.url) {
-            let folders = result;
-            console.log(folders);
-            await sidebar(folders); // step-2
-        }
-        else {
-            throw new Error("Error in Get All Folders Fetch - " + res.status);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
+// async function getAllFolders() {
+//     try {
+//         let res = await fetch(`/mail/getFoldersList`);
+//         let result = await res.json();
+//        if (res.ok && !result.url) {
+//             let folders = result;
+//             console.log(folders);
+//             await sidebar(folders); // step-2
+//         }
+//         else {
+//             throw new Error("Error in Get All Folders Fetch - " + res.status);
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 async function getAuthCode() {
     let res = await fetch(`/mail/getFoldersList`);
     let result = await res.json();
@@ -35,14 +35,14 @@ async function sidebar(allFolders) {
     let sideBarHtml = `<button class="composeMailBtn" onclick="composeMail()">New Mail - Compose <i class="fa-solid fa-pen"></i> </button>`
     let foldersArray = allFolders.data;
     foldersArray.forEach(f1 => {
-        sideBarHtml += `<div id="${f1.folderId}" class="btnForFolders" onclick="getListOfMail(this.id)">${f1.folderName}</div>`;
+        sideBarHtml += `<div id="${f1.folderId}" class="btnForFolders" onclick="getListOfMail(this.id, '${f1.folderName}')">${f1.folderName}</div>`;
     });
     sideBar.innerHTML = sideBarHtml
     outerWrapper.appendChild(sideBar);
 }
 
 // step - 3
-async function getListOfMail(folderId) {
+async function getListOfMail(folderId, folderName) {
 
     try {
         let response = await fetch(`/mail/getListOfEmails/${folderId}`, {
@@ -50,6 +50,8 @@ async function getListOfMail(folderId) {
         });
         if (response.ok) {
             let mailList = await response.json();
+            window.location.hash = folderName;
+            console.log(window.location.hash);
             await displayListOfMail(mailList.data); // step - 4
         }
         else {
@@ -116,16 +118,8 @@ async function displayListOfMail(mailList) {
 }
 
 // step - 7
-async function displayMail(maill, mailMetaData) {
-    // console.log("folderId"+folderId);
-    // console.log("messageId"+messageId);
+async function displayMail(maill) {
     let mailContent = await getMailContent(maill.folderId, maill.messageId);
-    console.log(maill.folderId + "," + maill.messageId);
-
-    // console.log(mailContent.data.content);
-    console.log(mailContent);
-    // console.log(mailMetaData);
-
     if (mailContent) {
         let displayContainer = document.createElement("section");
         let headerForDisplayMailContent = `<div id="headerForDisplayMail">
